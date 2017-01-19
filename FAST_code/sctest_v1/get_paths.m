@@ -1,0 +1,9 @@
+function paths = get_paths(rel_path)
+% Get necessary paths. These paths are relative with respect to 'rel_path'
+
+    paths = [rel_path '/core;' ...
+             rel_path '/input_data;' ...
+             rel_path '/libs;' ...
+             rel_path '/utils;'];
+
+end
