@@ -3,6 +3,8 @@ from Cython.Build import cythonize
 import numpy
 import os
 
+#os.environ["CC"] = "gcc"
+
 ext = Extension(
 	name = 'cyInterface',
 	sources = ["cyInterface.pyx", "MinHash.cpp", "MurmurHash3.cpp", "SimilaritySearch.cpp",
@@ -13,3 +15,4 @@ ext = Extension(
     extra_link_args=["-std=c++11"])
 
 setup(name='cyInterface', ext_modules=cythonize(ext))
+

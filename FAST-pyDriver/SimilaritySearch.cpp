@@ -8,8 +8,7 @@
 // Populate database - place fingerprint indices in hash buckets
 void InitializeDatabase(size_t mrows, size_t ncols, uint8_t const *vals,
         uint8_t ntbls, uint8_t nhashfuncs,
-        table_vec *t, uint64_t *keys, double *out_time)
-{
+        table_vec *t, uint64_t *keys, double *out_time) {
     clock_t begin = clock();
 
     //Insert pairs (key, id) into hash tables
@@ -24,7 +23,7 @@ void InitializeDatabase(size_t mrows, size_t ncols, uint8_t const *vals,
     *out_time += ((double)(end - begin)) / CLOCKS_PER_SEC;
 }
 
-inline void insert_new_item(table *t, uint64_t const key, uint32_t const value){
+inline void insert_new_item(table *t, uint64_t const key, uint32_t const value) {
     table_it pt = t->find(key);
     // Increment value
     if(pt != t->end())
@@ -34,26 +33,23 @@ inline void insert_new_item(table *t, uint64_t const key, uint32_t const value){
         table_pair data(key,val);
         t->insert(data);
     }
-
 }
 
 // Search database for query fingerprint
 void SearchDatabase(size_t nquery, size_t ncols, uint32_t *query, uint8_t ntbls,
         uint32_t near_repeats, table const *t, uint64_t const *keys,
-        map *results, double *out_time)
-{
+        map *results, double *out_time) {
     clock_t begin = clock();
 
     //Search
-    for(size_t i = 0; i != nquery; ++i){ 
+    for (size_t i = 0; i != nquery; ++i) {
         uint32_t query_index = query[i]-1; //subtract 1 to convert 1-indexing to 0-indexing
 
-        for(size_t j = 0; j != ntbls; ++j){
+        for(size_t j = 0; j != ntbls; ++j) {
             table const *t1 = &t[j];
-            
+
             table_cit its = t1->find((uint64_t)keys[j + query_index*ntbls]);
 
-            
             //Add all matches that are not near-repeats
             for(vec_cit it = its->second.begin(); it != its->second.end(); ++it){
                 if(fabs((int)(*it)- (int)query_index) >= near_repeats){
@@ -61,17 +57,17 @@ void SearchDatabase(size_t nquery, size_t ncols, uint32_t *query, uint8_t ntbls,
                     int j = *it;
                     int p = std::min(i,j);
                     int q = std::max(i,j);
-                    uint64_t key = p + q*ncols; 
+                    uint64_t key = p + q*ncols;
                     map_it count = results->find(key);
                     // Check if this pair has been added before,
                     // if so increment the counter for the pair
                     if(count != results->end()){
                         count->second++;
-                    }else{
+                    } else {
                         uint32_t const value = 1;
                         map_pair data(key,value);
-                        results->insert(data); 
-                    }     
+                        results->insert(data);
+                    }
                 }
             }
         }
@@ -88,10 +84,10 @@ void SearchDatabase_voting(size_t nquery, size_t ncols, uint32_t *query, uint8_t
 {
     clock_t begin = clock();
 
-    std::ofstream ofile ("simpairs.txt");
     //Search
+    std::ofstream ofile ("candidate_pairs.txt");
     for(size_t i = 0; i != nquery; ++i){
-        uint32_t query_index = query[i]; //subtract 1 to convert 1-indexing to 0-indexing
+        uint32_t query_index = query[i];
         map votes;
 
         for(size_t j = 0; j != ntbls; ++j){
@@ -102,32 +98,32 @@ void SearchDatabase_voting(size_t nquery, size_t ncols, uint32_t *query, uint8_t
             size_t l = std::min(num_items,limit);
             //Add all matches that are not near-repeats
             vec_cit it = its->second.begin();
-            for(size_t k = 0; k != l; ++k){
-                if(fabs((int)*(it) - (int)query_index) >= near_repeats){
-                    int i = query_index;
-                    int j = *it;
+            for(size_t k = 0; k != l; ++k) {
+                int i = query_index;
+                int j = *it;
+                if(i >= j && fabs(i - j) >= near_repeats) {
                     int p = std::min(i,j);
                     int q = std::max(i,j);
-                    uint64_t key = p + q*ncols; 
+                    uint64_t key = (p - 1) + (q - 1) * ncols;
                     // Check if this pair has been added before,
                     // if so increment the counter for the pair
-                    size_t count = update(&votes,key,1);
-                    // Only add to results table if it exceeds voting threshold
-                    if(count >= threshold)
-                        //size_t value = update_results(results,key,count);
-                        ofile << p << "," << q << std::endl;
+                    size_t count = update(&votes, key);
                 }
                 ++it;
             }
         }
-
+        for (map_it it = votes.begin(); it != votes.end(); it++) {
+            if (it->second >= threshold) {
+                ofile << it->first % ncols << "," << it->first / ncols << "," << it->second << std::endl;
+            }
+        }
     }
     ofile.close();
     clock_t end = clock();
     *out_time += ((double)(end - begin)) / CLOCKS_PER_SEC;
 }
 
-inline size_t update(map *table, uint64_t const key, uint32_t const value){
+inline size_t update(map *table, uint64_t const key){
     map_it pt = table->find(key);
     // Increment value
     if(pt != table->end()){
@@ -136,23 +132,11 @@ inline size_t update(map *table, uint64_t const key, uint32_t const value){
     }
 
     // Initialize default
-    map_pair data(key,value);
-    table->insert(data); 
-    return value;
+    map_pair data(key, 1);
+    table->insert(data);
+    return 1;
 }
 
-inline size_t update_results(map *table, uint64_t const key, uint32_t const value){
-    map_it pt = table->find(key);
-    if(pt != table->end()) {
-       pt->second = value;
-       return value;
-    }
-
-    // Initialize default
-    map_pair data(key,value);
-    table->insert(data); 
-    return value;
-}
 
 void ClearDatabase(uint8_t const ntbls, table *t){
    for (int i = 0; i != ntbls; i++)

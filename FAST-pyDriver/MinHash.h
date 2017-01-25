@@ -32,10 +32,10 @@ void MinHashMM_Block_32( const bool * key, int nx, int ny, int ntimes, uint32_t 
 // MinHash using Textbook hash
 
 //TODO: NOT YET IMPLEMENTED
-void MinHashTB_64( const void * key, int len, int ntimes, uint32_t seed, void * out );
+//void MinHashTB_64( const void * key, int len, int ntimes, uint32_t seed, void * out );
 
 //TODO: NOT YET IMPLEMENTED
-void MinHashTB_32( const void * key, int len, int ntimes, uint32_t seed, void * out );
+//void MinHashTB_32( const void * key, int len, int ntimes, uint32_t seed, void * out );
 
 //----------------------------------------------------------------------------- 
 

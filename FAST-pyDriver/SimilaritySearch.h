@@ -66,7 +66,7 @@ void SearchDatabase_voting(size_t nquery, size_t ncols, uint32_t *query, uint8_t
         uint32_t near_repeats, table_vec *t, uint64_t *keys,
         size_t threshold, size_t limit, double *out_time);
 // Update the value of a map for a given key, increment by one
-size_t update(map *table, uint64_t key, uint32_t const value);
+size_t update(map *table, uint64_t key);
 // Update the value of a map for a given key, initialize to value 
 size_t update_results(map *table, uint64_t key, uint32_t const value);
 

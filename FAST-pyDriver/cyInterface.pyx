@@ -5,6 +5,7 @@ from libcpp.map cimport map as cmap
 from libcpp.vector cimport vector
 from libc.stdint cimport uint8_t, uint32_t, uint64_t, uint16_t
 
+
 cdef class SearchParam:
 	cdef public int nfuncs, ntbls, nvotes, near_repeats
 	cdef public long limit
@@ -57,18 +58,18 @@ cdef extern from "SimilaritySearch.h":
         int nvotes, int limit, double *out_time)
 
 
-cpdef load(filename, np.ndarray[bool, ndim=1, mode="c"] fingerprints,
+cpdef hash_and_search(filename, np.ndarray[bool, ndim=1, mode="c"] fingerprints,
 	int fp_dim, int nfp):
 	cdef Param p = Param(filename)
 
 	cdef bool* fp_buff = &fingerprints[0]
-	print fingerprints[:150]
 	cdef int ntimes = p.searchParam.nfuncs * p.searchParam.ntbls
 	cdef np.ndarray[uint8_t, ndim=1, mode="c"] min_hash_sigs = np.empty(ntimes * nfp, dtype=np.uint8)
 	cdef uint8_t* sigs_buff = &min_hash_sigs[0]
 
 	cdef double time
-	MinHashMM_Block_32(fp_buff, nfp, fp_dim, ntimes, 1, sigs_buff, &time)
+	cdef uint32_t seed = 1783793664;
+	MinHashMM_Block_32(fp_buff, nfp, fp_dim, ntimes, seed, sigs_buff, &time)
 	print "MinHash signature took: " + str(time)
 
 	cdef np.ndarray[uint64_t, ndim=1, mode="c"] keys = np.empty(nfp * p.searchParam.ntbls, dtype=np.uint64)
@@ -77,7 +78,7 @@ cpdef load(filename, np.ndarray[bool, ndim=1, mode="c"] fingerprints,
 	for i in range(p.searchParam.ntbls):
 		t_vec.push_back(new table())
 	time = 0
-	InitializeDatabase(ntimes, nfp, sigs_buff, p.searchParam.ntbls, 
+	InitializeDatabase(ntimes, nfp, sigs_buff, p.searchParam.ntbls,
 		p.searchParam.nfuncs, &t_vec, keys_buff, &time)
 	print "Hash table populate took: " + str(time)
 
