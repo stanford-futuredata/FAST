@@ -2,6 +2,7 @@
 #include "SimilaritySearch.h"
 #include <iostream>
 #include <fstream>
+#include "boost/dynamic_bitset.hpp"
 
 using namespace std;
 
@@ -9,6 +10,7 @@ int main(int argc, char * argv[]) {
 	int ntbls = 100;
 	int nhashfuncs = 5;
 	int ncols = 86381;
+	//int ncols = 26496002;
 	int mrows = 4096;
 	uint32_t seed = 1783793664;
 	double out_time = 0;
@@ -17,15 +19,19 @@ int main(int argc, char * argv[]) {
 	uint32_t limit = 4e9;
 	int nvotes = 4;
 
-	bool *fingerprints = new bool[ncols*mrows];
+	const int tot_fp_len = ncols * mrows;
+	boost::dynamic_bitset<> fingerprints(tot_fp_len);
 	ifstream infile;
-	infile.open("24hr.bin", ios::in|ios::binary);
+	infile.open("24hr.bin", ios::in | ios::binary);
+	//infile.open("3m.txt", ios::in | ios::binary);
 	int count = 0;
-	while (!infile.eof()) {
+	while (!infile.eof() && count < tot_fp_len) {
 		char x;
 		infile.read(&x, 1);
-		fingerprints[count] = static_cast<int>(x);
-		count ++;
+		for (int i = 0; i < 8; i ++) {
+			fingerprints[count] = (x >> (7 - i)) & 1;
+			count ++;
+		}
 	}
 	infile.close();
 	table_vec* t = new table_vec();
@@ -35,8 +41,10 @@ int main(int argc, char * argv[]) {
     // Storage for min-hash signatures
     uint8_t *min_hash_sigs = new uint8_t[ncols * ntimes];
 
-	MinHashMM_Block_32(fingerprints, ncols, mrows, ntimes, seed, min_hash_sigs, &out_time);
+	// Compute MinHash
+	MinHashMM_Block_32(&fingerprints, ncols, mrows, ntimes, seed, min_hash_sigs, &out_time);
 	cout << "MinHash took: " << out_time << endl;
+	fingerprints.clear();
     // Populate database
     out_time = 0;
     InitializeDatabase(ntimes, ncols, min_hash_sigs, ntbls, nhashfuncs,

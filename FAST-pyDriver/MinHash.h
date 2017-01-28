@@ -17,18 +17,15 @@ typedef unsigned __int64 uint64_t;
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "boost/dynamic_bitset.hpp"
 
 #endif // !defined(_MSC_VER)
 
 //----------------------------------------------------------------------------- 
-// MinHash using MurmurHash
-//void MinHashMM_64( const void * key, int len, int ntimes, uint32_t seed, void * out );
-//void MinHashMM_32( const void * key, int len, int ntimes, uint32_t seed, void * out );
-//void MinHashMM_Block_32( const bool * key, int nx, int ny, int ntimes, uint32_t seed, void * out);
-void MinHashMM_Block_32( const bool * key, int nx, int ny, int ntimes, uint32_t seed, void * out, double * out_time );
-//-----------------------------------------------------------------------------  
+void MinHashMM_Block_32(boost::dynamic_bitset<> *key, int nx, int ny, int ntimes, uint32_t seed, uint8_t *out, double *out_time );
+//-----------------------------------------------------------------------------
 
-//----------------------------------------------------------------------------- 
+//-----------------------------------------------------------------------------
 // MinHash using Textbook hash
 
 //TODO: NOT YET IMPLEMENTED
