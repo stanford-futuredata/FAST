@@ -23,7 +23,8 @@ mat = sio.loadmat("binaryFingerprint_wLen10_wLag0.1_fpLen100_fpLag10_tvalue800.m
 (x, y) = mat['binaryFingerprint'].shape
 fp = mat['binaryFingerprint'].T.reshape(x * y)
 
-hash_and_search("24hr", fp, x, y)
+#hash_and_search("24hr", fp, x, y)
 
-plot_detection_indices("simpairs-map.txt")
+
+plot_detection_indices("candidate_pairs.txt")
 

@@ -51,7 +51,7 @@ typedef std::pair<uint64_t, uint32_t> map_pair;
 // Similarity search functions
 
 // Initialize database - place fingerprint indices in hash buckets
-void InitializeDatabase(size_t mrows, size_t ncols, uint8_t const *vals,
+void InitializeDatabase(size_t mrows, size_t ncols,
         uint8_t ntbls, uint8_t nhashfuncs,
         table_vec *t, uint64_t *keys, double *out_time);
 

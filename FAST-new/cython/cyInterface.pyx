@@ -4,7 +4,7 @@ from libcpp cimport bool
 from libcpp.map cimport map as cmap
 from libcpp.vector cimport vector
 from libc.stdint cimport uint8_t, uint32_t, uint64_t, uint16_t
-
+#from gperftools_wrapped import *
 
 cdef class SearchParam:
 	cdef public int nfuncs, ntbls, nvotes, near_repeats
@@ -60,6 +60,7 @@ cdef extern from "SimilaritySearch.h":
 
 cpdef hash_and_search(filename, np.ndarray[bool, ndim=1, mode="c"] fingerprints,
 	int fp_dim, int nfp):
+	#ProfStart("LSH.prof")
 	cdef Param p = Param(filename)
 
 	cdef bool* fp_buff = &fingerprints[0]
@@ -89,6 +90,9 @@ cpdef hash_and_search(filename, np.ndarray[bool, ndim=1, mode="c"] fingerprints,
         p.searchParam.near_repeats, &t_vec, keys_buff,
         p.searchParam.nvotes, p.searchParam.limit, &time)
 	print "Similarity search took: " + str(time)
+	#ProfFlush()
+	#ProfStop()
+
 
 
 

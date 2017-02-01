@@ -22,7 +22,9 @@ typedef unsigned __int64 uint64_t;
 #endif // !defined(_MSC_VER)
 
 //----------------------------------------------------------------------------- 
-void MinHashMM_Block_32(boost::dynamic_bitset<> *key, int nx, int ny, int ntimes, uint32_t seed, uint8_t *out, double *out_time );
+void calculate_hash(int ny, int ntimes, uint32_t seed, uint32_t* hashes);
+void MinHashMM_Block_32(boost::dynamic_bitset<> *block, int nx, int ny, int ntbls, int nhashfunc,
+	uint32_t* hashes, uint64_t *out, uint64_t *fp_index, double * out_time);
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------

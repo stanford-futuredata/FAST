@@ -6,17 +6,14 @@
 #include "SimilaritySearch.h"
 
 // Populate database - place fingerprint indices in hash buckets
-void InitializeDatabase(size_t mrows, size_t ncols, uint8_t const *vals,
-        uint8_t ntbls, uint8_t nhashfuncs,
+void InitializeDatabase(size_t mrows, size_t ncols, uint8_t ntbls, uint8_t nhashfuncs,
         table_vec *t, uint64_t *keys, double *out_time) {
     clock_t begin = clock();
 
     //Insert pairs (key, id) into hash tables
     for(size_t i = 0; i != ncols; ++i){
         for(size_t j = 0; j != ntbls; ++j){
-            uint64_t key = toint64_16(&vals[nhashfuncs*j + i*mrows],nhashfuncs);
-            keys[j + i*ntbls] = key;
-            insert_new_item(t->at(j),key,i);
+            insert_new_item(t->at(j),keys[j + i*ntbls],i);
         }
     }
     clock_t end = clock();
