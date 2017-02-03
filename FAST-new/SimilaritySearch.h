@@ -35,7 +35,6 @@ typedef unsigned __int64 uint64_t;
 typedef std::vector<uint32_t> vec;
 typedef vec::const_iterator vec_cit;
 typedef unordered_map<uint64_t,vec> table;
-typedef std::vector<table*> table_vec;
 //typedef boost::unordered_multimap<UINT64_T,UINT32_T> table;
 //typedef boost::unordered_map<UINT64_T,UINT32_T> map;
 typedef unordered_map<uint64_t,uint32_t> map;
@@ -53,7 +52,7 @@ typedef std::pair<uint64_t, uint32_t> map_pair;
 // Initialize database - place fingerprint indices in hash buckets
 void InitializeDatabase(size_t mrows, size_t ncols,
         uint8_t ntbls, uint8_t nhashfuncs,
-        table_vec *t, uint64_t *keys, double *out_time);
+        table *t, uint64_t *keys, double *out_time);
 
 inline void insert_new_item(table *t, uint64_t const key, uint32_t const value);
 
@@ -63,12 +62,10 @@ void SearchDatabase(size_t nquery, size_t ncols, uint32_t *query, uint8_t ntbls,
         map *results, double *out_time);
 
 void SearchDatabase_voting(size_t nquery, size_t ncols, uint32_t *query, uint8_t ntbls,
-        uint32_t near_repeats, table_vec *t, uint64_t *keys,
+        uint32_t near_repeats, table const *t, uint64_t *keys,
         size_t threshold, size_t limit, double *out_time);
 // Update the value of a map for a given key, increment by one
 size_t update(map *table, uint64_t key);
-// Update the value of a map for a given key, initialize to value 
-size_t update_results(map *table, uint64_t key, uint32_t const value);
 
 // Clears the database
 void ClearDatabase(uint8_t const ntbls, table *t);
@@ -83,7 +80,6 @@ void UpdateSimMatrix(dmap *totalMatrix, uint64_t key, float const value);
 // Output total similarity matrix for values above threshold
 void ThresholdTotalSimMatrix(float thresh, dmap const * totalMatrix,
       dmap *threshMatrix, double *out_time);
-      
 
 // Count number of fingerprints in each bucket
 vec CountBucketItems(table const *t);

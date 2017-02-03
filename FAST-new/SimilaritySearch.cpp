@@ -7,13 +7,13 @@
 
 // Populate database - place fingerprint indices in hash buckets
 void InitializeDatabase(size_t mrows, size_t ncols, uint8_t ntbls, uint8_t nhashfuncs,
-        table_vec *t, uint64_t *keys, double *out_time) {
+        table *t, uint64_t *keys, double *out_time) {
     clock_t begin = clock();
 
     //Insert pairs (key, id) into hash tables
     for(size_t i = 0; i != ncols; ++i){
         for(size_t j = 0; j != ntbls; ++j){
-            insert_new_item(t->at(j),keys[j + i*ntbls],i);
+            insert_new_item(&t[j], keys[j + i * ntbls], i);
         }
     }
     clock_t end = clock();
@@ -76,7 +76,7 @@ void SearchDatabase(size_t nquery, size_t ncols, uint32_t *query, uint8_t ntbls,
 
 // Search Database with voting
 void SearchDatabase_voting(size_t nquery, size_t ncols, uint32_t *query, uint8_t ntbls,
-        uint32_t near_repeats, table_vec *t, uint64_t *keys,
+        uint32_t near_repeats, table const *t, uint64_t *keys,
         size_t threshold, size_t limit, double *out_time)
 {
     clock_t begin = clock();
@@ -88,7 +88,7 @@ void SearchDatabase_voting(size_t nquery, size_t ncols, uint32_t *query, uint8_t
         map votes;
 
         for(size_t j = 0; j != ntbls; ++j){
-            table const *t1 = t->at(j);
+            table const *t1 = &t[j];
             size_t this_key = keys[j + query_index*ntbls];
             table_cit its = t1->find((uint64_t)this_key);
             size_t num_items = its->second.size();

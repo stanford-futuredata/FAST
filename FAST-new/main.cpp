@@ -8,10 +8,10 @@ using namespace std;
 
 int main(int argc, char * argv[]) {
 	uint64_t ntbls = 100;
-	//int nhashfuncs = 5;
-	int nhashfuncs = 8;
-	//int ncols = 86381;
-	uint64_t ncols = 26496002;
+	int nhashfuncs = 5;
+	//int nhashfuncs = 8;
+	int ncols = 86381;
+	//uint64_t ncols = 26496002;
 	int mrows = 4096;
 	uint32_t seed = 1783793664;
 	int ntimes = ntbls * nhashfuncs;    //number of min-hash permutations
@@ -30,8 +30,8 @@ int main(int argc, char * argv[]) {
 	boost::dynamic_bitset<> fingerprints(batch_size * mrows);
 	//Fingerprint file
 	ifstream infile;
-	//infile.open("24hr.bin", ios::in | ios::binary);
-	infile.open("3m.bin", ios::in | ios::binary);
+	infile.open("24hr.bin", ios::in | ios::binary);
+	//infile.open("3m.bin", ios::in | ios::binary);
 	uint64_t fp_index = 0;
 	double out_time = 0;
 	int j = 0;
@@ -52,14 +52,12 @@ int main(int argc, char * argv[]) {
 			min_hash_sigs, &fp_index, &out_time);
 	}
 	infile.close();
-	free(hashes);
+	delete[] hashes;
 	fingerprints.clear();
 	cout << "MinHash took: " << out_time << endl;
 
 	// Populate database
-	table_vec* t = new table_vec();
-	for (int i = 0; i < ntbls; i ++ )
-		t->push_back(new table());
+	table *t = new table[ntbls];
 	out_time = 0;
 	InitializeDatabase(ntimes, ncols, ntbls, nhashfuncs, t, min_hash_sigs, &out_time);
 	cout << "Initialize took: " << out_time << endl;
@@ -71,7 +69,9 @@ int main(int argc, char * argv[]) {
 	SearchDatabase_voting(ncols, ncols, query, ntbls, near_repeats, t, min_hash_sigs,
 		nvotes, limit, &out_time);
 	cout << "Search took: " << out_time << endl;
-	free(min_hash_sigs);
-	free(query);
-	for (int i = 0; i < ntbls; i++) { free(t->at(i)); }
+
+	ClearDatabase(ntbls, t);
+	delete[] min_hash_sigs;
+	delete[] query;
+	delete[] t;
 }
