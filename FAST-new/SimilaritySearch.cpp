@@ -20,14 +20,15 @@ void InitializeDatabase(size_t mrows, size_t ncols, uint8_t ntbls, uint8_t nhash
     *out_time += ((double)(end - begin)) / CLOCKS_PER_SEC;
 }
 
+
 inline void insert_new_item(table *t, uint64_t const key, uint32_t const value) {
     table_it pt = t->find(key);
     // Increment value
     if(pt != t->end())
         pt->second.push_back(value);
-    else{
+    else {
         vec val(1,value);
-        table_pair data(key,val);
+        table_pair data(key, val);
         t->insert(data);
     }
 }
@@ -76,22 +77,24 @@ void SearchDatabase(size_t nquery, size_t ncols, uint32_t *query, uint8_t ntbls,
 
 // Search Database with voting
 void SearchDatabase_voting(size_t nquery, size_t ncols, uint32_t *query, uint8_t ntbls,
-        uint32_t near_repeats, table const *t, uint64_t *keys,
-        size_t threshold, size_t limit, double *out_time)
+        uint32_t near_repeats, table *t, uint64_t const *keys,
+        size_t threshold, size_t limit, double *out_time, const std::string& out_file)
 {
     clock_t begin = clock();
 
     //Search
-    std::ofstream ofile ("candidate_pairs.txt");
+    //ShrinkDatabase(t, ntbls);
+    std::ofstream ofile (out_file);
     for(size_t i = 0; i != nquery; ++i){
         uint32_t query_index = query[i];
         map votes;
-
-        for(size_t j = 0; j != ntbls; ++j){
+        size_t j;
+        for(j = 0; j < ntbls; ++j){
             table const *t1 = &t[j];
             size_t this_key = keys[j + query_index*ntbls];
             table_cit its = t1->find((uint64_t)this_key);
             size_t num_items = its->second.size();
+            //if (num_items > 50) { continue; }
             size_t l = std::min(num_items,limit);
             //Add all matches that are not near-repeats
             vec_cit it = its->second.begin();
@@ -104,14 +107,15 @@ void SearchDatabase_voting(size_t nquery, size_t ncols, uint32_t *query, uint8_t
                     uint64_t key = (p - 1) + (q - 1) * ncols;
                     // Check if this pair has been added before,
                     // if so increment the counter for the pair
-                    size_t count = update(&votes, key);
+							      size_t count = update(&votes, key);
                 }
                 ++it;
             }
         }
         for (map_it it = votes.begin(); it != votes.end(); it++) {
             if (it->second >= threshold) {
-                ofile << it->first % ncols << "," << it->first / ncols << "," << it->second << std::endl;
+                ofile << it->first % ncols << "," << it->first / ncols
+                  << "," << it->second << std::endl;
             }
         }
     }
@@ -197,51 +201,39 @@ void ThresholdTotalSimMatrix(float thresh, dmap const * totalMatrix,
 }
 
 // Count number of fingerprints in each bucket
-vec CountBucketItems(table const *t)
-{
+vec CountBucketItems(table const *t) {
     // use one hash table for now
-    size_t indexTable = 0;
-    table const *t1 = &t[indexTable];
-    
     vec numItemsPerBucket;
-    for (size_t i = 0; i < t1->bucket_count(); ++i)
-    {
-        numItemsPerBucket.push_back(t1->bucket_size(i));
+    for (table_cit it = t->begin(); it != t->end(); ++it) {
+      numItemsPerBucket.push_back(it->second.size());
     }
-    
-    return numItemsPerBucket;
 
+    return numItemsPerBucket;
 }
 
 // Count number of buckets in each hash table
-vec CountBucketsPerTable(uint8_t ntbls, table const *t, vec & maxItemsInBucket)
-{
+vec CountBucketsPerTable(uint8_t ntbls, table const *t, vec *maxItemsInBucket) {
    vec numBucketsPerTable;
-   for(size_t j = 0; j != ntbls; ++j)
-   {
+   for(size_t j = 0; j != ntbls; ++j) {
       // Add number of buckets in this hash table
       table const *t1 = &t[j];
       numBucketsPerTable.push_back(t1->size());
 
       // Add maximum number of items per bucket in this hash table
       size_t maxItems = 0;
-      for (table_cit it = t1->begin(); it != t1->end(); ++it)
-      {
-	 if (it->second.size() > maxItems)
-	 {
-	    maxItems = it->second.size();
-	 }
+      for (table_cit it = t1->begin(); it != t1->end(); ++it) {
+        if (it->second.size() > maxItems) {
+          maxItems = it->second.size();
+    	  }
       }
-      maxItemsInBucket.push_back(maxItems);
+      maxItemsInBucket->push_back(maxItems);
    }
    return numBucketsPerTable;
 }
 
-vec BucketCountPerTable(uint8_t ntbls, table const *t)
-{
+vec BucketCountPerTable(uint8_t ntbls, table const *t) {
    vec bucketCountPerTable;
-   for(size_t j = 0; j != ntbls; ++j)
-   {
+   for(size_t j = 0; j != ntbls; ++j) {
       table const *t1 = &t[j];
       bucketCountPerTable.push_back(t1->bucket_count());
    }

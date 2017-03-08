@@ -56,14 +56,16 @@ void InitializeDatabase(size_t mrows, size_t ncols,
 
 inline void insert_new_item(table *t, uint64_t const key, uint32_t const value);
 
+void ShrinkDatabase(table *t, int ntbls);
+
 // Search database for query fingerprint
 void SearchDatabase(size_t nquery, size_t ncols, uint32_t *query, uint8_t ntbls,
         uint32_t near_repeats, table const *t, uint64_t const *keys,
         map *results, double *out_time);
 
 void SearchDatabase_voting(size_t nquery, size_t ncols, uint32_t *query, uint8_t ntbls,
-        uint32_t near_repeats, table const *t, uint64_t *keys,
-        size_t threshold, size_t limit, double *out_time);
+        uint32_t near_repeats, table *t, uint64_t const *keys,
+        size_t threshold, size_t limit, double *out_time, const std::string& out_file);
 // Update the value of a map for a given key, increment by one
 size_t update(map *table, uint64_t key);
 
@@ -84,7 +86,7 @@ void ThresholdTotalSimMatrix(float thresh, dmap const * totalMatrix,
 // Count number of fingerprints in each bucket
 vec CountBucketItems(table const *t);
 
-vec CountBucketsPerTable(uint8_t ntbls, table const *t, vec & maxItemsInBucket);
+vec CountBucketsPerTable(uint8_t ntbls, table const *t, vec *maxItemsInBucket);
 
 vec BucketCountPerTable(uint8_t ntbls, table const *t);
 

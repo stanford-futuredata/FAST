@@ -4,9 +4,8 @@
 #include "MurmurHash3.h"
 #include <limits.h>
 #include <ctime>
-#include <stdlib.h>
 #include <iostream>
-#include "toint64.h"
+#include <boost/functional/hash.hpp>
 
 #define MURMUR_HASH_LEN 4
 //-----------------------------------------------------------------------------
@@ -18,17 +17,19 @@ void calculate_hash(int ny, int ntimes, uint32_t seed, uint32_t* hashes) {
 }
 
 void MinHashMM_Block_32(boost::dynamic_bitset<> *block, int nx, int ny, int ntbls,
-  int nhashfuncs, uint32_t* hashes, uint64_t *out, uint64_t *fp_index, double * out_time) {
+  int ntotfunc, uint32_t* hashes, uint64_t *out, uint64_t *fp_index, double * out_time) {
    clock_t begin = clock();
 
    //For each fingerprint
+   int nhashfuncs = (ntotfunc + 1) / 2;
    int ntimes = ntbls * nhashfuncs;
    uint64_t block_index = 0;
    uint32_t *minhash = (uint32_t *) calloc(ntimes, sizeof(uint32_t));
-   uint8_t *minhash_8 = (uint8_t *) calloc(ntimes, sizeof(uint8_t));
+   uint32_t *maxhash = (uint32_t *) calloc(ntimes, sizeof(uint32_t));
    for (int i = 0; i < ntimes; i ++) {
       minhash[i] = UINT_MAX;
    }
+
    for (int i = 0; i != nx; ++i) {
        //Locate non-zero entries
        for (int j = 0; j != ny; ++j) {
@@ -36,23 +37,33 @@ void MinHashMM_Block_32(boost::dynamic_bitset<> *block, int nx, int ny, int ntbl
                 for (int k =0; k < ntimes; k ++) {
                   minhash[k] = std::min(minhash[k],
                     hashes[k + j * ntimes]);
+                  maxhash[k] = std::max(maxhash[k],
+                    hashes[k + j * ntimes]);
                 }
            }
            block_index ++;
        }
-       for (int k = 0; k < ntimes; k++) {
-          minhash_8[k] = minhash[k] % 255;
-          minhash[k] = UINT_MAX;
-       }
+
        for (int j = 0; j < ntbls; j ++ ) {
-          uint64_t key = toint64_16(&minhash_8[nhashfuncs * j], nhashfuncs);
+          size_t key = 0;
+          for (int k = 0; k < ntotfunc; k ++) {
+            if (k < nhashfuncs) {
+              boost::hash_combine(key, minhash[nhashfuncs * j + k]);
+            } else {
+              boost::hash_combine(key, maxhash[nhashfuncs * j + k - nhashfuncs]);
+            }
+          }
           out[*fp_index] = key;
           *fp_index += 1;
+       }
+       for (int k = 0; k < ntimes; k++) {
+          minhash[k] = UINT_MAX;
+          maxhash[k] = 0;
        }
    } //End for each fingerprint
 
    free(minhash);
-   free(minhash_8);
+   free(maxhash);
    clock_t end = clock();
    *out_time += ((double)(end - begin)) / CLOCKS_PER_SEC;
 }
