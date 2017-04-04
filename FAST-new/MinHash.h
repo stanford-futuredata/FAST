@@ -23,8 +23,8 @@ typedef unsigned __int64 uint64_t;
 
 //----------------------------------------------------------------------------- 
 void calculate_hash(int ny, int ntimes, uint32_t seed, uint32_t* hashes);
-void MinHashMM_Block_32(boost::dynamic_bitset<> *block, int nx, int ny, int ntbls, int nhashfunc,
-	uint32_t* hashes, uint64_t *out, uint64_t *fp_index, double * out_time);
+void MinHashMM_Block_32(const boost::dynamic_bitset<> &block, int nx, int ny, int ntbls, int nhashfunc,
+	const uint32_t* hashes, uint64_t *out, uint64_t fp_index);
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
