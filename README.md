@@ -34,4 +34,7 @@ Allowed options:
   --limit arg                    Limit
   --nvotes arg                   Number of votes
   --batch_size arg               Batch size to read fingerprints
+  
+  --minhash_threads              Maximum number of threads for minhash
+  --simsearch_threads            Maximum number of threads for simsearch and db init
 ```
