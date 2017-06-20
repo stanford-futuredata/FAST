@@ -13,6 +13,7 @@ To change the parameters (input filename, number of hash tables, number of hash 
         --output_pairs_file=candidate_pairs.txt \
         --output_minhash_sigs_file=mh.bin 
 ```
+For performance reason, the output of the similarity search is currently in binary format. Use ```python parse_results.py [output filename]``` to parse results in the format of [index 1, index 2, #hash table matched].
 
 See the full list of command line arguments through ```./main --help```
 ```
