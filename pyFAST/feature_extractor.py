@@ -21,7 +21,7 @@ from sklearn.preprocessing import normalize
 from copy import copy
 
 class FeatureExtractor(object):
-    
+
     def __init__(self, sampling_rate, window_length, window_lag, fingerprint_length, fingerprint_lag, min_freq = 0, max_freq = None, nfreq = 32, ntimes = 64):
         self.sampling_rate = sampling_rate             #/ sampling rate
         self.window_len    = window_length             #/ length of window (seconds) used in spectrogram
@@ -42,22 +42,22 @@ class FeatureExtractor(object):
     def _initialize_frequencies(self, max_freq):    #/ initializes data structure
         if max_freq is None:
             max_freq = self.sampling_rate/2.0
-        return max_freq 
+        return max_freq
 
     def update(self, field, value):
         if hasattr(self, field):
             setattr(self, field, value)
         else:
-             print 'WARNING: object has no attribute: ' + field  
+             print 'WARNING: object has no attribute: ' + field
              print 'object has the following attributes:' + self.__dict__.keys()
-        return         
+        return
 
     def get_params(self):
         mdict = dict()
         for k in self.__dict__.keys():
           if k not in ['haar_means','haar_stddevs','haar_absdevs','haar_medians']:
             mdict[k] =  self.__dict__[k]
-        return mdict  
+        return mdict
 
     #/ returns indicies for overlapping windows
     def get_window_params(self, N, L, dL):
@@ -65,36 +65,36 @@ class FeatureExtractor(object):
         idx2 = np.asarray(range(L,N+1,dL))
         nWindows = len(idx2)
         idx1 = idx0[0:nWindows]
-        return nWindows, idx1, idx2   
+        return nWindows, idx1, idx2
 
     ########################################################################
     ##     FOR COMPUTING FINGERPRINTS                                     ##
-    ########################################################################                                                                      
+    ########################################################################
 
-    #/ computes spectrogram from continous timeseries data    
+    #/ computes spectrogram from continous timeseries data
     def data_to_spectrogram(self, x_data, window_type = 'hamming'):
-        f, t, Sxx = sp.signal.spectrogram(x_data, fs=self.sampling_rate, 
-            window=window_type, nperseg=int(self.sampling_rate*self.window_len), 
-            noverlap = int(self.sampling_rate*(self.window_len - self.window_lag)))   
+        f, t, Sxx = sp.signal.spectrogram(x_data, fs=self.sampling_rate,
+            window=window_type, nperseg=int(self.sampling_rate*self.window_len),
+            noverlap = int(self.sampling_rate*(self.window_len - self.window_lag)))
         self.frequencies = f
         self.times = t
         return f, t, Sxx
 
-    #/ breaks spectrogram into overlapping spectral images       
+    #/ breaks spectrogram into overlapping spectral images
     def spectrogram_to_spectral_images(self, Sxx):
-        nFreq, nTimes = np.shape(Sxx)   
-        nWindows, idx1, idx2 = self.get_window_params(nTimes, self.fp_len, self.fp_lag)    
+        nFreq, nTimes = np.shape(Sxx)
+        nWindows, idx1, idx2 = self.get_window_params(nTimes, self.fp_len, self.fp_lag)
         spectral_images = np.zeros([nWindows, nFreq, self.fp_len])
         for i in range(nWindows):
-            spectral_images[i,:,:] = Sxx[:,idx1[i]:idx2[i]]    
+            spectral_images[i,:,:] = Sxx[:,idx1[i]:idx2[i]]
         self.nwindows = nWindows
         nWindows, self.d1, self.d2 = np.shape(spectral_images)
-        #self.new_d1, self.new_d2 = np.exp2(np.floor(np.log2([self.d1, self.d2])))           
+        #self.new_d1, self.new_d2 = np.exp2(np.floor(np.log2([self.d1, self.d2])))
         return spectral_images, nWindows, idx1, idx2
 
     #/ resizes each spectral image to specified dimensions
-    def _resize_spectral_images(self, spectral_images, new_d1, new_d2):       
-        new_spectral_images = np.zeros([self.nwindows,new_d1,new_d2]) 
+    def _resize_spectral_images(self, spectral_images, new_d1, new_d2):
+        new_spectral_images = np.zeros([self.nwindows,new_d1,new_d2])
         for i in range(self.nwindows):
             new_spectral_images[i,:,:] = resize(spectral_images[i,:,:], (new_d1, new_d2), order=1, preserve_range=True)
         return new_spectral_images
@@ -108,19 +108,19 @@ class FeatureExtractor(object):
             cA = np.concatenate((np.concatenate((cA, cV),axis= 1),np.concatenate((cH, cD),axis = 1)),axis=0)
         return cA
 
-    #/ computes wavelet transform for each spectral image               
-    def spectral_images_to_wavelet(self, spectral_images, wavelet = wt.Wavelet('db1')):    
+    #/ computes wavelet transform for each spectral image
+    def spectral_images_to_wavelet(self, spectral_images, wavelet = wt.Wavelet('db1')):
         if (int(self.new_d1)!=self.d1) or (int(self.new_d2)!=self.d2):
             spectral_images = self._resize_spectral_images(spectral_images, self.new_d1, self.new_d2)
         haar_images = np.zeros([self.nwindows,self.new_d1,self.new_d2])
         for i in range(self.nwindows):
             coeffs = wt.wavedec2(spectral_images[i,:,:], wavelet)
             haar_images[i,:,:] = self._unwrap_wavelet_coeffs(coeffs)
-        return haar_images    
+        return haar_images
 
-    #/ computes (normalized) haar_images from continous timeseries data    
+    #/ computes (normalized) haar_images from continous timeseries data
     def data_to_haar_images(self, x_data, window_type = 'hamming'):
-        f, t, Sxx = self.data_to_spectrogram(x_data)    
+        f, t, Sxx = self.data_to_spectrogram(x_data)
         spectral_images, nWindows, idx1, idx2 = self.spectrogram_to_spectral_images(Sxx)
         haar_images = self.spectral_images_to_wavelet(spectral_images)
         haar_images = normalize(self._images_to_vectors(haar_images), axis=1)
@@ -133,8 +133,8 @@ class FeatureExtractor(object):
         for i in range(N):
             vectors[i,:] = np.reshape(images[i,:,:], (1,d1*d2))
         return vectors
-    
-    #/ converts set of vectors into set of images (of dimension d1 x d2)   
+
+    #/ converts set of vectors into set of images (of dimension d1 x d2)
     def _vectors_to_images(self, vectors, d1, d2):
         N,D = np.shape(vectors)
         if D != d1*d2:
@@ -153,7 +153,7 @@ class FeatureExtractor(object):
                 self.haar_absdevs  = np.median(abs(haar_images - self.haar_medians),axis=0)
             else: # approximates median and absolute deviations
                 print 'Warning - not implemented. TODO: implement approximate median/absolute deviation calculation'
-        if type is not 'MAD':  
+        if type is not 'MAD':
             self.haar_means   = np.mean(haar_images,axis=0)
             self.haar_stddevs = np.std(haar_images,axis=0)
 
@@ -165,9 +165,9 @@ class FeatureExtractor(object):
             haar_images = (haar_images - self.haar_medians)/self.haar_absdevs
             return haar_images
         else:
-            print 'Warning: invalid type - select type MAD or Zscore' 
-            return None                                             
-  
+            print 'Warning: invalid type - select type MAD or Zscore'
+            return None
+
     def binarize_vectors_topK_sign(self, coeff_vectors, K):
         self.K = K
         N,M = np.shape(coeff_vectors)
@@ -175,9 +175,9 @@ class FeatureExtractor(object):
         for i in range(N):
             idx = np.argsort(abs(coeff_vectors[i,:]))[-K:]
             binary_vectors[i,idx]   = coeff_vectors[i,idx] > 0
-            binary_vectors[i,idx+M] = coeff_vectors[i,idx] < 0      
-        return binary_vectors  
-    
+            binary_vectors[i,idx+M] = coeff_vectors[i,idx] < 0
+        return binary_vector
+
     def vectors_to_topK_sign(self, coeff_vectors, K):
         self.K = K
         N,M = np.shape(coeff_vectors)
@@ -185,15 +185,15 @@ class FeatureExtractor(object):
         for i in range(N):
             idx = np.argsort(abs(coeff_vectors[i,:]))[-K:]
             sign_vectors[i,idx] = np.sign(coeff_vectors[i,idx])
-        return sign_vectors    
-            
+        return sign_vectors
+
     def sign_to_binary(self, vector):
         L = len(vector)
         new_vec = np.zeros((L,2), dtype=bool)
         new_vec[:,0] = vector > 0
-        new_vec[:,1] = vector < 0   
-        return  np.reshape(new_vec, (1,2*L)) 
-        
+        new_vec[:,1] = vector < 0
+        return  np.reshape(new_vec, (1,2*L))
+
     def binarize_vectors_topK(self, coeff_vectors, K):
         self.K = K
         N,M = np.shape(coeff_vectors)
@@ -201,11 +201,11 @@ class FeatureExtractor(object):
         for i in range(N):
             idx = np.argsort(coeff_vectors[i,:])[-K:]
             sign_vectors[i,idx] = 1
-        return sign_vectors     
-   
+        return sign_vectors
+
     def jaccard_sim(self, vec1, vec2):
         return sum(vec1 & vec2)/ (1.0*sum(vec1 | vec2))
-    
+
 ########################################################################
 ##     FOR COMPUTING DATA STATISTICS                                  ##
 ########################################################################

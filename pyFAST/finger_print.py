@@ -9,8 +9,11 @@ import datetime
 
 data_folder = 'waveformsKHZ/'
 fp_folder = data_folder + 'fingerprints/'
+ts_folder = data_folder + 'timestamps/'
 if not os.path.exists(fp_folder):
 	os.makedirs(fp_folder)
+if not os.path.exists(ts_folder):
+	os.makedirs(ts_folder)
 Fs = 20
 minfreq    = 2.0
 maxfreq    = 20.0
@@ -36,7 +39,7 @@ def normalize_and_fingerprint(partial_haar_images, fp_file):
 	binaryFingerprints = feats.binarize_vectors_topK_sign(std_haar_images, K = 1600)
 	# Write to file
 	b = np.packbits(binaryFingerprints)
-	fp_file.write(b.astype('int8').tobytes())
+	fp_file.write(b.tobytes())
 
 if __name__ == '__main__':
 	fname = sys.argv[1]
@@ -44,11 +47,11 @@ if __name__ == '__main__':
 	# Downsample to 20 Hz
 	st.decimate(5)
 
-	t00 = time.time()
-	ts_file = open(fp_folder + "ts_" + fname[:-6], "a")
+	ts_file = open(ts_folder + "ts_" + fname[:-6], "a")
 	fp_file = open(fp_folder + "fp_" + fname[:-6], "a")
 	last_normalized = datetime.datetime.strptime(str(st[0].stats.starttime), '%Y-%m-%dT%H:%M:%S.%fZ')
 	partial_haar_images = np.zeros([0, int(nfreq) * int(ntimes)])
+	t00 = time.time()
 	for i in range(len(st)):
 		# Get start and end time of the current continuous segment
 		starttime = datetime.datetime.strptime(str(st[i].stats.starttime), '%Y-%m-%dT%H:%M:%S.%fZ')
@@ -57,18 +60,18 @@ if __name__ == '__main__':
 		if endtime - starttime < datetime.timedelta(seconds = min_fp_length):
 			continue
 
-		if last_normalized + partition_len <= starttime:
-			print "Normalize since %s (%d)" %(str(last_normalized), np.shape(partial_haar_images)[0])
+		if last_normalized + partition_len <= starttime + datetime.timedelta(seconds = min_fp_length):
 			normalize_and_fingerprint(partial_haar_images, fp_file)
-			last_normalized += partition_len
+			last_normalized = min(last_normalized + partition_len, starttime)
 			partial_haar_images = np.zeros([0, int(nfreq) * int(ntimes)])
 
-		# Generate fingerprints per partition 
+		# Generate fingerprints per partition
 		s = starttime
-		while s < endtime:
+		while starttime > last_normalized + partition_len:
+			last_normalized += partition_len
+		while endtime - s > datetime.timedelta(seconds = min_fp_length):
 			e = min(min(last_normalized, s) + partition_len, endtime)
-			print s, e
-			partition_st = st[i].slice(UTCDateTime(s.strftime('%Y-%m-%dT%H:%M:%S.%f')), 
+			partition_st = st[i].slice(UTCDateTime(s.strftime('%Y-%m-%dT%H:%M:%S.%f')),
 				UTCDateTime(e.strftime('%Y-%m-%dT%H:%M:%S.%f')))
 			# Spectrogram + Wavelet transform
 			haar_images, nWindows, idx1, idx2, Sxx, t  = feats.data_to_haar_images(partition_st.data)
@@ -77,15 +80,16 @@ if __name__ == '__main__':
 			# Normalize and output fingerprints on a roughly 8 hour time interval
 			partial_haar_images = np.vstack([partial_haar_images, haar_images])
 			if last_normalized + partition_len <= e:
-				print "Normalize since %s (%d)" %(str(last_normalized), np.shape(partial_haar_images)[0])
 				normalize_and_fingerprint(partial_haar_images, fp_file)
 				last_normalized = e
 				partial_haar_images = np.zeros([0, int(nfreq) * int(ntimes)])
 
 			s = e
 
-	# Output last segment 
-	normalize_and_fingerprint(partial_haar_images, fp_file)
+	# Output last segment
+	endtime = datetime.datetime.strptime(str(st[len(st) - 1].stats.endtime), '%Y-%m-%dT%H:%M:%S.%fZ')
+	if endtime - last_normalized >= datetime.timedelta(seconds = min_fp_length):
+		normalize_and_fingerprint(partial_haar_images, fp_file)
 
 	ts_file.close()
 	fp_file.close()
