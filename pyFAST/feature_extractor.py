@@ -26,8 +26,8 @@ class FeatureExtractor(object):
         self.sampling_rate = sampling_rate             #/ sampling rate
         self.window_len    = window_length             #/ length of window (seconds) used in spectrogram
         self.window_lag    = window_lag                #/ window lag (seconds) used in spectrogram
-        self.fp_len        = fingerprint_length        #/ width of fingerprint (seconds)
-        self.fp_lag        = fingerprint_lag           #/ lag between fingerprints (seconds)
+        self.fp_len        = fingerprint_length        #/ width of fingerprint (samples)
+        self.fp_lag        = fingerprint_lag           #/ lag between fingerprints (samples)
         self.max_freq      =  self._initialize_frequencies(max_freq)  #/ minimum and maximum frequencies for bandpass filter
         self.min_freq      = min_freq
         self.new_d1        = int(nfreq)                #/ number of frequency / time bins in fingerprints (must be power of 2) - TODO: error checking
@@ -37,13 +37,13 @@ class FeatureExtractor(object):
         self.haar_means    = None
         self.haar_stddevs  = None
         self.haar_medians  = None
-        self.haar_absdevs  = None  
-                         
-    def _initialize_frequencies(self, max_freq):    #/ initializes data structure    
+        self.haar_absdevs  = None
+
+    def _initialize_frequencies(self, max_freq):    #/ initializes data structure
         if max_freq is None:
             max_freq = self.sampling_rate/2.0
         return max_freq 
-                                      
+
     def update(self, field, value):
         if hasattr(self, field):
             setattr(self, field, value)
@@ -66,25 +66,25 @@ class FeatureExtractor(object):
         nWindows = len(idx2)
         idx1 = idx0[0:nWindows]
         return nWindows, idx1, idx2   
-        
+
     ########################################################################
     ##     FOR COMPUTING FINGERPRINTS                                     ##
     ########################################################################                                                                      
 
     #/ computes spectrogram from continous timeseries data    
-    def data_to_spectrogram(self, x_data, window_type = 'hamming'):    
-        f, t, Sxx = sp.signal.spectrogram(x_data, fs = self.sampling_rate, window = window_type, nperseg = self.sampling_rate*self.window_len, noverlap = self.sampling_rate*(self.window_len - self.window_lag))   
+    def data_to_spectrogram(self, x_data, window_type = 'hamming'):
+        f, t, Sxx = sp.signal.spectrogram(x_data, fs=self.sampling_rate, 
+            window=window_type, nperseg=int(self.sampling_rate*self.window_len), 
+            noverlap = int(self.sampling_rate*(self.window_len - self.window_lag)))   
         self.frequencies = f
         self.times = t
         return f, t, Sxx
 
     #/ breaks spectrogram into overlapping spectral images       
     def spectrogram_to_spectral_images(self, Sxx):
-        fp_len = int(self.fp_len/self.window_lag)
-        fp_lag = int(self.fp_lag/self.window_lag)
         nFreq, nTimes = np.shape(Sxx)   
-        nWindows, idx1, idx2 = self.get_window_params(nTimes, fp_len, fp_lag)    
-        spectral_images = np.zeros([nWindows, nFreq, fp_len])
+        nWindows, idx1, idx2 = self.get_window_params(nTimes, self.fp_len, self.fp_lag)    
+        spectral_images = np.zeros([nWindows, nFreq, self.fp_len])
         for i in range(nWindows):
             spectral_images[i,:,:] = Sxx[:,idx1[i]:idx2[i]]    
         self.nwindows = nWindows
@@ -97,8 +97,8 @@ class FeatureExtractor(object):
         new_spectral_images = np.zeros([self.nwindows,new_d1,new_d2]) 
         for i in range(self.nwindows):
             new_spectral_images[i,:,:] = resize(spectral_images[i,:,:], (new_d1, new_d2), order=1, preserve_range=True)
-        return new_spectral_images  
-        
+        return new_spectral_images
+
     #/ reshapes output from PyWavelets 2d wavelet transform into image
     def _unwrap_wavelet_coeffs(self,coeffs):
         L = len(coeffs)
@@ -106,7 +106,7 @@ class FeatureExtractor(object):
         for i in range(1,L):
             (cH, cV, cD) = coeffs[i]
             cA = np.concatenate((np.concatenate((cA, cV),axis= 1),np.concatenate((cH, cD),axis = 1)),axis=0)
-        return cA         
+        return cA
 
     #/ computes wavelet transform for each spectral image               
     def spectral_images_to_wavelet(self, spectral_images, wavelet = wt.Wavelet('db1')):    
@@ -124,9 +124,9 @@ class FeatureExtractor(object):
         spectral_images, nWindows, idx1, idx2 = self.spectrogram_to_spectral_images(Sxx)
         haar_images = self.spectral_images_to_wavelet(spectral_images)
         haar_images = normalize(self._images_to_vectors(haar_images), axis=1)
-        return haar_images, nWindows, idx1, idx2, Sxx, t         
-                        
-    #/ converts set of images to array of vectors                                     
+        return haar_images, nWindows, idx1, idx2, Sxx, t
+
+    #/ converts set of images to array of vectors
     def _images_to_vectors(self,images):
         N,d1,d2 = np.shape(images)
         vectors = np.zeros([N,d1*d2])
@@ -144,7 +144,7 @@ class FeatureExtractor(object):
             images = np.zeros([N,d1,d2])
             for i in range(N):
                 images[i,:,:] = np.reshape(vectors[i,:], (d1,d2))
-            return images   
+            return images
 
     def compute_haar_stats(self, haar_images,type = None, exact_mad = True):
         if type is not 'Zscore':
@@ -152,11 +152,11 @@ class FeatureExtractor(object):
                 self.haar_medians = np.median(haar_images,axis=0)
                 self.haar_absdevs  = np.median(abs(haar_images - self.haar_medians),axis=0)
             else: # approximates median and absolute deviations
-                print 'Warning - not implemented. TODO: implement approximate median/absolute deviation calculation'            
+                print 'Warning - not implemented. TODO: implement approximate median/absolute deviation calculation'
         if type is not 'MAD':  
             self.haar_means   = np.mean(haar_images,axis=0)
             self.haar_stddevs = np.std(haar_images,axis=0)
-            
+
     def standardize_haar(self, haar_images, type = 'MAD'):
         if type is 'Zscore':
             haar_images = (haar_images - self.haar_means)/self.haar_stddevs
