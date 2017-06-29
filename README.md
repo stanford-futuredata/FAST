@@ -27,8 +27,8 @@ Allowed options:
   --output_pairs_file arg        name of file to store candidate pairs
   --ntbls arg                    Number of hash tables
   --nhash arg                    Number of hash functions
-  --ncols arg                    Number of hash functions
-  --mrows arg                    Number of rows
+  --ncols arg                    Number of fingerprints
+  --mrows arg                    Dimension of each fingerprint
   --near_repeats arg             Near repeat limit
   --num_queries arg              Number of indices to query in the similarity
                                  search
