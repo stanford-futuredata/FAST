@@ -29,5 +29,6 @@ def sort_pairs():
 	output = open("./sorted_pairs/" + FILE_NAME, "w")
 	for i in xrange(len(pairs)):
 		output.write(str(pairs[i][0]) + " " + str(flat_list[i][0]) + " " + str(flat_list[i][1]) + "\n")
+	output.close()
 
 sort_pairs()
