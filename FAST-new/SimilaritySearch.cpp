@@ -13,13 +13,26 @@ void InitializeDatabase(size_t mrows, size_t ncols, uint8_t ntbls, uint8_t nhash
     clock_t begin = clock();
 
   size_t j;
+  std::ifstream infile;
+  infile.open("filter.txt", std::ios::in);
+  int *filter = new int[ncols];
+  int x;
+  size_t i = 0;
+  while (infile >> x) {
+    filter[i] = x;
+    i ++;
+  }
+  infile.close();
+
   omp_set_num_threads(num_threads);
     //Insert pairs (key, id) into hash tables
 #pragma omp parallel for default(none)\
-    private(j) shared(ntbls, ncols, t, keys) 
+    private(j) shared(ntbls, ncols, t, keys, filter)
   for(j = 0; j < ntbls; ++j){
       for(size_t i = 0; i < ncols; ++i){
-          insert_new_item(&t[j], keys[j + i * ntbls], i);
+          if (filter[i] == 1) {
+            insert_new_item(&t[j], keys[j + i * ntbls], i);
+          }
       }
   }
     clock_t end = clock();
@@ -62,6 +75,7 @@ void SearchDatabase_voting(const size_t nquery, const size_t ncols, const uint32
             table const *t1 = &t[j];
             uint64_t this_key = keys[j + query_index*ntbls];
             table_cit its = t1->find(this_key);
+            if (its == t1->end()) { continue; }
             size_t num_items = its->second.size();
             query_size += num_items;
             size_t l = std::min(num_items,limit);
