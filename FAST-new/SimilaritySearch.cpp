@@ -7,19 +7,37 @@
 
 #define CHUNK 100
 
+// Read result file which indicates whether each fingerprint passed the filter
+void read_filter_file(int *filter, std::string fname) {
+  std::ifstream infile;
+  infile.open(fname, std::ios::in);
+  int x;
+  size_t i = 0;
+  while (infile >> x) {
+    filter[i] = x;
+    i ++;
+  }
+  infile.close();
+}
+
 // Populate database - place fingerprint indices in hash buckets
 void InitializeDatabase(size_t mrows, size_t ncols, uint8_t ntbls, uint8_t nhashfuncs,
         table *t, uint64_t *keys, double *out_time, const size_t num_threads) {
     clock_t begin = clock();
 
   size_t j;
+  int *filter = new int[ncols];
+  read_filter_file(filter, "filter.txt");
+
   omp_set_num_threads(num_threads);
     //Insert pairs (key, id) into hash tables
 #pragma omp parallel for default(none)\
-    private(j) shared(ntbls, ncols, t, keys) 
+    private(j) shared(ntbls, ncols, t, keys, filter)
   for(j = 0; j < ntbls; ++j){
       for(size_t i = 0; i < ncols; ++i){
-          insert_new_item(&t[j], keys[j + i * ntbls], i);
+          if (filter[i] == 1) {
+            insert_new_item(&t[j], keys[j + i * ntbls], i);
+          }
       }
   }
     clock_t end = clock();
@@ -64,6 +82,7 @@ void SearchDatabase_voting(const size_t nquery, const size_t ncols, const uint32
             size_t query_bucket_index = j + static_cast<size_t>(query_index)*static_cast<size_t>(ntbls); 
             uint64_t this_key = keys[query_bucket_index];
             table_cit its = t1->find(this_key);
+            if (its == t1->end()) { continue; }
             size_t num_items = its->second.size();
             query_size += num_items;
             size_t l = std::min(num_items,limit);
