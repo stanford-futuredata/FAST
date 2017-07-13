@@ -7,14 +7,8 @@ import os
 import sys
 import datetime
 
-data_folder = 'waveformsKHZ/'
-fp_folder = data_folder + 'fingerprints/'
-ts_folder = data_folder + 'timestamps/'
-if not os.path.exists(fp_folder):
-	os.makedirs(fp_folder)
-if not os.path.exists(ts_folder):
-	os.makedirs(ts_folder)
-Fs = 20
+data_folder = 'bp2to20_waveforms%s/'
+Fs = 100
 minfreq    = 2.0
 maxfreq    = 20.0
 spec_length = 6.0
@@ -25,32 +19,49 @@ min_fp_length = fp_length * spec_lag + spec_length
 partition_len = datetime.timedelta(hours=8)
 nfreq = 32
 ntimes = 64
-feats = FeatureExtractor(sampling_rate=Fs, window_length=spec_length, window_lag=spec_lag, 
-		fingerprint_length=fp_length, fingerprint_lag=fp_lag)
 
 def write_timestamp(t, idx1, idx2, starttime, ts_file):
 	fp_timestamp = np.asarray([t[int(np.mean((idx1[j], idx2[j])))] for j in range(len(idx1))])
 	for ts in fp_timestamp:
 		ts_file.write((starttime + datetime.timedelta(seconds = ts)).strftime('%y-%m-%dT%H:%M:%S.%f') + '\n')
 
-def normalize_and_fingerprint(partial_haar_images, fp_file):
-	feats.compute_haar_stats(partial_haar_images)
-	std_haar_images = feats.standardize_haar(partial_haar_images, type = 'MAD')
+def normalize_and_fingerprint(haar_images, fp_file):
+	std_haar_images = feats.standardize_haar(haar_images, type = 'MAD')
 	binaryFingerprints = feats.binarize_vectors_topK_sign(std_haar_images, K = 1600)
 	# Write to file
 	b = np.packbits(binaryFingerprints)
 	fp_file.write(b.tobytes())
 
+def init_MAD_stats():
+	feats.haar_medians = np.zeros(nfreq * ntimes)
+	feats.haar_absdevs = np.zeros(nfreq * ntimes)
+	f = open('mad%s.txt' % station, 'r')
+	for i, line in enumerate(f.readlines()):
+		nums = line.split(',')
+		feats.haar_medians[i] = float(nums[0])
+		feats.haar_absdevs[i] = float(nums[1])
+	f.close()
+
 if __name__ == '__main__':
 	fname = sys.argv[1]
-	st = read('%s%s' %(data_folder, fname))
-	# Downsample to 20 Hz
-	st.decimate(5)
+	station = sys.argv[2]
 
+	feats = FeatureExtractor(sampling_rate=Fs, window_length=spec_length, window_lag=spec_lag, 
+		fingerprint_length=fp_length, fingerprint_lag=fp_lag)
+	init_MAD_stats()
+
+	# Create timestamp and fingerprint folder if not exist
+	fp_folder = data_folder % station + 'fingerprints/'
+	ts_folder = data_folder % station + 'timestamps/'
+	if not os.path.exists(fp_folder):
+		os.makedirs(fp_folder)
+	if not os.path.exists(ts_folder):
+		os.makedirs(ts_folder)
+
+	# read mseed
+	st = read('%s%s' %(data_folder % station, fname))
 	ts_file = open(ts_folder + "ts_" + fname[:-6], "a")
 	fp_file = open(fp_folder + "fp_" + fname[:-6], "a")
-	last_normalized = datetime.datetime.strptime(str(st[0].stats.starttime), '%Y-%m-%dT%H:%M:%S.%fZ')
-	partial_haar_images = np.zeros([0, int(nfreq) * int(ntimes)])
 	t00 = time.time()
 	for i in range(len(st)):
 		# Get start and end time of the current continuous segment
@@ -60,17 +71,10 @@ if __name__ == '__main__':
 		if endtime - starttime < datetime.timedelta(seconds = min_fp_length):
 			continue
 
-		if last_normalized + partition_len <= starttime + datetime.timedelta(seconds = min_fp_length):
-			normalize_and_fingerprint(partial_haar_images, fp_file)
-			last_normalized = min(last_normalized + partition_len, starttime)
-			partial_haar_images = np.zeros([0, int(nfreq) * int(ntimes)])
-
-		# Generate fingerprints per partition
 		s = starttime
-		while starttime > last_normalized + partition_len:
-			last_normalized += partition_len
+		# Generate fingerprints per partition
 		while endtime - s > datetime.timedelta(seconds = min_fp_length):
-			e = min(min(last_normalized, s) + partition_len, endtime)
+			e = min(s + partition_len, endtime)
 			partition_st = st[i].slice(UTCDateTime(s.strftime('%Y-%m-%dT%H:%M:%S.%f')),
 				UTCDateTime(e.strftime('%Y-%m-%dT%H:%M:%S.%f')))
 			# Spectrogram + Wavelet transform
@@ -78,18 +82,8 @@ if __name__ == '__main__':
 			# Write fingerprint time stamps to file
 			write_timestamp(t, idx1, idx2, s, ts_file)
 			# Normalize and output fingerprints on a roughly 8 hour time interval
-			partial_haar_images = np.vstack([partial_haar_images, haar_images])
-			if last_normalized + partition_len <= e:
-				normalize_and_fingerprint(partial_haar_images, fp_file)
-				last_normalized = e
-				partial_haar_images = np.zeros([0, int(nfreq) * int(ntimes)])
-
+			normalize_and_fingerprint(haar_images, fp_file)
 			s = e
-
-	# Output last segment
-	endtime = datetime.datetime.strptime(str(st[len(st) - 1].stats.endtime), '%Y-%m-%dT%H:%M:%S.%fZ')
-	if endtime - last_normalized >= datetime.timedelta(seconds = min_fp_length):
-		normalize_and_fingerprint(partial_haar_images, fp_file)
 
 	ts_file.close()
 	fp_file.close()
