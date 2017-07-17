@@ -6,11 +6,10 @@ from datetime import datetime
 from collections import OrderedDict
 import linecache
 import multiprocessing
+import os, sys
 
-# modification
-
-FILE_NAME = "9days_NZ_GVZ_HHN.txt"
-PAIRS_FILE = "./sorted_pairs/" + FILE_NAME
+FILE_NAME = sys.argv[2] # assign a separate variable FILE_NAME because it will be used in constructing the output filename
+PAIRS_FILE = sys.argv[1] + FILE_NAME
 IDX_TO_TS = "./idx_to_ts/ts_NZ.GVZ.10.HHZ__20161122T000000Z__20161201T000000Z"
 RAW_TS = "./raw_time_series/NZ.GVZ.10.HHZ__20161122T000000Z__20161201T000000Z.mseed"
 
@@ -47,22 +46,6 @@ def plot_heatmap(idx1_list, idx2_list, similarity_list, smallest_idx1, largest_i
 	plt.pcolormesh(grid, cmap='hot')
 	plt.colorbar()
 	plt.show()
-
-def plot_time_series(smallest_idx1, smallest_idx2, largest_idx1, largest_idx2):
-	timestamps = []
-	with open(IDX_TO_TS, 'r') as f:
-		for index, line in enumerate(f):
-			timestamp = line.strip()
-			timestamps.append(timestamp)
-	date_format = "%y-%m-%dT%H:%M:%S.%f"
-	start_utc_idx1 = obspy.UTCDateTime(datetime.strptime(timestamps[smallest_idx1], date_format))
-	end_utc_idx1 = obspy.UTCDateTime(datetime.strptime(timestamps[largest_idx1], date_format)) + 20
-	start_utc_idx2 = obspy.UTCDateTime(datetime.strptime(timestamps[smallest_idx2], date_format))
-	end_utc_idx2 = obspy.UTCDateTime(datetime.strptime(timestamps[largest_idx2], date_format)) + 20
-	st1 = obspy.read(RAW_TS, starttime=start_utc_idx1, endtime=end_utc_idx1)
-	st2 = obspy.read(RAW_TS, starttime=start_utc_idx2, endtime=end_utc_idx2)
-	st1.plot()
-	st2.plot()
 
 def partition_file():
 	ranges = []
@@ -125,6 +108,8 @@ def analyze(interval):
 		output.write("Most similar pair: " + str(most_similar_pair) + "\n")
 		output.write("Total similarity (mass): %d\n" % (similarity_sum))
 		output.write("\n")
+	output.flush()
+	os.fsync(output.fileno())
 	lock.release()
 
 def init(l, o):
@@ -138,16 +123,14 @@ def analyze_pairs():
 	div_end = time.clock()
 	print "File partition time:", div_end - div_start
 	start = time.time()
-	num_cores = multiprocessing.cpu_count()
+	num_cores = 24
 	print "Num cores:", num_cores
 	l = multiprocessing.Lock()
-	o = open("./summaries/summary_" + FILE_NAME, 'w')
+	o = open("../summaries/summary_" + FILE_NAME, 'w')
 	pool = multiprocessing.Pool(num_cores, initializer=init, initargs=(l, o,))
 	pool.map(analyze, ranges)
 	pool.close()
 	pool.join()
-	for i in xrange(1000):
-		o.write("This is a filler\n")
 	o.close()
 	end = time.time()
 	print "Processing and writing time:", end - start
