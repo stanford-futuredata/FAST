@@ -76,7 +76,7 @@ if __name__ == '__main__':
 
 	median, mad = get_haar_stats(start_time, end_time)
 	# Output MAD stats to file
-	f = open('mad%s-%s,%s%s.txt' % (
+	f = open('mad%s-%s-%s%s.txt' % (
 		params.station, params.channel, sys.argv[1], sys.argv[2]), 'w')
 	for i in range(len(median)):
 		f.write('%.16f,%.16f\n' %(median[i], mad[i]))

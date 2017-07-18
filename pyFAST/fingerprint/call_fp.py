@@ -29,7 +29,7 @@ def call_mad():
 			stdout=subprocess.PIPE, shell=True)
 	output, error = process.communicate()
 	print output
-	return 'mad%s-%s,%s%s.txt' % (params.station, params.channel, start_time, end_time)
+	return 'mad%s-%s-%s%s.txt' % (params.station, params.channel, start_time, end_time)
 
 if __name__ == '__main__':
 	start_time = sys.argv[1]
