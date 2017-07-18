@@ -44,6 +44,7 @@ class FeatureExtractor(object):
             max_freq = self.sampling_rate/2.0
         return max_freq
 
+
     def update(self, field, value):
         if hasattr(self, field):
             setattr(self, field, value)
@@ -151,11 +152,13 @@ class FeatureExtractor(object):
             if exact_mad: # compute exact median and absolute deviations
                 self.haar_medians = np.median(haar_images,axis=0)
                 self.haar_absdevs  = np.median(abs(haar_images - self.haar_medians),axis=0)
+                return self.haar_medians, self.haar_absdevs
             else: # approximates median and absolute deviations
                 print 'Warning - not implemented. TODO: implement approximate median/absolute deviation calculation'
         if type is not 'MAD':
             self.haar_means   = np.mean(haar_images,axis=0)
             self.haar_stddevs = np.std(haar_images,axis=0)
+            return self.haar_means, self.haar_stddevs
 
     def standardize_haar(self, haar_images, type = 'MAD'):
         if type is 'Zscore':
@@ -176,7 +179,7 @@ class FeatureExtractor(object):
             idx = np.argsort(abs(coeff_vectors[i,:]))[-K:]
             binary_vectors[i,idx]   = coeff_vectors[i,idx] > 0
             binary_vectors[i,idx+M] = coeff_vectors[i,idx] < 0
-        return binary_vector
+        return binary_vectors
 
     def vectors_to_topK_sign(self, coeff_vectors, K):
         self.K = K
