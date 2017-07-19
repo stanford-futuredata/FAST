@@ -22,13 +22,14 @@ from copy import copy
 
 class FeatureExtractor(object):
 
-    def __init__(self, sampling_rate, window_length, window_lag, fingerprint_length, fingerprint_lag, min_freq = 0, max_freq = None, nfreq = 32, ntimes = 64):
+    def __init__(self, sampling_rate, window_length, window_lag, fingerprint_length, fingerprint_lag, 
+        min_freq = 0, max_freq = None, nfreq = 32, ntimes = 64):
         self.sampling_rate = sampling_rate             #/ sampling rate
         self.window_len    = window_length             #/ length of window (seconds) used in spectrogram
         self.window_lag    = window_lag                #/ window lag (seconds) used in spectrogram
         self.fp_len        = fingerprint_length        #/ width of fingerprint (samples)
         self.fp_lag        = fingerprint_lag           #/ lag between fingerprints (samples)
-        self.max_freq      =  self._initialize_frequencies(max_freq)  #/ minimum and maximum frequencies for bandpass filter
+        self.max_freq      = self._initialize_frequencies(max_freq)  #/ minimum and maximum frequencies for bandpass filter
         self.min_freq      = min_freq
         self.new_d1        = int(nfreq)                #/ number of frequency / time bins in fingerprints (must be power of 2) - TODO: error checking
         self.new_d2        = int(ntimes)
@@ -43,7 +44,6 @@ class FeatureExtractor(object):
         if max_freq is None:
             max_freq = self.sampling_rate/2.0
         return max_freq
-
 
     def update(self, field, value):
         if hasattr(self, field):
@@ -77,6 +77,14 @@ class FeatureExtractor(object):
         f, t, Sxx = sp.signal.spectrogram(x_data, fs=self.sampling_rate,
             window=window_type, nperseg=int(self.sampling_rate*self.window_len),
             noverlap = int(self.sampling_rate*(self.window_len - self.window_lag)))
+        if self.min_freq > 0:
+            fidx_keep = (f >= self.min_freq)
+            Sxx = Sxx[fidx_keep, :]
+            f = f[fidx_keep]
+        if self.max_freq > self.new_d1:
+            fidx_keep = (f <= self.max_freq)
+            Sxx = Sxx[fidx_keep, :]
+            f = f[fidx_keep]
         self.frequencies = f
         self.times = t
         return f, t, Sxx

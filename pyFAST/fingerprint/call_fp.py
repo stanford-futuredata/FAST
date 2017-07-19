@@ -6,15 +6,10 @@ from multiprocessing import Pool
 import sys
 import params
 import datetime
+from params import construct_filename
 
 madStatsCommand= 'python MAD.py %s %s'
 fingerprintCommand = 'python finger_print.py %s %s'
-
-def construct_filename(t):
-	fname_format = "bp2to20.NZ.%s.10.%s__%s__%s.mseed"
-	return fname_format % (
-		params.station, params.channel, t.strftime('%Y%m%dT000000Z'),
-		(t + params.INTERVAL).strftime('%Y%m%dT000000Z'))
 
 def call_fingerprint(args):
 	print "Fingerprinting " + str(args)

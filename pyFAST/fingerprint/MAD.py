@@ -7,13 +7,8 @@ import sys
 import random
 import params
 import datetime
+from params import construct_filename
 from feature_extractor import FeatureExtractor
-
-def construct_filename(t):
-	fname_format = "bp2to20.NZ.%s.10.%s__%s__%s.mseed"
-	return fname_format % (
-		params.station, params.channel, t.strftime('%Y%m%dT000000Z'),
-		(t + params.INTERVAL).strftime('%Y%m%dT000000Z'))
 
 def get_start_end_time(st, idx):
 	starttime = datetime.datetime.strptime(str(st[idx].stats.starttime), '%Y-%m-%dT%H:%M:%S.%fZ')
@@ -72,7 +67,7 @@ if __name__ == '__main__':
 	end_time = datetime.datetime.strptime(sys.argv[2], "%y-%m")
 	feats = FeatureExtractor(sampling_rate=params.Fs, window_length=params.spec_length, 
 		window_lag=params.spec_lag, fingerprint_length=params.fp_length, 
-		fingerprint_lag=params.fp_lag)
+		fingerprint_lag=params.fp_lag, min_freq=params.fmin, max_freq=params.fmax)
 
 	median, mad = get_haar_stats(start_time, end_time)
 	# Output MAD stats to file

@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
 	feats = FeatureExtractor(sampling_rate=params.Fs, window_length=params.spec_length, 
 		window_lag=params.spec_lag, fingerprint_length=params.fp_length, 
-		fingerprint_lag=params.fp_lag)
+		fingerprint_lag=params.fp_lag, min_freq=params.fmin, max_freq=params.fmax)
 	init_MAD_stats(mad_fname)
 
 	# Create timestamp and fingerprint folder if not exist
