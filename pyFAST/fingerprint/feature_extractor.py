@@ -81,7 +81,7 @@ class FeatureExtractor(object):
             fidx_keep = (f >= self.min_freq)
             Sxx = Sxx[fidx_keep, :]
             f = f[fidx_keep]
-        if self.max_freq > self.new_d1:
+        if self.max_freq < f[-1]:
             fidx_keep = (f <= self.max_freq)
             Sxx = Sxx[fidx_keep, :]
             f = f[fidx_keep]

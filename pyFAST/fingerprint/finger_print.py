@@ -51,6 +51,9 @@ if __name__ == '__main__':
 	st = read('%s%s' %(params.data_folder % params.station, fname))
 	ts_file = open(ts_folder + "ts_" + fname[:-6], "a")
 	fp_file = open(fp_folder + "fp_" + fname[:-6], "a")
+	# add this to end of time series of each partition so we don't have missing fingerprints
+	sec_extra = params.spec_length + (params.fp_length - params.fp_lag) * params.spec_lag
+	time_extra = datetime.timedelta(seconds=sec_extra)
 	t00 = time.time()
 	for i in range(len(st)):
 		# Get start and end time of the current continuous segment
@@ -63,9 +66,9 @@ if __name__ == '__main__':
 		s = starttime
 		# Generate and output fingerprints per partition_len
 		while endtime - s > datetime.timedelta(seconds = params.min_fp_length):
-			e = min(s + params.partition_len, endtime)
+			e_extra = min(s + params.partition_len + time_extra, endtime)
 			partition_st = st[i].slice(UTCDateTime(s.strftime('%Y-%m-%dT%H:%M:%S.%f')),
-				UTCDateTime(e.strftime('%Y-%m-%dT%H:%M:%S.%f')))
+				UTCDateTime(e_extra.strftime('%Y-%m-%dT%H:%M:%S.%f')))
 			# Spectrogram + Wavelet transform
 			haar_images, nWindows, idx1, idx2, Sxx, t  = feats.data_to_haar_images(partition_st.data)
 			# Write fingerprint time stamps to file
