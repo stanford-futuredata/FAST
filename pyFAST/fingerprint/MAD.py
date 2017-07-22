@@ -30,8 +30,8 @@ def get_haar_stats(start_time, end_time):
 	time = start_time
 	sample_haar_images = np.zeros([0, int(params.nfreq) * int(params.ntimes)])
 	while time < end_time:
-		fname = construct_filename(time)
-		st = read('%s%s' %((params.data_folder % params.station), fname))
+		fname = construct_filename(time, station)
+		st = read('%s%s' %((params.data_folder % station), fname))
 		# No sampling
 		if params.sampling_rate == 1:
 			for i in range(len(st)):
@@ -51,10 +51,11 @@ def get_haar_stats(start_time, end_time):
 			while sample_length >= params.min_fp_length:
 				# Get time series sample
 				trace_length = (endtime - starttime).total_seconds()
-				segment = get_segment(st[idx], starttime, endtime, min(trace_length, sample_length))
-				haar_images, nWindows, idx1, idx2, Sxx, t = feats.data_to_haar_images(segment.data)
-				sample_haar_images = np.vstack([sample_haar_images, haar_images])
-				sample_length -= min(sample_length, trace_length)
+				if trace_length > params.min_fp_length:
+					segment = get_segment(st[idx], starttime, endtime, min(trace_length, sample_length))
+					haar_images, nWindows, idx1, idx2, Sxx, t = feats.data_to_haar_images(segment.data)
+					sample_haar_images = np.vstack([sample_haar_images, haar_images])
+					sample_length -= min(sample_length, trace_length)
 				idx = random.randint(0, len(st) - 1)
 				starttime, endtime = get_start_end_time(st, idx)
 		time += params.INTERVAL
@@ -65,6 +66,8 @@ def get_haar_stats(start_time, end_time):
 if __name__ == '__main__':
 	start_time = datetime.datetime.strptime(sys.argv[1], "%y-%m")
 	end_time = datetime.datetime.strptime(sys.argv[2], "%y-%m")
+	station = sys.argv[3]
+
 	feats = FeatureExtractor(sampling_rate=params.Fs, window_length=params.spec_length, 
 		window_lag=params.spec_lag, fingerprint_length=params.fp_length, 
 		fingerprint_lag=params.fp_lag, min_freq=params.fmin, max_freq=params.fmax)
@@ -72,7 +75,7 @@ if __name__ == '__main__':
 	median, mad = get_haar_stats(start_time, end_time)
 	# Output MAD stats to file
 	f = open('mad%s-%s-%s%s.txt' % (
-		params.station, params.channel, sys.argv[1], sys.argv[2]), 'w')
+		station, params.channel, sys.argv[1], sys.argv[2]), 'w')
 	for i in range(len(median)):
 		f.write('%.16f,%.16f\n' %(median[i], mad[i]))
 	f.close()

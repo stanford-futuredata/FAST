@@ -20,16 +20,15 @@ sampling_rate = 0.01
 
 # FP performance parameter
 partition_len = datetime.timedelta(hours=8)
-NUM_FP_THREAD = 4
+NUM_FP_THREAD = 12
 
 # Data parameter
 data_folder = 'bp2to20_waveforms%s/'
-station = 'KHZ'
 channel = 'HHZ'
 INTERVAL = relativedelta(months=+1)
 
-def construct_filename(t):
+def construct_filename(t, sta):
 	fname_format = "bp2to20.NZ.%s.10.%s__%s__%s.mseed"
 	return fname_format % (
-		station, channel, t.strftime('%Y%m%dT000000Z'),
+		sta, channel, t.strftime('%Y%m%dT000000Z'),
 		(t + INTERVAL).strftime('%Y%m%dT000000Z'))

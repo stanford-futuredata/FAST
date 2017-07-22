@@ -33,6 +33,7 @@ def init_MAD_stats(mad_fname):
 if __name__ == '__main__':
 	fname = sys.argv[1]
 	mad_fname = sys.argv[2]
+	station = sys.argv[3]
 
 	feats = FeatureExtractor(sampling_rate=params.Fs, window_length=params.spec_length, 
 		window_lag=params.spec_lag, fingerprint_length=params.fp_length, 
@@ -40,15 +41,15 @@ if __name__ == '__main__':
 	init_MAD_stats(mad_fname)
 
 	# Create timestamp and fingerprint folder if not exist
-	fp_folder = params.data_folder % params.station + 'new_fingerprints/'
-	ts_folder = params.data_folder % params.station + 'new_timestamps/'
+	fp_folder = params.data_folder % station + 'new_fingerprints/'
+	ts_folder = params.data_folder % station + 'new_timestamps/'
 	if not os.path.exists(fp_folder):
 		os.makedirs(fp_folder)
 	if not os.path.exists(ts_folder):
 		os.makedirs(ts_folder)
 
 	# read mseed
-	st = read('%s%s' %(params.data_folder % params.station, fname))
+	st = read('%s%s' %(params.data_folder % station, fname))
 	ts_file = open(ts_folder + "ts_" + fname[:-6], "a")
 	fp_file = open(fp_folder + "fp_" + fname[:-6], "a")
 	# add this to end of time series of each partition so we don't have missing fingerprints
@@ -66,7 +67,7 @@ if __name__ == '__main__':
 		s = starttime
 		# Generate and output fingerprints per partition_len
 		while endtime - s > datetime.timedelta(seconds = params.min_fp_length):
-            e = min(s + params.partition_len, endtime)
+			e = min(s + params.partition_len, endtime)
 			e_extra = min(s + params.partition_len + time_extra, endtime)
 			partition_st = st[i].slice(UTCDateTime(s.strftime('%Y-%m-%dT%H:%M:%S.%f')),
 				UTCDateTime(e_extra.strftime('%Y-%m-%dT%H:%M:%S.%f')))
