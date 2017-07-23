@@ -22,13 +22,14 @@ from copy import copy
 
 class FeatureExtractor(object):
 
-    def __init__(self, sampling_rate, window_length, window_lag, fingerprint_length, fingerprint_lag, min_freq = 0, max_freq = None, nfreq = 32, ntimes = 64):
+    def __init__(self, sampling_rate, window_length, window_lag, fingerprint_length, fingerprint_lag, 
+        min_freq = 0, max_freq = None, nfreq = 32, ntimes = 64):
         self.sampling_rate = sampling_rate             #/ sampling rate
         self.window_len    = window_length             #/ length of window (seconds) used in spectrogram
         self.window_lag    = window_lag                #/ window lag (seconds) used in spectrogram
         self.fp_len        = fingerprint_length        #/ width of fingerprint (samples)
         self.fp_lag        = fingerprint_lag           #/ lag between fingerprints (samples)
-        self.max_freq      =  self._initialize_frequencies(max_freq)  #/ minimum and maximum frequencies for bandpass filter
+        self.max_freq      = self._initialize_frequencies(max_freq)  #/ minimum and maximum frequencies for bandpass filter
         self.min_freq      = min_freq
         self.new_d1        = int(nfreq)                #/ number of frequency / time bins in fingerprints (must be power of 2) - TODO: error checking
         self.new_d2        = int(ntimes)
@@ -76,6 +77,14 @@ class FeatureExtractor(object):
         f, t, Sxx = sp.signal.spectrogram(x_data, fs=self.sampling_rate,
             window=window_type, nperseg=int(self.sampling_rate*self.window_len),
             noverlap = int(self.sampling_rate*(self.window_len - self.window_lag)))
+        if self.min_freq > 0:
+            fidx_keep = (f >= self.min_freq)
+            Sxx = Sxx[fidx_keep, :]
+            f = f[fidx_keep]
+        if self.max_freq > self.new_d1:
+            fidx_keep = (f <= self.max_freq)
+            Sxx = Sxx[fidx_keep, :]
+            f = f[fidx_keep]
         self.frequencies = f
         self.times = t
         return f, t, Sxx
@@ -151,11 +160,13 @@ class FeatureExtractor(object):
             if exact_mad: # compute exact median and absolute deviations
                 self.haar_medians = np.median(haar_images,axis=0)
                 self.haar_absdevs  = np.median(abs(haar_images - self.haar_medians),axis=0)
+                return self.haar_medians, self.haar_absdevs
             else: # approximates median and absolute deviations
                 print 'Warning - not implemented. TODO: implement approximate median/absolute deviation calculation'
         if type is not 'MAD':
             self.haar_means   = np.mean(haar_images,axis=0)
             self.haar_stddevs = np.std(haar_images,axis=0)
+            return self.haar_means, self.haar_stddevs
 
     def standardize_haar(self, haar_images, type = 'MAD'):
         if type is 'Zscore':
@@ -176,7 +187,7 @@ class FeatureExtractor(object):
             idx = np.argsort(abs(coeff_vectors[i,:]))[-K:]
             binary_vectors[i,idx]   = coeff_vectors[i,idx] > 0
             binary_vectors[i,idx+M] = coeff_vectors[i,idx] < 0
-        return binary_vector
+        return binary_vectors
 
     def vectors_to_topK_sign(self, coeff_vectors, K):
         self.K = K
