@@ -19,6 +19,7 @@ import math
 from skimage.transform import resize
 from sklearn.preprocessing import normalize
 from copy import copy
+from scipy.misc import imresize
 
 class FeatureExtractor(object):
 
@@ -73,7 +74,7 @@ class FeatureExtractor(object):
     ########################################################################
 
     #/ computes spectrogram from continous timeseries data
-    def data_to_spectrogram(self, x_data, window_type = 'hamming'):
+    def data_to_spectrogram(self, x_data, window_type = 'hanning'):
         f, t, Sxx = sp.signal.spectrogram(x_data, fs=self.sampling_rate,
             window=window_type, nperseg=int(self.sampling_rate*self.window_len),
             noverlap = int(self.sampling_rate*(self.window_len - self.window_lag)))
@@ -105,7 +106,7 @@ class FeatureExtractor(object):
     def _resize_spectral_images(self, spectral_images, new_d1, new_d2):
         new_spectral_images = np.zeros([self.nwindows,new_d1,new_d2])
         for i in range(self.nwindows):
-            new_spectral_images[i,:,:] = resize(spectral_images[i,:,:], (new_d1, new_d2), order=1, preserve_range=True)
+            new_spectral_images[i,:,:] = imresize(spectral_images[i,:,:], (new_d1, new_d2), interp='bilinear', mode='F')
         return new_spectral_images
 
     #/ reshapes output from PyWavelets 2d wavelet transform into image
