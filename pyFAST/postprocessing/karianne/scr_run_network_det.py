@@ -7,7 +7,7 @@
 ######################################################################### 
 
 import pickle
-import h5py
+#import h5py
 import time
 import numpy as np
 from collections import defaultdict
@@ -30,15 +30,15 @@ from pseudo_association import diag_coordsV, prune_events, EventCloudExtractor, 
 #                      'detdata_AlltoSome_MAD_K400_nvotes3_nfuncs5_ntbls100_2014-03-15_17days_CX.PB08..BHZ_2to8_prefilter.hdf5',
 #                      'detdata_AlltoSome_MAD_K400_nvotes3_nfuncs5_ntbls100_2014-03-15_17days_CX.PB11..BHZ_2to8_prefilter.hdf5']
 
-data_folder = './pairs/'
-save_str = './results/network_detection'
+data_folder = '../../../../../../lfs/raiders2/0/hashem/pair_files/'
+save_str = '../../../../../../lfs/raiders2/0/hashem/network_results/network_detection'
 
-channel_vars = ['GVZ_HHZ', 'KHZ_HHZ', 'LTZ_HHZ']
-detdata_filenames = ['9days_NZ_GVZ_HHZ.txt', '9days_NZ_KHZ_HHZ.txt', '9days_NZ_LTZ_HHZ.txt']
+channel_vars = ['KHZ_HHZ', 'MQZ_HHZ', 'LTZ_HHZ', 'OXZ_HHZ', 'THZ_HHZ']
+detdata_filenames = ['10_11_KHZ_HHZ.txt', '10_11_MQZ_HHZ.txt', '10_11_LTZ_HHZ.txt', '10_11_OXZ_HHZ.txt', '10_11_THZ_HHZ.txt']
 
 nchannels = len(channel_vars)
 nstations = len(channel_vars)
-max_fp    = 17*86400  #/ largest fingperprint index  (was 'nfp')
+max_fp    = 31492000  #/ largest fingperprint index  (was 'nfp')
 dt_fp     = 1.0      #/ time lag between fingerprints
 dgapL     = 15       #/ = 30  #/ largest gap between detections along a single diagonal
 dgapW     = 3        #/ largest gap between detections adjacent diagonals
@@ -54,7 +54,7 @@ min_sum  = 6*min_dets
 max_width = 8
 
 #/ number of station detections to be included in event list
-nsta_thresh = 2
+nsta_thresh = 1
 
 
 ######################################################################### 
@@ -137,7 +137,7 @@ for cidx, channel in enumerate(channel_vars):
     print '    time to load data: ' + str( time.time() - t0) 
     print '    number of detection pairs (total): ' + str( len(idx1) )   
     #print '    number of detection pairs (this batch): ' + str( sum((dt >= q1) & (dt <= q2)) )   
-    print '    number of detection pairs (this batch): ' + str(sum(dt))                  
+    #print '    number of detection pairs (this batch): ' + str(sum(dt))                  
 
     # get events - create hashtable
     t1 = time.time()
@@ -177,10 +177,10 @@ print ' time to build network index: ' + str( time.time() - t4)
 t5 = time.time() 
 print 'Performing network pseudo-association...'
 #icount, network_events = associator.associate_network_diags(all_diags_dict, nstations = 3, offset = 20, q1 = q1, q2 = q2, include_stats = True)
-icount, network_events = associator.associate_network_diags(all_diags_dict, nstations = 3, offset = 20, include_stats = True)
+icount, network_events = associator.associate_network_diags(all_diags_dict, nstations = 5, offset = 20, include_stats = True)
 print ' time pseudo-association: ' + str( time.time() - t5) 
 
-print network_events
+#print network_events
 
 #########################################################################
 ##         EVENT RESOLUTION - detections                              ##
@@ -191,8 +191,8 @@ timestamp_to_netid = dict()
 timestamp_to_netid[0] = defaultdict(list) #/ keeps track of which network eventIDs are observed at each time
 timestamp_to_netid[1] = defaultdict(list) 
 timestamp_to_netid[2] = defaultdict(list) 
-# timestamp_to_netid[3] = defaultdict(list) 
-# timestamp_to_netid[4] = defaultdict(list) 
+timestamp_to_netid[3] = defaultdict(list) 
+timestamp_to_netid[4] = defaultdict(list) 
 for nid in networkID:
     net_event = network_events[nid]
     if len(np.unique([ x[1] for x in net_event])) >= nsta_thresh: #/ number of unique stations - THIS IS DATASET/TASK SPECIFIC (criteria does not even have to be related to station count)
@@ -218,8 +218,8 @@ for stid in range(nstations):
 det0_start, det0_dL, det0_connect = get_det_list(ndets[0,:], timestamp_to_netid[0])   #/ gets list of detections - may need to be updated depending on dataset
 det1_start, det1_dL, det1_connect = get_det_list(ndets[1,:], timestamp_to_netid[1])
 det2_start, det2_dL, det2_connect = get_det_list(ndets[2,:], timestamp_to_netid[2])
-# det3_start, det3_dL, det3_connect = get_det_list(ndets[3,:], timestamp_to_netid[3])
-# det4_start, det4_dL, det4_connect = get_det_list(ndets[4,:], timestamp_to_netid[4])
+det3_start, det3_dL, det3_connect = get_det_list(ndets[3,:], timestamp_to_netid[3])
+det4_start, det4_dL, det4_connect = get_det_list(ndets[4,:], timestamp_to_netid[4])
 
 #/ map back to network_events_final (i.e. assign detections at each station to the corresponding "network detection"
 network_events_final = defaultdict(lambda: defaultdict(list)) 
@@ -236,14 +236,14 @@ for x,y,z in izip(det2_start, det2_dL, det2_connect):
     #print 2, x, y, z
     for nid in z:
         network_events_final[nid][2].append(x)  
-# for x,y,z in izip(det3_start, det3_dL, det3_connect):
-#     #print 3, x, y, z
-#     for nid in z:
-#         network_events_final[nid][3].append(x) 
-# for x,y,z in izip(det4_start, det4_dL, det4_connect):
-#     #print 4, x, y, z
-#     for nid in z:
-#         network_events_final[nid][4].append(x)  
+for x,y,z in izip(det3_start, det3_dL, det3_connect):
+    #print 3, x, y, z
+    for nid in z:
+        network_events_final[nid][3].append(x) 
+for x,y,z in izip(det4_start, det4_dL, det4_connect):
+    #print 4, x, y, z
+    for nid in z:
+        network_events_final[nid][4].append(x)  
 #/ get dt values:
 for nid in network_events_final.keys():
     network_events_final[nid]['dt']      = int(np.median([x[0][0] for x in network_events[nid]]))
