@@ -1,6 +1,7 @@
 #ifndef _READOPIONS_H_
 #define _READOPIONS_H_
 
+#include <iostream>
 #include "boost/program_options.hpp"
 #include "boost/log/expressions.hpp"
 #include "boost/log/trivial.hpp"
