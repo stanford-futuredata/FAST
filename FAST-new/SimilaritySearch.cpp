@@ -60,7 +60,9 @@ void SearchDatabase_voting(const size_t nquery, const size_t ncols, const uint32
         double query_size = 0;
         for(size_t j = 0; j < ntbls; ++j){
             table const *t1 = &t[j];
-            uint64_t this_key = keys[j + query_index*ntbls];
+            // this index may be out of bounds for a uint32_t
+            size_t query_bucket_index = j + static_cast<size_t>(query_index)*static_cast<size_t>(ntbls); 
+            uint64_t this_key = keys[query_bucket_index];
             table_cit its = t1->find(this_key);
             size_t num_items = its->second.size();
             query_size += num_items;
