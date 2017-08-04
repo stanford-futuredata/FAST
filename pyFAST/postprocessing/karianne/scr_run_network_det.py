@@ -1,5 +1,5 @@
 ######################################################################### 
-##                NETWORK DETECTION - Iquique 17 days                  ##
+##                NETWORK DETECTION                                    ##
 ######################################################################### 
  
 ######################################################################### 
@@ -7,46 +7,278 @@
 ######################################################################### 
 
 import pickle
-#import h5py
 import time
 import numpy as np
 from collections import defaultdict
 from itertools import izip, count, islice
+import multiprocessing
+from multiprocessing.pool import ThreadPool
 
-from pseudo_association import diag_coordsV, prune_events, EventCloudExtractor, NetworkAssociator
+file_parallel = True
+parallel = True
 
+######################################################################### 
+##               functions                                            ##
+######################################################################### 
+    
+def diag_coordsV(t1, t2):
+    # for case where t1, t2 are vectors
+    return np.subtract(t2, t1)
+
+def prune_events(event_dict, min_dets = 0, min_sum = 0, max_width = None):
+    for k in event_dict.keys():
+        ndets = len(event_dict[k])
+        detsum = sum([x[2] for x in event_dict[k]])
+        if (ndets < min_dets) or (detsum < min_sum):
+            del event_dict[k]
+        else:
+            if max_width:
+                dtlist = [x[0] for x in event_dict[k]]
+                if max(dtlist) - min(dtlist) > max_width:
+                    del event_dict[k]
+               
+######################################################################### 
+##               EventCloudExtractor                                   ##
+######################################################################### 
+
+class EventCloudExtractor:
+    def __init__(self, dL, dW):
+      self.dL     = dL
+      self.dW     = dW
+
+    def triplet_to_diags(self, dt, idx1, ivals, dL = None, dt_min = 0, dt_max = None, ivals_thresh = 0, lock = None):
+        global event_ID
+        if dt_max is None:
+            dt_max = float("inf")   
+        if dL is None:
+            dL = self.dL                           
+        #/ map data to diagonals 
+        t1 = time.time()
+        diags = defaultdict(list) #/ initialize hash table        
+        for i, dtval in izip( count(), dt):                                 
+            if dtval >= dt_min and dtval <= dt_max and ivals[i] >= ivals_thresh:               
+                diags[dtval].append([idx1[i], ivals[i], None])
+        # if lock is None:
+        #     print '    time to create hash table (key = dt): ' + str( time.time() - t1)      
+        #/ sort data in diagonals - set initial event_IDs
+        t2 = time.time()
+        for kidx, k in enumerate(diags.keys()):
+            if diags[k]:
+                diags[k].sort(key=lambda x: x[0])
+                if lock is not None:
+                    lock.acquire()
+                diags[k][0][2] = event_ID
+                if len(diags[k]) >= 2:
+                    for iidx, x1, x0 in izip(count(), diags[k][1:], diags[k][:-1]):  #/ assign detections to same event_ID if timestamps are within <dgapL> of each other
+                        if x1[0]  - x0[0] > dL:
+                            event_ID += 1
+                        x1[2] = event_ID    
+                event_ID += 1
+                if lock is not None:
+                    lock.release()
+        # if lock is None:
+        #     print '    time to sort diagonals and set initial event IDs: ' + str( time.time() - t2)
+        return diags          
+                                  
+    def diags_to_event_list(self, diags, dt_min = None, dt_max = None, npass = 3, lock = None):
+        t1 = time.time()
+        if dt_min is None or dt_max is None:
+            dt_min = min(diags.keys())
+            dt_max = max(diags.keys())
+        for p in range(npass):
+            if p % 2 == 0:  #/ forward pass
+                t0 = time.time()
+                for qidx in range(dt_min, dt_max):       
+                    diags[qidx], diags[qidx+1] = self.merge_diags(diags[qidx], diags[qidx+1], self.dW)
+                # if lock is None:            
+                #     print '      pass ' + str(p) + ': ' + str( time.time() - t0)
+            else:  #/ backward pass
+                t0 = time.time()
+                for qidx in range(dt_max-1, dt_min-1, -1):    
+                    diags[qidx+1], diags[qidx] = self.merge_diags(diags[qidx+1], diags[qidx], self.dW)      
+                # if lock is None:
+                #     print '      pass ' + str(p) + ': ' + str( time.time() - t0)                              
+        t0 = time.time()
+        event_dict = defaultdict(list)
+        for k in diags:
+            for t1, sim, eventid in diags[k]:
+                event_dict[eventid].append([k,t1,sim])
+        # if lock is None:
+        #     print '    populating event hash table ' + str( time.time() - t0)
+        return event_dict              
+   
+    def merge_diags(self, diag0, diag1, dW = None):     
+        if dW is None:
+            dW = self.dW    
+        #event_equivalence = []
+        if diag0 and diag1:           
+            first_idx0, last_idx0 = self._get_event_start_end(diag0) #/ for each event_ID, get first and last index where it appears in diags[j]
+            first_t0 = [ diag0[i][0] for i in first_idx0 ]     #/ get first timestamp for each event_ID
+            last_t0  = [ diag0[i][0] for i in last_idx0 ]      #/ get last timestamp for each event_ID
+            # TODO - call this directly when resetting overlapping events so that if eventID is updated, its taken into account immediately (for multiple overlaps within single pair of adjacent diagonals)
+            eventID0 = [ diag0[i][2] for i in first_idx0 ]         
+            first_idx1, last_idx1 = self._get_event_start_end(diag1)
+            first_t1 = [ diag1[i][0] for i in first_idx1 ]     #/ get first timestamp for each event_ID
+            last_t1  = [ diag1[i][0] for i in last_idx1 ]      #/ get last timestamp for each event_ID    
+            # TODO - call this directly when resetting overlapping events so that if eventID is updated, its taken into account immediately (for multiple overlaps within single pair of adjacent diagonals)       
+            eventID1 = [ diag1[i][2] for i in first_idx1 ]             
+            #TODO - handles case of nultiple overlaps for same event    
+            n1 = len(first_t1)
+            j = 0                
+            for i, t0_start, t0_end, id0 in izip(count(), first_t0, last_t0, eventID0):    
+                while (j < n1) and (t0_start > last_t1[j] + dW): # increment j if event j is before event i
+                    j += 1
+                if (j < n1) and (t0_start  - dW  <= last_t1[j]) and (first_t1[j] <= t0_end + dW):                                         
+                    newEventID =  min(eventID0[i], eventID1[j])
+                    eventID0[i] = newEventID  #/ update for next iteration
+                    eventID1[j] = newEventID
+                    #/ updates eventIDs (in all triplets)
+                    for ridx0 in range(first_idx0[i], last_idx0[i] + 1):
+                        diag0[ridx0][2] = newEventID  
+                    for ridx1 in range(first_idx1[j], last_idx1[j] + 1):     
+                        diag1[ridx1][2] = newEventID  
+        return diag0, diag1 #, event_equivalence   
+
+    def _get_event_start_end(self, diag0):
+        n0 = len(diag0)    
+        event_last_idx  = [ i for i, j, k in izip(count(), diag0[1:], diag0[:-1] ) if j[2] != k[2]] + [n0-1]
+        event_first_idx = [0] + [ x+1  for x in event_last_idx[:-1]]
+        return event_first_idx, event_last_idx          
+
+########################################################################## 
+###                  Pseudo-Association                                 ##
+########################################################################## 
+                    
+class NetworkAssociator:
+    def __init__(self, icount = 0): 
+        self.icount = icount     
+      
+    def clouds_to_network_diags(self, event_dict, event_dict_keys, include_stats = False):         
+        all_diags_dict = defaultdict(list)
+        dcount = 0
+        for cidx, channel in enumerate(event_dict_keys):
+            for k in event_dict[channel].keys():
+                ddiag, bbox = self._get_ddiag_bbox(event_dict[channel][k])
+                if include_stats:
+                    event_stats = self._get_event_stats(event_dict[channel][k])
+                    all_diags_dict[ddiag].append([bbox, cidx, k, None, event_stats])  #/ boundingBox, stationID, diagonalKey, networkEventID, event_stats : (ndets , vol (sum_sim), peak_sim)
+                else:    
+                    all_diags_dict[ddiag].append([bbox, cidx, k, None])  #/ boundingBox, stationID, diagonalKey, networkEventID
+                dcount += 1  
+        for k in all_diags_dict.keys():            
+            all_diags_dict[k].sort(key=lambda x: x[0][2])  #/ sort event pairs by initial time t1 in bounding box             
+        return all_diags_dict, dcount  
+
+                    
+    def associate_network_diags(self, all_diags_dict, nstations, offset, q1 = None, q2 = None, return_network_events = True, include_stats = True):
+        p = 2*nstations
+        icount = self.icount
+        # for k in all_diags_dict:
+        #     print k, ":", all_diags_dict[k]
+        if (q1 is None) or (q2 is None):
+            tmpk = all_diags_dict.keys()
+            q1 = min(tmpk)
+            q2 = max(tmpk) + 1                    
+        for k in range(q1, q2):
+            #/ from this diagonal
+            t_init_k0 = [x[0][2] for x in all_diags_dict[k]]    #/ initial time of each bbox along diag k 
+            t_end_k0  = [x[0][3] for x in all_diags_dict[k]]    #/ end time of each bbox along diag k  
+            eid_k0    = [x[3] for x in all_diags_dict[k]]       #/ network eventID
+            stid_k0   = [x[1] for x in all_diags_dict[k]]       #/ stationID
+            t_init_k1 = [x[0][2] for x in all_diags_dict[k+1]]  #/ initial time of each bbox along diag k 
+            t_end_k1  = [x[0][3] for x in all_diags_dict[k+1]]  #/ end time of each bbox along diag k  
+            eid_k1    = [x[3] for x in all_diags_dict[k+1]]     #/ network eventID
+            stid_k1   = [x[1] for x in all_diags_dict[k+1]]     #/ stationID  
+            if len(t_init_k0 + t_init_k1) >= 1:
+                #/ bookkeeping
+                kidx  = [0 for x in all_diags_dict[k]] + [1 for x in all_diags_dict[k+1]]                               #/ which diagonal hash does this event belong to
+                oidx = [z for z, x in enumerate(all_diags_dict[k])] + [z for z, x in enumerate(all_diags_dict[k+1])]  #/ index of event within diagonal hash
+                #/ resort by t_init
+                t_init, t_end, tmp_eid, stid, kidx, oidx = zip(*sorted(zip( t_init_k0+t_init_k1, t_end_k0+t_end_k1, eid_k0+eid_k1, stid_k0+stid_k1, kidx, oidx)))  
+                eid = [x for x in tmp_eid] #/ makes eid a list (tmp_eid is a tuple)
+                #/ sweeps through event pairs assigned to hash k and k+1            
+                for j, t1 in izip(count(), t_end):
+                    if (j == len(t_end)-1) or (stid[j] != stid[j+1]):                                                                 #/ skip if same station ID as next entry (don't want to match to itself - skips checking if we already know this would be self-match)
+                        dt1 = tuple([t - t1 for t in t_init[j+1:j+p]])
+                        # dt1 = t_init[j+1:j+p] - t1
+                        if len(dt1) > 0:
+                            if dt1[0] <= offset:                                                                                      #/ if at least one other event is close in time
+                                glist = [j] + [j+1+q for q, t2 in izip(count(), dt1) if (t2 <= offset) and (stid[j+1+q] != stid[j])]  #/ group if within offset (unless same station - fix?)   
+                                if len(glist) > 1:   
+                                    elist = [eid[q] for q in glist]   
+                                    tmpid = [q for q in elist if q is not None]
+                                    if tmpid:  # (case of 2+ pre-existing event labels)
+                                        tmpid = min(tmpid)
+                                    elif not tmpid: #/ if event already has label (case of 1 pre-existing event label) NOTE: weird numbering issue without elif
+                                        tmpid = icount
+                                        icount += 1      
+                                    for q in glist:
+                                        eid[q] = tmpid 
+                for tmpidx, tmpk, tmpeid in izip(oidx, kidx, eid): #/ 
+                    if tmpk == 0:
+                        all_diags_dict[k][tmpidx][3] = tmpeid
+                    else:
+                        all_diags_dict[k+1][tmpidx][3] = tmpeid           
+        
+        #/ compiles list of events detected on multiple stations            
+        if return_network_events:              
+            network_events = defaultdict(list)        
+            for k in range(q1, q2):
+                for eventcloud in all_diags_dict[k]:
+                    if eventcloud[3] is not None:
+                        if include_stats:
+                            network_events[ eventcloud[3] ].append( ((k, k, eventcloud[0][2], eventcloud[0][3]), eventcloud[1], eventcloud[2], eventcloud[4]) )
+                        else:    
+                            network_events[ eventcloud[3] ].append( ((k, k, eventcloud[0][2], eventcloud[0][3]), eventcloud[1], eventcloud[2]) )
+        else: 
+            network_events = None  
+            
+        self.icount = icount                                                          
+        return icount, network_events                                                                                
+
+    def _get_ddiag_bbox(self, event_data, return_bbox = True):
+        ddiag = None #/ assigns valid value
+        bbox  = None #/ assigns valid value
+        dtlist  = [x[0] for x in event_data]
+        dtmin   = min(dtlist)
+        dtmax   = max(dtlist)
+        if dtmin == dtmax: #/ if one diagonal, this is dominant
+            ddiag = dtmin
+        else:              #/ if multiple diagonals, select one with largest similarity (numpy returns first instance of maximum)
+            simlist = [x[2] for x in event_data]  
+            ddiag = dtlist[np.argmax(simlist)]     #/ TODO: update rule
+        if return_bbox:  #/ compute bounding box, if requested  
+            t1list  = [x[1] for x in event_data]
+            t1min   = min(t1list)
+            t1max   = max(t1list) 
+            bbox    = (dtmin, dtmax, t1min, t1max)    
+        return ddiag, bbox  
+        
+    def _get_event_stats(self, event_data):
+        tmp = [x[2] for x in event_data]
+        return ( len(event_data) , sum(tmp), max(tmp) ) 
 
 #########################################################################
 ##            Network detection - data & parameters                    ##
 #########################################################################
 
-# data_folder = '/Users/Kari/Documents/Python/Seismology/network_detection/Iquique/from_cees/search/'
-# save_str    = 'results/network_detection-min4sta_AlltoSome_MADK400_nvotes3_nfuncs5_ntbls100_2014-03-15_17days_04B'
+data_folder = './pairs/'
+save_str = './results/network_detection'
 
-# channel_vars = ['PATCX..BHZ', 'PSGCX..BHZ', 'PB01..BHZ', 'PB08..BHZ', 'PB11..BHZ']
-# detdata_filenames = ['detdata_AlltoSome_MAD_K400_nvotes3_nfuncs5_ntbls100_2014-03-15_17days_CX.PATCX..BHZ_2to8_prefilter.hdf5',
-#                      'detdata_AlltoSome_MAD_K400_nvotes3_nfuncs5_ntbls100_2014-03-15_17days_CX.PSGCX..BHZ_2to8_prefilter.hdf5',
-#                      'detdata_AlltoSome_MAD_K400_nvotes3_nfuncs5_ntbls100_2014-03-15_17days_CX.PB01..BHZ_1to8_prefilter.hdf5',
-#                      'detdata_AlltoSome_MAD_K400_nvotes3_nfuncs5_ntbls100_2014-03-15_17days_CX.PB08..BHZ_2to8_prefilter.hdf5',
-#                      'detdata_AlltoSome_MAD_K400_nvotes3_nfuncs5_ntbls100_2014-03-15_17days_CX.PB11..BHZ_2to8_prefilter.hdf5']
-
-data_folder = '../../../../../../lfs/raiders2/0/hashem/pair_files/'
-save_str = '../../../../../../lfs/raiders2/0/hashem/network_results/network_detection'
-
-channel_vars = ['KHZ_HHZ', 'MQZ_HHZ', 'LTZ_HHZ', 'OXZ_HHZ', 'THZ_HHZ']
-detdata_filenames = ['10_11_KHZ_HHZ.txt', '10_11_MQZ_HHZ.txt', '10_11_LTZ_HHZ.txt', '10_11_OXZ_HHZ.txt', '10_11_THZ_HHZ.txt']
+channel_vars = ['GVZ_HHZ', 'KHZ_HHZ', 'LTZ_HHZ']
+detdata_filenames = ['9days_NZ_GVZ_HHZ.txt', '9days_NZ_KHZ_HHZ.txt', '9days_NZ_LTZ_HHZ.txt']
 
 nchannels = len(channel_vars)
 nstations = len(channel_vars)
-max_fp    = 31492000  #/ largest fingperprint index  (was 'nfp')
+max_fp    = 17*86400  #/ largest fingperprint index  (was 'nfp')
 dt_fp     = 1.0      #/ time lag between fingerprints
 dgapL     = 15       #/ = 30  #/ largest gap between detections along a single diagonal
 dgapW     = 3        #/ largest gap between detections adjacent diagonals
 ivals_thresh = 3
 
 #/ specifies which chunck of data (dt range) to process
-q1 = 30
-q2 = 86400
+#q1 = 30
+#q2 = 86400
 
 # only detections within 24 of each other
 min_dets = 5
@@ -54,7 +286,10 @@ min_sum  = 6*min_dets
 max_width = 8
 
 #/ number of station detections to be included in event list
-nsta_thresh = 1
+nsta_thresh = 2
+
+# number of threads for parallelism
+NUM_THREADS = 2
 
 
 ######################################################################### 
@@ -104,22 +339,60 @@ def get_det_list(ndets, timestamp_to_netid):
         det_connect.append(sorted(list(set(tmp))))
     return det_start, det_dt, det_connect
 
-######################################################################### 
-##                  Event-pair detection                               ##
-#########################################################################  
-    
-clouds = EventCloudExtractor(dL = dgapL, dW = dgapW) 
-event_dict = dict((x, {}) for x in channel_vars)
+def partition(dt, partition_size):
+    ranges = []
+    first_set = False
+    counter = 0
+    for dt0 in dt:
+        counter += 1
+        if not first_set:
+            first = dt0
+            first_set = True
+        elif dt0 - prev > 10 and counter >= partition_size:
+            ranges.append((first, prev))
+            counter = 0
+            first = dt0
+        prev = dt0
+    ranges.append((first, dt0))
+    return ranges
 
-for cidx, channel in enumerate(channel_vars):
-    
-    print detdata_filenames[cidx] 
-    print '  Extracting event-pair clouds ...'    
+######################################################################### 
+##                  Event-pair detection functions                     ##
+#########################################################################  
+
+def detection_init(l):
+    global lock
+    lock = l
+
+def detection(x):
+    global event_ID
+    q1 = x[0]
+    q2 = x[1]
+    clouds = EventCloudExtractor(dL = dgapL, dW = dgapW)
+    lock.acquire()
+    print '    number of detection pairs (this batch): ' + str( sum((dt >= q1) & (dt <= q2)) )
+    lock.release()
+    # get events - create hashtable
+    diags = clouds.triplet_to_diags(dt, idx1, ivals, dt_min = q1, dt_max = q2, ivals_thresh = ivals_thresh, lock = lock)
+    #/ extract event-pair clouds
+    curr_event_dict = clouds.diags_to_event_list(diags, dt_min = q1, dt_max = q2,  npass = 3, lock = lock)
+    diags = None
+    #/ prune event-pairs
+    prune_events(curr_event_dict, min_dets, min_sum, max_width)
+    return curr_event_dict
+
+def process(x):
+    global event_ID, dt, idx1, ivals
+    cidx = x[0]
+    detdata_filenames = x[1]
+    data_folder = x[2]
+
+    # print detdata_filenames[cidx] 
+    # print '  Extracting event-pair clouds ...'
             
     # loads data, converts to (int_idx1, int_dt2 > 0, int_value) format (mapper)
     t0 = time.time()
-    load_file = data_folder + detdata_filenames[cidx]   
-    # f = h5py.File(load_file,  "r")
+    load_file = data_folder + detdata_filenames[cidx]
     idx1 = []
     idx2 = []
     ivals = []
@@ -129,35 +402,63 @@ for cidx, channel in enumerate(channel_vars):
             idx1.append(int(data[0]))
             idx2.append(int(data[1]))
             ivals.append(int(data[2]))
-    # idx1  = f['pair_i'].value.flatten() #/ idx1 is 1-dimensional array containing first time index in detection pair
-    # idx2  = f['pair_j'].value.flatten() #/ idx2 is 1-dimensional array containing second time index in detection pair  
-    # ivals = f['pair_k'].value.flatten() #/ ivals is 1-dimensional array containing similarity value of detection pair, converted to integer value 
-    # f.close()        
-    dt, _ = diag_coordsV(idx1,idx2)    
-    print '    time to load data: ' + str( time.time() - t0) 
-    print '    number of detection pairs (total): ' + str( len(idx1) )   
-    #print '    number of detection pairs (this batch): ' + str( sum((dt >= q1) & (dt <= q2)) )   
-    #print '    number of detection pairs (this batch): ' + str(sum(dt))                  
+    dt = diag_coordsV(idx1,idx2)
 
-    # get events - create hashtable
-    t1 = time.time()
-    #diags, max_eventID = clouds.triplet_to_diags(dt, idx1, ivals, dt_min = q1, dt_max = q2, ivals_thresh = ivals_thresh, min_eventID = 0)
-    diags, max_eventID = clouds.triplet_to_diags(dt, idx1, ivals, ivals_thresh = ivals_thresh, min_eventID = 0)
-    print '    time triplet_to_diags: ' + str( time.time() - t1) 
-    
-    #/ extract event-pair clouds    
-    t2 = time.time() 
-    #event_dict[cidx] = clouds.diags_to_event_list(diags, dt_min = q1, dt_max = q2,  npass = 3)
-    event_dict[cidx] = clouds.diags_to_event_list(diags, npass = 3)
-    diags = None 
-    print '    time diags_to_event_list: ' + str( time.time() - t2)  
-      
-    #/ prune event-pairs   
-    t3= time.time()   
-    prune_events(event_dict[cidx], min_dets, min_sum, max_width) 
-    print '    time prune_events: ' + str( time.time() - t3)  
-    print '  total time: ' + str( time.time() - t0)
+    # print '    time to load data: ' + str( time.time() - t0)
+    # print '    number of detection pairs (total): ' + str( len(idx1) )
 
+    if parallel:
+        dt, idx1, ivals = zip(*sorted(zip(dt, idx1, ivals)))
+        dt_ranges = partition(dt, len(dt) / NUM_THREADS)
+        l = multiprocessing.Lock()
+        pool = ThreadPool(NUM_THREADS, initializer=detection_init, initargs=(l,))
+        event_ID = 0
+        event_dicts = pool.map(detection, dt_ranges)
+        pool.close()
+        pool.join()
+        result = {}
+        for dictionary in event_dicts:
+            result.update(dictionary)
+    else:
+        clouds = EventCloudExtractor(dL = dgapL, dW = dgapW)
+        # get events - create hashtable
+        t1 = time.time()
+        event_ID = 0
+        diags = clouds.triplet_to_diags(dt, idx1, ivals, ivals_thresh = ivals_thresh)
+        #print '    time triplet_to_diags: ' + str( time.time() - t1)
+        #/ extract event-pair clouds
+        t2 = time.time()
+        result = clouds.diags_to_event_list(diags, npass = 3)
+        diags = None
+        #print '    time diags_to_event_list: ' + str( time.time() - t2)
+        #/ prune event-pairs
+        t3= time.time()
+        prune_events(result, min_dets, min_sum, max_width)
+        #print '    time prune_events: ' + str( time.time() - t3)
+    print '  total time for %s:' % (detdata_filenames[cidx]), time.time() - t0
+    return result
+
+#########################################################################
+##                  Event-pair detection                               ##
+#########################################################################
+
+if parallel:
+    print 'PARALLEL'
+else:
+    print 'NON PARALLEL'
+if file_parallel:
+    print 'FILE-PARALLEL'
+else:
+    print 'NON FILE-PARALLEL'
+
+grand_start_time = time.time()
+
+if file_parallel:
+    num_cores = min(multiprocessing.cpu_count(), 24)
+    pool = multiprocessing.Pool(num_cores)
+    event_dict = dict(izip(range(len(channel_vars)), pool.map(process, [(cidx, detdata_filenames, data_folder) for cidx in range(len(channel_vars))])))
+else:
+    event_dict = dict(izip(range(len(channel_vars)), map(process, [(cidx, detdata_filenames, data_folder) for cidx in range(len(channel_vars))])))
     
 ######################################################################### 
 ##                         Network detection                           ##
@@ -177,10 +478,8 @@ print ' time to build network index: ' + str( time.time() - t4)
 t5 = time.time() 
 print 'Performing network pseudo-association...'
 #icount, network_events = associator.associate_network_diags(all_diags_dict, nstations = 3, offset = 20, q1 = q1, q2 = q2, include_stats = True)
-icount, network_events = associator.associate_network_diags(all_diags_dict, nstations = 5, offset = 20, include_stats = True)
+icount, network_events = associator.associate_network_diags(all_diags_dict, nstations = nstations, offset = 20, include_stats = True)
 print ' time pseudo-association: ' + str( time.time() - t5) 
-
-#print network_events
 
 #########################################################################
 ##         EVENT RESOLUTION - detections                              ##
@@ -188,11 +487,9 @@ print ' time pseudo-association: ' + str( time.time() - t5)
 
 networkID = network_events.keys()
 timestamp_to_netid = dict()
-timestamp_to_netid[0] = defaultdict(list) #/ keeps track of which network eventIDs are observed at each time
-timestamp_to_netid[1] = defaultdict(list) 
-timestamp_to_netid[2] = defaultdict(list) 
-timestamp_to_netid[3] = defaultdict(list) 
-timestamp_to_netid[4] = defaultdict(list) 
+for i in range(nstations):
+    timestamp_to_netid[i] = defaultdict(list) #/ keeps track of which network eventIDs are observed at each time
+
 for nid in networkID:
     net_event = network_events[nid]
     if len(np.unique([ x[1] for x in net_event])) >= nsta_thresh: #/ number of unique stations - THIS IS DATASET/TASK SPECIFIC (criteria does not even have to be related to station count)
@@ -218,8 +515,8 @@ for stid in range(nstations):
 det0_start, det0_dL, det0_connect = get_det_list(ndets[0,:], timestamp_to_netid[0])   #/ gets list of detections - may need to be updated depending on dataset
 det1_start, det1_dL, det1_connect = get_det_list(ndets[1,:], timestamp_to_netid[1])
 det2_start, det2_dL, det2_connect = get_det_list(ndets[2,:], timestamp_to_netid[2])
-det3_start, det3_dL, det3_connect = get_det_list(ndets[3,:], timestamp_to_netid[3])
-det4_start, det4_dL, det4_connect = get_det_list(ndets[4,:], timestamp_to_netid[4])
+# det3_start, det3_dL, det3_connect = get_det_list(ndets[3,:], timestamp_to_netid[3])
+# det4_start, det4_dL, det4_connect = get_det_list(ndets[4,:], timestamp_to_netid[4])
 
 #/ map back to network_events_final (i.e. assign detections at each station to the corresponding "network detection"
 network_events_final = defaultdict(lambda: defaultdict(list)) 
@@ -236,14 +533,14 @@ for x,y,z in izip(det2_start, det2_dL, det2_connect):
     #print 2, x, y, z
     for nid in z:
         network_events_final[nid][2].append(x)  
-for x,y,z in izip(det3_start, det3_dL, det3_connect):
-    #print 3, x, y, z
-    for nid in z:
-        network_events_final[nid][3].append(x) 
-for x,y,z in izip(det4_start, det4_dL, det4_connect):
-    #print 4, x, y, z
-    for nid in z:
-        network_events_final[nid][4].append(x)  
+# for x,y,z in izip(det3_start, det3_dL, det3_connect):
+#     #print 3, x, y, z
+#     for nid in z:
+#         network_events_final[nid][3].append(x) 
+# for x,y,z in izip(det4_start, det4_dL, det4_connect):
+#     #print 4, x, y, z
+#     for nid in z:
+#         network_events_final[nid][4].append(x)  
 #/ get dt values:
 for nid in network_events_final.keys():
     network_events_final[nid]['dt']      = int(np.median([x[0][0] for x in network_events[nid]]))
@@ -291,7 +588,7 @@ for sta in range(nstations):
     network_eventlist = list()
     tmp_neventlist = list()
     for i in range(n1-1):
-        if np.all((out2[i,:]  == out2[i+1,:]) | np.isnan(out2[i,:]) | np.isnan(out2[i+1,:] ) ):  #/ if match or nan
+        if np.any((out2[i,:] == out2[i+1,:]) & (~np.isnan(out2[i,:]))):  #/ if match or nan
             out2[i+1,:] = np.nanmin((out2[i,:], out2[i+1,:]),axis=0) #/ fill in nans
             tmp_neventlist.append(netids2[i])                                  
         else:        
@@ -403,6 +700,5 @@ mdict['network_events'] = network_events  #ok
 with open(save_str + '.dat', "wb") as f:
     pickle.dump(mdict, f)
 
-
-
+print 'GRAND TOTAL TIME:', time.time() - grand_start_time
 

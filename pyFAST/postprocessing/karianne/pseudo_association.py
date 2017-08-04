@@ -22,18 +22,21 @@ def prune_events(event_dict, min_dets = 0, min_sum = 0, max_width = None):
                 dtlist = [x[0] for x in event_dict[k]]
                 if max(dtlist) - min(dtlist) > max_width:
                     del event_dict[k]
-    
                
 ######################################################################### 
 ##               EventCloudExtractor                                   ##
 ######################################################################### 
 
 class EventCloudExtractor:
-    def __init__(self, dL, dW):
+    def __init__(self, dL, dW, dt, idx1, ivals, ivals_thresh):
       self.dL     = dL
       self.dW     = dW
-      
-    def triplet_to_diags(self, dt, idx1, ivals, dL = None, dt_min = 0, dt_max = None, ivals_thresh = 0, min_eventID = 0):
+      self.dt = dt
+      self.idx1 = idx1
+      self.ivals = ivals
+      self.ivals_thresh = ivals_thresh
+
+    def triplet_to_diags(self, dL = None, dt_min = 0, dt_max = None, lock = None):
         if dt_max is None:
             dt_max = float("inf")   
         if dL is None:
@@ -41,28 +44,38 @@ class EventCloudExtractor:
         #/ map data to diagonals 
         t1 = time.time()
         diags = defaultdict(list) #/ initialize hash table        
-        for i, dtval in izip( count(), dt):                                 
-            if dtval >= dt_min and dtval <=dt_max and ivals[i] >= ivals_thresh:               
-                diags[dtval].append([idx1[i], ivals[i], None]) 
-        print '    time to create hash table (key = dt): ' + str( time.time() - t1)       
+        for i, dtval in izip( count(), self.dt):                                 
+            if dtval >= dt_min and dtval <= dt_max and self.ivals[i] >= self.ivals_thresh:               
+                diags[dtval].append([self.idx1[i], self.ivals[i], None])
+        if lock is not None:
+            lock.acquire()
+        print '    time to create hash table (key = dt): ' + str( time.time() - t1)
+        if lock is not None:
+            lock.release()       
         #/ sort data in diagonals - set initial event_IDs
         t2 = time.time()
-        event_ID = min_eventID
         for kidx, k in enumerate(diags.keys()):
-        #for k in range(nfp):
             if diags[k]:
-                diags[k].sort(key=lambda x: x[0])             
-                diags[k][0][2] = event_ID
+                diags[k].sort(key=lambda x: x[0])
+                if lock is not None:
+                    lock.acquire()
+                diags[k][0][2] = network.event_ID
                 if len(diags[k]) >= 2:
                     for iidx, x1, x0 in izip(count(), diags[k][1:], diags[k][:-1]):  #/ assign detections to same event_ID if timestamps are within <dgapL> of each other
                         if x1[0]  - x0[0] > dL:
-                            event_ID += 1
-                        x1[2] = event_ID    
-                event_ID += 1   
-        print '    time to sort diagonals and set initial event IDs: ' + str( time.time() - t2)       
-        return diags, event_ID           
+                            network.event_ID += 1
+                        x1[2] = network.event_ID    
+                network.event_ID += 1
+                if lock is not None:
+                    lock.release()
+        if lock is not None:
+            lock.acquire()
+        print '    time to sort diagonals and set initial event IDs: ' + str( time.time() - t2)
+        if lock is not None:
+            lock.release()
+        return diags          
                                   
-    def diags_to_event_list(self, diags, dt_min = None, dt_max = None, npass = 3):
+    def diags_to_event_list(self, diags, dt_min = None, dt_max = None, npass = 3, lock = None):
         t1 = time.time()
         if dt_min is None or dt_max is None:
             dt_min = min(diags.keys())
@@ -71,21 +84,31 @@ class EventCloudExtractor:
             if p % 2 == 0:  #/ forward pass
                 t0 = time.time()
                 for qidx in range(dt_min, dt_max):       
-                    diags[qidx], diags[qidx+1] = self.merge_diags(diags[qidx], diags[qidx+1], self.dW)              
-                print '      pass ' + str(p) + ': ' + str( time.time() - t0)  
+                    diags[qidx], diags[qidx+1] = self.merge_diags(diags[qidx], diags[qidx+1], self.dW)
+                if lock is not None:
+                    lock.acquire()              
+                print '      pass ' + str(p) + ': ' + str( time.time() - t0)
+                if lock is not None:
+                    lock.release()
             else:  #/ backward pass
                 t0 = time.time()
                 for qidx in range(dt_max-1, dt_min-1, -1):    
-                    diags[qidx+1], diags[qidx] = self.merge_diags(diags[qidx+1], diags[qidx], self.dW)              
-                print '      pass ' + str(p) + ': ' + str( time.time() - t0)                                 
+                    diags[qidx+1], diags[qidx] = self.merge_diags(diags[qidx+1], diags[qidx], self.dW)      
+                if lock is not None:
+                    lock.acquire()         
+                print '      pass ' + str(p) + ': ' + str( time.time() - t0)
+                if lock is not None:
+                    lock.release()                                  
         t0 = time.time()
         event_dict = defaultdict(list)
-        for k in range(dt_min, dt_max+1):
-            if diags[k]:
-                for t1, sim, eventid in diags[k]:
-                    event_dict[eventid].append([k,t1,sim])
-        print '    populating event hash table ' + str( time.time() - t0) 
-        #print '(total) diags to event list ' + str( time.time() - t1) 
+        for k in diags:
+            for t1, sim, eventid in diags[k]:
+                event_dict[eventid].append([k,t1,sim])
+        if lock is not None:
+            lock.acquire() 
+        print '    populating event hash table ' + str( time.time() - t0)
+        if lock is not None:
+            lock.release()
         return event_dict              
    
     def merge_diags(self, diag0, diag1, dW = None):     
@@ -139,14 +162,13 @@ class NetworkAssociator:
         dcount = 0
         for cidx, channel in enumerate(event_dict_keys):
             for k in event_dict[channel].keys():
-                if event_dict[channel][k]:
-                    ddiag, bbox = self._get_ddiag_bbox(event_dict[channel][k])
-                    if include_stats:
-                        event_stats = self._get_event_stats(event_dict[channel][k])
-                        all_diags_dict[ddiag].append([bbox, cidx, k, None, event_stats])  #/ boundingBox, stationID, diagonalKey, networkEventID, event_stats : (ndets , vol (sum_sim), peak_sim)
-                    else:    
-                        all_diags_dict[ddiag].append([bbox, cidx, k, None])  #/ boundingBox, stationID, diagonalKey, networkEventID
-                    dcount += 1  
+                ddiag, bbox = self._get_ddiag_bbox(event_dict[channel][k])
+                if include_stats:
+                    event_stats = self._get_event_stats(event_dict[channel][k])
+                    all_diags_dict[ddiag].append([bbox, cidx, k, None, event_stats])  #/ boundingBox, stationID, diagonalKey, networkEventID, event_stats : (ndets , vol (sum_sim), peak_sim)
+                else:    
+                    all_diags_dict[ddiag].append([bbox, cidx, k, None])  #/ boundingBox, stationID, diagonalKey, networkEventID
+                dcount += 1  
         for k in all_diags_dict.keys():            
             all_diags_dict[k].sort(key=lambda x: x[0][2])  #/ sort event pairs by initial time t1 in bounding box             
         return all_diags_dict, dcount  
@@ -238,4 +260,6 @@ class NetworkAssociator:
         
     def _get_event_stats(self, event_data):
         tmp = [x[2] for x in event_data]
-        return ( len(event_data) , sum(tmp), max(tmp) )                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+        return ( len(event_data) , sum(tmp), max(tmp) ) 
+
+import scr_run_network_det.py as network                                                                                                                                                                                                                                                                                                                                                                                                                                                                
