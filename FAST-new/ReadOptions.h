@@ -26,6 +26,7 @@ struct Settings {
 	size_t simsearch_threads=1;
 	string input_file, input_mh_sigs_file, output_pairs_file;
 	string output_mh_sigs_file = "minhash_sigs.txt";
+	size_t num_partitions = 5;
 };
 
 Settings readOptions(int argc, char * argv[]) {
@@ -48,6 +49,7 @@ Settings readOptions(int argc, char * argv[]) {
 		("batch_size", po::value<size_t>(), "Batch size to read fingerprints")
 		("minhash_threads", po::value<size_t>(), "Maximum number of threads for minhash")
 		("simsearch_threads", po::value<size_t>(), "Maximum number of threads for simsearch and db init")
+		("num_partitions", po::value<size_t>(), "Number of partitions for similarity search")
 		;
 	po::variables_map vm;
 
@@ -174,6 +176,11 @@ Settings readOptions(int argc, char * argv[]) {
 		setting.nvotes = vm["nvotes"].as<size_t>();
 	}
 	BOOST_LOG_TRIVIAL(debug) << "nvotes:\t" << setting.nvotes;
+
+	if (vm.count("num_partitions")) {
+		setting.num_partitions = vm["num_partitions"].as<size_t>();
+	}
+	BOOST_LOG_TRIVIAL(debug) << "num_partitions:\t" << setting.num_partitions;
 
 	return setting;
 }

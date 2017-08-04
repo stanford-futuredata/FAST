@@ -144,28 +144,37 @@ int main(int argc, char * argv[]) {
 	genMinhashSig(min_hash_sigs, ntimes);
 
 	if(!s.output_pairs_file.empty()){
-		// Populate database
-		table *t = new table[s.ntbls];
 		out_time = 0;
-		InitializeDatabase(ntimes, s.ncols, s.ntbls, s.nhashfuncs, t, min_hash_sigs, 
-			&out_time, s.simsearch_threads);
-		BOOST_LOG_TRIVIAL(info) << "Initialize took: " << out_time;
 
-		// Similarity Search
-		uint32_t *query =  new uint32_t[s.num_queries];
-		for (uint32_t i = 0; i < s.num_queries; i++) { query[i] = i; }
-		out_time = 0;
-		SearchDatabase_voting(s.num_queries, s.ncols, query, s.ntbls, s.near_repeats, t, min_hash_sigs,
-						s.nvotes, s.limit, &out_time, s.output_pairs_file, s.simsearch_threads);
-		BOOST_LOG_TRIVIAL(info) << "Search took: " << out_time;
-		delete[] query;
+		// Run per partition
+		for (size_t i = 0; i < s.num_partitions; i ++) {
+			size_t start_indice = s.ncols / s.num_partitions * i;
+			size_t end_indice = s.ncols / s.num_partitions * (i + 1);
+			if (i == s.num_partitions - 1) { end_indice = s.ncols; }
+			BOOST_LOG_TRIVIAL(info) << "Search fingerprints " << start_indice
+				<< "," << end_indice;
+
+			// Populate database
+			table *t = new table[s.ntbls];
+			InitializeDatabase(ntimes, s.ncols, s.ntbls, s.nhashfuncs, t, min_hash_sigs, 
+				&out_time, s.simsearch_threads, start_indice, end_indice);
+			BOOST_LOG_TRIVIAL(info) << "Initialize took: " << out_time;
+
+			// Similarity Search
+			out_time = 0;
+			uint32_t *query =  new uint32_t[s.num_queries - start_indice];
+			for (size_t i = start_indice; i < s.num_queries; i++) { query[i - start_indice] = i; }
+			SearchDatabase_voting(s.num_queries - start_indice, s.ncols, query, 
+					s.ntbls, s.near_repeats, t, min_hash_sigs,
+					s.nvotes, s.limit, &out_time, s.output_pairs_file, s.simsearch_threads);
+			delete[] query;
+			BOOST_LOG_TRIVIAL(info) << "Search took: " << out_time;
+
+			delete[] t;
+		}
 
 		// Hash table stats
 		//OutputHashTableStats(t);
-
-		// Clean up
-		ClearDatabase(s.ntbls, t);
-		delete[] t;
 	}
 
 	delete[] min_hash_sigs;
