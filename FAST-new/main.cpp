@@ -129,6 +129,34 @@ void genMinhashSig(uint64_t *min_hash_sigs, size_t ntimes) {
 	}
 }
 
+void searchRange(size_t start_indice, size_t end_indice, string filter_file,
+	uint32_t *query, size_t num_queries,
+	uint64_t *min_hash_sigs, size_t ntimes) {
+	BOOST_LOG_TRIVIAL(info) << "Search fingerprints " << start_indice
+		<< "," << end_indice;
+
+	// Populate database
+	double out_time = 0;
+	table *t = new table[s.ntbls];
+	if (! filter_file.empty()) {
+		InitializeDatabase(ntimes, s.ncols, s.ntbls, s.nhashfuncs, t, min_hash_sigs, 
+			&out_time, s.simsearch_threads, filter_file);
+	} else {
+		InitializeDatabase(ntimes, s.ncols, s.ntbls, s.nhashfuncs, t, min_hash_sigs, 
+			&out_time, s.simsearch_threads, start_indice, end_indice);
+	}
+	BOOST_LOG_TRIVIAL(info) << "Initialize took: " << out_time;
+
+	// Similarity Search
+	out_time = 0;
+	SearchDatabase_voting(num_queries, s.ncols, query,
+			s.ntbls, s.near_repeats, t, min_hash_sigs,
+			s.nvotes, s.limit, &out_time, s.output_pairs_file, s.simsearch_threads);
+	BOOST_LOG_TRIVIAL(info) << "Search took: " << out_time;
+
+	delete[] t;
+}
+
 int main(int argc, char * argv[]) {
 	srand(time(NULL));
 	s = readOptions(argc, argv);
@@ -140,41 +168,34 @@ int main(int argc, char * argv[]) {
 	uint64_t *min_hash_sigs = new uint64_t[sig_len];
 
 	// Generate minhash signatures
-	double out_time = 0;
 	genMinhashSig(min_hash_sigs, ntimes);
 
-	if(!s.output_pairs_file.empty()){
-		out_time = 0;
+	if (!s.output_pairs_file.empty()) {
+		if (!s.filter_file.empty() ||
+			(s.start_index > 0 && s.end_index > 0)) { // Search again specified indices
+			uint32_t *query =  new uint32_t[s.num_queries];
+			for (size_t i = 0; i < s.num_queries; i++) { query[i] = i; }
 
-		// Run per partition
-		for (size_t i = 0; i < s.num_partitions; i ++) {
-			size_t start_indice = s.ncols / s.num_partitions * i;
-			size_t end_indice = s.ncols / s.num_partitions * (i + 1);
-			if (i == s.num_partitions - 1) { end_indice = s.ncols; }
-			BOOST_LOG_TRIVIAL(info) << "Search fingerprints " << start_indice
-				<< "," << end_indice;
+			searchRange(s.start_index, s.end_index, s.filter_file, 
+				query, s.num_queries, min_hash_sigs, ntimes);
 
-			// Populate database
-			table *t = new table[s.ntbls];
-			InitializeDatabase(ntimes, s.ncols, s.ntbls, s.nhashfuncs, t, min_hash_sigs, 
-				&out_time, s.simsearch_threads, start_indice, end_indice);
-			BOOST_LOG_TRIVIAL(info) << "Initialize took: " << out_time;
-
-			// Similarity Search
-			out_time = 0;
-			uint32_t *query =  new uint32_t[s.num_queries - start_indice];
-			for (size_t i = start_indice; i < s.num_queries; i++) { query[i - start_indice] = i; }
-			SearchDatabase_voting(s.num_queries - start_indice, s.ncols, query, 
-					s.ntbls, s.near_repeats, t, min_hash_sigs,
-					s.nvotes, s.limit, &out_time, s.output_pairs_file, s.simsearch_threads);
 			delete[] query;
-			BOOST_LOG_TRIVIAL(info) << "Search took: " << out_time;
+		} else { 			// Run per partition
+			for (size_t i = 0; i < s.num_partitions; i ++) {
+				size_t start_indice = s.ncols / s.num_partitions * i;
+				size_t end_indice = s.ncols / s.num_partitions * (i + 1);
+				if (i == s.num_partitions - 1) { end_indice = s.ncols; }
 
-			delete[] t;
+				uint32_t *query =  new uint32_t[s.num_queries - start_indice];
+				for (size_t i = start_indice; i < s.num_queries; i++) { 
+					query[i - start_indice] = i; }
+
+				searchRange(start_indice, end_indice, s.filter_file,
+					query, s.num_queries - start_indice, min_hash_sigs, ntimes);
+
+				delete[] query;
+			}
 		}
-
-		// Hash table stats
-		//OutputHashTableStats(t);
 	}
 
 	delete[] min_hash_sigs;

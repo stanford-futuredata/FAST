@@ -22,11 +22,13 @@ struct Settings {
 	size_t num_queries;
 	uint32_t limit = 4e9;
 	size_t nvotes = 4;
-	size_t minhash_threads=1;
-	size_t simsearch_threads=1;
-	string input_file, input_mh_sigs_file, output_pairs_file;
+	size_t minhash_threads= 1;
+	size_t simsearch_threads= 1;
+	string input_file, input_mh_sigs_file, output_pairs_file, filter_file;
 	string output_mh_sigs_file = "minhash_sigs.txt";
 	size_t num_partitions = 5;
+	size_t start_index = 0;
+	size_t end_index= 0;
 };
 
 Settings readOptions(int argc, char * argv[]) {
@@ -38,6 +40,7 @@ Settings readOptions(int argc, char * argv[]) {
 		("input_minhash_sigs_file", po::value<string>(), "name of file from which to retrieve minhash sigs")
 		("output_minhash_sigs_file", po::value<string>(), "name of file to store minhash sigs")
 		("output_pairs_file", po::value<string>(), "name of file to store candidate pairs")
+		("filter_file", po::value<string>(), "name of fingerprint binary filter file")
 		("ntbls", po::value<uint64_t>(), "Number of hash tables")
 		("nhash", po::value<size_t>(), "Number of hash functions")
 		("ncols", po::value<uint64_t>(), "Number of hash functions")
@@ -50,6 +53,8 @@ Settings readOptions(int argc, char * argv[]) {
 		("minhash_threads", po::value<size_t>(), "Maximum number of threads for minhash")
 		("simsearch_threads", po::value<size_t>(), "Maximum number of threads for simsearch and db init")
 		("num_partitions", po::value<size_t>(), "Number of partitions for similarity search")
+		("start_index", po::value<size_t>(), "Start fingerprint index for the all to some search")
+		("end_index", po::value<size_t>(), "End fingerprint index for the all to some search")
 		;
 	po::variables_map vm;
 
@@ -118,6 +123,11 @@ Settings readOptions(int argc, char * argv[]) {
 		BOOST_LOG_TRIVIAL(debug) << "Output minhash sigs file:\t" << setting.output_mh_sigs_file;
 	}
 
+	if (vm.count("filter_file")) {
+		setting.filter_file = vm["filter_file"].as<string>();
+		fs::path p = setting.filter_file;
+	}
+
 	if (vm.count("batch_size")) {
 		setting.batch_size = vm["batch_size"].as<size_t>();
 	}
@@ -181,6 +191,16 @@ Settings readOptions(int argc, char * argv[]) {
 		setting.num_partitions = vm["num_partitions"].as<size_t>();
 	}
 	BOOST_LOG_TRIVIAL(debug) << "num_partitions:\t" << setting.num_partitions;
+
+	if (vm.count("start_index")) {
+		setting.start_index = vm["start_index"].as<size_t>();
+	}
+	BOOST_LOG_TRIVIAL(debug) << "start_index:\t" << setting.start_index;
+
+	if (vm.count("end_index")) {
+		setting.end_index = vm["end_index"].as<size_t>();
+	}
+	BOOST_LOG_TRIVIAL(debug) << "end_index:\t" << setting.end_index;
 
 	return setting;
 }
