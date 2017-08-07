@@ -109,7 +109,7 @@ Settings readOptions(int argc, char * argv[]) {
 		setting.output_pairs_file = vm["output_pairs_file"].as<string>();
 		fs::path p = setting.output_pairs_file;
 		if (fs::exists(p)) {
-			BOOST_LOG_TRIVIAL(warning) << "Pairs file already exists. It will be overwritten";
+			BOOST_LOG_TRIVIAL(warning) << "Pairs file already exists. It will be appended.";
 		}
 		BOOST_LOG_TRIVIAL(debug) << "Output pairs file:\t" << setting.output_pairs_file;
 	}

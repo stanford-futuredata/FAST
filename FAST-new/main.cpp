@@ -1,5 +1,6 @@
 #include "MinHash.h"
 #include "SimilaritySearch.h"
+#include "HashtableStats.h"
 #include "ReadOptions.h"
 #include <iostream>
 #include <fstream>
@@ -129,6 +130,8 @@ void genMinhashSig(uint64_t *min_hash_sigs, size_t ntimes) {
 	}
 }
 
+/* Initialize hash table and perform similarity search for a range of fingerprint
+   indices or for selected fingerprints in a file. */
 void searchRange(size_t start_indice, size_t end_indice, string filter_file,
 	uint32_t *query, size_t num_queries,
 	uint64_t *min_hash_sigs, size_t ntimes) {
@@ -153,6 +156,8 @@ void searchRange(size_t start_indice, size_t end_indice, string filter_file,
 			s.ntbls, s.near_repeats, t, min_hash_sigs,
 			s.nvotes, s.limit, &out_time, s.output_pairs_file, s.simsearch_threads);
 	BOOST_LOG_TRIVIAL(info) << "Search took: " << out_time;
+
+	OutputHashTableStats(t);
 
 	delete[] t;
 }

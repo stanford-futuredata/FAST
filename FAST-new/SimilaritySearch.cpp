@@ -9,58 +9,39 @@
 
 // Read result file which indicates whether each fingerprint passed the filter
 void read_filter_file(int *filter, std::string fname) {
-  std::ifstream infile;
-  infile.open(fname, std::ios::in);
-  int x;
-  size_t i = 0;
-  while (infile >> x) {
-    filter[i] = x;
-    i ++;
-  }
-  infile.close();
-}
-
-// Populate database - place ALL fingerprint indices in hash buckets
-void InitializeDatabase(size_t mrows, size_t ncols, uint8_t ntbls, uint8_t nhashfuncs,
-        table *t, uint64_t *keys, double *out_time, const size_t num_threads) {
-    clock_t begin = clock();
-
-  size_t j;
-
-  omp_set_num_threads(num_threads);
-    //Insert pairs (key, id) into hash tables
-#pragma omp parallel for default(none)\
-    private(j) shared(ntbls, ncols, t, keys)
-  for (j = 0; j < ntbls; ++j) {
-      for (size_t i = 0; i < ncols; ++i) {
-          insert_new_item(&t[j], keys[j + i * ntbls], i);
-      }
-  }
-    clock_t end = clock();
-    *out_time += ((double)(end - begin)) / CLOCKS_PER_SEC / num_threads;
+    std::ifstream infile;
+    infile.open(fname, std::ios::in);
+    int x;
+    size_t i = 0;
+    while (infile >> x) {
+        filter[i] = x;
+        i ++;
+    }
+    infile.close();
 }
 
 // Populate database - place selected fingerprints in hash buckets (according to filter_fname)
 void InitializeDatabase(size_t mrows, size_t ncols, uint8_t ntbls, uint8_t nhashfuncs,
         table *t, uint64_t *keys, double *out_time, const size_t num_threads,
         const std::string filter_fname) {
+
     clock_t begin = clock();
 
-  size_t j;
-  int *filter = new int[ncols];
-  read_filter_file(filter, filter_fname);
+    size_t j;
+    int *filter = new int[ncols];
+    read_filter_file(filter, filter_fname);
 
-  omp_set_num_threads(num_threads);
+    omp_set_num_threads(num_threads);
     //Insert pairs (key, id) into hash tables
 #pragma omp parallel for default(none)\
     private(j) shared(ntbls, ncols, t, keys, filter)
-  for (j = 0; j < ntbls; ++j) {
-      for (size_t i = 0; i < ncols; ++i) {
-          if (filter[i] == 1) {
-            insert_new_item(&t[j], keys[j + i * ntbls], i);
-          }
-      }
-  }
+    for (j = 0; j < ntbls; ++j) {
+        for (size_t i = 0; i < ncols; ++i) {
+            if (filter[i] == 1) {
+                insert_new_item(&t[j], keys[j + i * ntbls], i);
+            }
+        }
+    }
     clock_t end = clock();
     *out_time += ((double)(end - begin)) / CLOCKS_PER_SEC / num_threads;
 }
@@ -69,19 +50,20 @@ void InitializeDatabase(size_t mrows, size_t ncols, uint8_t ntbls, uint8_t nhash
 void InitializeDatabase(size_t mrows, size_t ncols, uint8_t ntbls, uint8_t nhashfuncs,
         table *t, uint64_t *keys, double *out_time, const size_t num_threads,
         const size_t start_indice, const size_t end_indice) {
+
     clock_t begin = clock();
 
-  size_t j;
+    size_t j;
 
-  omp_set_num_threads(num_threads);
+    omp_set_num_threads(num_threads);
     //Insert pairs (key, id) into hash tables
 #pragma omp parallel for default(none)\
     private(j) shared(ntbls, ncols, t, keys)
-  for (j = 0; j < ntbls; ++j) {
-      for (size_t i = start_indice; i < end_indice; ++i) {
-         insert_new_item(&t[j], keys[j + i * ntbls], i);
-      }
-  }
+    for (j = 0; j < ntbls; ++j) {
+        for (size_t i = start_indice; i < end_indice; ++i) {
+            insert_new_item(&t[j], keys[j + i * ntbls], i);
+        }
+    }
     clock_t end = clock();
     *out_time += ((double)(end - begin)) / CLOCKS_PER_SEC / num_threads;
 }
@@ -144,7 +126,7 @@ void SearchDatabase_voting(const size_t nquery, const size_t ncols, const uint32
             }
         }
         std::vector<uint32_t> results;
-        for (map_it it = votes.begin(); it != votes.end(); it++) {
+        for (map_cit it = votes.begin(); it != votes.end(); it++) {
             if (it->second >= threshold) {
                 results.push_back(it->first);
                 results.push_back(it->second);
@@ -163,45 +145,4 @@ void SearchDatabase_voting(const size_t nquery, const size_t ncols, const uint32
     clock_t end = clock();
     *out_time += ((double)(end - begin)) / CLOCKS_PER_SEC / num_threads;
     std::cout << "Average lookups:" << lookups << std::endl;
-}
-
-
-// Count number of fingerprints in each bucket
-vec CountBucketItems(table const *t) {
-    // use one hash table for now
-    vec numItemsPerBucket;
-    for (table_cit it = t->begin(); it != t->end(); ++it) {
-      numItemsPerBucket.push_back(it->second.size());
-    }
-
-    return numItemsPerBucket;
-}
-
-// Count number of buckets in each hash table
-vec CountBucketsPerTable(uint8_t ntbls, table const *t, vec *maxItemsInBucket) {
-   vec numBucketsPerTable;
-   for(size_t j = 0; j != ntbls; ++j) {
-      // Add number of buckets in this hash table
-      table const *t1 = &t[j];
-      numBucketsPerTable.push_back(t1->size());
-
-      // Add maximum number of items per bucket in this hash table
-      size_t maxItems = 0;
-      for (table_cit it = t1->begin(); it != t1->end(); ++it) {
-        if (it->second.size() > maxItems) {
-          maxItems = it->second.size();
-        }
-      }
-      maxItemsInBucket->push_back(maxItems);
-   }
-   return numBucketsPerTable;
-}
-
-vec BucketCountPerTable(uint8_t ntbls, table const *t) {
-   vec bucketCountPerTable;
-   for(size_t j = 0; j != ntbls; ++j) {
-      table const *t1 = &t[j];
-      bucketCountPerTable.push_back(t1->bucket_count());
-   }
-   return bucketCountPerTable;
 }
