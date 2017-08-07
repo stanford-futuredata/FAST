@@ -1,0 +1,29 @@
+{
+    "fingerprint": {
+        "sampling_rate": 100,
+        "min_freq": 2.0,
+        "max_freq": 20.0,
+        "spec_length": 6.0,
+        "spec_lag": 0.2,
+        "fp_length": 128,
+        "fp_lag": 10,
+        "nfreq": 32,
+        "ntimes": 64,
+        "mad_sampling_rate": 0.01,
+        "mad_sample_interval": 3600
+    },
+
+    "performance": {
+        "num_fp_thread": 12,
+        "partition_len": 28800
+    },
+
+    "data": {
+        "station": "KHZ",
+        "channel": "HHZ",
+        "start_time": "10-01-01T00:00:00.0",
+        "end_time": "10-03-01T00:00:00.0",
+        "folder": "../bp2to20_waveformsKHZ/",
+        "fname_time_format": "%Y%m%dT%H%M%SZ"
+    }
+}
