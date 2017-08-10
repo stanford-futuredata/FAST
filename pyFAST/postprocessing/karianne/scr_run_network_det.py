@@ -16,8 +16,10 @@ try:
 except ImportError:
     izip = zip
 import multiprocessing
+from multiprocessing import Array
 from multiprocessing.pool import ThreadPool
 import os
+from bisect import *
 
 file_parallel = False
 parallel = True
@@ -25,7 +27,7 @@ parallel = True
 ######################################################################### 
 ##               functions                                            ##
 ######################################################################### 
-    
+
 def diag_coordsV(t1, t2):
     # for case where t1, t2 are vectors
     return np.subtract(t2, t1)
@@ -41,30 +43,38 @@ def prune_events(event_dict, min_dets = 0, min_sum = 0, max_width = None):
                 dtlist = [x[0] for x in event_dict[k]]
                 if max(dtlist) - min(dtlist) > max_width:
                     del event_dict[k]
-               
+
 ######################################################################### 
 ##               EventCloudExtractor                                   ##
 ######################################################################### 
+
+def index(a, x):
+    'Locate the leftmost value exactly equal to x'
+    i = bisect_left(a, x)
+    if i != len(a) and a[i] == x:
+        return i
+    raise ValueError
 
 class EventCloudExtractor:
     def __init__(self, dL, dW):
       self.dL     = dL
       self.dW     = dW
 
-    def triplet_to_diags(self, dt, idx1, ivals, event_ID, pid_prefix = True, dL = None, dt_min = 0, dt_max = None, ivals_thresh = 0, lock = None):
+    def triplet_to_diags(self, q1, q2, event_ID, pid_prefix = True, dL = None, dt_min = 0, dt_max = None, ivals_thresh = 0, lock = None):
         if dt_max is None:
             dt_max = float('inf')
         if dL is None:
-            dL = self.dL                           
+            dL = self.dL
         #/ map data to diagonals
         t1 = time.time()
         diags = defaultdict(list) #/ initialize hash table
-        prev_key = dt[0]
+        prev_key = dt[q1]
         elems = []
-        for i in range(len(dt)):
-            if ivals[i] < ivals_thresh or dt[i] < dt_min or dt[i] > dt_max: # the second two conditions aren't applicable to the parallel case since they'd always be false
+        l = len(pairs) / 3
+        for i in range(q1, q2):
+            if pairs[i + 2 * l] < ivals_thresh or pairs[i] < dt_min or pairs[i] > dt_max: # the second two conditions aren't applicable to the parallel case since they'd always be false
                 continue
-            if dt[i] != prev_key:
+            if pairs[i] != prev_key:
                 l = len(elems)
                 if l > 0:
                     elems.sort(key=lambda x: x[0])
@@ -87,8 +97,8 @@ class EventCloudExtractor:
                         event_ID = pid + '-' + str(idval + 1)
                     else:
                         event_ID += 1
-                prev_key = dt[i]
-            elems.append([idx1[i], ivals[i], None])
+                prev_key = pairs[i]
+            elems.append([pairs[i + l], pairs[i + 2 * l], None])
         # for the remaining stuff accumulated in elems
         l = len(elems)
         if l > 0:
@@ -105,8 +115,8 @@ class EventCloudExtractor:
                             event_ID += 1
                     elems[j][2] = event_ID
             diags[prev_key] = elems
-        return diags          
-                                  
+        return diags
+
     def diags_to_event_list(self, diags, dt_min = None, dt_max = None, npass = 3, lock = None):
         t1 = time.time()
         if dt_min is None or dt_max is None:
@@ -115,16 +125,16 @@ class EventCloudExtractor:
         for p in range(npass):
             if p % 2 == 0:  #/ forward pass
                 t0 = time.time()
-                for qidx in range(dt_min, dt_max):     
+                for qidx in range(dt_min, dt_max):
                     diags[qidx], diags[qidx+1] = self.merge_diags(diags[qidx], diags[qidx+1], self.dW)
-                # if lock is None:            
+                # if lock is None:
                 #     print '      pass ' + str(p) + ': ' + str( time.time() - t0)
             else:  #/ backward pass
                 t0 = time.time()
-                for qidx in range(dt_max-1, dt_min-1, -1):    
+                for qidx in range(dt_max-1, dt_min-1, -1):
                     diags[qidx+1], diags[qidx] = self.merge_diags(diags[qidx+1], diags[qidx], self.dW)
                 # if lock is None:
-                #     print '      pass ' + str(p) + ': ' + str( time.time() - t0)                              
+                #     print '      pass ' + str(p) + ': ' + str( time.time() - t0)
         t0 = time.time()
         event_dict = defaultdict(list)
         for k in diags:
@@ -132,55 +142,55 @@ class EventCloudExtractor:
                 event_dict[eventid].append([k,t1,sim])
         # if lock is None:
         #     print '    populating event hash table ' + str( time.time() - t0)
-        return event_dict              
-   
-    def merge_diags(self, diag0, diag1, dW = None):     
+        return event_dict
+
+    def merge_diags(self, diag0, diag1, dW = None):
         if dW is None:
-            dW = self.dW    
+            dW = self.dW
         #event_equivalence = []
-        if diag0 and diag1:           
+        if diag0 and diag1:
             first_idx0, last_idx0 = self._get_event_start_end(diag0) #/ for each event_ID, get first and last index where it appears in diags[j]
             first_t0 = [ diag0[i][0] for i in first_idx0 ]     #/ get first timestamp for each event_ID
             last_t0  = [ diag0[i][0] for i in last_idx0 ]      #/ get last timestamp for each event_ID
             # TODO - call this directly when resetting overlapping events so that if eventID is updated, its taken into account immediately (for multiple overlaps within single pair of adjacent diagonals)
-            eventID0 = [ diag0[i][2] for i in first_idx0 ]         
+            eventID0 = [ diag0[i][2] for i in first_idx0 ]
             first_idx1, last_idx1 = self._get_event_start_end(diag1)
             first_t1 = [ diag1[i][0] for i in first_idx1 ]     #/ get first timestamp for each event_ID
-            last_t1  = [ diag1[i][0] for i in last_idx1 ]      #/ get last timestamp for each event_ID    
-            # TODO - call this directly when resetting overlapping events so that if eventID is updated, its taken into account immediately (for multiple overlaps within single pair of adjacent diagonals)       
-            eventID1 = [ diag1[i][2] for i in first_idx1 ]             
-            #TODO - handles case of nultiple overlaps for same event    
+            last_t1  = [ diag1[i][0] for i in last_idx1 ]      #/ get last timestamp for each event_ID
+            # TODO - call this directly when resetting overlapping events so that if eventID is updated, its taken into account immediately (for multiple overlaps within single pair of adjacent diagonals)
+            eventID1 = [ diag1[i][2] for i in first_idx1 ]
+            #TODO - handles case of nultiple overlaps for same event
             n1 = len(first_t1)
-            j = 0                
-            for i, t0_start, t0_end, id0 in izip(count(), first_t0, last_t0, eventID0):    
+            j = 0
+            for i, t0_start, t0_end, id0 in izip(count(), first_t0, last_t0, eventID0):
                 while (j < n1) and (t0_start > last_t1[j] + dW): # increment j if event j is before event i
                     j += 1
-                if (j < n1) and (t0_start  - dW  <= last_t1[j]) and (first_t1[j] <= t0_end + dW):                                         
+                if (j < n1) and (t0_start  - dW  <= last_t1[j]) and (first_t1[j] <= t0_end + dW):
                     newEventID =  min(eventID0[i], eventID1[j])
                     eventID0[i] = newEventID  #/ update for next iteration
                     eventID1[j] = newEventID
                     #/ updates eventIDs (in all triplets)
                     for ridx0 in range(first_idx0[i], last_idx0[i] + 1):
-                        diag0[ridx0][2] = newEventID  
-                    for ridx1 in range(first_idx1[j], last_idx1[j] + 1):     
-                        diag1[ridx1][2] = newEventID  
-        return diag0, diag1 #, event_equivalence   
+                        diag0[ridx0][2] = newEventID
+                    for ridx1 in range(first_idx1[j], last_idx1[j] + 1):
+                        diag1[ridx1][2] = newEventID
+        return diag0, diag1 #, event_equivalence
 
     def _get_event_start_end(self, diag0):
-        n0 = len(diag0)    
+        n0 = len(diag0)
         event_last_idx  = [ i for i, j, k in izip(count(), diag0[1:], diag0[:-1] ) if j[2] != k[2]] + [n0-1]
         event_first_idx = [0] + [ x+1  for x in event_last_idx[:-1]]
-        return event_first_idx, event_last_idx          
+        return event_first_idx, event_last_idx
 
-########################################################################## 
+##########################################################################
 ###                  Pseudo-Association                                 ##
-########################################################################## 
-                    
+##########################################################################
+
 class NetworkAssociator:
-    def __init__(self, icount = 0): 
-        self.icount = icount     
-      
-    def clouds_to_network_diags(self, event_dict, event_dict_keys, include_stats = False):         
+    def __init__(self, icount = 0):
+        self.icount = icount
+
+    def clouds_to_network_diags(self, event_dict, event_dict_keys, include_stats = False):
         all_diags_dict = defaultdict(list)
         dcount = 0
         for cidx, channel in enumerate(event_dict_keys):
@@ -189,10 +199,10 @@ class NetworkAssociator:
                 if include_stats:
                     event_stats = self._get_event_stats(event_dict[channel][k])
                     all_diags_dict[ddiag].append([bbox, cidx, k, None, event_stats])  #/ boundingBox, stationID, diagonalKey, networkEventID, event_stats : (ndets , vol (sum_sim), peak_sim)
-                else:    
+                else:
                     all_diags_dict[ddiag].append([bbox, cidx, k, None])  #/ boundingBox, stationID, diagonalKey, networkEventID
-                dcount += 1  
-        for k in all_diags_dict.keys():            
+                dcount += 1
+        for k in all_diags_dict.keys():
             all_diags_dict[k].sort(key=lambda x: x[0][2])  #/ sort event pairs by initial time t1 in bounding box             
         return all_diags_dict, dcount
 
@@ -205,7 +215,7 @@ class NetworkAssociator:
         if (q1 is None) or (q2 is None):
             tmpk = all_diags_dict.keys()
             q1 = min(tmpk)
-            q2 = max(tmpk) + 1                    
+            q2 = max(tmpk) + 1 
         for k in range(q1, q2):
             #/ from this diagonal
             t_init_k0 = [x[0][2] for x in all_diags_dict[k]]    #/ initial time of each bbox along diag k
@@ -391,26 +401,26 @@ def partition(dt, partition_size):
 ##                  Event-pair detection functions                     ##
 #########################################################################  
 
-def detection_init(l):
+def detection_init(l, dt, idx1, ivals):
     global lock
     lock = l
+    global pairs
+    dt.extend(idx1)
+    dt.extend(ivals)
+    pairs = Array('i', dt)
 
-def detection(x):
+def detection(ranges):
     start = time.time()
     pid = os.getpid()
     clouds = EventCloudExtractor(dL = dgapL, dW = dgapW)
-    dt = x[0]
-    idx1 = x[1]
-    ivals = x[2]
+    q1 = ranges[0]
+    q2 = ranges[1]
     x = None
-    if parallel:
-        lock.acquire()
-    print('    number of detection pairs at process %d:' % pid, len(dt))
-    if parallel:
-        lock.release()
+
     # get events - create hashtable
     t0 = time.time()
-    diags = clouds.triplet_to_diags(dt, idx1, ivals, str(pid) + '-0', ivals_thresh = ivals_thresh, lock = lock)
+    diags = clouds.triplet_to_diags(q1, q2, str(pid) + '-0', ivals_thresh = ivals_thresh, lock = lock)
+    #diags = clouds.triplet_to_diags(dt, idx1, ivals, str(pid) + '-0', ivals_thresh = ivals_thresh, lock = lock)
     if parallel:
         lock.acquire()
     print '(%d, %d): time triplet_to_diags:' % (q1, q2), time.time() - t0
@@ -442,7 +452,7 @@ def process(x):
 
     # print detdata_filenames[cidx] 
     # print '  Extracting event-pair clouds ...'
-            
+
     # loads data, converts to (int_idx1, int_dt2 > 0, int_value) format (mapper)
     t0 = time.time()
     print "Start %f" % t0
@@ -478,8 +488,9 @@ def process(x):
     if parallel:
         #print "Processing start %f" % time.time()
         l = multiprocessing.Lock()
-        pool = multiprocessing.Pool(num_cores, initializer=detection_init, initargs=(l,))
-        event_dicts = pool.map(detection, [(dt[q1:q2+1], idx1[q1:q2+1], ivals[q1:q2+1]) for q1, q2 in dt_ranges])
+        pool = multiprocessing.Pool(num_cores,
+            initializer=detection_init, initargs=(l, dt, idx1, ivals))
+        event_dicts = pool.map(detection, dt_ranges)
         pool.close()
         pool.join()
         result = {}
@@ -526,23 +537,23 @@ if file_parallel:
     event_dict = dict(izip(range(len(channel_vars)), pool.map(process, [(cidx, detdata_filenames, data_folder) for cidx in range(len(channel_vars))])))
 else:
     event_dict = dict(izip(range(len(channel_vars)), map(process, [(cidx, detdata_filenames, data_folder) for cidx in range(len(channel_vars))])))
-    
-######################################################################### 
+
+#########################################################################
 ##                         Network detection                           ##
 ##         (NOTE: updated to include adjacent diagonal hashes)         ##
-#########################################################################    
-    
+#########################################################################
+
 print('Extracting network events...')
-    
-associator =  NetworkAssociator()   
-    
+
+associator =  NetworkAssociator()
+
 #/ map events to diagonals
-t4 = time.time()         
+t4 = time.time()
 all_diags_dict, dcount = associator.clouds_to_network_diags(event_dict, event_dict_keys = range(0,nstations), include_stats = True)
 print(' time to build network index: ' + str( time.time() - t4))
 
-#/ pseudo-association            
-t5 = time.time() 
+#/ pseudo-association
+t5 = time.time()
 print('Performing network pseudo-association...')
 icount, network_events = associator.associate_network_diags(all_diags_dict, nstations = nstations, offset = 20, include_stats = True)
 print(' time pseudo-association: ' + str( time.time() - t5))
@@ -637,8 +648,8 @@ for sta in range(nstations):
     for i in range(n1-1):
         if np.any((out2[i,:] == out2[i+1,:]) & (~np.isnan(out2[i,:]))):  #/ if match or nan
             out2[i+1,:] = np.nanmin((out2[i,:], out2[i+1,:]),axis=0) #/ fill in nans
-            tmp_neventlist.append(netids2[i])                                  
-        else:        
+            tmp_neventlist.append(netids2[i])
+        else:
             keep_row[i] = True
             tmp_neventlist.append(netids2[i]) #/ network id
             network_eventlist.append(tmp_neventlist)
@@ -659,10 +670,10 @@ def list_flatten(S):
     return S[:1] + flatten(S[1:])
 
 netids2 = [list_flatten(x) for x in netids2]    #/ to check if any missing
-                                                                       
-nfinal, n2 = np.shape(out2)                                          
+
+nfinal, n2 = np.shape(out2)
 tmp = np.nanargmin(out2,axis=1)
-row_sort = np.argsort( out2[np.arange(0, nfinal),tmp] )         
+row_sort = np.argsort( out2[np.arange(0, nfinal),tmp] )
 final_eventlist = out2[row_sort,:]   
 network_eventlist = [ netids2[k] for k in row_sort]
 
