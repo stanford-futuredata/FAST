@@ -1,9 +1,9 @@
 # FAST
 
-- Use ```python mat-to-txt.py [filename]``` to convert the binary fingerprint mat files to binary files.
 - To compile and run:
 ```
 cd FAST-new/
+cmake .
 make
 ./main
 ```
@@ -38,4 +38,11 @@ Allowed options:
   
   --minhash_threads              Maximum number of threads for minhash
   --simsearch_threads            Maximum number of threads for simsearch and db init
+  
+  --num_partitions               Number of (equally divided) partitions for similarity search, default is 5
+  --start_index                  Start fingerprint index for the all-to-some search
+  --end_index                    End fingerprint index for the all-to-some search 
+                                 (start_index and end_index overwrites the num_partition setting)
+  --filter_file                  Name of fingerprint binary filter file (each line represents whether 
+                                 the corresponding fingerprint should be put in the hash table or not)
 ```

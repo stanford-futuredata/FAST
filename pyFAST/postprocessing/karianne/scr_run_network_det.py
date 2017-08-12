@@ -16,7 +16,6 @@ try:
 except ImportError:
     izip = zip
 import multiprocessing
-from multiprocessing import Array, Value
 import multiprocessing.pool
 import os
 from bisect import *
@@ -205,21 +204,15 @@ class EventCloudExtractor:
                 t0 = time.time()
                 for qidx in range(dt_min, dt_max):
                     diags[qidx], diags[qidx+1] = self.merge_diags(diags[qidx], diags[qidx+1], self.dW)
-                # if lock is None:
-                #     print '      pass ' + str(p) + ': ' + str( time.time() - t0)
             else:  #/ backward pass
                 t0 = time.time()
                 for qidx in range(dt_max-1, dt_min-1, -1):
                     diags[qidx+1], diags[qidx] = self.merge_diags(diags[qidx+1], diags[qidx], self.dW)
-                # if lock is None:
-                #     print '      pass ' + str(p) + ': ' + str( time.time() - t0)
         t0 = time.time()
         event_dict = defaultdict(list)
         for k in diags:
             for t1, sim, eventid in diags[k]:
                 event_dict[eventid].append([k,t1,sim])
-        # if lock is None:
-        #     print '    populating event hash table ' + str( time.time() - t0)
         return event_dict
 
     def merge_diags(self, diag0, diag1, dW = None):
@@ -420,8 +413,6 @@ else:
 ##                      Helper functions                               ##
 #########################################################################                            
 
-
-#/
 def get_event_stats(network_event):
     ndets = sum( [x[3][0] for x in network_event] )
     vol   = sum( [x[3][1] for x in network_event] )
@@ -450,7 +441,6 @@ def flatten(items, seqtypes=(list, tuple)):
             items[i:i+1] = items[i]
     return items
 
-#/
 def get_det_list(ndets, timestamp_to_netid):
     det_start = np.where((ndets[:-1] == 0) & (ndets[1:] > 0))[0] + 1
     det_end   = np.where((ndets[:-1] > 0) & (ndets[1:] == 0))[0] + 1
@@ -490,8 +480,8 @@ def detection_init(l, dt, idx1, ivals):
     lock = l
     dt.extend(idx1)
     dt.extend(ivals)
-    pairs = Array('i', dt)
-    process_counter = Value('i', 0)
+    pairs = multiprocessing.Array('i', dt)
+    process_counter = multiprocessing.Value('i', 0)
 
 def detection(ranges):
     global process_counter
@@ -816,4 +806,4 @@ mdict['network_events'] = network_events  #ok
 with open(save_str + '.dat', "wb") as f:
     pickle.dump(mdict, f)
 
-print('GRAND TOTAL TIME:', time.time() - grand_start_time)
+print 'GRAND TOTAL TIME:', time.time() - grand_start_time
