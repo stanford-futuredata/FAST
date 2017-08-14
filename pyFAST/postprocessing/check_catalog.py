@@ -1,11 +1,6 @@
 import datetime
 import csv
-
-IDX_INTERVAL = 2
-min_time = datetime.datetime.strptime('2016-11-22 00:00:15.798391', '%Y-%m-%d %H:%M:%S.%f')
-start_time = datetime.datetime(2016, 11, 22)
-end_time = datetime.datetime(2016, 12, 1)
-results_folder = 'results/'
+import sys
 
 def get_events():
 	events = []
@@ -67,8 +62,21 @@ def output_comparisons_with_catalog():
 		f.write('\n')
 	f.close()
 
+def get_stats(fname):
+	f = open(fname, 'r')
+	lines = f.readlines()
+	min_time = datetime.datetime.strptime(lines[0].strip(), '%Y-%m-%dT%H:%M:%S.%f')
+	IDX_INTERVAL = int(lines[1].strip())
+	start_time = datetime.datetime.strptime(lines[2].strip(), '%Y-%m-%dT%H:%M:%S.%f')
+	end_time = datetime.datetime.strptime(lines[3].strip(), '%Y-%m-%dT%H:%M:%S.%f')
+	f.close()
+	return min_time, IDX_INTERVAL, start_time, end_time
 
 if __name__ == '__main__':
+	global_idx_file = sys.argv[1]
+	results_folder = sys.argv[2]
+	N_STATIONS = int(sys.argv[3])
+	min_time, IDX_INTERVAL, start_time, end_time = get_stats(global_idx_file)
 	events = get_events()
 
 	# Read and check groups
@@ -82,7 +90,7 @@ if __name__ == '__main__':
 		cells = line.split()
 		indices = []
 		t = []
-		for j in range(6):
+		for j in range(N_STATIONS):
 			if not 'nan' in cells[j]:
 				ts = min_time + datetime.timedelta(seconds=int(cells[j]) * IDX_INTERVAL)
 				f.write("%s " % ts.strftime('%Y-%m-%dT%H:%M:%S'))
