@@ -30,8 +30,8 @@ from pseudo_association import diag_coordsV, prune_events, EventCloudExtractor, 
 #                      'detdata_AlltoSome_MAD_K400_nvotes3_nfuncs5_ntbls100_2014-03-15_17days_CX.PB08..BHZ_2to8_prefilter.hdf5',
 #                      'detdata_AlltoSome_MAD_K400_nvotes3_nfuncs5_ntbls100_2014-03-15_17days_CX.PB11..BHZ_2to8_prefilter.hdf5']
 
-data_folder = './10-4/'
-save_str = './10-4_results/network_detection'
+data_folder = './8-2/'
+save_str = './results/network_detection'
 
 # channel_vars = ['GVZ_HHZ', 'GVZ_HHN', 'GVZ_HHE',
 #     'KHZ_HHZ', 'KHZ_HHN', 'KHZ_HHE',
@@ -48,8 +48,8 @@ save_str = './10-4_results/network_detection'
 
 channel_vars = ['KHZ', 'MQZ', 'OXZ', 'THZ']#, 'LTZ']
 
-detdata_filenames = ['KHZ-HHZ-10,11-104_pairs.txt', 'MQZ-HHZ-10,11-104_pairs.txt', 'OXZ-HHZ-10,11-104_pairs.txt',
-    'THZ-HHZ-10,11-104_pairs.txt']#, 'LTZ-HHZ-10,11-104_pairs.txt']
+detdata_filenames = ['KHZ-HHZ-10,11-82_pairs.txt', 'MQZ-HHZ-10,11-82_pairs.txt', 'OXZ-HHZ-10,11-82_pairs.txt',
+    'THZ-HHZ-10,11-82_pairs.txt']#, 'LTZ-HHZ-10,11-104_pairs.txt']
 
 nchannels = 1
 nstations = 4
@@ -158,6 +158,9 @@ for cidx, channel in enumerate(channel_vars):
     #diags, max_eventID = clouds.triplet_to_diags(dt, idx1, ivals, dt_min = q1, dt_max = q2, ivals_thresh = ivals_thresh, min_eventID = 0)
     diags, max_eventID = clouds.triplet_to_diags(dt, idx1, ivals, ivals_thresh = ivals_thresh, min_eventID = 0)
     print '    time triplet_to_diags: ' + str( time.time() - t1)
+    dt = None
+    idx1 = None
+    ivals = None
 
     #/ extract event-pair clouds
     t2 = time.time()
@@ -171,6 +174,9 @@ for cidx, channel in enumerate(channel_vars):
     prune_events(event_dict[cidx], min_dets, min_sum, max_width)
     print '    time prune_events: ' + str( time.time() - t3)
     print '  total time: ' + str( time.time() - t0)
+
+    with open(save_str + '_%s' % cidx, "wb") as f:
+        pickle.dump(event_dict[cidx], f)
 
 
 # #########################################################################
