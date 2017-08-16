@@ -24,6 +24,22 @@ void OutputHashTableStats(table* t) {
 	}
 	ofile.close();
 
+	ofstream of("stats/table0_bucket.txt");
+	table const *t1 = &t[0];
+	// Add maximum number of items per bucket in this hash table
+	for (table_cit it = t1->begin(); it != t1->end(); ++it) {
+		if (it->second.size() > 2000) {
+			size_t numItems = it->second.size();
+			of << "Bucket size: " << numItems << endl;
+			vec_cit vit = it->second.begin();
+			for (size_t j = 0; j < numItems; j ++) {
+				of << *vit << endl;
+				vit ++;
+			}
+		}
+	}
+	of.close();
+
 	for (uint64_t i = 0; i < s.ntbls; i ++) {
 		vec numItemsPerBucket = CountBucketItems(&t[i]);
 		ofstream ofile ("stats/table" + to_string(i) + ".txt" );
@@ -151,11 +167,11 @@ void searchRange(size_t start_indice, size_t end_indice, string filter_file,
 	BOOST_LOG_TRIVIAL(info) << "Initialize took: " << out_time;
 
 	// Similarity Search
-	out_time = 0;
-	SearchDatabase_voting(num_queries, s.ncols, query,
-			s.ntbls, s.near_repeats, t, min_hash_sigs,
-			s.nvotes, s.limit, &out_time, s.output_pairs_file, s.simsearch_threads);
-	BOOST_LOG_TRIVIAL(info) << "Search took: " << out_time;
+	// out_time = 0;
+	// SearchDatabase_voting(num_queries, s.ncols, query,
+	// 		s.ntbls, s.near_repeats, t, min_hash_sigs,
+	// 		s.nvotes, s.limit, &out_time, s.output_pairs_file, s.simsearch_threads);
+	// BOOST_LOG_TRIVIAL(info) << "Search took: " << out_time;
 
 	OutputHashTableStats(t);
 
@@ -177,7 +193,7 @@ int main(int argc, char * argv[]) {
 
 	if (!s.output_pairs_file.empty()) {
 		if (!s.filter_file.empty() ||
-			(s.start_index > 0 && s.end_index > 0)) { // Search again specified indices
+			(s.end_index > 0)) { // Search again specified indices
 			uint32_t *query =  new uint32_t[s.num_queries];
 			for (size_t i = 0; i < s.num_queries; i++) { query[i] = i; }
 
