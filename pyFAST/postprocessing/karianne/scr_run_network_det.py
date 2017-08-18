@@ -71,7 +71,7 @@ class EventCloudExtractor:
         if dt_max is None:
             dt_max = float('inf')
         if dL is None:
-            dL = self.dL                           
+            dL = self.dL
         #/ map data to diagonals
         t1 = time.time()
         diags = defaultdict(list) #/ initialize hash table
@@ -322,13 +322,13 @@ class NetworkAssociator:
                     if eventcloud[3] is not None:
                         if include_stats:
                             network_events[ eventcloud[3] ].append( ((k, k, eventcloud[0][2], eventcloud[0][3]), eventcloud[1], eventcloud[2], eventcloud[4]) )
-                        else:    
+                        else:
                             network_events[ eventcloud[3] ].append( ((k, k, eventcloud[0][2], eventcloud[0][3]), eventcloud[1], eventcloud[2]) )
-        else: 
-            network_events = None  
-            
-        self.icount = icount                                                          
-        return icount, network_events                                                                                
+        else:
+            network_events = None
+
+        self.icount = icount
+        return icount, network_events
 
     def _get_ddiag_bbox(self, event_data, return_bbox = True):
         ddiag = None #/ assigns valid value
@@ -346,8 +346,8 @@ class NetworkAssociator:
             t1min   = min(t1list)
             t1max   = max(t1list) 
             bbox    = (dtmin, dtmax, t1min, t1max)    
-        return ddiag, bbox  
-        
+        return ddiag, bbox
+
     def _get_event_stats(self, event_data):
         tmp = [x[2] for x in event_data]
         return ( len(event_data) , sum(tmp), max(tmp) ) 
@@ -365,8 +365,8 @@ detdata_filenames = ['9days_NZ_GVZ_HHZ.txt', '9days_NZ_KHZ_HHZ.txt', '9days_NZ_L
 # channel_vars = ['KHZ_HHZ', 'GVZ_HHZ', 'LTZ_HHZ', 'MQZ_HHZ', 'OXZ_HHZ', 'THZ_HHZ']
 # detdata_filenames = ['KHZ_total.txt', 'GVZ_total.txt', 'LTZ_total.txt', 'MQZ_total.txt', 'OXZ_total.txt', 'THZ_total.txt']
 
-channel_vars = ['MQZ_HHZ', 'KHZ_HHZ', 'OXZ_HHZ', 'THZ_HHZ']
-detdata_filenames = ['MQZ-HHZ-10,11-104_pairs.txt', 'KHZ-HHZ-10,11-104_pairs.txt', 'OXZ-HHZ-10,11-104_pairs.txt', 'THZ-HHZ-10,11-104_pairs.txt']
+channel_vars = ['KHZ_HHZ', 'MQZ_HHZ', 'OXZ_HHZ', 'THZ_HHZ']
+detdata_filenames = ['KHZ-HHZ-10,11-104_pairs.txt', 'MQZ-HHZ-10,11-104_pairs.txt', 'OXZ-HHZ-10,11-104_pairs.txt', 'THZ-HHZ-10,11-104_pairs.txt']
 
 nchannels = len(channel_vars)
 nstations = len(channel_vars)
@@ -449,6 +449,9 @@ def detection(file):
     global process_counter
     with process_counter.get_lock():
         process_counter.value += 1
+    q1 = int(file[0].split('_')[-1].split('to')[0])
+    q2 = int(file[0].split('_')[-1].split('to')[1])
+    print "(%d %d) started" % (q1, q2)
     start = time.time()
     pid = os.getpid()
     clouds = EventCloudExtractor(dL = dgapL, dW = dgapW)
@@ -465,11 +468,9 @@ def detection(file):
     diags = None
     #/ prune event-pairs
     prune_events(curr_event_dict, min_dets, min_sum, max_width)
-    q1 = int(file[0].split('_')[-1].split('to')[0])
-    q2 = int(file[0].split('_')[-1].split('to')[1])
     print '    Time taken for batch (%d, %d):' % (q1, q2), time.time() - start
     print 'Batch finish (%d, %d) %f' % (q1, q2, time.time())
-    return curr_event_dict
+    pickle.dump(curr_event_dict, open("%d_%d.dat" % (q1, q2), 'wb'))
 
 def process(cidx):
     print detdata_filenames[cidx]
@@ -482,12 +483,15 @@ def process(cidx):
     idx2 = sorted([f for f in files if 'idx1' in f])
     ivals = sorted([f for f in files if 'ivals' in f])
     files = zip(dt, idx2, ivals)
-    event_dicts = pool.map(detection, files)
+    pool.map(detection, files)
     print "after map_async %f" %time.time()
     pool.terminate()
     print "before combining %f" % time.time()
     result_dict = {}
-    for dictionary in event_dicts:
+    for file in files:
+        q1 = int(file[0].split('_')[-1].split('to')[0])
+        q2 = int(file[0].split('_')[-1].split('to')[1])
+        dictionary = pickle.load(open("%d_%d.dat" % (q1, q2), 'rb'))
         result_dict.update(dictionary)
     print len(result_dict)
     print time.time()
