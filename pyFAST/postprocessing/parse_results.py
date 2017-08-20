@@ -29,6 +29,7 @@ if __name__ == '__main__':
 	# File size in bytes
 	file_size = os.path.getsize(fname)
 	offset = 0
+	global_idx = None
 	f = open(fname, 'r')
 	pairs_file = open("%s_pairs.txt" % fname, 'w')
 	pbar = tqdm(total=file_size / MB_TO_BYTES, unit="MB")
@@ -46,6 +47,8 @@ if __name__ == '__main__':
 			i += 1
 			counts = a[i]
 			i += 1
+			if len(sys.argv) > 2:
+				global_idx = idx_map[idx]
 			# Read extra bytes
 			if i + counts > len(a):
 				read_size = (i + counts - len(a)) * 4
@@ -58,10 +61,10 @@ if __name__ == '__main__':
 					# Map station fingerprint index to global index
 					if len(sys.argv) > 2:
 						lines.append('%d %d %d\n' %(
-							idx_map[idx], idx_map[a[i + j * 2]], a[i + j * 2 + 1]))
+							global_idx - idx_map[a[i + j * 2]], global_idx, a[i + j * 2 + 1]))
 					# Use station index
 					else:
-						lines.append('%d %d %d\n' %(idx, a[i + j * 2], a[i + j * 2 + 1]))
+						lines.append('%d %d %d\n' %(idx - a[i + j * 2], idx, a[i + j * 2 + 1]))
 			i += counts
 
 		pairs_file.writelines(lines)
