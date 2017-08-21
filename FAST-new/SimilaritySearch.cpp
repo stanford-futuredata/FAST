@@ -90,7 +90,7 @@ void SearchDatabase_voting(const size_t nquery, const size_t ncols, const uint32
 
     //Search
     std::ofstream ofile;
-    ofile.open(out_file, std::ios::binary | std::ios::app);
+    ofile.open(out_file, std::ios::binary);
     size_t i;
     omp_set_num_threads(num_threads);
     double lookups = 0;

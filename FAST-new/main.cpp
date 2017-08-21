@@ -152,9 +152,13 @@ void searchRange(size_t start_indice, size_t end_indice, string filter_file,
 
 	// Similarity Search
 	out_time = 0;
+	ostringstream stringStream;
+	stringStream << s.output_pairs_file << "(" << start_indice 
+		<< "," << end_indice << ")";
+	string fname = stringStream.str();
 	SearchDatabase_voting(num_queries, s.ncols, query,
 			s.ntbls, s.near_repeats, t, min_hash_sigs,
-			s.nvotes, s.limit, &out_time, s.output_pairs_file, s.simsearch_threads);
+			s.nvotes, s.limit, &out_time, fname, s.simsearch_threads);
 	BOOST_LOG_TRIVIAL(info) << "Search took: " << out_time;
 
 	OutputHashTableStats(t);
