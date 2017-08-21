@@ -2,77 +2,139 @@ import numpy as np
 import sys
 from operator import itemgetter
 import os
-from tqdm import *
+from os.path import isfile, join
+import multiprocessing
+import argparse
+from extsort import *
 
-# Read input file 128MB per chunk
 MB_TO_BYTES = 1024 * 1024
-chunk_in_bytes = 128 * MB_TO_BYTES
 
+''' Helper function that defines the sorting order '''
+def _get_sort_key(line):
+    nums = line.split()
+    return (int(nums[0]), int(nums[1]))
+
+''' Helper function to get names of all intermediate (sorted) files '''
+def _get_sorted_fname(fname):
+    return fname + "_sorted"
+
+''' Helper function to get names of all intermediate (sorted) files '''
+def _get_pairs_fname(fname):
+    return fname + "_pairs"
 
 def get_global_index_map(idx_fname):
-	f = open(idx_fname, 'r')
-	idx_map = {}
-	for i, line in enumerate(f.readlines()):
-		idx_map[i] = int(line.strip())
-	f.close()
-	return idx_map
+    f = open(idx_fname, 'r')
+    idx_map = {}
+    for i, line in enumerate(f.readlines()):
+        idx_map[i] = int(line.strip())
+    f.close()
+    return idx_map
+
+def parse_partition(fname):
+    print "Parsing %s" % fname
+    # File size in bytes
+    file_size = os.path.getsize(fname)
+    offset = 0
+    global_idx = None
+    f = open(fname, 'r')
+    pairs_file = open(_get_pairs_fname(fname), 'w')
+
+    # Read binary file in chunks
+    while offset < file_size:
+        read_size = min(partition_memeory, file_size - offset)
+        buf = f.read(read_size)
+        delta_offset = 0
+        a = np.frombuffer(buf, dtype=np.uint32)
+        i = 0
+        lines = []
+        while (i < len(a)):
+            idx = a[i]
+            i += 1
+            counts = a[i]
+            i += 1
+            if args.idx:
+                global_idx = idx_map[idx]
+            # Read extra bytes
+            if i + counts > len(a):
+                read_size = (i + counts - len(a)) * 4
+                buf = f.read(read_size)
+                delta_offset += read_size
+                a = np.concatenate([a, np.frombuffer(buf, dtype=np.uint32)])
+            for j in range(counts / 2):
+                # Only add things that are above specified thresholds
+                if args.thresh is None or a[i + j * 2 + 1] >= args.thresh:
+                    # Map station fingerprint index to global index
+                    if args.idx:
+                        lines.append('%d %d %d\n' %(
+                            global_idx - idx_map[a[i + j * 2]], global_idx, a[i + j * 2 + 1]))
+                    # Use station index
+                    else:
+                        lines.append('%d %d %d\n' %(idx - a[i + j * 2], idx, a[i + j * 2 + 1]))
+            i += counts
+
+        pairs_file.writelines(lines)
+        delta_offset += min(partition_memeory, file_size - offset)
+        offset += delta_offset
+
+    pairs_file.close()
+    f.close()
+
+''' Sort each input file '''
+def sort(fname):
+    sorter = ExternalSort(partition_memeory)
+    print "Sorting %s" %fname
+    sorter.sort(fname, lambda line: _get_sort_key(line))
+    os.remove(fname)
+
+''' Merge all sorted file '''
+def merge(sorted_filenames, buffer_size):
+    print "Merging files"
+    merger = FileMerger(MergeByKey())
+    merger.merge(sorted_filenames, '%s_pairs_sorted.txt' % args.prefix, buffer_size)
+    map(lambda f: os.remove(f), sorted_filenames)
 
 if __name__ == '__main__':
-	fname = sys.argv[1]
-	nvotes = None
-	# Optionally map the fingerprint index for each station to a global index
-	if len(sys.argv) > 2:
-		idx_map = get_global_index_map(sys.argv[2])
-		if len(sys.argv) > 3:
-			nvotes = int(sys.argv[3])
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d',
+                        '--dir',
+                        help='directory of binary output files',
+                        default='./')
+    parser.add_argument('-p',
+                        '--prefix',
+                        help='prefix for all binary output files')
+    parser.add_argument('-t',
+                        '--thresh',
+                        nargs='?',
+                        help='threshold of similarity')
+    parser.add_argument('-i',
+                        '--idx',
+                        nargs='?',
+                        help='global idx file')
+    parser.add_argument('-m',
+                        '--mem',
+                        help='amount of memory to use for parsing',
+                        default='300M')
+    args = parser.parse_args()
 
-	# File size in bytes
-	file_size = os.path.getsize(fname)
-	offset = 0
-	global_idx = None
-	f = open(fname, 'r')
-	pairs_file = open("%s_pairs.txt" % fname, 'w')
-	pbar = tqdm(total=file_size / MB_TO_BYTES, unit="MB")
+    idx_map = {}
+    if args.idx:
+        idx_map = get_global_index_map(args.idx)
 
-	# Read binary file in chunks
-	while offset < file_size:
-		read_size = min(chunk_in_bytes, file_size - offset)
-		buf = f.read(read_size)
-		delta_offset = 0
-		a = np.frombuffer(buf, dtype=np.uint32)
-		i = 0
-		lines = []
-		while (i < len(a)):
-			idx = a[i]
-			i += 1
-			counts = a[i]
-			i += 1
-			if len(sys.argv) > 2:
-				global_idx = idx_map[idx]
-			# Read extra bytes
-			if i + counts > len(a):
-				read_size = (i + counts - len(a)) * 4
-				buf = f.read(read_size)
-				delta_offset += read_size
-				a = np.concatenate([a, np.frombuffer(buf, dtype=np.uint32)])
-			for j in range(counts / 2):
-				# Only add things that are above specified thresholds
-				if nvotes is None or a[i + j * 2 + 1] >= nvotes:
-					# Map station fingerprint index to global index
-					if len(sys.argv) > 2:
-						lines.append('%d %d %d\n' %(
-							global_idx - idx_map[a[i + j * 2]], global_idx, a[i + j * 2 + 1]))
-					# Use station index
-					else:
-						lines.append('%d %d %d\n' %(idx - a[i + j * 2], idx, a[i + j * 2 + 1]))
-			i += counts
+    fnames = []
+    for f in os.listdir(args.dir):
+        if args.prefix in f and isfile(join(args.dir, f)):
+            fnames.append(join(args.dir, f))
 
-		pairs_file.writelines(lines)
-		delta_offset += min(chunk_in_bytes, file_size - offset)
-		offset += delta_offset
-		pbar.update((delta_offset / MB_TO_BYTES))
-
-	pbar.close()
-	pairs_file.close()
-	f.close()
+    partition_memeory = parse_memory(args.mem) / len(fnames)
+    p = multiprocessing.Pool(len(fnames))
+    # Parse each binary output partition
+    p.map(parse_partition, fnames)
+    # Sort each partition
+    pairs_fnames = map(_get_pairs_fname, fnames)
+    p.map(sort, pairs_fnames)
+    # Merge sorted partitinos
+    if len(fnames) > 1:
+        buffer_size =parse_memory(args.mem) / (len(fnames) + 1)
+        sorted_filenames = map(_get_sorted_fname, pairs_fnames)
+        merge(sorted_filenames, buffer_size)
 

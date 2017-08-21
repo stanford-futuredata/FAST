@@ -4,6 +4,9 @@ import os
 from multiprocessing import Pool
 from extsort import *
 
+def str2bool(v):
+  return v.lower() in ("yes", "true", "t", "1")
+
 ''' Helper function that defines the sorting order '''
 def _get_sort_key(line):
     nums = line.split()
@@ -11,7 +14,7 @@ def _get_sort_key(line):
 
 ''' Helper function to get names of all intermediate (sorted) files '''
 def _get_sorted_fname(fname):
-	return fname + "_sorted"
+    return fname + "_sorted"
 
 def _output_buffer(buf, f_out):
     lines = []
@@ -39,13 +42,16 @@ def merge():
     print "Merging files"
     merger = FileMerger(MergeByKey())
     buffer_size = parse_memory(args.mem) / (len(args.filenames) + 1)
-    sorted_filenames = map(_get_sorted_fname, args.filenames)
-    merger.merge(sorted_filenames, 'merged.txt', buffer_size)
-    map(lambda f: os.remove(f), sorted_filenames)
+    if args.sort:
+        sorted_filenames = map(_get_sorted_fname, args.filenames)
+        merger.merge(sorted_filenames, 'merged.txt', buffer_size)
+        map(lambda f: os.remove(f), sorted_filenames)
+    else:
+        merger.merge(args.filenames, 'merged.txt', buffer_size)
 
 ''' Add up similarity and filter out those below threshold '''
 def filter_and_reduce():
-    print "Filtering by threshold"
+    print "Filtering by threshold, outputing results to %s" % args.outfile
     f_out = open(args.outfile, 'w')
     with open('merged.txt', 'r') as f:
         buf = []
@@ -88,15 +94,18 @@ if __name__ == '__main__':
     parser.add_argument('filenames',
                         metavar='<filename1 filename2...>',
                         nargs='+',
-                        help='name of file to sort')
+                        help='name of file to combine')
+    parser.add_argument("--sort", type=str2bool, nargs='?',
+                        default=True, help="Whether to sort input files")
     parser.add_argument('-o',
-    					'--outfile',
+                        '--outfile',
                         help='output filename',
                         default='combined.txt')
     args = parser.parse_args()
     pool = Pool(len(args.filenames))
 
-    pool.map(sort, args.filenames)
+    if args.sort:
+        pool.map(sort, args.filenames)
     merge()
     filter_and_reduce()
 
