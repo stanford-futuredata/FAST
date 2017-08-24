@@ -39,7 +39,7 @@ class EventCloudExtractor:
                 elems[j][2] = '%s-%d' % (pid_prefix, eventID)
         return elems, eventID
 
-    def p_triplet_to_diags(self, fname, pid_prefix = None, dL = None, dt_min = 0, dt_max = None, ivals_thresh = 0, lock = None):
+    def p_triplet_to_diags(self, fname, pid_prefix = None, dL = None, dt_min = 0, dt_max = None, ivals_thresh = 0):
         if dt_max is None:
             dt_max = float('inf')
         if dL is None:
@@ -81,7 +81,7 @@ class EventCloudExtractor:
 
         return diags
 
-    def diags_to_event_list(self, diags, dt_min = None, dt_max = None, npass = 3, lock = None):
+    def diags_to_event_list(self, diags, dt_min = None, dt_max = None, npass = 3):
         if dt_min is None or dt_max is None: # non parallel case
             dt_min = min(diags.keys())
             dt_max = max(diags.keys())

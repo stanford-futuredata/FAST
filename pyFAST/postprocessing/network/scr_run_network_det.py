@@ -34,19 +34,19 @@ parallel = True
 ##            Network detection - data & parameters                    ##
 #########################################################################
 
-data_folder = './9days_sorted/'
+data_folder = './8-2/partition/'
 save_str = './results/network_detection'
 
-channel_vars = ['KHZ', 'GVZ', 'LTZ', 'MQZ', 'OXZ', 'THZ']
-detdata_filenames = ['KHZ_sorted_total.txt', 'GVZ_sorted_total.txt', 'LTZ_sorted_total.txt', 
-    'MQZ_sorted_total.txt', 'OXZ_sorted_total.txt', 'THZ_sorted_total.txt']
+channel_vars = ['KHZ', 'OXZ', 'THZ', 'MQZ']
+detdata_filenames = ['KHZ-HHZ-2yr-82-sorted.txt', 
+    'OXZ-HHZ-2yr-82-sorted.txt', 'THZ-HHZ-2yr-82-sorted.txt', 'MQZ-HHZ-2yr-82-sorted.txt']
 
 #channel_vars = ['KHZ_HHZ', 'MQZ_HHZ', 'OXZ_HHZ', 'THZ_HHZ']
 #detdata_filenames = ['KHZ-HHZ-10,11-104_pairs.txt', 'MQZ-HHZ-10,11-104_pairs.txt', 'OXZ-HHZ-10,11-104_pairs.txt', 'THZ-HHZ-10,11-104_pairs.txt']
 
 nchannels = len(channel_vars)
 nstations = len(channel_vars)
-max_fp    = 17 * 86400  #/ largest fingperprint index  (was 'nfp')
+max_fp    = 32000000  #/ largest fingperprint index  (was 'nfp')
 dt_fp     = 1.0      #/ time lag between fingerprints
 dgapL     = 15       #/ = 30  #/ largest gap between detections along a single diagonal
 dgapW     = 3        #/ largest gap between detections adjacent diagonals
@@ -62,7 +62,7 @@ min_sum  = 6*min_dets
 max_width = 8
 
 #/ number of station detections to be included in event list
-nsta_thresh = 3
+nsta_thresh = 2
 
 # number of cores for parallelism
 num_cores = min(multiprocessing.cpu_count(), 24)
@@ -72,9 +72,8 @@ num_cores = min(multiprocessing.cpu_count(), 24)
 ##                  Event-pair detection functions                     ##
 #########################################################################  
 
-def detection_init(l):
-    global lock, process_counter
-    lock = l
+def detection_init():
+    global process_counter
     process_counter = multiprocessing.Value('i', 0)
 
 def detection(file):
@@ -86,9 +85,9 @@ def detection(file):
     clouds = EventCloudExtractor(dL = dgapL, dW = dgapW)
     # get events - create hashtable
     diags = clouds.p_triplet_to_diags(file, pid_prefix = str(pid + process_counter.value * 1000), 
-            ivals_thresh = ivals_thresh, lock = lock)
+            ivals_thresh = ivals_thresh)
     #/ extract event-pair clouds
-    curr_event_dict = clouds.diags_to_event_list(diags, npass = 3, lock = lock)
+    curr_event_dict = clouds.diags_to_event_list(diags, npass = 3)
     diags = None
     #/ prune event-pairs
     prune_events(curr_event_dict, min_dets, min_sum, max_width)
@@ -100,8 +99,8 @@ def process(cidx):
     print '  Extracting event-pair clouds ...'
     t0 = time.time()
     l = multiprocessing.Lock()
-    pool = multiprocessing.Pool(num_cores, initializer=detection_init, initargs=(l,))
-    files = [data_folder + f for f in os.listdir("./9days_sorted/") if f.startswith(detdata_filenames[cidx].split('.')[0])]
+    pool = multiprocessing.Pool(num_cores, initializer=detection_init)
+    files = [data_folder + f for f in os.listdir(data_folder) if f.startswith(detdata_filenames[cidx].split('.')[0])]
     event_dicts = pool.map(detection, files)
     pool.terminate()
     result_dict = {}
