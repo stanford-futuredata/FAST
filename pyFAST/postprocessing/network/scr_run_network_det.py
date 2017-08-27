@@ -7,6 +7,7 @@
 ######################################################################### 
 
 import cPickle as pickle
+import gc
 import time
 import numpy as np
 from collections import defaultdict
@@ -34,19 +35,19 @@ parallel = True
 ##            Network detection - data & parameters                    ##
 #########################################################################
 
-data_folder = './8-2/partition/'
-save_str = './results/network_detection'
+data_folder = './diablo_partition/'
+save_str = './diablo_partition_results/network_detection'
 
-channel_vars = ['KHZ', 'OXZ', 'THZ', 'MQZ']
-detdata_filenames = ['KHZ-HHZ-2yr-82-sorted.txt', 
-    'OXZ-HHZ-2yr-82-sorted.txt', 'THZ-HHZ-2yr-82-sorted.txt', 'MQZ-HHZ-2yr-82-sorted.txt']
+channel_vars = ['LMA', 'SHD', 'LSD', 'DCD', 'VPD']
+detdata_filenames = ['LMD_sorted.txt', 'SHD_sorted.txt',
+    'LSD_sorted.txt', 'DCD_sorted.txt', 'VPD_sorted.txt']
 
 #channel_vars = ['KHZ_HHZ', 'MQZ_HHZ', 'OXZ_HHZ', 'THZ_HHZ']
 #detdata_filenames = ['KHZ-HHZ-10,11-104_pairs.txt', 'MQZ-HHZ-10,11-104_pairs.txt', 'OXZ-HHZ-10,11-104_pairs.txt', 'THZ-HHZ-10,11-104_pairs.txt']
 
 nchannels = len(channel_vars)
 nstations = len(channel_vars)
-max_fp    = 32000000  #/ largest fingperprint index  (was 'nfp')
+max_fp    = 360000000  #/ largest fingperprint index  (was 'nfp')
 dt_fp     = 1.0      #/ time lag between fingerprints
 dgapL     = 15       #/ = 30  #/ largest gap between detections along a single diagonal
 dgapW     = 3        #/ largest gap between detections adjacent diagonals
@@ -65,7 +66,7 @@ max_width = 8
 nsta_thresh = 2
 
 # number of cores for parallelism
-num_cores = min(multiprocessing.cpu_count(), 24)
+num_cores = 4
 
 
 ######################################################################### 
@@ -77,6 +78,7 @@ def detection_init():
     process_counter = multiprocessing.Value('i', 0)
 
 def detection(file):
+    print file
     global process_counter
     with process_counter.get_lock():
         process_counter.value += 1
@@ -92,7 +94,9 @@ def detection(file):
     #/ prune event-pairs
     prune_events(curr_event_dict, min_dets, min_sum, max_width)
     print '    Time taken for %s:' % file, time.time() - start
-    return curr_event_dict
+    print "Saving event_dict to %s_event_dict.dat" % file
+    with open('%s_event.dat' % file, "wb") as f:
+        pickle.dump(curr_event_dict, f)
 
 def process(cidx):
     print detdata_filenames[cidx]
@@ -101,14 +105,11 @@ def process(cidx):
     l = multiprocessing.Lock()
     pool = multiprocessing.Pool(num_cores, initializer=detection_init)
     files = [data_folder + f for f in os.listdir(data_folder) if f.startswith(detdata_filenames[cidx].split('.')[0])]
-    event_dicts = pool.map(detection, files)
+    pool.map(detection, files)
     pool.terminate()
-    result_dict = {}
-    for dictionary in event_dicts:
-        result_dict.update(dictionary)
     print time.time()
     print '  total time for %s:' % (detdata_filenames[cidx]), time.time() - t0
-    return result_dict
+    return files
 
 #########################################################################
 ##                  Event-pair detection                               ##
@@ -126,17 +127,26 @@ if __name__ == '__main__':
 
     grand_start_time = time.time()
 
-    event_dict = dict(izip(xrange(len(channel_vars)), map(process, [cidx for cidx in xrange(len(channel_vars))])))
+    result_names = dict(izip(xrange(len(channel_vars)), map(process, [cidx for cidx in xrange(len(channel_vars))])))
+    event_dict = {}
+    for cidx in xrange(len(channel_vars)):
+        channel_dict = {}
+        for file in result_names[cidx]:
+            if not 'event' in file:
+                dictionary = pickle.load(open('%s_event.dat' % file, 'rb'))
+                channel_dict.update(dictionary)
+        event_dict[cidx] = channel_dict
 
     print "Saving event_dict to event_dict.dat"
     with open('event_dict.dat', "wb") as f:
-         pickle.dump(event_dict, f)
+        pickle.dump(event_dict, f)
 
 #########################################################################
 ##                         Network detection                           ##
 ##         (NOTE: updated to include adjacent diagonal hashes)         ##
 #########################################################################
 
+    gc.collect()
     print 'Extracting network events...'
 
     associator =  NetworkAssociator()
@@ -145,6 +155,7 @@ if __name__ == '__main__':
     t4 = time.time()
     all_diags_dict, dcount = associator.clouds_to_network_diags(event_dict, event_dict_keys = range(0,nstations), include_stats = True)
     print ' time to build network index:', time.time() - t4
+    del event_dict
 
     #/ pseudo-association
     t5 = time.time()
@@ -159,7 +170,8 @@ if __name__ == '__main__':
     print "Saving network event to network_event.dat"
     with open('network_event.dat', "wb") as f:
         pickle.dump(network_events, f)
-    #network_events = pickle.load(open('network_event.dat', 'rb'))
+    # network_events = pickle.load(open('network_event.dat', 'rb'))
+    # print "Loaded network event"
 
     # Get network events
     network_events_final = get_network_events_final(network_events, max_fp, nstations, nsta_thresh)

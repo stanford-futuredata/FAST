@@ -3,8 +3,6 @@ import time
 from collections import defaultdict
 from itertools import izip, count
 
-SIZE_HINT = 128 * 1024 * 1024
-
 ######################################################################### 
 ##               functions                                            ##
 ######################################################################### 
@@ -49,15 +47,12 @@ class EventCloudExtractor:
         diags = defaultdict(list) #/ initialize hash table
 
         eventID = 0
-        f = open(fname, 'r')
         prev_key = None
         elems = []
-        while True:
-            buf = f.readlines(SIZE_HINT)
-            if not buf:
-                break
-            for line in buf:
+        with open(fname, 'r') as f:
+            for line in f:
                 tmp = line.strip().split()
+                del line
                 dt = int(tmp[0])
                 idx1 = int(tmp[1])
                 ivals = int(tmp[2])
