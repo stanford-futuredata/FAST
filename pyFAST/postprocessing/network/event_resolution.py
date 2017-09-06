@@ -49,26 +49,28 @@ def get_event_stats(network_event):
     #/ max dets for each station
     return ndets, vol, nsta, dL, peaksum
 
-######################################################################### 
+#########################################################################
 
 def prune_network_events(network_events, nsta_thresh):
-    ''' 
+    '''
     eliminates network events based on station threshold criterion
-    '''    
+    '''
     networkID = network_events.keys()
     for nid in networkID:
         if len(np.unique([ x[1] for x in network_events[nid]])) < nsta_thresh:
             del network_events[nid]
 
-    
-#########################################################################             
 
+#########################################################################
+
+'''
+In this version <ndets> is updated to contain a binary variable indicating whether
+each time stamp is included in some event-pair, rather than a count of the number
+of event-pairs. <timestamp_to_netids> has been updated so that each ID is assigned 
+to only two time stamps (the initial time stamp for each event in the pair),
+rather than for every timestamp associated with the event-pair
+'''
 def get_network_events_final(network_events, max_fp, nstations, nsta_thresh):
-    '''
-    In this version <ndets> is updated to contain a binary variable indicating whether each time stamp is included in some event-pair, 
-     rather than a count of the number of event-pairs. <timestamp_to_netids> has been updated so that only each ID is assigned to only
-     two time stamps (the initial time stamp for each event in the pair), rather than for every timestamp associated with the event-pair 
-    '''    
     networkID = network_events.keys()
     timestamp_to_netid = dict()
     for i in xrange(nstations):
@@ -88,7 +90,7 @@ def get_network_events_final(network_events, max_fp, nstations, nsta_thresh):
                 ndets[stid0][t1a:(t1b+1)] = True
                 ndets[stid0][t2a:(t2b+1)] = True
                 timestamp_to_netid[stid0][t1a].append(nid)
-                timestamp_to_netid[stid0][t2a].append(nid)                
+                timestamp_to_netid[stid0][t2a].append(nid)
 
     #/ counts number of detections for each time interval (for each station)
     network_events_final = defaultdict(lambda: defaultdict(list))
@@ -107,24 +109,26 @@ def get_network_events_final(network_events, max_fp, nstations, nsta_thresh):
         network_events_final[nid]['max_sum'] = sum([x[3][2] for x in network_events[nid]])
 
     return network_events_final
-    
-#########################################################################   
-    
+
+#########################################################################
+
+'''
+In this version <ndets> is updated to contain a binary variable indicating whether each
+time stamp is included in some event-pair, rather than a count of the number of event-pairs.
+<timestamp_to_netids> has been updated so that only each ID is assigned to only two time
+stamps (the initial time stamp for each event in the pair), rather than for every timestamp
+associated with the event-pair.
+----
+To further reduce size of <ndets> and  <timestamp_to_netids> for networks with large number
+of stations, events are resolved separately for each station (within for-loop)
+---
+Additionally, instead of condition for inclusion embedded within event-resolution loop,
+a separate function call removes network events that will not be included in final detection
+list to improve modularity of post-processing
+'''
 def get_network_events_final_by_station(network_events, max_fp, nstations, nsta_thresh):
-    '''
-    In this version <ndets> is updated to contain a binary variable indicating whether each time stamp is included in some event-pair, 
-     rather than a count of the number of event-pairs. <timestamp_to_netids> has been updated so that only each ID is assigned to only
-     two time stamps (the initial time stamp for each event in the pair), rather than for every timestamp associated with the event-pair.
-     ----
-     To further reduce size of <ndets> and  <timestamp_to_netids> for networks with large number of stations, events are resolved separately
-     for each station (within for-loop)
-     ---
-     Additionally, instead of condition for inclusion embedded within event-resolution loop, a separate function call removes network events
-     that will not be included in final detection list to improve modularity of post-processing
-    '''  
-        
-    prune_network_events(network_events, nsta_thresh)   
-     
+    prune_network_events(network_events, nsta_thresh)
+
     networkID = network_events.keys()
     network_events_final = defaultdict(lambda: defaultdict(list))
 
@@ -143,7 +147,7 @@ def get_network_events_final_by_station(network_events, max_fp, nstations, nsta_
                     ndets[t1a:(t1b+1)] = True
                     ndets[t2a:(t2b+1)] = True
                     timestamp_to_netid[t1a].append(nid)
-                    timestamp_to_netid[t2a].append(nid)                
+                    timestamp_to_netid[t2a].append(nid)
 
         #/ counts number of detections for each time interval (for each station)
         det_data = _get_det_list(ndets, timestamp_to_netid) #/ gets list of detections - may need to be updated depending on dataset
@@ -159,7 +163,7 @@ def get_network_events_final_by_station(network_events, max_fp, nstations, nsta_
         network_events_final[nid]['vol']     = sum([x[3][1] for x in network_events[nid]])
         network_events_final[nid]['max_sum'] = sum([x[3][2] for x in network_events[nid]])
 
-    return network_events_final 
+    return network_events_final
 
 ########################################################################################
 
@@ -215,8 +219,8 @@ def event_to_list_and_dedup(network_events_final, nstations):
                 tmp_neventlist.append(netids2[i+1])
                 network_eventlist.append(tmp_neventlist) 
                 tmp_neventlist = list()
-        out2 = out2[keep_row,:]   
-        netids2 = network_eventlist 
+        out2 = out2[keep_row,:]
+        netids2 = network_eventlist
 
     def list_flatten(S):
         if S == []:

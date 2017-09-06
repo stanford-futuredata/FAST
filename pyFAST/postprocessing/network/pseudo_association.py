@@ -54,7 +54,8 @@ class EventCloudExtractor:
                 tmp = line.strip().split()
                 del line
                 dt = int(tmp[0])
-                idx1 = int(tmp[1])
+                idx2 = int(tmp[1])
+                idx1 = idx2 - dt
                 ivals = int(tmp[2])
                 if ivals < ivals_thresh:
                     continue
@@ -144,22 +145,16 @@ class NetworkAssociator:
     def __init__(self, icount = 0):
         self.icount = icount
 
-    def clouds_to_network_diags(self, event_dict, event_dict_keys, include_stats = False):
-        all_diags_dict = defaultdict(list)
-        dcount = 0
-        for cidx, channel in enumerate(event_dict_keys):
-            for k in event_dict[channel].keys():
-                ddiag, bbox = self._get_ddiag_bbox(event_dict[channel][k])
-                if include_stats:
-                    event_stats = self._get_event_stats(event_dict[channel][k])
-                    all_diags_dict[ddiag].append([bbox, cidx, k, None, event_stats])  #/ boundingBox, stationID, diagonalKey, networkEventID, event_stats : (ndets , vol (sum_sim), peak_sim)
-                else:
-                    all_diags_dict[ddiag].append([bbox, cidx, k, None])  #/ boundingBox, stationID, diagonalKey, networkEventID
-                dcount += 1
-        for k in all_diags_dict.keys():
-            all_diags_dict[k].sort(key=lambda x: x[0][2])  #/ sort event pairs by initial time t1 in bounding box             
-        return all_diags_dict, dcount
-
+    def clouds_to_network_diags_one_channel(self, event_dict, cidx, include_stats = True):
+        diags_dict = defaultdict(list)
+        for k in event_dict:
+            ddiag, bbox = self._get_ddiag_bbox(event_dict[k])
+            if include_stats:
+                event_stats = self._get_event_stats(event_dict[k])
+                diags_dict[ddiag].append([bbox, cidx, k, None, event_stats])  #/ boundingBox, stationID, diagonalKey, networkEventID, event_stats : (ndets , vol (sum_sim), peak_sim)
+            else:
+                diags_dict[ddiag].append([bbox, cidx, k, None])  #/ boundingBox, stationID, diagonalKey, networkEventID
+        return diags_dict
 
     def associate_network_diags(self, all_diags_dict, nstations, offset, q1 = None, q2 = None, return_network_events = True, include_stats = True):
         p = 2*nstations
