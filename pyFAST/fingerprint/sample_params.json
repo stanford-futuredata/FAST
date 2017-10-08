@@ -24,6 +24,8 @@
         "start_time": "10-01-01T00:00:00.0",
         "end_time": "10-03-01T00:00:00.0",
         "folder": "../bp2to20_waveformsKHZ/",
-        "fname_time_format": "%Y%m%dT%H%M%SZ"
+        "fname_time_format": "%Y%m%dT%H%M%SZ",
+        "files": ["bp2to20.NZ.KHZ.10.HHZ__20100101T000000Z__20100201T000000Z.mseed",
+            "bp2to20.NZ.KHZ.10.HHZ__20100201T000000Z__20100301T000000Z.mseed"]
     }
 }

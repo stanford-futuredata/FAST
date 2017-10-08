@@ -25,21 +25,20 @@ def call_mad(params):
 if __name__ == '__main__':
 	param_json = sys.argv[1]
 	params = parse_json(param_json)
-	start_time, end_time = get_start_end_times(params)
 
 	# Preprocess to calculate MAD
 	call_mad(params)
 
 	# Fingerprint
 	p = Pool(params['performance']['num_fp_thread'])
-	args = []
-	files = get_data_files(params)
-	print files
+	files = params['data']['files']
 	print (p.map(call_fingerprint, files))
+
 	# t = start_time
 	# while t < end_time:
 	# 	fname = construct_filename(t, params['data']['station'])
 	# 	args.append(fname)
 	# 	t += params.INTERVAL
 	# print(p.map(call_fingerprint, args))
+
 

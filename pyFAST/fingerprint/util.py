@@ -18,7 +18,6 @@ def get_data_files(params):
     files = []
     for f in listdir(path):
         if isfile(join(path, f)) and should_include_file(f, params):
-            #files.append(join(path, f))
             files.append(f)
     return files
 
@@ -34,9 +33,11 @@ def get_start_end_times(params):
     return (start_time, end_time)
 
 def gen_mad_fname(params):
-    return 'mad%s_%s_%s_%s.txt' % (
+    return 'mad%s_%s_%f_%.0f_%s_%s.txt' % (
         params['data']['station'],
         params['data']['channel'],
+        params['fingerprint']['mad_sampling_rate'],
+        params['fingerprint']['mad_sample_interval'],
         params['data']['start_time'],
         params['data']['end_time'] )
 
