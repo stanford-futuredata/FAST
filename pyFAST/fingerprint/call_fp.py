@@ -1,46 +1,44 @@
-from obspy import read
-from os import listdir
-from os.path import isfile, join
 import subprocess
 from multiprocessing import Pool
 import sys
-import params
 import datetime
-from params import construct_filename
+import json
+from util import *
 
-madStatsCommand= 'python MAD.py %s %s %s'
-fingerprintCommand = 'python finger_print.py %s %s %s'
+madStatsCommand= 'python MAD.py %s'
+fingerprintCommand = 'python finger_print.py %s %s'
 
 def call_fingerprint(args):
 	print "Fingerprinting " + str(args)
-	process = subprocess.Popen((fingerprintCommand % (args, mad_file, station)),
+	process = subprocess.Popen((fingerprintCommand % (args, param_json)),
 			stdout=subprocess.PIPE, shell=True)
 	output, error = process.communicate()
 	return output, error
 
-def call_mad():
+def call_mad(params):
 	print "Processing for MAD"
-	process = subprocess.Popen((madStatsCommand % (start_time, end_time, station)),
+	process = subprocess.Popen((madStatsCommand % (param_json)),
 			stdout=subprocess.PIPE, shell=True)
 	output, error = process.communicate()
 	print output
-	return 'mad%s-%s-%s%s.txt' % (station, params.channel, start_time, end_time)
 
 if __name__ == '__main__':
-	start_time = sys.argv[1]
-	end_time = sys.argv[2]
-	station = sys.argv[3]
+	param_json = sys.argv[1]
+	params = parse_json(param_json)
 
 	# Preprocess to calculate MAD
-	mad_file = call_mad()
+	call_mad(params)
 
 	# Fingerprint
-	p = Pool(params.NUM_FP_THREAD)
-	args = []
-	time = datetime.datetime.strptime(start_time, "%y-%m")
-	while time < datetime.datetime.strptime(end_time, "%y-%m"):
-		fname = construct_filename(time, station)
-		args.append(fname)
-		time += params.INTERVAL
-	print(p.map(call_fingerprint, args))
+	p = Pool(params['performance']['num_fp_thread'])
+	files = params['data']['fingerprint_files']
+	print (p.map(call_fingerprint, files))
+
+	# t = start_time
+	# while t < end_time:
+	# 	fname = construct_filename(t, params['data']['station'])
+	# 	args.append(fname)
+	# 	t += params.INTERVAL
+	# print(p.map(call_fingerprint, args))
+
 

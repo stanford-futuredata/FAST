@@ -5,15 +5,8 @@ from obspy.core import UTCDateTime
 import os
 import sys
 import random
-import params
 import datetime
-from params import construct_filename
-from feature_extractor import FeatureExtractor
-
-def get_start_end_time(st, idx):
-	starttime = datetime.datetime.strptime(str(st[idx].stats.starttime), '%Y-%m-%dT%H:%M:%S.%fZ')
-	endtime = datetime.datetime.strptime(str(st[idx].stats.endtime), '%Y-%m-%dT%H:%M:%S.%fZ')
-	return (starttime, endtime)
+from util import *
 
 def get_segment(st, starttime, endtime, sample_length):
 	delta = int((endtime - starttime).total_seconds() - sample_length)
@@ -26,56 +19,52 @@ def get_segment(st, starttime, endtime, sample_length):
 	return sample_segment
 
 
-def get_haar_stats(start_time, end_time):
-	time = start_time
-	sample_haar_images = np.zeros([0, int(params.nfreq) * int(params.ntimes)])
-	while time < end_time:
-		fname = construct_filename(time, station)
-		st = read('%s%s' %((params.data_folder % station), fname))
+def get_haar_stats():
+	p = params['fingerprint']
+	min_fp_length = get_min_fp_length(params)
+	sample_haar_images = np.zeros([0,
+		int(p['nfreq']) * int(p['ntimes'])])
+	files = params['data']['MAD_sample_files']
+	for fname in files:
+		st = read(params['data']['folder'] + fname)
 		# No sampling
-		if params.sampling_rate == 1:
+		if p['mad_sampling_rate'] == 1:
 			for i in range(len(st)):
-				starttime, endtime = get_start_end_time(st, i)
-				if endtime - starttime <= datetime.timedelta(seconds=params.min_fp_length):
+				if st[i].stats.endtime - st[i].stats.starttime <= min_fp_length:
 					print 'continue'
 					continue
 				haar_images, nWindows, idx1, idx2, Sxx, t = feats.data_to_haar_images(st[i].data)
 				sample_haar_images = np.vstack([sample_haar_images, haar_images])
-		# Randomly sample sample_length proportion of data from each input file
+		# Randomly sample sample_length proportion of data from each input file 
+		# at each specified sample interval
 		else:
-			sample_length = max((time + params.INTERVAL - time).total_seconds() 
-				* params.sampling_rate, params.min_fp_length)
-			# Get a random trace that is long enough
-			idx = random.randint(0, len(st) - 1)
-			starttime, endtime = get_start_end_time(st, idx)
-			while sample_length >= params.min_fp_length:
-				# Get time series sample
-				trace_length = (endtime - starttime).total_seconds()
-				if trace_length > params.min_fp_length:
-					segment = get_segment(st[idx], starttime, endtime, min(trace_length, sample_length))
-					haar_images, nWindows, idx1, idx2, Sxx, t = feats.data_to_haar_images(segment.data)
+			sample_interval = p['mad_sample_interval']
+			sample_length = max(sample_interval * p['mad_sampling_rate'], min_fp_length)
+			curr_time = st[0].stats.starttime
+			file_endtime = st[len(st) - 1].stats.endtime
+			while file_endtime - curr_time >= sample_interval:
+				start_offset = random.randint(0, sample_interval - sample_length)
+				segment = st.slice(curr_time + start_offset,
+					curr_time + start_offset + sample_length)
+				if len(segment) > 0:
+					data = segment[0].data
+					for i in range(1, len(segment)):
+						data = np.append(data, segment[i].data)
+					haar_images, nWindows, idx1, idx2, Sxx, t = feats.data_to_haar_images(data)
 					sample_haar_images = np.vstack([sample_haar_images, haar_images])
-					sample_length -= min(sample_length, trace_length)
-				idx = random.randint(0, len(st) - 1)
-				starttime, endtime = get_start_end_time(st, idx)
-		time += params.INTERVAL
+				curr_time = curr_time + sample_interval
 
 	return feats.compute_haar_stats(sample_haar_images)
 
 
 if __name__ == '__main__':
-	start_time = datetime.datetime.strptime(sys.argv[1], "%y-%m")
-	end_time = datetime.datetime.strptime(sys.argv[2], "%y-%m")
-	station = sys.argv[3]
+	param_json = sys.argv[1]
+	params = parse_json(param_json)
+	feats = init_feature_extractor(params)
 
-	feats = FeatureExtractor(sampling_rate=params.Fs, window_length=params.spec_length, 
-		window_lag=params.spec_lag, fingerprint_length=params.fp_length, 
-		fingerprint_lag=params.fp_lag, min_freq=params.fmin, max_freq=params.fmax)
-
-	median, mad = get_haar_stats(start_time, end_time)
+	median, mad = get_haar_stats()
 	# Output MAD stats to file
-	f = open('mad%s-%s-%s%s.txt' % (
-		station, params.channel, sys.argv[1], sys.argv[2]), 'w')
+	f = open(gen_mad_fname(params), 'w')
 	for i in range(len(median)):
 		f.write('%.16f,%.16f\n' %(median[i], mad[i]))
 	f.close()
