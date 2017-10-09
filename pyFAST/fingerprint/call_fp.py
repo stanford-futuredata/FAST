@@ -31,7 +31,7 @@ if __name__ == '__main__':
 
 	# Fingerprint
 	p = Pool(params['performance']['num_fp_thread'])
-	files = params['data']['files']
+	files = params['data']['fingerprint_files']
 	print (p.map(call_fingerprint, files))
 
 	# t = start_time

@@ -24,7 +24,7 @@ def get_haar_stats():
 	min_fp_length = get_min_fp_length(params)
 	sample_haar_images = np.zeros([0,
 		int(p['nfreq']) * int(p['ntimes'])])
-	files = params['data']['files']
+	files = params['data']['MAD_sample_files']
 	for fname in files:
 		st = read(params['data']['folder'] + fname)
 		# No sampling
