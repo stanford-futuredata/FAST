@@ -13,6 +13,19 @@ def should_include_file(f, params):
     return params['data']['station'] in f and \
         params['data']['channel'] in f
 
+def get_fp_ts_folders(params):
+    fp_folder = params['data']['folder'] + 'fingerprints/'
+    ts_folder = params['data']['folder'] + 'timestamps/'
+    return fp_folder, ts_folder
+
+def get_ts_fname(mseed_fname):
+    idx = mseed_fname.rfind('.')
+    return "ts_" + mseed_fname[:idx]
+
+def get_fp_fname(mseed_fname):
+    idx = mseed_fname.rfind('.')
+    return "fp_" + mseed_fname[:idx]
+
 def get_data_files(params):
     path = abspath(join(dirname(__file__), params['data']['folder']))
     files = []

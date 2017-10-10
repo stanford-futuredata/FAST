@@ -133,11 +133,13 @@ void SearchDatabase_voting(const size_t nquery, const size_t ncols, const uint32
             }
         }
         uint32_t count = results.size();
-        #pragma omp critical(WRITE_TO_FILE)
-        {
-              ofile.write((char*)&query_index, 4);
-              ofile.write((char*)&count, 4);
-              ofile.write((char*)&(results[0]), count * 4);
+        if (count > 0) {
+             #pragma omp critical(WRITE_TO_FILE)
+            {
+                  ofile.write((char*)&query_index, 4);
+                  ofile.write((char*)&count, 4);
+                  ofile.write((char*)&(results[0]), count * 4);
+            }
         }
         lookups += query_size * 1.0 / nquery;
     }
