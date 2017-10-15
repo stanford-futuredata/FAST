@@ -33,8 +33,7 @@ def init_MAD_stats(mad_fname):
 
 def init_fp_folders(params):
 	# Create timestamp and fingerprint folder if not exist
-	fp_folder = params['data']['folder'] + 'fingerprints/'
-	ts_folder = params['data']['folder'] + 'timestamps/'
+	fp_folder, ts_folder = get_fp_ts_folders(params)
 	if not os.path.exists(fp_folder):
 		os.makedirs(fp_folder)
 	if not os.path.exists(ts_folder):
@@ -63,8 +62,8 @@ if __name__ == '__main__':
 
 	# read mseed
 	st = read(params['data']['folder'] + fname)
-	ts_file = open(ts_folder + "ts_" + fname[:-6], "a")
-	fp_file = open(fp_folder + "fp_" + fname[:-6], "a")
+	ts_file = open(ts_folder + get_ts_fname(fname), "a")
+	fp_file = open(fp_folder + get_fp_fname(fname), "a")
 	time_padding = get_partition_padding()
 	min_fp_length = get_min_fp_length(params)
 

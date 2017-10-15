@@ -2,6 +2,7 @@ from obspy import read
 import numpy as np
 import time
 from obspy.core import UTCDateTime
+from multiprocessing import Pool
 import os
 import sys
 import random
@@ -18,41 +19,51 @@ def get_segment(st, starttime, endtime, sample_length):
 			starttime + datetime.timedelta(seconds=start_delta + sample_length)).strftime('%Y-%m-%dT%H:%M:%S.%f')))
 	return sample_segment
 
-
-def get_haar_stats():
+def get_haar_image(fname):
 	p = params['fingerprint']
 	min_fp_length = get_min_fp_length(params)
 	sample_haar_images = np.zeros([0,
 		int(p['nfreq']) * int(p['ntimes'])])
-	files = params['data']['MAD_sample_files']
-	for fname in files:
-		st = read(params['data']['folder'] + fname)
-		# No sampling
-		if p['mad_sampling_rate'] == 1:
-			for i in range(len(st)):
-				if st[i].stats.endtime - st[i].stats.starttime <= min_fp_length:
-					print 'continue'
-					continue
-				haar_images, nWindows, idx1, idx2, Sxx, t = feats.data_to_haar_images(st[i].data)
+	st = read(params['data']['folder'] + fname)
+	# No sampling
+	if p['mad_sampling_rate'] == 1:
+		for i in range(len(st)):
+			if st[i].stats.endtime - st[i].stats.starttime <= min_fp_length:
+				print 'continue'
+				continue
+			haar_images, nWindows, idx1, idx2, Sxx, t = feats.data_to_haar_images(st[i].data)
+			sample_haar_images = np.vstack([sample_haar_images, haar_images])
+	# Randomly sample sample_length proportion of data from each input file 
+	# at each specified sample interval
+	else:
+		sample_interval = p['mad_sample_interval']
+		sample_length = max(sample_interval * p['mad_sampling_rate'], min_fp_length)
+		curr_time = st[0].stats.starttime
+		file_endtime = st[len(st) - 1].stats.endtime
+		while file_endtime - curr_time >= sample_interval:
+			start_offset = random.randint(0, sample_interval - sample_length)
+			segment = st.slice(curr_time + start_offset,
+				curr_time + start_offset + sample_length)
+			if len(segment) > 0:
+				data = segment[0].data
+				for i in range(1, len(segment)):
+					data = np.append(data, segment[i].data)
+				haar_images, nWindows, idx1, idx2, Sxx, t = feats.data_to_haar_images(data)
 				sample_haar_images = np.vstack([sample_haar_images, haar_images])
-		# Randomly sample sample_length proportion of data from each input file 
-		# at each specified sample interval
-		else:
-			sample_interval = p['mad_sample_interval']
-			sample_length = max(sample_interval * p['mad_sampling_rate'], min_fp_length)
-			curr_time = st[0].stats.starttime
-			file_endtime = st[len(st) - 1].stats.endtime
-			while file_endtime - curr_time >= sample_interval:
-				start_offset = random.randint(0, sample_interval - sample_length)
-				segment = st.slice(curr_time + start_offset,
-					curr_time + start_offset + sample_length)
-				if len(segment) > 0:
-					data = segment[0].data
-					for i in range(1, len(segment)):
-						data = np.append(data, segment[i].data)
-					haar_images, nWindows, idx1, idx2, Sxx, t = feats.data_to_haar_images(data)
-					sample_haar_images = np.vstack([sample_haar_images, haar_images])
-				curr_time = curr_time + sample_interval
+			curr_time = curr_time + sample_interval
+
+	np.save('%s_sample' % fname, sample_haar_images)
+
+def get_haar_stats():
+	sample_haar_images = np.zeros([0,
+		int(params['fingerprint']['nfreq']) * int(params['fingerprint']['ntimes'])])
+	files = params['data']['MAD_sample_files']
+	pool = Pool(params['performance']['num_fp_thread'])
+	pool.map(get_haar_image, files)
+	for file in files:
+		partial = np.load('%s_sample.npy' % file)
+		sample_haar_images = np.vstack([sample_haar_images, partial])
+		os.remove('%s_sample.npy' % file)
 
 	return feats.compute_haar_stats(sample_haar_images)
 
