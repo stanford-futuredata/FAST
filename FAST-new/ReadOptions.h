@@ -28,7 +28,8 @@ struct Settings {
 	string output_mh_sigs_file = "minhash_sigs.txt";
 	size_t num_partitions = 5;
 	size_t start_index = 0;
-	size_t end_index= 0;
+	size_t end_index = 0;
+	double noise_freq = -1;
 };
 
 Settings readOptions(int argc, char * argv[]) {
@@ -55,6 +56,7 @@ Settings readOptions(int argc, char * argv[]) {
 		("num_partitions", po::value<size_t>(), "Number of partitions for similarity search")
 		("start_index", po::value<size_t>(), "Start fingerprint index for the all to some search")
 		("end_index", po::value<size_t>(), "End fingerprint index for the all to some search")
+		("noise_freq", po::value<string>(), "Frequency above which fingerprints will be filtered out as correlated noise")
 		;
 	po::variables_map vm;
 
@@ -201,6 +203,11 @@ Settings readOptions(int argc, char * argv[]) {
 		setting.end_index = vm["end_index"].as<size_t>();
 	}
 	BOOST_LOG_TRIVIAL(debug) << "end_index:\t" << setting.end_index;
+
+	if (vm.count("noise_freq")) {
+		setting.noise_freq = atof(vm["noise_freq"].as<string>().c_str());
+		BOOST_LOG_TRIVIAL(debug) << "noise_freq:\t" << setting.noise_freq;
+	}
 
 	return setting;
 }

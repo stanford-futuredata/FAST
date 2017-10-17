@@ -132,18 +132,18 @@ void genMinhashSig(uint64_t *min_hash_sigs, size_t ntimes) {
 
 /* Initialize hash table and perform similarity search for a range of fingerprint
    indices or for selected fingerprints in a file. */
-void searchRange(size_t start_indice, size_t end_indice, string filter_file,
-	uint32_t *query, size_t num_queries,
-	uint64_t *min_hash_sigs, size_t ntimes) {
+void searchRange(size_t start_indice, size_t end_indice, 
+	uint32_t *query, size_t num_queries, uint64_t *min_hash_sigs, size_t ntimes,
+	boost::dynamic_bitset<>* filter_flag) {
 	BOOST_LOG_TRIVIAL(info) << "Search fingerprints " << start_indice
 		<< "," << end_indice;
 
 	// Populate database
 	double out_time = 0;
 	table *t = new table[s.ntbls];
-	if (! filter_file.empty()) {
+	if (!s.filter_file.empty()) {
 		InitializeDatabase(ntimes, s.ncols, s.ntbls, s.nhashfuncs, t, min_hash_sigs, 
-			&out_time, s.simsearch_threads, filter_file);
+			&out_time, s.simsearch_threads, start_indice, end_indice, filter_flag);
 	} else {
 		InitializeDatabase(ntimes, s.ncols, s.ntbls, s.nhashfuncs, t, min_hash_sigs, 
 			&out_time, s.simsearch_threads, start_indice, end_indice);
@@ -158,12 +158,26 @@ void searchRange(size_t start_indice, size_t end_indice, string filter_file,
 	string fname = stringStream.str();
 	SearchDatabase_voting(num_queries, s.ncols, query,
 			s.ntbls, s.near_repeats, t, min_hash_sigs,
-			s.nvotes, s.limit, &out_time, fname, s.simsearch_threads);
+			s.nvotes, s.limit, &out_time, fname, s.simsearch_threads,
+			start_indice, end_indice, filter_flag, s.noise_freq);
 	BOOST_LOG_TRIVIAL(info) << "Search took: " << out_time;
 
-	OutputHashTableStats(t);
+	//OutputHashTableStats(t);
 
 	delete[] t;
+}
+
+// Read result file which indicates whether each fingerprint passed the filter
+void read_filter_file(boost::dynamic_bitset<>* filter_flag, std::string fname) {
+    std::ifstream infile;
+    infile.open(fname, std::ios::in);
+    int x;
+    size_t i = 0;
+    while (infile >> x) {
+        if (i == 1) { filter_flag->set(i, 1); }
+        i ++;
+    }
+    infile.close();
 }
 
 int main(int argc, char * argv[]) {
@@ -179,28 +193,31 @@ int main(int argc, char * argv[]) {
 	// Generate minhash signatures
 	genMinhashSig(min_hash_sigs, ntimes);
 
+    boost::dynamic_bitset<> filter_flag(s.num_queries);
+
 	if (!s.output_pairs_file.empty()) {
-		if (!s.filter_file.empty() ||
-			(s.start_index > 0 && s.end_index > 0)) { // Search again specified indices
+		if ((s.start_index > 0 && s.end_index > 0)) { // Search again specified indices
 			uint32_t *query =  new uint32_t[s.num_queries];
 			for (size_t i = 0; i < s.num_queries; i++) { query[i] = i; }
 
-			searchRange(s.start_index, s.end_index, s.filter_file, 
-				query, s.num_queries, min_hash_sigs, ntimes);
+			searchRange(s.start_index, s.end_index, query, s.num_queries,
+				min_hash_sigs, ntimes, &filter_flag);
 
 			delete[] query;
 		} else { 			// Run per partition
+			if (!s.filter_file.empty()) {   // Read filter file
+				read_filter_file(&filter_flag, s.filter_file);
+			}
 			for (size_t i = 0; i < s.num_partitions; i ++) {
 				size_t start_indice = s.ncols / s.num_partitions * i;
 				size_t end_indice = s.ncols / s.num_partitions * (i + 1);
 				if (i == s.num_partitions - 1) { end_indice = s.ncols; }
 
-				uint32_t *query =  new uint32_t[s.num_queries - start_indice];
-				for (size_t i = start_indice; i < s.num_queries; i++) { 
-					query[i - start_indice] = i; }
+				uint32_t *query =  new uint32_t[end_indice];
+				for (size_t i = 0; i < end_indice; i++) { query[i] = i; }
 
-				searchRange(start_indice, end_indice, s.filter_file,
-					query, s.num_queries - start_indice, min_hash_sigs, ntimes);
+				searchRange(start_indice, end_indice, query, end_indice,
+					min_hash_sigs, ntimes, &filter_flag);
 
 				delete[] query;
 			}
