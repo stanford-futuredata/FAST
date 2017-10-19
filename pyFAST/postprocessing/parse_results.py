@@ -5,7 +5,8 @@ import os
 from os.path import isfile, join
 import multiprocessing
 import argparse
-from extsort import *
+#from extsort import *
+import subprocess
 
 MB_TO_BYTES = 1024 * 1024
 
@@ -29,6 +30,16 @@ def get_global_index_map(idx_fname):
         idx_map[i] = int(line.strip())
     f.close()
     return idx_map
+
+def parse_memory(string):
+    if string[-1].lower() == 'k':
+        return int(string[:-1]) * 1024
+    elif string[-1].lower() == 'm':
+        return int(string[:-1]) * 1024 * 1024
+    elif string[-1].lower() == 'g':
+        return int(string[:-1]) * 1024 * 1024 * 1024
+    else:
+        return int(string)
 
 def parse_partition(fname):
     print "Parsing %s" % fname
@@ -66,10 +77,10 @@ def parse_partition(fname):
                     # Map station fingerprint index to global index
                     if args.idx:
                         lines.append('%d %d %d\n' %(
-                            global_idx - idx_map[a[i + j * 2]], global_idx, a[i + j * 2 + 1]))
+                            idx_map[a[i + j * 2]] - global_idx, idx_map[a[i + j * 2]], a[i + j * 2 + 1]))
                     # Use station index
                     else:
-                        lines.append('%d %d %d\n' %(idx - a[i + j * 2], idx, a[i + j * 2 + 1]))
+                        lines.append('%d %d %d\n' %(a[i + j * 2] - idx, a[i + j * 2], a[i + j * 2 + 1]))
             i += counts
 
         pairs_file.writelines(lines)
@@ -80,17 +91,27 @@ def parse_partition(fname):
     f.close()
 
 ''' Sort each input file '''
+# def sort(fname):
+#     sorter = ExternalSort(partition_memeory)
+#     print "Sorting %s" %fname
+#     sorter.sort(fname, lambda line: _get_sort_key(line))
+#     os.remove(fname)
+
 def sort(fname):
-    sorter = ExternalSort(partition_memeory)
-    print "Sorting %s" %fname
-    sorter.sort(fname, lambda line: _get_sort_key(line))
+    print "Sorting %s" % fname
+    subprocess.call(['sort', '-k1,1n', '-k2,2n', '-o', fname + '_sorted', fname])
     os.remove(fname)
 
 ''' Merge all sorted file '''
-def merge(sorted_filenames, buffer_size):
+# def merge(sorted_filenames, buffer_size):
+#     print "Merging files"
+#     merger = FileMerger(MergeByKey())
+#     merger.merge(sorted_filenames, '%s_pairs_sorted.txt' % args.prefix, buffer_size)
+#     map(lambda f: os.remove(f), sorted_filenames)
+
+def merge(sorted_filenames):
     print "Merging files"
-    merger = FileMerger(MergeByKey())
-    merger.merge(sorted_filenames, '%s_pairs_sorted.txt' % args.prefix, buffer_size)
+    subprocess.call(['sort', '-m /binary/*_sorted', '-k1,1n', '-k2,2n', '-o', '%s_pairs_sorted.txt' % args.prefix])
     map(lambda f: os.remove(f), sorted_filenames)
 
 if __name__ == '__main__':
@@ -122,7 +143,7 @@ if __name__ == '__main__':
 
     fnames = []
     for f in os.listdir(args.dir):
-        if args.prefix in f and isfile(join(args.dir, f)):
+        if args.prefix in f and isfile(join(args.dir, f)) and not '_pairs' in f:
             fnames.append(join(args.dir, f))
 
     partition_memeory = parse_memory(args.mem) / len(fnames)
@@ -133,8 +154,10 @@ if __name__ == '__main__':
     pairs_fnames = map(_get_pairs_fname, fnames)
     p.map(sort, pairs_fnames)
     # Merge sorted partitinos
-    if len(fnames) > 1:
-        buffer_size =parse_memory(args.mem) / (len(fnames) + 1)
-        sorted_filenames = map(_get_sorted_fname, pairs_fnames)
-        merge(sorted_filenames, buffer_size)
+    sorted_filenames = map(_get_sorted_fname, pairs_fnames)
+    merge(sorted_filenames)
+    # if len(fnames) > 1:
+    #     buffer_size =parse_memory(args.mem) / (len(fnames) + 1)
+    #     sorted_filenames = map(_get_sorted_fname, pairs_fnames)
+    #     merge(sorted_filenames, buffer_size)
 
