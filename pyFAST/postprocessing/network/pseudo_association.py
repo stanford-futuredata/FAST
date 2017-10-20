@@ -52,13 +52,12 @@ class EventCloudExtractor:
         with open(fname, 'r') as f:
             for line in f:
                 tmp = line.strip().split()
-                del line
-                dt = int(tmp[0])
-                idx2 = int(tmp[1])
-                idx1 = idx2 - dt
                 ivals = int(tmp[2])
                 if ivals < ivals_thresh:
                     continue
+                dt = int(tmp[0])
+                idx2 = int(tmp[1])
+                idx1 = idx2 - dt
 
                 if dt != prev_key:
                     if len(elems) > 0:

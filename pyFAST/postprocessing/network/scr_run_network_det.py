@@ -32,28 +32,22 @@ from event_resolution import *
 ##            Network detection - data & parameters                    ##
 #########################################################################
 
-data_folder = './diablo_partition/'
-save_str = './diablo_partition_results/network_detection'
+data_folder = './new-82/partition/'
+save_str = './results/new_82_network_detection_all'
 
-channel_vars = ['LMA', 'LSD', 'DCD', 'VPD', 'SHD']
-detdata_filenames = ['LMD.txt', 
-    'LSD.txt', 'DCD.txt', 'VPD.txt', 'SHD.txt']
+channel_vars = ['KHZ', 'THZ',  'OXZ',  'MQZ', 'LTZ']
+detdata_filenames = ['NZ.KHZ.HHZ.2yr.82_pairs_sorted', 'NZ.THZ.HHZ.2yr.82_pairs_sorted', 
+       'NZ.OXZ.HHZ.2yr.82_pairs_sorted', 'NZ.MQZ.HHZ.2yr.82_pairs_sorted', 'LTZ_sorted']
 
-# data_folder = './8-2/partition/'
-# save_str = './results/82_network_detection'
-
-# channel_vars = ['KHZ', 'OXZ', 'THZ', 'MQZ']
-# detdata_filenames = ['KHZ_82_sorted.txt', 'OXZ_82_sorted.txt', 
-#         'THZ_82_sorted.txt', 'MQZ_82_sorted.txt']
 
 nchannels = len(channel_vars)
 nstations = len(channel_vars)
-#max_fp    = 32000000  #/ largest fingperprint index  (was 'nfp')
-max_fp  =    360000000
+max_fp    = 32000000  #/ largest fingperprint index  (was 'nfp')
+#max_fp  =    360000000
 dt_fp     = 2.0      #/ time lag between fingerprints
 dgapL     = 15       #/ = 30  #/ largest gap between detections along a single diagonal
 dgapW     = 3        #/ largest gap between detections adjacent diagonals
-ivals_thresh = 3
+ivals_thresh = 2
 
 #/ specifies which chunck of data (dt range) to process
 q1 = 5
@@ -61,14 +55,14 @@ q2 = 86400
 
 # only detections within 24 of each other
 min_dets = 5
-min_sum  = 6*min_dets
+min_sum  = 2 * ivals_thresh * min_dets
 max_width = 8
 
 #/ number of station detections to be included in event list
-nsta_thresh = 3
+nsta_thresh = 2
 
 # number of cores for parallelism
-num_cores = 8
+num_cores = 4
 
 
 ######################################################################### 
@@ -113,13 +107,11 @@ def process(cidx):
     print detdata_filenames[cidx]
     print '  Extracting event-pair clouds ...'
     t0 = time.time()
-    l = multiprocessing.Lock()
-    pool = multiprocessing.Pool(num_cores, initializer=detection_init)
-    files = [data_folder + f for f in os.listdir(data_folder) if f.startswith(detdata_filenames[cidx].split('.')[0])]
+    files = [data_folder + f for f in os.listdir(data_folder) if f.startswith(detdata_filenames[cidx]) and not '.dat' in f]
     args = [[f, cidx] for f in files]
+    pool = multiprocessing.Pool(num_cores, initializer=detection_init)
     pool.map(detection, args)
     pool.terminate()
-    print time.time()
     print '  total time for %s:' % (detdata_filenames[cidx]), time.time() - t0
     return files
 
@@ -132,8 +124,10 @@ if __name__ == '__main__':
 ##                  Event-pair detection                               ##
 #########################################################################
 
-    dict_names = dict(izip(xrange(len(channel_vars)),
-        map(process, [cidx for cidx in xrange(len(channel_vars))])))
+    dict_names = {}
+    for cidx in xrange(len(channel_vars)):
+        dict_names[cidx] = process(cidx)
+        gc.collect()
 
 #########################################################################
 ##                         Network detection                           ##
