@@ -14,16 +14,16 @@ def write_timestamp(t, idx1, idx2, starttime, ts_file):
 
 def normalize_and_fingerprint(haar_images, fp_file):
 	std_haar_images = feats.standardize_haar(haar_images, type = 'MAD')
-	binaryFingerprints =  feats.binarize_vectors_topK_sign(std_haar_images, K = 1600)
+	binaryFingerprints =  feats.binarize_vectors_topK_sign(std_haar_images,
+		K = params['fingerprint']['k_coef'])
 	# Write to file
 	b = np.packbits(binaryFingerprints)
 	fp_file.write(b.tobytes())
 
 def init_MAD_stats(mad_fname):
-	feats.haar_medians = np.zeros(
-		params['fingerprint']['nfreq'] * params['fingerprint']['ntimes'])
-	feats.haar_absdevs = np.zeros(
-		params['fingerprint']['nfreq'] * params['fingerprint']['ntimes'])
+	ntimes = get_ntimes(params)
+	feats.haar_medians = np.zeros(params['fingerprint']['nfreq'] * ntimes)
+	feats.haar_absdevs = np.zeros(params['fingerprint']['nfreq'] * ntimes)
 	f = open(mad_fname, 'r')
 	for i, line in enumerate(f.readlines()):
 		nums = line.split(',')
@@ -62,8 +62,8 @@ if __name__ == '__main__':
 
 	# read mseed
 	st = read(params['data']['folder'] + fname)
-	ts_file = open(ts_folder + get_ts_fname(fname), "a")
-	fp_file = open(fp_folder + get_fp_fname(fname), "a")
+	ts_file = open(ts_folder + get_ts_fname(fname), "w")
+	fp_file = open(fp_folder + get_fp_fname(fname), "w")
 	time_padding = get_partition_padding()
 	min_fp_length = get_min_fp_length(params)
 

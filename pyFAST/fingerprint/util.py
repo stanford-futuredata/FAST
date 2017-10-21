@@ -3,6 +3,7 @@ import datetime
 from os import listdir
 from os.path import isfile, join, abspath, dirname
 from feature_extractor import FeatureExtractor
+import math
 
 def parse_json(param_json):
     with open(param_json) as json_data_file:
@@ -54,6 +55,13 @@ def gen_mad_fname(params):
         params['data']['start_time'],
         params['data']['end_time'] )
 
+# Return the largest power of 2 less than or equal to n
+def lower_power_2(n):
+   return 2**(int(math.log(n, 2)))
+
+def get_ntimes(params):
+    return lower_power_2(params['fingerprint']['fp_length'])
+
 def init_feature_extractor(params):
     feats = FeatureExtractor(sampling_rate=params['fingerprint']['sampling_rate'],
         window_length=params['fingerprint']['spec_length'],
@@ -61,6 +69,8 @@ def init_feature_extractor(params):
         fingerprint_length=params['fingerprint']['fp_length'],
         fingerprint_lag=params['fingerprint']['fp_lag'],
         min_freq=params['fingerprint']["min_freq"],
-        max_freq=params['fingerprint']["max_freq"])
+        max_freq=params['fingerprint']["max_freq"],
+        nfreq = params['fingerprint']['nfreq'], 
+        ntimes = get_ntimes(params))
     return feats
 

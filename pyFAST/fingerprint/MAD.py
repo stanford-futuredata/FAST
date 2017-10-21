@@ -22,8 +22,8 @@ def get_segment(st, starttime, endtime, sample_length):
 def get_haar_image(fname):
 	p = params['fingerprint']
 	min_fp_length = get_min_fp_length(params)
-	sample_haar_images = np.zeros([0,
-		int(p['nfreq']) * int(p['ntimes'])])
+	ntimes = get_ntimes(params)
+	sample_haar_images = np.zeros([0, p['nfreq'] * ntimes])
 	st = read(params['data']['folder'] + fname)
 	# No sampling
 	if p['mad_sampling_rate'] == 1:
@@ -55,8 +55,8 @@ def get_haar_image(fname):
 	np.save('%s_sample' % fname, sample_haar_images)
 
 def get_haar_stats():
-	sample_haar_images = np.zeros([0,
-		int(params['fingerprint']['nfreq']) * int(params['fingerprint']['ntimes'])])
+	ntimes = get_ntimes(params)
+	sample_haar_images = np.zeros([0, params['fingerprint']['nfreq'] * ntimes])
 	files = params['data']['MAD_sample_files']
 	pool = Pool(params['performance']['num_fp_thread'])
 	pool.map(get_haar_image, files)

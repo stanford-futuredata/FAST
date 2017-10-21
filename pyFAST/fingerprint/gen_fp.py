@@ -37,7 +37,8 @@ if __name__ == '__main__':
 
 	# Stich fingerprint files
 	nfp = 0
-	fp_in_bytes = params['fingerprint']['nfreq'] * params['fingerprint']['ntimes'] / 4
+	ntimes = get_ntimes(params)
+	fp_in_bytes = params['fingerprint']['nfreq'] * ntimes / 4
 	final_fp_name = '%s.%s.fp' % (params['data']['station'],
 				params['data']['channel'])
 	fp_path, ts_path = get_fp_ts_folders(params)

@@ -7,8 +7,8 @@
         "spec_lag": 0.2,
         "fp_length": 128,
         "fp_lag": 10,
+        "k_coef": 1600,
         "nfreq": 32,
-        "ntimes": 64,
         "mad_sampling_rate": 0.1,
         "mad_sample_interval": 14400
     },
