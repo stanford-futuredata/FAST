@@ -5,10 +5,12 @@ import os
 from os.path import isfile, join
 import multiprocessing
 import argparse
-#from extsort import *
 import subprocess
 
 MB_TO_BYTES = 1024 * 1024
+
+def str2bool(v):
+  return v.lower() in ("yes", "true", "t", "1")
 
 ''' Helper function that defines the sorting order '''
 def _get_sort_key(line):
@@ -41,6 +43,21 @@ def parse_memory(string):
     else:
         return int(string)
 
+def _parse_line(line):
+    idx = line.rfind(' ')
+    return line[:idx], int(line[idx+1:])
+
+def _output_buffer(buf, f_out):
+    lines = []
+    if args.thresh:
+        for elem in buf:
+            if elem[1] >= args.thresh:
+                lines.append("%s %d\n" % (elem[0], elem[1]))
+    else:
+        for elem in buf:
+            lines.append("%s %d\n" % (elem[0], elem[1]))
+    f_out.writelines(lines)
+
 def parse_partition(fname):
     print "Parsing %s" % fname
     # File size in bytes
@@ -52,7 +69,7 @@ def parse_partition(fname):
 
     # Read binary file in chunks
     while offset < file_size:
-        read_size = min(partition_memeory, file_size - offset)
+        read_size = min(partition_memory, file_size - offset)
         buf = f.read(read_size)
         delta_offset = 0
         a = np.frombuffer(buf, dtype=np.uint32)
@@ -84,35 +101,52 @@ def parse_partition(fname):
             i += counts
 
         pairs_file.writelines(lines)
-        delta_offset += min(partition_memeory, file_size - offset)
+        delta_offset += min(partition_memory, file_size - offset)
         offset += delta_offset
 
     pairs_file.close()
     f.close()
 
-''' Sort each input file '''
-# def sort(fname):
-#     sorter = ExternalSort(partition_memeory)
-#     print "Sorting %s" %fname
-#     sorter.sort(fname, lambda line: _get_sort_key(line))
-#     os.remove(fname)
-
 def sort(fname):
     print "Sorting %s" % fname
     subprocess.call(['sort', '-k1,1n', '-k2,2n', '-o', fname + '_sorted', fname])
+    print "Done sorting %s" % fname
     os.remove(fname)
-
-''' Merge all sorted file '''
-# def merge(sorted_filenames, buffer_size):
-#     print "Merging files"
-#     merger = FileMerger(MergeByKey())
-#     merger.merge(sorted_filenames, '%s_pairs_sorted.txt' % args.prefix, buffer_size)
-#     map(lambda f: os.remove(f), sorted_filenames)
 
 def merge(sorted_filenames):
     print "Merging files"
-    subprocess.call(['sort', '-m /binary/*_sorted', '-k1,1n', '-k2,2n', '-o', '%s_pairs_sorted.txt' % args.prefix])
+    subprocess.call(['sort', '-m'] + sorted_filenames + ['-k1,1n', '-k2,2n', '-o', '%s_merged.txt' % args.prefix])
     map(lambda f: os.remove(f), sorted_filenames)
+
+''' Add up similarity and filter out those below threshold '''
+def filter_and_reduce():
+    print "Filtering by threshold, outputing results to %s_combined.txt" % args.prefix
+    f_out = open('%s_combined.txt' % args.prefix, 'w')
+    with open('%s_merged.txt' % args.prefix, 'r') as f:
+        buf = []
+        line = f.readline()
+        reduce_key, reduce_val = _parse_line(line)
+        for line in f:
+            key, val = _parse_line(line)
+            if key == reduce_key:
+                reduce_val += val
+            else:
+                buf.append([reduce_key, reduce_val])
+                # Output in chunks
+                if len(buf) >= 10000:
+                    _output_buffer(buf, f_out)
+                    buf = []
+                reduce_key = key
+                reduce_val = val
+    # Add last element
+    if buf[-1][0] != reduce_key:
+        buf.append([reduce_key, reduce_val])
+    # Flush remaining buffer
+    if len(buf) > 0:
+        _output_buffer(buf, f_out)
+    f_out.close()
+    # Remove intermediate file
+    os.remove('%s_merged.txt' % args.prefix)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -135,6 +169,10 @@ if __name__ == '__main__':
                         '--mem',
                         help='amount of memory to use for parsing',
                         default='300M')
+    parser.add_argument('-c',
+                        '--combine',
+                        action='store_true',
+                        help='whether to filter and reduce')
     args = parser.parse_args()
 
     idx_map = {}
@@ -146,7 +184,7 @@ if __name__ == '__main__':
         if args.prefix in f and isfile(join(args.dir, f)) and not '_pairs' in f:
             fnames.append(join(args.dir, f))
 
-    partition_memeory = parse_memory(args.mem) / len(fnames)
+    partition_memory = parse_memory(args.mem) / len(fnames)
     p = multiprocessing.Pool(len(fnames))
     # Parse each binary output partition
     p.map(parse_partition, fnames)
@@ -156,8 +194,7 @@ if __name__ == '__main__':
     # Merge sorted partitinos
     sorted_filenames = map(_get_sorted_fname, pairs_fnames)
     merge(sorted_filenames)
-    # if len(fnames) > 1:
-    #     buffer_size =parse_memory(args.mem) / (len(fnames) + 1)
-    #     sorted_filenames = map(_get_sorted_fname, pairs_fnames)
-    #     merge(sorted_filenames, buffer_size)
+    if args.combine:
+        filter_and_reduce()
+
 
