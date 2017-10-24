@@ -90,14 +90,16 @@ def parse_partition(fname):
                 a = np.concatenate([a, np.frombuffer(buf, dtype=np.uint32)])
             for j in range(counts / 2):
                 # Only add things that are above specified thresholds
-                if args.thresh is None or a[i + j * 2 + 1] >= args.thresh:
+                sim = a[i + j * 2 + 1]
+                idx2 = a[i + j * 2]
+                if args.thresh is None or sim >= args.thresh:
                     # Map station fingerprint index to global index
                     if args.idx:
                         lines.append('%d %d %d\n' %(
-                            idx_map[a[i + j * 2]] - global_idx, idx_map[a[i + j * 2]], a[i + j * 2 + 1]))
+                            abs(idx_map[idx2] - global_idx), max(idx_map[idx2], global_idx), sim))
                     # Use station index
                     else:
-                        lines.append('%d %d %d\n' %(a[i + j * 2] - idx, a[i + j * 2], a[i + j * 2 + 1]))
+                        lines.append('%d %d %d\n' %(abs(idx2 - idx), max(idx2, idx), sim))
             i += counts
 
         pairs_file.writelines(lines)
@@ -159,6 +161,7 @@ if __name__ == '__main__':
                         help='prefix for all binary output files')
     parser.add_argument('-t',
                         '--thresh',
+                        type=int,
                         nargs='?',
                         help='threshold of similarity')
     parser.add_argument('-i',
@@ -168,11 +171,16 @@ if __name__ == '__main__':
     parser.add_argument('-m',
                         '--mem',
                         help='amount of memory to use for parsing',
-                        default='300M')
+                        default='1G')
+    parser.add_argument("--parse", type=str2bool, nargs='?',
+                        default=True, help="Whether to parse input files (default to true)")
+    parser.add_argument("--sort", type=str2bool, nargs='?',
+                        default=True, help="Whether to sort input files (default to true)")
     parser.add_argument('-c',
                         '--combine',
-                        action='store_true',
-                        help='whether to filter and reduce')
+                        type=str2bool,
+                        default=False,
+                        help='whether to combine similarity for the same pair')
     args = parser.parse_args()
 
     idx_map = {}
@@ -186,14 +194,17 @@ if __name__ == '__main__':
 
     partition_memory = parse_memory(args.mem) / len(fnames)
     p = multiprocessing.Pool(len(fnames))
-    # Parse each binary output partition
-    p.map(parse_partition, fnames)
-    # Sort each partition
-    pairs_fnames = map(_get_pairs_fname, fnames)
-    p.map(sort, pairs_fnames)
-    # Merge sorted partitinos
-    sorted_filenames = map(_get_sorted_fname, pairs_fnames)
-    merge(sorted_filenames)
+    out_fnames = fnames
+    if args.parse:
+        # Parse each binary output partition
+        p.map(parse_partition, fnames)
+        # Sort each partition
+        out_fnames = map(_get_pairs_fname, fnames)
+    if args.sort:
+        p.map(sort, out_fnames)
+        # Merge sorted partitinos
+        out_fnames = map(_get_sorted_fname, out_fnames)
+    merge(out_fnames)
     if args.combine:
         filter_and_reduce()
 
