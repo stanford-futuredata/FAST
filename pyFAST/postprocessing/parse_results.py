@@ -117,14 +117,17 @@ def sort(fname):
 
 def merge(sorted_filenames):
     print "Merging files"
-    subprocess.call(['sort', '-m'] + sorted_filenames + ['-k1,1n', '-k2,2n', '-o', '%s_merged.txt' % args.prefix])
+    subprocess.call(
+        ['sort', '-m'] + sorted_filenames + \
+        ['-k1,1n', '-k2,2n', '-o', '%s%s_merged.txt' % (args.dir, args.prefix)])
     map(lambda f: os.remove(f), sorted_filenames)
 
 ''' Add up similarity and filter out those below threshold '''
 def filter_and_reduce():
-    print "Filtering by threshold, outputing results to %s_combined.txt" % args.prefix
-    f_out = open('%s_combined.txt' % args.prefix, 'w')
-    with open('%s_merged.txt' % args.prefix, 'r') as f:
+    print "Filtering by threshold, outputing results to %s%s_combined.txt" \
+        % (args.dir, args.prefix)
+    f_out = open('%s%s_combined.txt' % (args.dir, args.prefix), 'w')
+    with open('%s%s_merged.txt' % (args.dir, args.prefix), 'r') as f:
         buf = []
         line = f.readline()
         reduce_key, reduce_val = _parse_line(line)
@@ -189,7 +192,7 @@ if __name__ == '__main__':
 
     fnames = []
     for f in os.listdir(args.dir):
-        if args.prefix in f and isfile(join(args.dir, f)) and not '_pairs' in f:
+        if args.prefix in f and isfile(join(args.dir, f)):
             fnames.append(join(args.dir, f))
 
     partition_memory = parse_memory(args.mem) / len(fnames)
