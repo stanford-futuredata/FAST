@@ -12,7 +12,8 @@ Example fingerprint parameter settings:
         "fp_length": 128,             (fingerprint length in samples)
         "fp_lag": 10,                 (fingerprint lag in samples)
         "k_coef": 1600,               (number of top haar wavelet coefficients to keep)
-        "nfreq": 32,                  (number of frequency / time bins in fingerprints (must be power of 2))
+        "nfreq": 32,                  (number of frequency / time bins in fingerprints 
+                                       (must be power of 2))
         "mad_sampling_rate": 0.1,     (sampling rate for calculating MAD statistics)
         "mad_sample_interval": 14400  (sampling interval for calculating MAD statistics in seconds)
     },
