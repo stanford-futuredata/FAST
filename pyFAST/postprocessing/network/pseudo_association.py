@@ -76,7 +76,7 @@ class EventCloudExtractor:
 
         return diags
 
-    def diags_to_event_list(self, diags, dt_min = None, dt_max = None, npass = 3):
+    def diags_to_event_list(self, diags, dt_min = None, dt_max = None, npass = 2):
         if dt_min is None or dt_max is None: # non parallel case
             dt_min = min(diags.keys())
             dt_max = max(diags.keys())

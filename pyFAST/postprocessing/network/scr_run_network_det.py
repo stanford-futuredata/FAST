@@ -32,18 +32,15 @@ from event_resolution import *
 ##            Network detection - data & parameters                    ##
 #########################################################################
 
-data_folder = './new-82/partition/'
-save_str = './results/new_82_network_detection_all'
+data_folder = '../binary/partition/'
+save_str = './results/network_single'
 
-channel_vars = ['KHZ', 'THZ',  'OXZ',  'MQZ', 'LTZ']
-detdata_filenames = ['NZ.KHZ.HHZ.2yr.82_pairs_sorted', 'NZ.THZ.HHZ.2yr.82_pairs_sorted', 
-       'NZ.OXZ.HHZ.2yr.82_pairs_sorted', 'NZ.MQZ.HHZ.2yr.82_pairs_sorted', 'LTZ_sorted']
-
+channel_vars = ['KHZ']
+detdata_filenames = ['KHZ_sorted.txt']
 
 nchannels = len(channel_vars)
 nstations = len(channel_vars)
 max_fp    = 32000000  #/ largest fingperprint index  (was 'nfp')
-#max_fp  =    360000000
 dt_fp     = 2.0      #/ time lag between fingerprints
 dgapL     = 15       #/ = 30  #/ largest gap between detections along a single diagonal
 dgapW     = 3        #/ largest gap between detections adjacent diagonals
@@ -89,11 +86,18 @@ def detection(args):
         pid_prefix = str(pid + process_counter.value * 1000),
         ivals_thresh = ivals_thresh)
     #/ extract event-pair clouds
-    curr_event_dict = clouds.diags_to_event_list(diags, npass = 3)
+    curr_event_dict = clouds.diags_to_event_list(diags, npass = 2)
     del diags
     #/ prune event-pairs
     prune_events(curr_event_dict, min_dets, min_sum, max_width)
     print '    Time taken for %s:' % file, time.time() - start
+    #/ Save event-pairs for the single station case
+    if len(channel_vars) == 1:
+        with open('%s_event_pairs.dat' % file, "wb") as f:
+            pickle.dump(curr_event_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
+        del curr_event_dict
+        return
+
     #/ get bounding boxes
     diags_dict = associator.clouds_to_network_diags_one_channel(
         curr_event_dict, cidx)
@@ -136,6 +140,29 @@ if __name__ == '__main__':
 
     gc.collect()
     print 'Extracting network events...'
+
+    #/ Single station network detection
+    if len(channel_vars) == 1:
+        event_dict = defaultdict(list)
+        for file in dict_names[0]:
+            print file
+            event_pairs = pickle.load(open('%s_event_pairs.dat' % file, 'rb'))
+            for k in event_pairs:
+                event_dict[k].extend(event_pairs[k])
+
+        event_start, event_dt, event_stats, pair_list = event_resolution_single(
+            event_dict, max_fp)
+        # TODO: Save to prettier formats
+        events = {'event_start': event_start, 'event_dt': event_dt,
+            'event_stats': event_stats}
+        with open('%s_%s_events.dat' % (save_str,
+            channel_vars[0]), "wb") as f:
+            pickle.dump(events, f, protocol=pickle.HIGHEST_PROTOCOL)
+        if pair_list is not None:
+            with open('%s_%s_pairs_list.dat' % (save_str,
+                channel_vars[0]), "wb") as f:
+                pickle.dump(pair_list, f, protocol=pickle.HIGHEST_PROTOCOL)
+        exit(1)
 
     associator =  NetworkAssociator()
 
@@ -180,11 +207,11 @@ if __name__ == '__main__':
     # print "Loaded network event"
 
     gc.collect()
-    # Get network events
+    #/ Get network events
     network_events_final = get_network_events_final_by_station(
         network_events, max_fp, nstations, nsta_thresh)
 
-    # add all events to list and dedup
+    #/ add all events to list and dedup
     final_eventlist, network_eventlist, nfinal = event_to_list_and_dedup(network_events_final, nstations)
 
     #/ get statistics for each event

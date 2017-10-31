@@ -49,6 +49,10 @@ def get_event_stats(network_event):
     #/ max dets for each station
     return ndets, vol, nsta, dL, peaksum
 
+def _get_eventpair_stats(eventpair):
+    svals  = [x[2] for x in eventpair]
+    return max(svals), sum(svals)
+
 #########################################################################
 
 def prune_network_events(network_events, nsta_thresh):
@@ -61,12 +65,79 @@ def prune_network_events(network_events, nsta_thresh):
             del network_events[nid]
 
 
+################################################################################
+#                       Single-station event resolution                        #
+################################################################################
+#
+#   Note: This is a very simple event resolution algorithm meant for use after
+#         removing excess false detections with event-pair pruning & network
+#         detection. If there are too many (false) detections this method may
+#         produce poor results - with multiple events grouped together into a
+#         single very long event.
+#
+#         event_stats: i-th corresponds to event starting at time events_start[i].
+#            First column is ndets (total number of event-pairs that include this
+#            event). Second column is 'peaksum' (sum of single maximum similarity
+#            value for each event-pair containing this event). Third column
+#            (`volume') is the sum of all similarity values for all event-pairs
+#            containing this event). Self-matches are excluded from statistics
+#
+#         max_fp: maximum number of fingerprints
+#
+#         pair_list (optional): each row returns [t1, t2, `peak', 'vol'] for
+#            each event-pair so pairwise detection information is retained
+#
+def event_resolution_single(event_dict, max_fp, pairwise_info = True):
+
+    #/ get hashkeys
+    keys = sorted(event_dict.keys())
+    keylist = [q for q in keys if len(event_dict[q]) > 0]
+
+    #/ get max similarity for each fingerprint index - fills gaps
+    countval = np.zeros(max_fp, dtype=bool)
+    for k in keylist:
+        t1 = [x[1] for x in event_dict[k]]
+        t2 = [x[0]+x[1] for x in event_dict[k]]
+        countval[min(t1):(max(t1)+1)] = 1
+        countval[min(t2):(max(t2)+1)] = 1
+
+    event_start = np.where( (countval[1:] > 0) & (countval[:-1] == 0))[0] + 1
+    event_end   = np.where( (countval[1:] == 0) & (countval[:-1] > 0))[0] 
+    event_dt = event_end - event_start
+
+    nDets = len(event_dt)
+    event_stats = np.zeros((nDets,3))
+    if pairwise_info:
+        pair_list = np.zeros((len(keylist),4))
+    else:
+        pair_list = None
+
+    #/ get pairwise detection info
+    for kidx, k in enumerate(keylist):
+        t1 = event_dict[k][0][1]
+        t2 = t1 + event_dict[k][0][0] 
+        pk, v = _get_eventpair_stats(event_dict[k])
+        t1idx = np.where( (t1 <= event_end) & (t1>= event_start) )[0][0]
+        t2idx = np.where( (t2 <= event_end) & (t2>= event_start) )[0][0]
+        if t1idx != t2idx: # ignores self-matches for computing stats
+            event_stats[t1idx,0] += 1    #/ number of event-pairs
+            event_stats[t2idx,0] += 1
+            event_stats[t1idx,1] += pk    #/ peaksum
+            event_stats[t2idx,1] += pk
+            event_stats[t1idx,2] += v    #/ vol
+            event_stats[t2idx,2] += v
+        if pairwise_info:
+            pair_list[kidx,:] = [event_start[t1idx], event_start[t2idx], pk, v]
+
+    return event_start, event_dt, event_stats, pair_list
+
+
 #########################################################################
 
 '''
 In this version <ndets> is updated to contain a binary variable indicating whether
 each time stamp is included in some event-pair, rather than a count of the number
-of event-pairs. <timestamp_to_netids> has been updated so that each ID is assigned 
+of event-pairs. <timestamp_to_netids> has been updated so that each ID is assigned
 to only two time stamps (the initial time stamp for each event in the pair),
 rather than for every timestamp associated with the event-pair
 '''
