@@ -10,6 +10,7 @@ import time
 import struct
 
 MB_TO_BYTES = 1024 * 1024
+N_PROCS = 28
 
 def str2bool(v):
   return v.lower() in ("yes", "true", "t", "1")
@@ -127,59 +128,6 @@ def parse_chunk(tup):
     print "Time to parse %s at (%d,%d):" % (filename, first_pos, last_pos), time.time() - start
     return pairs_file_name
 
-def parse_partition(fname):
-    print "Parsing %s" % fname
-    start = time.time()
-    # File size in bytes
-    file_size = os.path.getsize(fname)
-    offset = 0
-    global_idx = None
-    f = open(fname, 'r')
-    pairs_file = open(_get_pairs_fname(fname), 'w')
-
-    # Read binary file in chunks
-    while offset < file_size:
-        read_size = min(partition_memory, file_size - offset)
-        buf = f.read(read_size)
-        delta_offset = 0
-        a = np.frombuffer(buf, dtype=np.uint32)
-        i = 0
-        lines = []
-        while (i < len(a)):
-            idx = a[i]
-            i += 1
-            counts = a[i]
-            i += 1
-            if args.idx:
-                global_idx = idx_map[idx]
-            # Read extra bytes
-            if i + counts > len(a):
-                read_size = (i + counts - len(a)) * 4
-                buf = f.read(read_size)
-                delta_offset += read_size
-                a = np.concatenate([a, np.frombuffer(buf, dtype=np.uint32)])
-            for j in range(counts / 2):
-                # Only add things that are above specified thresholds
-                sim = a[i + j * 2 + 1]
-                idx2 = a[i + j * 2]
-                if args.thresh is None or sim >= args.thresh:
-                    # Map station fingerprint index to global index
-                    if args.idx:
-                        lines.append('%d %d %d\n' %(
-                            abs(idx_map[idx2] - global_idx), max(idx_map[idx2], global_idx), sim))
-                    # Use station index
-                    else:
-                        lines.append('%d %d %d\n' %(abs(idx2 - idx), max(idx2, idx), sim))
-            i += counts
-
-        pairs_file.writelines(lines)
-        delta_offset += min(partition_memory, file_size - offset)
-        offset += delta_offset
-
-    pairs_file.close()
-    f.close()
-    print "Time to parse %s:" % fname, time.time() - start
-
 def sort(fname):
     print "Sorting %s" % fname
     start = time.time()
@@ -250,7 +198,7 @@ if __name__ == '__main__':
     parser.add_argument('-m',
                         '--mem',
                         help='amount of memory to use for parsing',
-                        default='1G')
+                        default='20G')
     parser.add_argument("--parse", type=str2bool, nargs='?',
                         default=True, help="Whether to parse input files (default to true)")
     parser.add_argument("--sort", type=str2bool, nargs='?',
@@ -273,38 +221,22 @@ if __name__ == '__main__':
         if args.prefix in f and isfile(join(args.dir, f)):
             fnames.append(join(args.dir, f))
 
-    partition_memory = parse_memory(args.mem) / len(fnames)
-    p = multiprocessing.Pool(len(fnames))
+    partition_memory = parse_memory(args.mem) / len(fnames) / len(fnames)
+    p = multiprocessing.Pool(N_PROCS)
     out_fnames = fnames
     if args.parse:
+        file_chunks = p.map(get_positions, fnames) # list of lists, where each list is a list of tuples of the form (fname, first_pos, last_pos)
+        file_chunks = [chunk for chunk_list in file_chunks for chunk in chunk_list] # flatten the list
         # Parse each binary output partition
-        p.map(parse_partition, fnames)
-        # Sort each partition
-        out_fnames = map(_get_pairs_fname, fnames)
+        out_fnames = p.map(parse_chunk, file_chunks)
+    # Sort each partition
     if args.sort:
         p.map(sort, out_fnames)
-        # Merge sorted partitinos
         out_fnames = map(_get_sorted_fname, out_fnames)
+    # Merge sorted partitinos
     merge(out_fnames)
     if args.combine:
         filter_and_reduce()
-
-    # partition_memory = parse_memory(args.mem) / len(fnames) / len(fnames)
-    # p = multiprocessing.Pool(len(fnames) * len(fnames))
-    # out_fnames = fnames
-    # if args.parse:
-    #     file_chunks = p.map(get_positions, fnames) # list of lists, where each list is a list of tuples of the form (fname, first_pos, last_pos)
-    #     file_chunks = [chunk for chunk_list in file_chunks for chunk in chunk_list] # flatten the list
-    #     # Parse each binary output partition
-    #     out_fnames = p.map(parse_chunk, file_chunks)
-    # # Sort each partition
-    # if args.sort:
-    #     p.map(sort, out_fnames)
-    #     out_fnames = map(_get_sorted_fname, out_fnames)
-    # # Merge sorted partitinos
-    # merge(out_fnames)
-    # if args.combine:
-    #     filter_and_reduce()
 
     print "Total time taken:", time.time() - grand_start_time
 
