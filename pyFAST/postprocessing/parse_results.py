@@ -6,6 +6,7 @@ from os.path import isfile, join
 import multiprocessing
 import argparse
 import subprocess
+from subprocess import Popen, PIPE
 import time
 import struct
 
@@ -27,6 +28,9 @@ def _get_sorted_fname(fname):
 ''' Helper function to get names of all intermediate (sorted) files '''
 def _get_pairs_fname(fname):
     return fname + "_pairs"
+
+def _get_combined_fname(i):
+    return 'merged_%02d' % i
 
 def get_global_index_map(idx_fname):
     f = open(idx_fname, 'r')
@@ -141,19 +145,26 @@ def merge(sorted_filenames):
     subprocess.call(
         ['sort', '-m'] + sorted_filenames + \
         ['-k1,1n', '-k2,2n', '-o', '%s%s_merged.txt' % (args.dir, args.prefix)])
-    map(lambda f: os.remove(f), sorted_filenames)
+    if args.sort:
+        map(lambda f: os.remove(f), sorted_filenames)
     print "Done merging, time taken:", time.time() - start
 
-''' Add up similarity and filter out those below threshold '''
-def filter_and_reduce():
-    print "Filtering by threshold, outputing results to %s%s_combined.txt" \
-        % (args.dir, args.prefix)
-    start = time.time()
-    f_out = open('%s%s_combined.txt' % (args.dir, args.prefix), 'w')
-    with open('%s%s_merged.txt' % (args.dir, args.prefix), 'r') as f:
+def filter_and_reduce_file(idx):
+    fname = _get_combined_fname(idx)
+    f_out = open('%s%s_reduced' % (args.dir, fname), 'w')
+    with open('%s%s' % (args.dir, fname), 'r') as f:
         buf = []
         line = f.readline()
         reduce_key, reduce_val = _parse_line(line)
+        # Check the end of previous partition
+        if idx > 0:
+            cmd = 'tail -n 1 %s' % (_get_combined_fname(idx - 1))
+            proc = Popen(cmd.split(), stdout=PIPE, stderr=PIPE)
+            output, err = proc.communicate()
+            if reduce_key in output:
+                while reduce_key in line:
+                    line = f.next()
+                reduce_key, reduce_val = _parse_line(line)
         for line in f:
             key, val = _parse_line(line)
             if key == reduce_key:
@@ -166,14 +177,42 @@ def filter_and_reduce():
                     buf = []
                 reduce_key = key
                 reduce_val = val
-    # Add last element
+    # Check the start of next partition
+    if idx < N_PROCS - 1:
+        f_next = open('%s%s' % (args.dir, _get_combined_fname(idx + 1)), 'r')
+        line = f_next.next()
+        while reduce_key in line:
+            key, val = _parse_line(line)
+            reduce_val += val
+            line = f_next.next()
+        f_next.close()
+   # Add last element
     if buf[-1][0] != reduce_key:
         buf.append([reduce_key, reduce_val])
     # Flush remaining buffer
     if len(buf) > 0:
         _output_buffer(buf, f_out)
     f_out.close()
-    # Remove intermediate file
+
+''' Add up similarity and filter out those below threshold '''
+def filter_and_reduce(p):
+    print "Filtering by threshold, outputing results to %s%s_combined.txt" \
+        % (args.dir, args.prefix)
+    start = time.time()
+    # Split into smaller files
+    subprocess.call(
+        ('split -d --number=l/%d %s%s_merged.txt merged_' % (
+            N_PROCS, args.dir, args.prefix)).split())
+    # Filter and reduce
+    p.map(filter_and_reduce_file, range(N_PROCS))
+    # (Optional) Concatenate back
+    # Remove intermediate files
+    final_fname = '%s%s_combined.txt' % (args.dir, args.prefix)
+    for i in range(N_PROCS):
+        fname = '%s%s_reduced' % (args.dir, _get_combined_fname(i))
+        os.system("cat %s >> %s" % (fname, final_fname))
+        os.remove('%s%s' % (args.dir, fname))
+        os.remove('%s%s' % (args.dir, _get_combined_fname(i)))
     os.remove('%s%s_merged.txt' % (args.dir, args.prefix))
     print "Done filtering, time taken:", time.time() - start
 
@@ -236,7 +275,7 @@ if __name__ == '__main__':
     # Merge sorted partitinos
     merge(out_fnames)
     if args.combine:
-        filter_and_reduce()
+        filter_and_reduce(p)
 
     print "Total time taken:", time.time() - grand_start_time
 
