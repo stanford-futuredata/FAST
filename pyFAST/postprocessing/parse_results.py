@@ -16,6 +16,11 @@ N_PROCS = 28
 def str2bool(v):
   return v.lower() in ("yes", "true", "t", "1")
 
+def get_dirname(d):
+    if d[-1] == '/':
+        return d
+    return d + '/'
+
 ''' Helper function that defines the sorting order '''
 def _get_sort_key(line):
     nums = line.split()
@@ -144,15 +149,15 @@ def merge(sorted_filenames):
     start = time.time()
     subprocess.call(
         ['sort', '-m'] + sorted_filenames + \
-        ['-k1,1n', '-k2,2n', '-o', '%s%s_merged.txt' % (args.dir, args.prefix)])
+        ['-T=%s' % get_dirname(args.dir), '-k1,1n', '-k2,2n', '-o', '%s%s_merged.txt' % (get_dirname(args.dir), args.prefix)])
     if args.sort:
         map(lambda f: os.remove(f), sorted_filenames)
     print "Done merging, time taken:", time.time() - start
 
 def filter_and_reduce_file(idx):
     fname = _get_combined_fname(idx)
-    f_out = open('%s%s_reduced' % (args.dir, fname), 'w')
-    with open('%s%s' % (args.dir, fname), 'r') as f:
+    f_out = open('%s%s_reduced' % (get_dirname(args.dir), fname), 'w')
+    with open('%s%s' % (get_dirname(args.dir), fname), 'r') as f:
         buf = []
         line = f.readline()
         reduce_key, reduce_val = _parse_line(line)
@@ -179,7 +184,7 @@ def filter_and_reduce_file(idx):
                 reduce_val = val
     # Check the start of next partition
     if idx < N_PROCS - 1:
-        f_next = open('%s%s' % (args.dir, _get_combined_fname(idx + 1)), 'r')
+        f_next = open('%s%s' % (get_dirname(args.dir), _get_combined_fname(idx + 1)), 'r')
         line = f_next.next()
         while reduce_key in line:
             key, val = _parse_line(line)
@@ -197,23 +202,23 @@ def filter_and_reduce_file(idx):
 ''' Add up similarity and filter out those below threshold '''
 def filter_and_reduce(p):
     print "Filtering by threshold, outputing results to %s%s_combined.txt" \
-        % (args.dir, args.prefix)
+        % (get_dirname(args.dir), args.prefix)
     start = time.time()
     # Split into smaller files
     subprocess.call(
-        ('split -d --number=l/%d %s%s_merged.txt merged_' % (
-            N_PROCS, args.dir, args.prefix)).split())
+        ('split -d --number=l/%d %s%s_merged.txt %smerged_' % (
+            N_PROCS, get_dirname(args.dir), args.prefix, get_dirname(args.dir))).split())
     # Filter and reduce
     p.map(filter_and_reduce_file, range(N_PROCS))
     # (Optional) Concatenate back
     # Remove intermediate files
-    final_fname = '%s%s_combined.txt' % (args.dir, args.prefix)
+    final_fname = '%s%s_combined.txt' % (get_dirname(args.dir), args.prefix)
     for i in range(N_PROCS):
-        fname = '%s%s_reduced' % (args.dir, _get_combined_fname(i))
+        fname = '%s%s_reduced' % (get_dirname(args.dir), _get_combined_fname(i))
         os.system("cat %s >> %s" % (fname, final_fname))
-        os.remove('%s%s' % (args.dir, fname))
-        os.remove('%s%s' % (args.dir, _get_combined_fname(i)))
-    os.remove('%s%s_merged.txt' % (args.dir, args.prefix))
+        os.remove(fname)
+        os.remove('%s%s' % (get_dirname(args.dir), _get_combined_fname(i)))
+    os.remove('%s%s_merged.txt' % (get_dirname(args.dir), args.prefix))
     print "Done filtering, time taken:", time.time() - start
 
 if __name__ == '__main__':
