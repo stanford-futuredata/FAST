@@ -11,7 +11,6 @@ import time
 import struct
 
 MB_TO_BYTES = 1024 * 1024
-N_PROCS = 28
 
 def str2bool(v):
   return v.lower() in ("yes", "true", "t", "1")
@@ -37,6 +36,21 @@ def _get_pairs_fname(fname):
 def _get_combined_fname(i):
     return 'merged_%02d' % i
 
+def _parse_line(line):
+    idx = line.rfind(' ')
+    return line[:idx], int(line[idx+1:])
+
+def _output_buffer(buf, f_out):
+    lines = []
+    if args.thresh:
+        for elem in buf:
+            if elem[1] >= args.thresh:
+                lines.append("%s %d\n" % (elem[0], elem[1]))
+    else:
+        for elem in buf:
+            lines.append("%s %d\n" % (elem[0], elem[1]))
+    f_out.writelines(lines)
+
 def get_global_index_map(idx_fname):
     f = open(idx_fname, 'r')
     idx_map = {}
@@ -54,21 +68,6 @@ def parse_memory(string):
         return int(string[:-1]) * 1024 * 1024 * 1024
     else:
         return int(string)
-
-def _parse_line(line):
-    idx = line.rfind(' ')
-    return line[:idx], int(line[idx+1:])
-
-def _output_buffer(buf, f_out):
-    lines = []
-    if args.thresh:
-        for elem in buf:
-            if elem[1] >= args.thresh:
-                lines.append("%s %d\n" % (elem[0], elem[1]))
-    else:
-        for elem in buf:
-            lines.append("%s %d\n" % (elem[0], elem[1]))
-    f_out.writelines(lines)
 
 def get_positions(fname):
     print "Getting positions %s" % fname
@@ -144,14 +143,37 @@ def sort(fname):
     print "Done sorting %s, time taken:" % fname, time.time() - start
     os.remove(fname)
 
+def merge_chunk(chunk_filenames):
+    print "Merging chunk"
+    merged_fname = '%s_merged.txt' % (chunk_filenames[0])
+    subprocess.call(
+        ['sort', '-m'] + chunk_filenames + \
+        ['-T', get_dirname(args.dir), '-k1,1n', '-k2,2n', '-o', merged_fname])
+    if args.sort:
+        map(lambda f: os.remove(f), chunk_filenames)
+    return merged_fname
+
 def merge(sorted_filenames):
     print "Merging files"
     start = time.time()
-    subprocess.call(
-        ['sort', '-m'] + sorted_filenames + \
-        ['-T=%s' % get_dirname(args.dir), '-k1,1n', '-k2,2n', '-o', '%s%s_merged.txt' % (get_dirname(args.dir), args.prefix)])
-    if args.sort:
-        map(lambda f: os.remove(f), sorted_filenames)
+    # Too many input files
+    l = len(sorted_filenames)
+    if len(sorted_filenames) > args.nprocs:
+        n = l / args.nprocs
+        merged_fnames = p.map(merge_chunk,
+            [sorted_filenames[i:i + n] for i in range(0, l, n)])
+        subprocess.call(
+            ['sort', '-m'] + merged_fnames + \
+            ['-T', get_dirname(args.dir), '-k1,1n', '-k2,2n', 
+            '-o', '%s%s_merged.txt' % (get_dirname(args.dir), args.prefix)])
+        map(lambda f: os.remove(f), merged_fnames)
+    else:
+        subprocess.call(
+            ['sort', '-m'] + sorted_filenames + \
+            ['-T', get_dirname(args.dir), '-k1,1n', '-k2,2n', 
+            '-o', '%s%s_merged.txt' % (get_dirname(args.dir), args.prefix)])
+        if args.sort:
+            map(lambda f: os.remove(f), sorted_filenames)
     print "Done merging, time taken:", time.time() - start
 
 def filter_and_reduce_file(idx):
@@ -183,7 +205,7 @@ def filter_and_reduce_file(idx):
                 reduce_key = key
                 reduce_val = val
     # Check the start of next partition
-    if idx < N_PROCS - 1:
+    if idx < args.nprocs - 1:
         f_next = open('%s%s' % (get_dirname(args.dir), _get_combined_fname(idx + 1)), 'r')
         line = f_next.next()
         while reduce_key in line:
@@ -207,13 +229,13 @@ def filter_and_reduce(p):
     # Split into smaller files
     subprocess.call(
         ('split -d --number=l/%d %s%s_merged.txt %smerged_' % (
-            N_PROCS, get_dirname(args.dir), args.prefix, get_dirname(args.dir))).split())
+            args.nprocs, get_dirname(args.dir), args.prefix, get_dirname(args.dir))).split())
     # Filter and reduce
-    p.map(filter_and_reduce_file, range(N_PROCS))
+    p.map(filter_and_reduce_file, range(args.nprocs))
     # (Optional) Concatenate back
     # Remove intermediate files
     final_fname = '%s%s_combined.txt' % (get_dirname(args.dir), args.prefix)
-    for i in range(N_PROCS):
+    for i in range(args.nprocs):
         fname = '%s%s_reduced' % (get_dirname(args.dir), _get_combined_fname(i))
         os.system("cat %s >> %s" % (fname, final_fname))
         os.remove(fname)
@@ -252,22 +274,30 @@ if __name__ == '__main__':
                         type=str2bool,
                         default=False,
                         help='whether to combine similarity for the same pair')
+    parser.add_argument('-n',
+                       '--nprocs',
+                       type=int,
+                       default=multiprocessing.cpu_count() / 2,
+                       help='number of processes')
     args = parser.parse_args()
 
     grand_start_time = time.time()
 
+    # Get global index map
     idx_map = {}
     if args.idx:
         idx_map = get_global_index_map(args.idx)
 
+    # Get input files
     fnames = []
     for f in os.listdir(args.dir):
         if args.prefix in f and isfile(join(args.dir, f)):
             fnames.append(join(args.dir, f))
 
-    partition_memory = parse_memory(args.mem) / len(fnames) / len(fnames)
-    p = multiprocessing.Pool(N_PROCS)
+    partition_memory = parse_memory(args.mem) / args.nprocs
+    p = multiprocessing.Pool(args.nprocs)
     out_fnames = fnames
+    # Parse
     if args.parse:
         file_chunks = p.map(get_positions, fnames) # list of lists, where each list is a list of tuples of the form (fname, first_pos, last_pos)
         file_chunks = [chunk for chunk_list in file_chunks for chunk in chunk_list] # flatten the list
@@ -279,6 +309,7 @@ if __name__ == '__main__':
         out_fnames = map(_get_sorted_fname, out_fnames)
     # Merge sorted partitinos
     merge(out_fnames)
+    # Combine results from multiple channels
     if args.combine:
         filter_and_reduce(p)
 
