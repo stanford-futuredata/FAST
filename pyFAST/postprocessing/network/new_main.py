@@ -17,42 +17,53 @@ import multiprocessing.pool
 import os
 from event_resolution import *
 from new_association import *
+import gc
 
 #########################################################################
 ##            Network detection - data & parameters                    ##
 #########################################################################
 
-data_folder = './'
-save_str = './results/numpy_detection'
+base_dir = '/lfs/1/krong/HectorMine/'
+data_folder = base_dir+'partition/'
+out_folder = base_dir+'network_detection/'
+save_str = out_folder+'new_association'
 
-channel_vars = ['LMA', 'LSD', 'DCD', 'VPD', 'SHD']
-detdata_filenames = ['LMD_sorted.txt', 
-    'LSD_sorted.txt', 'DCD_sorted.txt', 'VPD_sorted.txt', 'SHD_sorted.txt']
+channel_vars = ['CDY', 'CPM', 'GTM', 'HEC', 'RMM', 'RMR', 'TPC']
+detdata_filenames = []
+for cha in channel_vars:
+  detdata_filenames.append('candidate_pairs_'+cha+'_combined.txt')
+#   detdata_filenames.append('sorted_idx_TOTAL_result_pairs_'+cha+'_19991015_19991016.txt')
 
 nchannels = len(channel_vars)
 nstations = len(channel_vars)
-max_fp    = 360000000  #/ largest fingperprint index  (was 'nfp')
+max_fp    = 74797    #/ largest fingerprint index  (was 'nfp')
 dt_fp     = 1.0      #/ time lag between fingerprints
-dgapL     = 15       #/ = 30  #/ largest gap between detections along a single diagonal
+#dgapL     = 8        #/ = 30  #/ largest gap between detections along a single diagonal
+dgapL     = 3        #/ = 30  #/ largest gap between detections along a single diagonal
 dgapW     = 3        #/ largest gap between detections adjacent diagonals
-ivals_thresh = 3
+ivals_thresh = 6     # number of votes
+#num_pass  = 3
+num_pass  = 2
 
 #/ specifies which chunck of data (dt range) to process
 q1 = 5
 q2 = 86400
 
 # only detections within 24 of each other
-min_dets = 5
-min_sum  = 6*min_dets
-max_width = 8
+#min_dets = 5
+min_dets = 4
+min_sum  = ivals_thresh * min_dets
+max_width = 8 # prevent diagonals from getting too fat (blobby)
 
-#/ number of station detections to be included in event list
+#/ number of station detections to be included in event list (threshold)
 nsta_thresh = 2
 
-# number of cores for parallelism
-num_cores = min(multiprocessing.cpu_count(), 8)
+# Offset length between start time on nearest(earliest) station and end time on farthest(latest) station
+#input_offset = 5
+input_offset = 3
 
-M = 1 + 4 + 1 + 1 + 1 + 3
+# number of cores for parallelism
+num_cores = 4
 
 #########################################################################
 print "creating all_diags_dict"
@@ -70,24 +81,25 @@ all_diags = np.concatenate(all_arrs)
 all_diags[:, 7] = -1
 
 #/ sort event pairs by diagonal and initial time t1 in bounding box
-inds = np.lexsort([all_diags[:,0], all_diags[:,1]])
+inds = np.lexsort([all_diags[:,3], all_diags[:,0]])
 all_diags = all_diags[inds, ...]
 
 print "Saving all_diags_dict to all_diags_dict.dat"
 np.save("all_diags_dict.npy", all_diags)
 
+#all_diags = np.load("all_diags_dict.npy")
 associator =  NetworkAssociator()
 
 t5 = time.time()
 print 'Performing network pseudo-association...'
 icount, network_events = associator.associate_network_diags(
-    all_diags, nstations = nstations, offset = 20, include_stats = True)
+    all_diags, nstations = nstations, offset = input_offset, include_stats = True)
 print ' time pseudo-association:', time.time() - t5
 del all_diags
 
-########################################################################
-#         EVENT RESOLUTION - detections                              ##
-########################################################################
+# ########################################################################
+# #         EVENT RESOLUTION - detections                              ##
+# ########################################################################
 
 print "Saving network event to network_event.dat"
 with open('network_event.dat', "wb") as f:

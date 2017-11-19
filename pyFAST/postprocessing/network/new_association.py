@@ -158,16 +158,16 @@ class NetworkAssociator:
     def associate_network_diags(self, all_diags, nstations, offset, q1 = None, q2 = None, return_network_events = True, include_stats = True):
         p = 2 * nstations
         icount = self.icount
-        tmpk = all_diags[:, 0]
+        diags = all_diags[:, 0]
         if (q1 is None) or (q2 is None):
-            q1 = min(tmpk)
-            q2 = max(tmpk) + 1
-        kp1_indices = np.where(tmpk == q1)[0]
+            q1 = min(diags)
+            q2 = max(diags) + 1
+        kp1_indices = np.where(diags == q1)[0]
         for k in xrange(q1, q2):
             k_indices = kp1_indices
             diags_k = all_diags[k_indices]
-            kp1_indices = np.where(tmpk == k + 1)[0]
-            diags_kp1 = all_diags[np.where(kp1_indices)]
+            kp1_indices = np.where(diags == k + 1)[0]
+            diags_kp1 = all_diags[kp1_indices]
             #/ from this diagonal
             t_init_k0 = list(diags_k[:, 3])    #/ initial time of each bbox along diag k
             t_end_k0  = list(diags_k[:, 4])   #/ end time of each bbox along diag k  
@@ -195,10 +195,12 @@ class NetworkAssociator:
                                 glist = [j] + [j+1+q for q, t2 in izip(count(), dt1) if (t2 <= offset) and (stid[j+1+q] != stid[j])]  #/ group if within offset (unless same station - fix?)   
                                 if len(glist) > 1:
                                     elist = [eid[q] for q in glist]
-                                    tmpid = [q for q in elist if q is not None]
-                                    if tmpid:  # (case of 2+ pre-existing event labels)
+                                    tmpid = [q for q in elist if q >= 0]
+                                    if len(tmpid) > 0:  # (case of 2+ pre-existing event labels)
+                                        print j, t1, tmpid
                                         tmpid = min(tmpid)
-                                    elif not tmpid: #/ if event already has label (case of 1 pre-existing event label) NOTE: weird numbering issue without elif
+                                    else: #/ if event already has label (case of 1 pre-existing event label) NOTE: weird numbering issue without elif
+                                        print j, t1, tmpid
                                         tmpid = icount
                                         icount += 1
                                     for q in glist:
@@ -216,7 +218,7 @@ class NetworkAssociator:
         if return_network_events:
             network_events = defaultdict(list)
             for k in xrange(q1, q2):
-                diags_k = all_diags[np.where(tmpk == k)]
+                diags_k = all_diags[np.where(diags == k)[0]]
                 for eventcloud in diags_k:
                     if eventcloud[7] >= 0:
                         if include_stats:
