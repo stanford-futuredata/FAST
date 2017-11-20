@@ -32,39 +32,61 @@ from event_resolution import *
 ##            Network detection - data & parameters                    ##
 #########################################################################
 
-data_folder = '../binary/partition/'
-save_str = './results/network_single'
+base_dir = '/lfs/1/krong/HectorMine/'
+data_folder = base_dir + 'partition/'
+out_folder = base_dir + 'network_detection/'
 
-channel_vars = ['KHZ']
-detdata_filenames = ['KHZ_sorted.txt']
+channel_vars = ['CDY', 'CPM', 'GTM', 'HEC', 'RMM', 'RMR', 'TPC']
+detdata_filenames = {}
+for i, cha in enumerate(channel_vars):
+  detdata_filenames[i] = 'candidate_pairs_'+cha+'_combined.txt'
 
 nchannels = len(channel_vars)
 nstations = len(channel_vars)
-max_fp    = 32000000  #/ largest fingperprint index  (was 'nfp')
-dt_fp     = 2.0      #/ time lag between fingerprints
-dgapL     = 15       #/ = 30  #/ largest gap between detections along a single diagonal
+max_fp    = 74797    #/ largest fingerprint index  (was 'nfp')
+dt_fp     = 1.0      #/ time lag between fingerprints
+dgapL     = 3        #/ = 30  #/ largest gap between detections along a single diagonal
 dgapW     = 3        #/ largest gap between detections adjacent diagonals
-ivals_thresh = 2
+ivals_thresh = 6     # number of votes
+num_pass  = 2
 
 #/ specifies which chunck of data (dt range) to process
 q1 = 5
 q2 = 86400
 
 # only detections within 24 of each other
-min_dets = 5
-min_sum  = 2 * ivals_thresh * min_dets
-max_width = 8
+min_dets = 4
+min_sum  = ivals_thresh * min_dets
+max_width = 8 # prevent diagonals from getting too fat (blobby)
 
-#/ number of station detections to be included in event list
+#/ number of station detections to be included in event list (threshold)
 nsta_thresh = 2
+save_str = out_folder + '%dsta_%dstathresh' % (nstations, nsta_thresh)
+
+# Offset length between start time on nearest(earliest) station and end time on farthest(latest) station
+input_offset = 3
 
 # number of cores for parallelism
 num_cores = 4
 
+# Dimension of the event dictionary entry in numpy format:
+# [dt, bbox * 4, station_id, diagonalKey, networkEventID, event_stats * 3]
+M = 1 + 4 + 1 + 1 + 1 + 3
 
 ######################################################################### 
 ##                  Event-pair detection functions                     ##
 #########################################################################  
+
+def dict_to_numpy(d):
+    num_entries = sum(len(d[k]) for k in d)
+    arr = np.empty([num_entries, M], dtype=np.int32)
+    idx = 0
+    for k in d:
+        for event in d[k]:
+            arr[idx, :] = [k, event[0][0], event[0][1], event[0][2],
+                event[0][3], event[1], hash(event[2]), -1, event[4][0], event[4][1], event[4][2]]
+            idx += 1
+    return arr
 
 def detection_init():
     global process_counter
@@ -102,16 +124,16 @@ def detection(args):
     diags_dict = associator.clouds_to_network_diags_one_channel(
         curr_event_dict, cidx)
     del curr_event_dict
-    print "Saving diags_dict to %s_diags_dict.dat" % file
-    with open('%s_diags.dat' % file, "wb") as f:
-        pickle.dump(diags_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
-    del diags_dict
+    print "Saving diags_dict to %s.npy" % file
+    arr = dict_to_numpy(diags_dict)
+    np.save('%s.npy' % file, arr)
+    del diags_dict, arr
 
 def process(cidx):
     print detdata_filenames[cidx]
     print '  Extracting event-pair clouds ...'
     t0 = time.time()
-    files = [data_folder + f for f in os.listdir(data_folder) if f.startswith(detdata_filenames[cidx]) and not '.dat' in f]
+    files = [data_folder + f for f in os.listdir(data_folder) if f.startswith(detdata_filenames[cidx]) and not '.npy' in f]
     args = [[f, cidx] for f in files]
     pool = multiprocessing.Pool(num_cores, initializer=detection_init)
     pool.map(detection, args)
@@ -128,9 +150,9 @@ if __name__ == '__main__':
 ##                  Event-pair detection                               ##
 #########################################################################
 
-    dict_names = {}
+    fnames = []
     for cidx in xrange(len(channel_vars)):
-        dict_names[cidx] = process(cidx)
+        fnames.extend(process(cidx))
         gc.collect()
 
 #########################################################################
@@ -144,7 +166,7 @@ if __name__ == '__main__':
     #/ Single station network detection
     if len(channel_vars) == 1:
         event_dict = defaultdict(list)
-        for file in dict_names[0]:
+        for file in fnames:
             print file
             event_pairs = pickle.load(open('%s_event_pairs.dat' % file, 'rb'))
             for k in event_pairs:
@@ -164,37 +186,31 @@ if __name__ == '__main__':
                 pickle.dump(pair_list, f, protocol=pickle.HIGHEST_PROTOCOL)
         exit(1)
 
-    associator =  NetworkAssociator()
-
     #/ map events to diagonals
     t4 = time.time()
 
-    all_diags_dict = defaultdict(list)
-    for cidx in xrange(len(channel_vars)):
-        for file in dict_names[cidx]:
-            print file
-            diags_dict = pickle.load(open('%s_diags.dat' % file, 'rb'))
-            for k in diags_dict:
-                all_diags_dict[k].extend(diags_dict[k])
-
-    #/ sort event pairs by initial time t1 in bounding box
-    for k in all_diags_dict:
-        all_diags_dict[k].sort(key=lambda x: x[0][2])
+    all_arrs = []
+    for file in fnames:
+        print file
+        arr = np.load('%s.npy' % file)
+        all_arrs.append(arr)
+    all_diags = np.concatenate(all_arrs)
+    #/ sort event pairs by diagonal and initial time t1 in bounding box
+    inds = np.lexsort([all_diags[:,3], all_diags[:,0]])
+    all_diags = all_diags[inds, ...]
 
     print "Saving all_diags_dict to all_diags_dict.dat"
-    with open('all_diags_dict.dat', "wb") as f:
-        pickle.dump(all_diags_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
+    np.save("all_diags_dict.npy", all_diags)
     print ' time to build network index:', time.time() - t4
 
-    # associator =  NetworkAssociator()
-    # all_diags_dict = pickle.load(open('all_diags_dict.dat', "rb"))
+    associator =  NetworkAssociator()
     #/ pseudo-association
     t5 = time.time()
     print 'Performing network pseudo-association...'
     icount, network_events = associator.associate_network_diags(
-        all_diags_dict, nstations = nstations, offset = 20, include_stats = True)
+        all_diags, nstations = nstations, offset = input_offset, include_stats = True)
     print ' time pseudo-association:', time.time() - t5
-    del all_diags_dict
+    del all_diags
 
 ########################################################################
 #         EVENT RESOLUTION - detections                              ##

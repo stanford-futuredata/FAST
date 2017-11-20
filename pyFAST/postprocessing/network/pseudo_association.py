@@ -155,29 +155,48 @@ class NetworkAssociator:
                 diags_dict[ddiag].append([bbox, cidx, k, None])  #/ boundingBox, stationID, diagonalKey, networkEventID
         return diags_dict
 
-    def associate_network_diags(self, all_diags_dict, nstations, offset, q1 = None, q2 = None, return_network_events = True, include_stats = True):
-        p = 2*nstations
+    def associate_network_diags(self, all_diags, nstations, offset, q1 = None, q2 = None, return_network_events = True, include_stats = True):
+        p = 2 * nstations
         icount = self.icount
-        # for k in all_diags_dict:
-        #     print k, ":", all_diags_dict[k]
+        diags = all_diags[:, 0]
         if (q1 is None) or (q2 is None):
-            tmpk = all_diags_dict.keys()
-            q1 = min(tmpk)
-            q2 = max(tmpk) + 1 
+            q1 = min(diags)
+            q2 = max(diags) + 1
+        slicing_points = list(np.where(np.diff(diags) > 0)[0])
+        map_to_indices = {}
+        prev_idx = -1
+        for idx in slicing_points:
+            map_to_indices[diags[idx]] = range(prev_idx + 1, idx + 1)
+            prev_idx = idx
+        map_to_indices[diags[-1]] = range(prev_idx + 1, len(diags))
+        network_events = defaultdict(list)
         for k in xrange(q1, q2):
+            if k in map_to_indices:
+                k_indices = map_to_indices[k]
+                diags_k = all_diags[k_indices]
+            else:
+                k_indices = []
+                diags_k = np.zeros([0, 11], dtype=np.int32)
+            if k + 1 in map_to_indices:
+                kp1_indices = map_to_indices[k + 1]
+                diags_kp1 = all_diags[kp1_indices]
+            else:
+                kp1_indices = []
+                diags_kp1 = np.zeros([0, 11], dtype=np.int32)
             #/ from this diagonal
-            t_init_k0 = [x[0][2] for x in all_diags_dict[k]]    #/ initial time of each bbox along diag k
-            t_end_k0  = [x[0][3] for x in all_diags_dict[k]]    #/ end time of each bbox along diag k  
-            eid_k0    = [x[3] for x in all_diags_dict[k]]       #/ network eventID
-            stid_k0   = [x[1] for x in all_diags_dict[k]]       #/ stationID
-            t_init_k1 = [x[0][2] for x in all_diags_dict[k+1]]  #/ initial time of each bbox along diag k 
-            t_end_k1  = [x[0][3] for x in all_diags_dict[k+1]]  #/ end time of each bbox along diag k  
-            eid_k1    = [x[3] for x in all_diags_dict[k+1]]     #/ network eventID
-            stid_k1   = [x[1] for x in all_diags_dict[k+1]]     #/ stationID
+            t_init_k0 = list(diags_k[:, 3])    #/ initial time of each bbox along diag k
+            t_end_k0  = list(diags_k[:, 4])   #/ end time of each bbox along diag k  
+            eid_k0    = list(diags_k[:, 7])       #/ network eventID
+            stid_k0   = list(diags_k[:, 5])       #/ stationID
+            t_init_k1 = list(diags_kp1[:, 3])  #/ initial time of each bbox along diag k 
+            t_end_k1  = list(diags_kp1[:, 4])  #/ end time of each bbox along diag k  
+            eid_k1    = list(diags_kp1[:, 7])     #/ network eventID
+            stid_k1   = list(diags_kp1[:, 5])     #/ stationID
+
             if len(t_init_k0 + t_init_k1) >= 1:
                 #/ bookkeeping
-                kidx  = [0 for x in all_diags_dict[k]] + [1 for x in all_diags_dict[k+1]]                               #/ which diagonal hash does this event belong to
-                oidx = [z for z, x in enumerate(all_diags_dict[k])] + [z for z, x in enumerate(all_diags_dict[k+1])]  #/ index of event within diagonal hash
+                kidx  = [0 for x in diags_k] + [1 for x in diags_kp1]                               #/ which diagonal hash does this event belong to
+                oidx = [z for z, x in enumerate(diags_k)] + [z for z, x in enumerate(diags_kp1)]  #/ index of event within diagonal hash
                 #/ resort by t_init
                 t_init, t_end, tmp_eid, stid, kidx, oidx = zip(*sorted(zip( t_init_k0+t_init_k1, t_end_k0+t_end_k1, eid_k0+eid_k1, stid_k0+stid_k1, kidx, oidx)))  
                 eid = [x for x in tmp_eid] #/ makes eid a list (tmp_eid is a tuple)
@@ -189,32 +208,39 @@ class NetworkAssociator:
                         if len(dt1) > 0:
                             if dt1[0] <= offset:                                                                                      #/ if at least one other event is close in time
                                 glist = [j] + [j+1+q for q, t2 in izip(count(), dt1) if (t2 <= offset) and (stid[j+1+q] != stid[j])]  #/ group if within offset (unless same station - fix?)   
-                                if len(glist) > 1:   
-                                    elist = [eid[q] for q in glist]   
-                                    tmpid = [q for q in elist if q is not None]
-                                    if tmpid:  # (case of 2+ pre-existing event labels)
+                                if len(glist) > 1:
+                                    elist = [eid[q] for q in glist]
+                                    tmpid = [q for q in elist if q >= 0]
+                                    if len(tmpid) > 0:  # (case of 2+ pre-existing event labels)
                                         tmpid = min(tmpid)
-                                    elif not tmpid: #/ if event already has label (case of 1 pre-existing event label) NOTE: weird numbering issue without elif
+                                    else: #/ if event already has label (case of 1 pre-existing event label) NOTE: weird numbering issue without elif
                                         tmpid = icount
-                                        icount += 1      
+                                        icount += 1
                                     for q in glist:
-                                        eid[q] = tmpid 
-                for tmpidx, tmpk, tmpeid in izip(oidx, kidx, eid): #/ 
+                                        eid[q] = tmpid
+
+                for tmpidx, tmpk, tmpeid in izip(oidx, kidx, eid): #/
                     if tmpk == 0:
-                        all_diags_dict[k][tmpidx][3] = tmpeid
+                        all_diags[k_indices[0] + tmpidx][7] = tmpeid
+                        #all_diags_dict[k][tmpidx][3] = tmpeid
                     else:
-                        all_diags_dict[k+1][tmpidx][3] = tmpeid
+                        all_diags[kp1_indices[0] + tmpidx][7] = tmpeid
+                        #all_diags_dict[k+1][tmpidx][3] = tmpeid
 
         #/ compiles list of events detected on multiple stations
         if return_network_events:
             network_events = defaultdict(list)
             for k in xrange(q1, q2):
-                for eventcloud in all_diags_dict[k]:
-                    if eventcloud[3] is not None:
+                if k in map_to_indices:
+                    diags_k = all_diags[map_to_indices[k]]
+                else:
+                    diags_k = []
+                for eventcloud in diags_k:
+                    if eventcloud[7] >= 0:
                         if include_stats:
-                            network_events[ eventcloud[3] ].append( ((k, k, eventcloud[0][2], eventcloud[0][3]), eventcloud[1], eventcloud[2], eventcloud[4]) )
+                            network_events[ eventcloud[7] ].append( ((k, k, eventcloud[3], eventcloud[4]), eventcloud[5], eventcloud[6], (eventcloud[8], eventcloud[9], eventcloud[10])) )
                         else:
-                            network_events[ eventcloud[3] ].append( ((k, k, eventcloud[0][2], eventcloud[0][3]), eventcloud[1], eventcloud[2]) )
+                            network_events[ eventcloud[7] ].append( ((k, k, eventcloud[3], eventcloud[4]), eventcloud[5], eventcloud[6]) )
         else:
             network_events = None
 
