@@ -62,32 +62,60 @@ max_width = 8
 nsta_thresh = 2
 
 # number of cores for parallelism
-num_cores = 4
+num_cores = min(multiprocessing.cpu_count(), 8)
 
+PARTITION_SIZE = 100000000     # Size of partition in lines (this is around 2 GB per partition)
+PARTITION_GAP = 5              # Minimum dt gap between partitions
 
 ######################################################################### 
 ##                  Event-pair detection functions                     ##
 #########################################################################  
+
+def partition(fname):
+    print '  Building chunks and pickling for %s...' % fname
+    load_file = data_folder + fname
+    with open(load_file, 'r') as f:
+        lines_read = 0
+        bytes_so_far = 0
+        prev_dt = None
+        byte_positions = [0]
+        for index, line in enumerate(f):
+            tmp = line.strip().split()
+            dt = int(tmp[0])
+            idx1 = int(tmp[1])
+            ivals = int(tmp[2])
+            if not prev_dt:
+                prev_dt = dt
+            if (dt - prev_dt > PARTITION_GAP and lines_read >= PARTITION_SIZE) or \
+                (lines_read >= PARTITION_SIZE * 2):
+                byte_positions.append(bytes_so_far)
+                lines_read = 0
+            curr_bytes = len(line.encode())
+            bytes_so_far += curr_bytes
+            prev_dt = dt
+            lines_read += 1
+    byte_positions.append(bytes_so_far)
+    return byte_positions
 
 def detection_init():
     global process_counter
     process_counter = multiprocessing.Value('i', 0)
 
 def detection(args):
-    file = args[0]
-    cidx = args[1]
+    byte_pos = args[0]
+    bytes_to_read = args[1]
+    cidx = args[2]
+    start = time.time()
+    pid = os.getpid()
     associator =  NetworkAssociator()
+    clouds = EventCloudExtractor(dL = dgapL, dW = dgapW)
     global process_counter
     with process_counter.get_lock():
         process_counter.value += 1
-    start = time.time()
-    pid = os.getpid()
-    clouds = EventCloudExtractor(dL = dgapL, dW = dgapW)
 
     # get events - create hashtable
-    diags = clouds.p_triplet_to_diags(file,
-        pid_prefix = str(pid + process_counter.value * 1000),
-        ivals_thresh = ivals_thresh)
+    diags = clouds.p_triplet_to_diags(detdata_filenames[cidx], byte_pos, bytes_to_read, 
+                                      pid_prefix = str(pid + process_counter.value * 1000), ivals_thresh = ivals_thresh)
     #/ extract event-pair clouds
     curr_event_dict = clouds.diags_to_event_list(diags, npass = 3)
     del diags
@@ -98,37 +126,51 @@ def detection(args):
     diags_dict = associator.clouds_to_network_diags_one_channel(
         curr_event_dict, cidx)
     del curr_event_dict
-    print "Saving diags_dict to %s_diags_dict.dat" % file
-    with open('%s_diags.dat' % file, "wb") as f:
+    print "Saving diags_dict to byte%d_diags.dat" % byte_pos
+    with open('byte%d_diags.dat' % byte_pos, "wb") as f:
         pickle.dump(diags_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
     del diags_dict
+    return 'byte%d_diags.dat' % byte_pos
 
 def process(cidx):
     print detdata_filenames[cidx]
     print '  Extracting event-pair clouds ...'
     t0 = time.time()
-    files = [data_folder + f for f in os.listdir(data_folder) if f.startswith(detdata_filenames[cidx]) and not '.dat' in f]
-    args = [[f, cidx] for f in files]
+    byte_positions = byte_positions_list[cidx]
+    args = []
+    for idx in xrange(len(byte_positions)): # fill args with tuples of the form (byte_pos, bytes_to_read, cidx). bytes_to_read is -1 for the last byte_pos, in which case we will call read() with no argument
+        if idx == len(byte_positions) - 1:
+            args.append((byte_positions[idx], -1, cidx))
+        else:
+            args.append((byte_positions[idx], byte_positions[idx + 1] - byte_positions[idx], cidx))
     pool = multiprocessing.Pool(num_cores, initializer=detection_init)
-    pool.map(detection, args)
+    output_files = pool.map(detection, args)
     pool.terminate()
     print '  total time for %s:' % (detdata_filenames[cidx]), time.time() - t0
-    return files
+    return output_files
 
 
 if __name__ == '__main__':
 
     grand_start_time = time.time()
 
-#########################################################################
-##                  Event-pair detection                               ##
-#########################################################################
+    #########################################################################
+    ##                  Event-pair detection                               ##
+    #########################################################################
+
+    p = multiprocessing.Pool(len(detdata_filenames))
+    byte_positions_list = p.map(partition, detdata_filenames) # list of lists of byte positions, each list corresponding to one of detdata_filenames
+
+    print 'TOTAL PARTITIONING TIME:', time.time() - grand_start_time
+
+    process_start_time = time.time()
 
     dict_names = {}
-    for cidx in xrange(len(channel_vars)):
+    for cidx in xrange(len(detdata_filenames)):
         dict_names[cidx] = process(cidx)
         gc.collect()
 
+    print 'TOTAL PROCESSING TIME:', time.time() - process_start_time
 #########################################################################
 ##                         Network detection                           ##
 ##         (NOTE: updated to include adjacent diagonal hashes)         ##
@@ -146,7 +188,7 @@ if __name__ == '__main__':
     for cidx in xrange(len(channel_vars)):
         for file in dict_names[cidx]:
             print file
-            diags_dict = pickle.load(open('%s_diags.dat' % file, 'rb'))
+            diags_dict = pickle.load(open(file, 'rb'))
             for k in diags_dict:
                 all_diags_dict[k].extend(diags_dict[k])
 

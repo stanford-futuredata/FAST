@@ -37,7 +37,7 @@ class EventCloudExtractor:
                 elems[j][2] = '%s-%d' % (pid_prefix, eventID)
         return elems, eventID
 
-    def p_triplet_to_diags(self, fname, pid_prefix = None, dL = None, dt_min = 0, dt_max = None, ivals_thresh = 0):
+    def p_triplet_to_diags(self, fname, byte_pos, bytes_to_read, pid_prefix = None, dL = None, dt_min = 0, dt_max = None, ivals_thresh = 0):
         if dt_max is None:
             dt_max = float('inf')
         if dL is None:
@@ -50,8 +50,10 @@ class EventCloudExtractor:
         prev_key = None
         elems = []
         with open(fname, 'r') as f:
-            for line in f:
-                tmp = line.strip().split()
+            f.seek(byte_pos)
+            lines = f.read(bytes_to_read).strip().split('\n')
+            for line in lines:
+                tmp = line.split() # no need to strip() since that's already done above
                 ivals = int(tmp[2])
                 if ivals < ivals_thresh:
                     continue
