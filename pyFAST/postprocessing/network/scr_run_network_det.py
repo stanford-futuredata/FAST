@@ -18,8 +18,7 @@ import multiprocessing.pool
 import os
 from pseudo_association import *
 from event_resolution import *
-from os import listdir
-from os.path import isfile, join
+from os.path import isfile, join, getsize
 
 
 #########################################################################
@@ -58,7 +57,7 @@ from os.path import isfile, join
 # # number of cores for parallelism
 # num_cores = min(multiprocessing.cpu_count(), 8)
 
-PARTITION_SIZE = 100000000     # Size of partition in lines (this is around 2 GB per partition)
+PARTITION_SIZE = 2147483648    # Size of partition in bytes (this is 2 GB per partition)
 PARTITION_GAP = 5              # Minimum dt gap between partitions
 
 ## ------------------------------ WENCHUAN -------------------------------
@@ -143,26 +142,31 @@ num_cores = 4
 def partition(fname):
     print '  Building chunks and pickling for %s...' % fname
     load_file = data_folder + fname
-    with open(load_file, 'r') as f:
-        lines_read = 0
-        bytes_so_far = 0
-        prev_dt = None
+    file_size = getsize(load_file)
+    with open(load_file, 'rb') as f:
         byte_positions = [0]
-        for index, line in enumerate(f):
-            tmp = line.strip().split()
+        while file_size - f.tell() > PARTITION_SIZE:
+            f.seek(PARTITION_SIZE, 1) # jump PARTITION_SIZE bytes from current file position
+            f.readline() # read a line to make sure we're now at the beginning of a new line (if we end up in the middle of a line, now we're at the start of the following line)
+            tmp = f.readline().strip().split()
             dt = int(tmp[0])
-            idx1 = int(tmp[1])
-            ivals = int(tmp[2])
-            if not prev_dt:
-                prev_dt = dt
-            if (dt - prev_dt > PARTITION_GAP and lines_read >= PARTITION_SIZE) or \
-                (lines_read >= PARTITION_SIZE * 2):
-                byte_positions.append(bytes_so_far)
-                lines_read = 0
-            curr_bytes = len(line.encode())
-            bytes_so_far += curr_bytes
             prev_dt = dt
-            lines_read += 1
+            lines_read = 0
+            end_reached = False
+            while lines_read < PARTITION_SIZE:
+                line_start = f.tell()
+                line = f.readline()
+                if line == '':
+                    end_reached = True
+                    break
+                tmp = line.strip().split()
+                dt = int(tmp[0])
+                if dt - prev_dt > PARTITION_GAP:
+                    break
+                lines_read += 1
+                prev_dt = dt
+            if not end_reached: # this means the previous while loop ended either because we found a dt more than PARTITION_GAP away from prev_dt, or we read one more PARTITION_SIZE in which case we just split here
+                byte_positions.append(line_start)
     return byte_positions
 
 def detection_init():
