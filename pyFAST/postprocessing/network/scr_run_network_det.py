@@ -108,7 +108,7 @@ M = 1 + 4 + 1 + 1 + 1 + 3
 #########################################################################  
 
 def partition(fname):
-    print '  Building chunks and pickling for %s...' % fname
+    print '  Partitioning %s...' % fname
     load_file = data_folder + fname
     file_size = getsize(load_file)
     with open(load_file, 'rb') as f:
@@ -166,17 +166,17 @@ def detection(args):
         process_counter.value += 1
 
     # get events - create hashtable
-    diags = clouds.p_triplet_to_diags(fname, byte_pos, bytes_to_read, 
-                                      pid_prefix = str(pid + process_counter.value * 1000), ivals_thresh = ivals_thresh)
+    pid_prefix = str(pid + process_counter.value * 1000)
+    diags = clouds.p_triplet_to_diags(fname, byte_pos, bytes_to_read, pid_prefix = pid_prefix, ivals_thresh = ivals_thresh)
     #/ extract event-pair clouds
     curr_event_dict = clouds.diags_to_event_list(diags, npass = num_pass)
     del diags
     #/ prune event-pairs
     prune_events(curr_event_dict, min_dets, min_sum, max_width)
-    print '    Time taken for %s (byte%d):' % (detdata_filenames[cidx], byte_pos), time.time() - start
+    print '    Time taken for %s (byte %d):' % (detdata_filenames[cidx], byte_pos), time.time() - start
     #/ Save event-pairs for the single station case
     if len(channel_vars) == 1:
-        with open('%sbyte%d_event_pairs.dat' % (detdata_filenames[cidx], byte_pos), "wb") as f:
+        with open('%s_byte_%d_event_pairs.dat' % (detdata_filenames[cidx], byte_pos), "wb") as f:
             pickle.dump(curr_event_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
         del curr_event_dict
         return
@@ -185,11 +185,11 @@ def detection(args):
     diags_dict = associator.clouds_to_network_diags_one_channel(
         curr_event_dict, cidx)
     del curr_event_dict
-    print "Saving diags_dict to %sbyte%d.npy" % (detdata_filenames[cidx], byte_pos)
+    print "Saving diags_dict to %s_byte_%d.npy" % (detdata_filenames[cidx], byte_pos)
     arr = dict_to_numpy(diags_dict)
-    np.save('%sbyte%d.npy' % (detdata_filenames[cidx], byte_pos), arr)
+    np.save('%s_byte_%d.npy' % (detdata_filenames[cidx], byte_pos), arr)
     del diags_dict, arr
-    return '%sbyte%d.npy' % (detdata_filenames[cidx], byte_pos)
+    return '%s_byte_%d.npy' % (detdata_filenames[cidx], byte_pos)
 
 def process(cidx):
     print detdata_filenames[cidx]
@@ -212,6 +212,9 @@ def process(cidx):
 if __name__ == '__main__':
 
     grand_start_time = time.time()
+
+    if not os.path.exists(out_folder):
+        os.makedirs(out_folder)
 
     ########################################################################
     #                  Event-pair detection                               ##
@@ -245,7 +248,7 @@ if __name__ == '__main__':
         byte_positions = byte_positions_list[0] # get byte_positions corresponding to the single station
         event_dict = defaultdict(list)
         for byte_pos in byte_positions:
-            fname = '%sbyte%d_event_pairs.dat' % (detdata_filenames[0], byte_pos)
+            fname = '%s_byte_%d_event_pairs.dat' % (detdata_filenames[0], byte_pos)
             event_pairs = pickle.load(open(fname, 'rb'))
             for k in event_pairs:
                 event_dict[k].extend(event_pairs[k])
