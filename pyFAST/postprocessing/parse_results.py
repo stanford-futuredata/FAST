@@ -314,5 +314,3 @@ if __name__ == '__main__':
         filter_and_reduce(p)
 
     print "Total time taken:", time.time() - grand_start_time
-
-
