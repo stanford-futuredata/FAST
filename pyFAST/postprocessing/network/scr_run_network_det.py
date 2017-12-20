@@ -35,7 +35,7 @@ def partition(fname):
     PARTITION_GAP = param["performance"]["partition_gap"]
 
     print '  Partitioning %s...' % fname
-    load_file = get_data_folder(param) + fname
+    load_file = data_folder + fname
     file_size = getsize(load_file)
     with open(load_file, 'rb') as f:
         byte_positions = [0]
@@ -83,7 +83,7 @@ def detection(args):
     byte_pos = args[0]
     bytes_to_read = args[1]
     cidx = args[2]
-    fname = get_data_folder(param) + detdata_filenames[cidx]
+    fname = data_folder + detdata_filenames[cidx]
     start = time.time()
     pid = os.getpid()
     associator =  NetworkAssociator()
@@ -109,7 +109,8 @@ def detection(args):
     print '    Time taken for %s (byte %d):' % (detdata_filenames[cidx], byte_pos), time.time() - start
     #/ Save event-pairs for the single station case
     if nstations == 1:
-        with open('%s_byte_%d_event_pairs.dat' % (detdata_filenames[cidx], byte_pos), "wb") as f:
+        with open('%s%s_byte_%d_event_pairs.dat' % (data_folder,
+            detdata_filenames[cidx], byte_pos), "wb") as f:
             pickle.dump(curr_event_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
         del curr_event_dict
         return
@@ -120,9 +121,9 @@ def detection(args):
     del curr_event_dict
     print "    Saving diags_dict to %s_byte_%d.npy" % (detdata_filenames[cidx], byte_pos)
     arr = dict_to_numpy(diags_dict)
-    np.save('%s_byte_%d.npy' % (detdata_filenames[cidx], byte_pos), arr)
+    np.save('%s%s_byte_%d.npy' % (data_folder, detdata_filenames[cidx], byte_pos), arr)
     del diags_dict, arr
-    return '%s_byte_%d.npy' % (detdata_filenames[cidx], byte_pos)
+    return '%s%s_byte_%d.npy' % (data_folder, detdata_filenames[cidx], byte_pos)
 
 def process(cidx):
     print '  Extracting event-pairs for %s...' % detdata_filenames[cidx]
@@ -148,10 +149,12 @@ if __name__ == '__main__':
 
     param = parse_json(sys.argv[1])
     nstations = len(param["io"]["channel_vars"])
+    data_folder = get_data_folder(param)
+    out_folder = get_output_folder(param)
     out_fname = get_network_fname(param)
 
-    if not os.path.exists(param["io"]["out_folder"]):
-        os.makedirs(param["io"]["out_folder"])
+    if not os.path.exists(out_folder):
+        os.makedirs(out_folder)
 
     ########################################################################
     #                  Partition                                          ##
@@ -192,7 +195,7 @@ if __name__ == '__main__':
         byte_positions = byte_positions_list[0] # get byte_positions corresponding to the single station
         event_dict = defaultdict(list)
         for byte_pos in byte_positions:
-            fname = '%s_byte_%d_event_pairs.dat' % (detdata_filenames[0], byte_pos)
+            fname = '%s%s_byte_%d_event_pairs.dat' % (data_folder, detdata_filenames[0], byte_pos)
             event_pairs = pickle.load(open(fname, 'rb'))
             for k in event_pairs:
                 event_dict[k].extend(event_pairs[k])
@@ -202,6 +205,7 @@ if __name__ == '__main__':
         # TODO: Save to prettier formats
         events = {'event_start': event_start, 'event_dt': event_dt,
             'event_stats': event_stats}
+        print "  Outputting results to %s*" % out_fname
         with open('%s_%s_events.dat' % (out_fname,
             param["io"]["channel_vars"][0]), "wb") as f:
             pickle.dump(events, f, protocol=pickle.HIGHEST_PROTOCOL)

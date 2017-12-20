@@ -12,7 +12,7 @@ def get_pairs_filenames(param_json):
   	return detdata_filenames
 
 def get_network_fname(param_json):
-	return param_json["io"]["out_folder"] + \
+	return get_output_folder(param_json) + \
 		'%dsta_%dstathresh' % (len(param_json["io"]["channel_vars"]),
 			param_json["network"]["nsta_thresh"])
 
@@ -23,3 +23,6 @@ def get_min_sum(param_json):
 
 def get_data_folder(param_json):
 	return param_json["io"]["base_dir"] + param_json["io"]["data_folder"]
+
+def get_output_folder(param_json):
+	return param_json["io"]["base_dir"] + param_json["io"]["out_folder"]
