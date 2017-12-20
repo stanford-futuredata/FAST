@@ -1,0 +1,29 @@
+{
+	"network": {
+		"max_fp": 74797,
+		"dt_fp": 1.0,
+		"dgapL": 3,
+		"dgapW": 3,
+		"num_pass": 2,
+		"min_dets": 4,
+		"min_sum_multiplier": 1,
+		"max_width": 8,
+		"ivals_thresh": 6,
+		"nsta_thresh": 2,
+		"input_offset": 3
+	},
+
+	"performance": {
+		"partition_size": 2147483648,
+		"partition_gap": 5,
+		"num_cores": 4
+	},
+
+	"io": {
+		"channel_vars": ["CDY", "CPM", "GTM", "HEC", "RMM", "RMR", "TPC"],
+		"fname_template": "candidate_pairs_%s_combined.txt",
+		"base_dir": "/lfs/1/krong/HectorMine/",
+		"data_folder": "partition/",
+		"out_folder": "network/"
+	}
+}

@@ -37,7 +37,8 @@ class EventCloudExtractor:
                 elems[j][2] = '%s-%d' % (pid_prefix, eventID)
         return elems, eventID
 
-    def p_triplet_to_diags(self, fname, byte_pos, bytes_to_read, pid_prefix = None, dL = None, dt_min = 0, dt_max = None, ivals_thresh = 0):
+    def p_triplet_to_diags(self, fname, byte_pos, bytes_to_read, pid_prefix = None,
+                           dL = None, dt_min = 0, dt_max = None, ivals_thresh = 0):
         if dt_max is None:
             dt_max = float('inf')
         if dL is None:
@@ -146,24 +147,20 @@ class NetworkAssociator:
     def __init__(self, icount = 0):
         self.icount = icount
 
-    def clouds_to_network_diags_one_channel(self, event_dict, cidx, include_stats = True):
+    def clouds_to_network_diags_one_channel(self, event_dict, cidx):
         diags_dict = defaultdict(list)
         for k in event_dict:
             ddiag, bbox = self._get_ddiag_bbox(event_dict[k])
-            if include_stats:
-                event_stats = self._get_event_stats(event_dict[k])
-                diags_dict[ddiag].append([bbox, cidx, k, None, event_stats])  #/ boundingBox, stationID, diagonalKey, networkEventID, event_stats : (ndets , vol (sum_sim), peak_sim)
-            else:
-                diags_dict[ddiag].append([bbox, cidx, k, None])  #/ boundingBox, stationID, diagonalKey, networkEventID
+            event_stats = self._get_event_stats(event_dict[k])
+            diags_dict[ddiag].append([bbox, cidx, k, None, event_stats])  #/ boundingBox, stationID, diagonalKey, networkEventID, event_stats : (ndets , vol (sum_sim), peak_sim)
         return diags_dict
 
-    def associate_network_diags(self, all_diags, nstations, offset, q1 = None, q2 = None, return_network_events = True, include_stats = True):
+    def associate_network_diags(self, all_diags, nstations, offset):
         p = 2 * nstations
         icount = self.icount
         diags = all_diags[:, 0]
-        if (q1 is None) or (q2 is None):
-            q1 = min(diags)
-            q2 = max(diags) + 1
+        q1 = min(diags)
+        q2 = max(diags) + 1
         slicing_points = list(np.where(np.diff(diags) > 0)[0])
         map_to_indices = {}
         prev_idx = -1
@@ -187,11 +184,11 @@ class NetworkAssociator:
                 diags_kp1 = np.zeros([0, 11], dtype=np.int32)
             #/ from this diagonal
             t_init_k0 = list(diags_k[:, 3])    #/ initial time of each bbox along diag k
-            t_end_k0  = list(diags_k[:, 4])   #/ end time of each bbox along diag k  
+            t_end_k0  = list(diags_k[:, 4])   #/ end time of each bbox along diag k
             eid_k0    = list(diags_k[:, 7])       #/ network eventID
             stid_k0   = list(diags_k[:, 5])       #/ stationID
-            t_init_k1 = list(diags_kp1[:, 3])  #/ initial time of each bbox along diag k 
-            t_end_k1  = list(diags_kp1[:, 4])  #/ end time of each bbox along diag k  
+            t_init_k1 = list(diags_kp1[:, 3])  #/ initial time of each bbox along diag k
+            t_end_k1  = list(diags_kp1[:, 4])  #/ end time of each bbox along diag k
             eid_k1    = list(diags_kp1[:, 7])     #/ network eventID
             stid_k1   = list(diags_kp1[:, 5])     #/ stationID
 
@@ -230,26 +227,21 @@ class NetworkAssociator:
                         #all_diags_dict[k+1][tmpidx][3] = tmpeid
 
         #/ compiles list of events detected on multiple stations
-        if return_network_events:
-            network_events = defaultdict(list)
-            for k in xrange(q1, q2):
-                if k in map_to_indices:
-                    diags_k = all_diags[map_to_indices[k]]
-                else:
-                    diags_k = []
-                for eventcloud in diags_k:
-                    if eventcloud[7] >= 0:
-                        if include_stats:
-                            network_events[ eventcloud[7] ].append( ((k, k, eventcloud[3], eventcloud[4]), eventcloud[5], eventcloud[6], (eventcloud[8], eventcloud[9], eventcloud[10])) )
-                        else:
-                            network_events[ eventcloud[7] ].append( ((k, k, eventcloud[3], eventcloud[4]), eventcloud[5], eventcloud[6]) )
-        else:
-            network_events = None
+        network_events = defaultdict(list)
+        for k in xrange(q1, q2):
+            if k in map_to_indices:
+                diags_k = all_diags[map_to_indices[k]]
+            else:
+                diags_k = []
+            for eventcloud in diags_k:
+                if eventcloud[7] >= 0:
+                    network_events[ eventcloud[7] ].append( ((k, k, eventcloud[3], eventcloud[4]),
+                        eventcloud[5], eventcloud[6], (eventcloud[8], eventcloud[9], eventcloud[10])) )
 
         self.icount = icount
         return icount, network_events
 
-    def _get_ddiag_bbox(self, event_data, return_bbox = True):
+    def _get_ddiag_bbox(self, event_data):
         ddiag = None #/ assigns valid value
         bbox  = None #/ assigns valid value
         dtlist  = [x[0] for x in event_data]
@@ -258,15 +250,15 @@ class NetworkAssociator:
         if dtmin == dtmax: #/ if one diagonal, this is dominant
             ddiag = dtmin
         else:              #/ if multiple diagonals, select one with largest similarity (numpy returns first instance of maximum)
-            simlist = [x[2] for x in event_data]  
+            simlist = [x[2] for x in event_data]
             ddiag = dtlist[np.argmax(simlist)]     #/ TODO: update rule
-        if return_bbox:  #/ compute bounding box, if requested  
-            t1list  = [x[1] for x in event_data]
-            t1min   = min(t1list)
-            t1max   = max(t1list) 
-            bbox    = (dtmin, dtmax, t1min, t1max)    
+        #/ compute bounding box
+        t1list  = [x[1] for x in event_data]
+        t1min   = min(t1list)
+        t1max   = max(t1list)
+        bbox    = (dtmin, dtmax, t1min, t1max)
         return ddiag, bbox
 
     def _get_event_stats(self, event_data):
         tmp = [x[2] for x in event_data]
-        return ( len(event_data) , sum(tmp), max(tmp) ) 
+        return ( len(event_data) , sum(tmp), max(tmp) )
