@@ -10,9 +10,5 @@ find_package( Boost COMPONENTS system log program_options filesystem REQUIRED )
 include_directories( ${Boost_INCLUDE_DIRS} )
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBOOST_LOG_DYN_LINK") # http://stackoverflow.com/questions/23137637/linker-error-while-linking-boost-log-tutorial-undefined-references
 
-list(APPEND CMAKE_MODULE_PATH "cmake/modules/")
-find_package(TBB COMPONENTS tbbmalloc tbbmalloc_proxy)
-include_directories( ${TBB_INCLUDE_DIRS} )
-
 add_executable(main ${SOURCE_FILES})
 target_link_libraries( main ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_LOG_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRARY} ${TBB_LIBRARIES} )
