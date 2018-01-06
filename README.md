@@ -1,5 +1,12 @@
 # FAST Detection Pipeline
 
+### Dependencies
+
+```
+c++ dependency: boost
+python dependencies: obspy, pywt, scipy, numpy, skimage, sklearn, linecache, dateutil
+```
+
 ### Fingerprint
 Input time series files and fingerprint parameters are specified in a JSON format. See [sample_params.json](https://github.com/stanford-futuredata/quake/blob/master/pyFAST/fingerprint/sample_params.json) for an example. To generate fingerprints:
 ```
