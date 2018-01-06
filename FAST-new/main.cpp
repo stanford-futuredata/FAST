@@ -57,10 +57,11 @@ void minhashBatch(uint64_t i, uint64_t min_hash_sigs[], const uint32_t hashes[],
 	fingerprints.clear();
 }
 
-void genMinhashSig(uint64_t *min_hash_sigs, size_t ntimes) {
+void genMinhashSig(uint64_t *min_hash_sigs) {
 	uint64_t sig_len = s.ncols * s.ntbls;
 	size_t byte_per_fp = s.mrows / 8;
 	double out_time = 0;
+	size_t minmax_ntimes = s.ntbls * ((s.nhashfuncs + 1) / 2);    //number of min-hash permutations
 
 	// Read minhash signatures from file
 	if (!s.input_mh_sigs_file.empty()) {
@@ -77,8 +78,9 @@ void genMinhashSig(uint64_t *min_hash_sigs, size_t ntimes) {
 		clock_t end = clock();
 		out_time += ((double)(end - begin)) / CLOCKS_PER_SEC;
 	} else { // Compute hashes for each row
-		uint32_t *hashes = (uint32_t*) malloc(ntimes * s.mrows * sizeof(uint32_t));
-		calculate_hash(s.mrows, ntimes, rand(), hashes);
+		clock_t begin = clock();
+		uint32_t *hashes = (uint32_t*) malloc(minmax_ntimes * s.mrows * sizeof(uint32_t));
+		calculate_hash(s.mrows, minmax_ntimes, rand(), hashes);
 		//Fingerprint file
 		fs::path p = s.input_file;
 		uintmax_t insize = fs::file_size(p);
@@ -97,7 +99,6 @@ void genMinhashSig(uint64_t *min_hash_sigs, size_t ntimes) {
 			}
 		}
 
-		clock_t begin = clock();
 		uint64_t num_batches = 1 + insize / (s.batch_size * byte_per_fp);
 		BOOST_LOG_TRIVIAL(trace) << "Number of batches:\t" << num_batches;
 
@@ -191,7 +192,7 @@ int main(int argc, char * argv[]) {
 	uint64_t *min_hash_sigs = new uint64_t[sig_len];
 
 	// Generate minhash signatures
-	genMinhashSig(min_hash_sigs, ntimes);
+	genMinhashSig(min_hash_sigs);
 
     boost::dynamic_bitset<> filter_flag(s.num_queries);
 
