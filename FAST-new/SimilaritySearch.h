@@ -28,15 +28,14 @@ typedef unsigned __int64 uint64_t;
 #endif
 
 #include <vector>
-#include "tbb/concurrent_hash_map.h"
 #include "boost/dynamic_bitset.hpp"
-
-#define EST_NUM_ITEMS_PER_BUCKET 10
 
 typedef std::vector<uint32_t> vec;
 typedef vec::const_iterator vec_cit;
 typedef unordered_map<uint64_t,vec> table;
-typedef tbb::concurrent_hash_map<uint32_t,uint32_t> map;
+typedef unordered_map<uint32_t,uint32_t> map;
+typedef std::pair<uint32_t,uint32_t> map_pair;
+typedef map::iterator map_it;
 typedef map::const_iterator map_cit;
 typedef table::const_iterator table_cit;
 typedef table::iterator table_it;

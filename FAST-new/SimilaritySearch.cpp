@@ -107,11 +107,15 @@ void SearchDatabase_voting(const size_t nquery, const size_t ncols, const uint32
             for(size_t k = 0; k != l; ++k) {
                 int64_t key = *it;
                 if ((key - query_index) >= near_repeats) {
-                    map::accessor a;
-                    // will either fetch current value or use 0 as default if new 
-                    votes.insert(a, key);
-                    a->second+=1;
-                    a.release();
+                    map_it pt = votes.find(key);
+                    // Increment value
+                    if(pt != votes.end()) {
+                        pt->second++;
+                    } else {
+                        uint32_t const count = 1;
+                        map_pair data(key, count);
+                        votes.insert(data);
+                    }
                 }
                 ++it;
             }
