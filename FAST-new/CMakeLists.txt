@@ -11,4 +11,4 @@ include_directories( ${Boost_INCLUDE_DIRS} )
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBOOST_LOG_DYN_LINK") # http://stackoverflow.com/questions/23137637/linker-error-while-linking-boost-log-tutorial-undefined-references
 
 add_executable(main ${SOURCE_FILES})
-target_link_libraries( main ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_LOG_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRARY} ${TBB_LIBRARIES} )
+target_link_libraries( main ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_LOG_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRARY} )
