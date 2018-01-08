@@ -29,6 +29,7 @@ def get_haar_image(fname):
 	if p['mad_sampling_rate'] == 1:
 		time_padding = get_partition_padding(params)
 		for i in range(len(st)):
+			print st[i]
 			if st[i].stats.endtime - st[i].stats.starttime <= min_fp_length:
 				print 'continue'
 

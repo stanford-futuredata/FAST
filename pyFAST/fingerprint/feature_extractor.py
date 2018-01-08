@@ -16,6 +16,7 @@ import numpy as np
 import scipy as sp
 import pywt as wt
 import math
+import time
 from skimage.transform import resize
 from sklearn.preprocessing import normalize
 from copy import copy
@@ -156,15 +157,28 @@ class FeatureExtractor(object):
                 images[i,:,:] = np.reshape(vectors[i,:], (d1,d2))
             return images
 
-    def compute_haar_stats(self, haar_images,type = None, exact_mad = True):
+    def compute_haar_stats(self, haar_images,type = None):
         if type is not 'Zscore':
-            if exact_mad: # compute exact median and absolute deviations
-                self.haar_medians = np.median(haar_images,axis=0)
-                tmp = abs(haar_images - self.haar_medians)
-                self.haar_absdevs  = np.median(tmp, axis=0)
-                return self.haar_medians, self.haar_absdevs
-            else: # approximates median and absolute deviations
-                print 'Warning - not implemented. TODO: implement approximate median/absolute deviation calculation'
+            print "compute_haar_stats"
+            shape = haar_images.shape
+            print time.time()
+            medians = []
+            for i in range(shape[1]):
+                medians.append(np.median(haar_images[:, i]))
+            self.haar_medians = np.array(medians)
+            print time.time()
+            print self.haar_medians.shape
+
+            mad = []
+            for i in range(shape[1]):
+                if i % 100 == 0:
+                    print i
+                tmp = abs(haar_images[:, i] - medians[i])
+                mad.append(np.median(tmp))
+            self.haar_absdevs  = np.array(mad)
+            print time.time()
+
+            return self.haar_medians, self.haar_absdevs
         if type is not 'MAD':
             self.haar_means   = np.mean(haar_images,axis=0)
             self.haar_stddevs = np.std(haar_images,axis=0)
