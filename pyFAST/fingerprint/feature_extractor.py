@@ -160,7 +160,8 @@ class FeatureExtractor(object):
         if type is not 'Zscore':
             if exact_mad: # compute exact median and absolute deviations
                 self.haar_medians = np.median(haar_images,axis=0)
-                self.haar_absdevs  = np.median(abs(haar_images - self.haar_medians),axis=0)
+                tmp = abs(haar_images - self.haar_medians)
+                self.haar_absdevs  = np.median(tmp, axis=0)
                 return self.haar_medians, self.haar_absdevs
             else: # approximates median and absolute deviations
                 print 'Warning - not implemented. TODO: implement approximate median/absolute deviation calculation'

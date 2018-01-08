@@ -4,6 +4,7 @@ import sys
 import datetime
 import json
 import os
+import time
 from util import *
 
 madStatsCommand= 'python MAD.py %s'
@@ -28,11 +29,14 @@ if __name__ == '__main__':
 	params = parse_json(param_json)
 
 	# Preprocess to calculate MAD
+	t_start = time.time()
 	call_mad(params)
+	t_end = time.time()
+	print("MAD fingerprints took: %.2f seconds" % (t_end - t_start))
 
 	# Fingerprint
-	p = Pool(params['performance']['num_fp_thread'])
 	files = params['data']['fingerprint_files']
+	p = Pool(min(params['performance']['num_fp_thread'], len(files)))
 	print (p.map(call_fingerprint, files))
 
 	# Stich fingerprint files
