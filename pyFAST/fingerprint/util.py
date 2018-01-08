@@ -74,3 +74,12 @@ def init_feature_extractor(params):
         ntimes = get_ntimes(params))
     return feats
 
+
+def get_partition_padding(params):
+    # add this to end of time series of each partition so we don't have missing fingerprints
+    sec_extra = params['fingerprint']['spec_length'] + \
+        (params['fingerprint']['fp_length'] - params['fingerprint']['fp_lag']) * \
+        params['fingerprint']['spec_lag']
+    time_extra = datetime.timedelta(seconds=sec_extra)
+    return time_extra
+

@@ -156,14 +156,21 @@ class FeatureExtractor(object):
                 images[i,:,:] = np.reshape(vectors[i,:], (d1,d2))
             return images
 
-    def compute_haar_stats(self, haar_images,type = None, exact_mad = True):
+    def compute_haar_stats(self, haar_images,type = None):
         if type is not 'Zscore':
-            if exact_mad: # compute exact median and absolute deviations
-                self.haar_medians = np.median(haar_images,axis=0)
-                self.haar_absdevs  = np.median(abs(haar_images - self.haar_medians),axis=0)
-                return self.haar_medians, self.haar_absdevs
-            else: # approximates median and absolute deviations
-                print 'Warning - not implemented. TODO: implement approximate median/absolute deviation calculation'
+            shape = haar_images.shape
+            medians = []
+            for i in range(shape[1]):
+                medians.append(np.median(haar_images[:, i]))
+            self.haar_medians = np.array(medians)
+
+            mad = []
+            for i in range(shape[1]):
+                tmp = abs(haar_images[:, i] - medians[i])
+                mad.append(np.median(tmp))
+            self.haar_absdevs  = np.array(mad)
+
+            return self.haar_medians, self.haar_absdevs
         if type is not 'MAD':
             self.haar_means   = np.mean(haar_images,axis=0)
             self.haar_stddevs = np.std(haar_images,axis=0)

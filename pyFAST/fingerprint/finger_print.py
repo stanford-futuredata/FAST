@@ -1,10 +1,10 @@
 from obspy import read
 import numpy as np
-import time
 from obspy.core import UTCDateTime
 import os
 import sys
 import datetime
+import time
 from util import *
 
 def write_timestamp(t, idx1, idx2, starttime, ts_file):
@@ -40,15 +40,8 @@ def init_fp_folders(params):
 		os.makedirs(ts_folder)
 	return fp_folder, ts_folder
 
-def get_partition_padding():
-	# add this to end of time series of each partition so we don't have missing fingerprints
-	sec_extra = params['fingerprint']['spec_length'] + \
-		(params['fingerprint']['fp_length'] - params['fingerprint']['fp_lag']) * \
-		params['fingerprint']['spec_lag']
-	time_extra = datetime.timedelta(seconds=sec_extra)
-	return time_extra
-
 if __name__ == '__main__':
+	t_start = time.time()
 	fname = sys.argv[1]
 	param_json = sys.argv[2]
 	params = parse_json(param_json)
@@ -64,10 +57,9 @@ if __name__ == '__main__':
 	st = read(params['data']['folder'] + fname)
 	ts_file = open(ts_folder + get_ts_fname(fname), "w")
 	fp_file = open(fp_folder + get_fp_fname(fname), "w")
-	time_padding = get_partition_padding()
+	time_padding = get_partition_padding(params)
 	min_fp_length = get_min_fp_length(params)
 
-	t00 = time.time()
 	for i in range(len(st)):
 		# Get start and end time of the current continuous segment
 		starttime = datetime.datetime.strptime(str(st[i].stats.starttime), '%Y-%m-%dT%H:%M:%S.%fZ')
@@ -95,5 +87,6 @@ if __name__ == '__main__':
 
 	ts_file.close()
 	fp_file.close()
-	t000 = time.time()
-	print("Binary fingerprints took: %.2f seconds" % (t000 - t00))
+
+	t_end = time.time()
+	print("Binary fingerprints took: %.2f seconds" % (t_end - t_start))

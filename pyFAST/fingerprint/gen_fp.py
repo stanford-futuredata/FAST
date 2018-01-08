@@ -4,6 +4,7 @@ import sys
 import datetime
 import json
 import os
+import time
 from util import *
 
 madStatsCommand= 'python MAD.py %s'
@@ -21,18 +22,18 @@ def call_mad(params):
 	process = subprocess.Popen((madStatsCommand % (param_json)),
 			stdout=subprocess.PIPE, shell=True)
 	output, error = process.communicate()
-	print output
+	return output, error
 
 if __name__ == '__main__':
 	param_json = sys.argv[1]
 	params = parse_json(param_json)
 
 	# Preprocess to calculate MAD
-	call_mad(params)
+	print (call_mad(params))
 
 	# Fingerprint
-	p = Pool(params['performance']['num_fp_thread'])
 	files = params['data']['fingerprint_files']
+	p = Pool(min(params['performance']['num_fp_thread'], len(files)))
 	print (p.map(call_fingerprint, files))
 
 	# Stich fingerprint files

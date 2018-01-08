@@ -23,7 +23,7 @@ def get_haar_image(fname):
 	p = params['fingerprint']
 	min_fp_length = get_min_fp_length(params)
 	ntimes = get_ntimes(params)
-	sample_haar_images = np.zeros([0, p['nfreq'] * ntimes])
+	sample_haar_images = []
 	st = read(params['data']['folder'] + fname)
 	# No sampling
 	if p['mad_sampling_rate'] == 1:
@@ -31,8 +31,10 @@ def get_haar_image(fname):
 			if st[i].stats.endtime - st[i].stats.starttime <= min_fp_length:
 				print 'continue'
 				continue
-			haar_images, nWindows, idx1, idx2, Sxx, t = feats.data_to_haar_images(st[i].data)
-			sample_haar_images = np.vstack([sample_haar_images, haar_images])
+
+			haar_images, nWindows, idx1, idx2, Sxx, t  = feats.data_to_haar_images(st[i].data)
+			sample_haar_images.append(haar_images)
+
 	# Randomly sample sample_length proportion of data from each input file 
 	# at each specified sample interval
 	else:
@@ -49,26 +51,30 @@ def get_haar_image(fname):
 				for i in range(1, len(segment)):
 					data = np.append(data, segment[i].data)
 				haar_images, nWindows, idx1, idx2, Sxx, t = feats.data_to_haar_images(data)
-				sample_haar_images = np.vstack([sample_haar_images, haar_images])
+				sample_haar_images.append(haar_images)
 			curr_time = curr_time + sample_interval
 
-	np.save('%s_sample' % fname, sample_haar_images)
+	total_haar_images = np.concatenate(sample_haar_images, axis=0)
+	np.save('%s_sample' % fname, total_haar_images)
 
 def get_haar_stats():
 	ntimes = get_ntimes(params)
 	sample_haar_images = np.zeros([0, params['fingerprint']['nfreq'] * ntimes])
 	files = params['data']['MAD_sample_files']
-	pool = Pool(params['performance']['num_fp_thread'])
+	pool = Pool(min(params['performance']['num_fp_thread'], len(files)))
 	pool.map(get_haar_image, files)
+	sample_haar_images = []
 	for file in files:
 		partial = np.load('%s_sample.npy' % file)
-		sample_haar_images = np.vstack([sample_haar_images, partial])
+		sample_haar_images.append(partial)
 		os.remove('%s_sample.npy' % file)
 
-	return feats.compute_haar_stats(sample_haar_images)
+	total_haar_images = np.concatenate(sample_haar_images, axis=0)
+	return feats.compute_haar_stats(total_haar_images)
 
 
 if __name__ == '__main__':
+	t_start = time.time()
 	param_json = sys.argv[1]
 	params = parse_json(param_json)
 	feats = init_feature_extractor(params)
@@ -79,3 +85,5 @@ if __name__ == '__main__':
 	for i in range(len(median)):
 		f.write('%.16f,%.16f\n' %(median[i], mad[i]))
 	f.close()
+	t_end = time.time()
+	print("MAD fingerprints took: %.2f seconds" % (t_end - t_start))
