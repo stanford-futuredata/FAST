@@ -27,11 +27,10 @@ def get_haar_image(fname):
 	st = read(params['data']['folder'] + fname)
 	# No sampling
 	if p['mad_sampling_rate'] == 1:
-		time_padding = get_partition_padding(params)
 		for i in range(len(st)):
-			print st[i]
 			if st[i].stats.endtime - st[i].stats.starttime <= min_fp_length:
 				print 'continue'
+				continue
 
 			haar_images, nWindows, idx1, idx2, Sxx, t  = feats.data_to_haar_images(st[i].data)
 			sample_haar_images.append(haar_images)
@@ -75,6 +74,7 @@ def get_haar_stats():
 
 
 if __name__ == '__main__':
+	t_start = time.time()
 	param_json = sys.argv[1]
 	params = parse_json(param_json)
 	feats = init_feature_extractor(params)
@@ -85,3 +85,5 @@ if __name__ == '__main__':
 	for i in range(len(median)):
 		f.write('%.16f,%.16f\n' %(median[i], mad[i]))
 	f.close()
+	t_end = time.time()
+	print("MAD fingerprints took: %.2f seconds" % (t_end - t_start))

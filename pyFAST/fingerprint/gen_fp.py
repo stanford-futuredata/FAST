@@ -22,17 +22,14 @@ def call_mad(params):
 	process = subprocess.Popen((madStatsCommand % (param_json)),
 			stdout=subprocess.PIPE, shell=True)
 	output, error = process.communicate()
-	print output
+	return output, error
 
 if __name__ == '__main__':
 	param_json = sys.argv[1]
 	params = parse_json(param_json)
 
 	# Preprocess to calculate MAD
-	t_start = time.time()
-	call_mad(params)
-	t_end = time.time()
-	print("MAD fingerprints took: %.2f seconds" % (t_end - t_start))
+	print (call_mad(params))
 
 	# Fingerprint
 	files = params['data']['fingerprint_files']
