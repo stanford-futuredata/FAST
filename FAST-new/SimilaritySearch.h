@@ -44,13 +44,9 @@ typedef std::pair<uint64_t, vec> table_pair;
 //-----------------------------------------------------------------------------
 // Similarity search functions
 
-// Populate database - place selected fingerprints in hash buckets (according to filter_fname)
-void InitializeDatabase(size_t mrows, size_t ncols, uint8_t ntbls, uint8_t nhashfuncs,
-        table *t, uint64_t *keys, double *out_time, const size_t num_threads,
-        size_t start_indice, size_t end_indice, boost::dynamic_bitset<>* filter_flag);
 
 // Populate database - place a range of fingerprints in hash buckets
-void InitializeDatabase(size_t mrows, size_t ncols, uint8_t ntbls, uint8_t nhashfuncs,
+void InitializeDatabase(size_t ncols, uint64_t ntbls, size_t nhashfuncs,
         table *t, uint64_t *keys, double *out_time, const size_t num_threads,
         size_t start_indice, size_t end_indice);
 

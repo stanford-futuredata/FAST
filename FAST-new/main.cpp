@@ -142,19 +142,14 @@ void searchRange(size_t start_indice, size_t end_indice,
 	// Populate database
 	double out_time = 0;
 	table *t = new table[s.ntbls];
-	if (!s.filter_file.empty()) {
-		InitializeDatabase(ntimes, s.ncols, s.ntbls, s.nhashfuncs, t, min_hash_sigs, 
-			&out_time, s.simsearch_threads, start_indice, end_indice, filter_flag);
-	} else {
-		InitializeDatabase(ntimes, s.ncols, s.ntbls, s.nhashfuncs, t, min_hash_sigs, 
+	InitializeDatabase(s.ncols, s.ntbls, s.nhashfuncs, t, min_hash_sigs,
 			&out_time, s.simsearch_threads, start_indice, end_indice);
-	}
 	BOOST_LOG_TRIVIAL(info) << "Initialize took: " << out_time;
 
 	// Similarity Search
 	out_time = 0;
 	ostringstream stringStream;
-	stringStream << s.output_pairs_file << "(" << start_indice 
+	stringStream << s.output_pairs_file << "(" << start_indice
 		<< "," << end_indice << ")";
 	string fname = stringStream.str();
 	SearchDatabase_voting(num_queries, s.ncols, query,
@@ -163,7 +158,7 @@ void searchRange(size_t start_indice, size_t end_indice,
 			start_indice, end_indice, filter_flag, s.noise_freq);
 	BOOST_LOG_TRIVIAL(info) << "Search took: " << out_time;
 
-	//OutputHashTableStats(t);
+	OutputHashTableStats(t);
 
 	delete[] t;
 }

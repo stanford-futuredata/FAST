@@ -7,51 +7,23 @@
 
 #define CHUNK 100
 
-// Populate database - place selected fingerprints in hash buckets (according to filter_fname)
-void InitializeDatabase(size_t mrows, size_t ncols, uint8_t ntbls, uint8_t nhashfuncs,
-        table *t, uint64_t *keys, double *out_time, const size_t num_threads,
-        const size_t start_indice, const size_t end_indice,
-        boost::dynamic_bitset<>* filter_flag) {
-
-    clock_t begin = clock();
-    size_t j;
-
-    omp_set_num_threads(num_threads);
-    //Insert pairs (key, id) into hash tables
-#pragma omp parallel for default(none)\
-    private(j) shared(ntbls, t, keys, filter_flag)
-    for (j = 0; j < ntbls; ++j) {
-        for (size_t i = start_indice; i < end_indice; ++i) {
-            if (!filter_flag->test(i)) {
-                insert_new_item(&t[j], keys[j + i * ntbls], i);
-            }
-        }
-    }
-    clock_t end = clock();
-    *out_time += ((double)(end - begin)) / CLOCKS_PER_SEC / num_threads;
-}
-
-// Populate database - place a range of fingerprints in hash buckets
-void InitializeDatabase(size_t mrows, size_t ncols, uint8_t ntbls, uint8_t nhashfuncs,
+// Populate database - place selected fingerprints in hash buckets
+void InitializeDatabase(size_t ncols, uint64_t ntbls, size_t nhashfuncs,
         table *t, uint64_t *keys, double *out_time, const size_t num_threads,
         const size_t start_indice, const size_t end_indice) {
 
     clock_t begin = clock();
 
-    size_t j;
-
-    omp_set_num_threads(num_threads);
     //Insert pairs (key, id) into hash tables
-#pragma omp parallel for default(none)\
-    private(j) shared(ntbls, ncols, t, keys)
-    for (j = 0; j < ntbls; ++j) {
-        for (size_t i = start_indice; i < end_indice; ++i) {
+    for (size_t i = 0; i < ncols; i ++) {
+        for (size_t j = 0; j < ntbls; j ++) {
             insert_new_item(&t[j], keys[j + i * ntbls], i);
         }
     }
     clock_t end = clock();
     *out_time += ((double)(end - begin)) / CLOCKS_PER_SEC / num_threads;
 }
+
 
 inline void insert_new_item(table *t, uint64_t const key, uint32_t const value) {
     table_it pt = t->find(key);

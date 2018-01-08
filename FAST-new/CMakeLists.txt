@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
 project(FAST)
-set(SOURCE_FILES MurmurHash3.cpp MurmurHash3.h ReadOptions.h MinHash.cpp MinHash.h SimilaritySearch.cpp SimilaritySearch.h HashtableStats.cpp HashtableStats.h main.cpp)
+set(SOURCE_FILES MurmurHash3.cpp MurmurHash3.h ReadOptions.h MinHash.cpp MinHash.h SimilaritySearch.cpp SimilaritySearch.h HashtableStats.cpp HashtableStats.h toint64.h toint64.cpp main.cpp)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -fopenmp  -std=c++11 -O3 -g")
 
 # refer to http://stackoverflow.com/questions/6646405/how-do-you-add-boost-libraries-in-cmakelists-txt/6646746#6646746

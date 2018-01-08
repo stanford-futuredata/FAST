@@ -6,6 +6,7 @@
 #include <ctime>
 #include <iostream>
 #include <boost/functional/hash.hpp>
+#include "toint64.h"
 
 #define MURMUR_HASH_LEN 4
 //-----------------------------------------------------------------------------
@@ -17,12 +18,13 @@ void calculate_hash(int ny, int ntimes, uint32_t seed, uint32_t* hashes) {
 }
 
 void MinHashMM_Block_32(const boost::dynamic_bitset<> &block, int nx, int ny, int ntbls, int ntotfunc,
-  const uint32_t* hashes, void *out, uint64_t fp_index){
+  const uint32_t* hashes, uint64_t *out, uint64_t fp_index){
 
    // nnz_max  : Maximum number of non-zero bits
    int nnz_max = ny;
    int ntimes = ntbls * ntotfunc;
    uint32_t *indices = (uint32_t*)calloc(nnz_max,sizeof(uint32_t));
+   uint8_t *tmp = (uint8_t*)calloc(ntimes * nx,sizeof(uint8_t));
 
    //For each fingerprint
    for( int i = 0; i != nx; ++i ) {
@@ -46,12 +48,20 @@ void MinHashMM_Block_32(const boost::dynamic_bitset<> &block, int nx, int ny, in
                     imin = hashes[block_index];
             }
             uint64_t temp_index = static_cast<uint64_t>(j) + static_cast<uint64_t>(i)*static_cast<uint64_t>(ntimes);
-            ((uint8_t*)out)[temp_index] = imin % 255;
+            tmp[temp_index] = imin % 255;
        }
    } //End for each fingerprint
 
-   free(indices);
 
+   for (int i = 0; i < nx; i ++) {
+        for (int j = 0; j < ntbls; j ++) {
+            uint64_t key = toint64_16(&tmp[i * ntimes + j * ntotfunc], ntotfunc);
+            out[fp_index + j + i * ntbls] = key;
+        }
+    }
+
+   free(indices);
+   free(tmp);
 }
 
 
