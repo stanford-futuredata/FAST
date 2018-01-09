@@ -61,7 +61,7 @@ void genMinhashSig(uint64_t *min_hash_sigs) {
 	uint64_t sig_len = s.ncols * s.ntbls;
 	size_t byte_per_fp = s.mrows / 8;
 	double out_time = 0;
-	size_t minmax_ntimes = s.ntbls * ((s.nhashfuncs + 1) / 2);    //number of min-hash permutations
+	size_t minmax_ntimes = s.ntbls * s.nhashfuncs;    //number of min-hash permutations
 
 	// Read minhash signatures from file
 	if (!s.input_mh_sigs_file.empty()) {
