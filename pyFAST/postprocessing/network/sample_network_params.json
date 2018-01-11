@@ -22,8 +22,7 @@
 	"io": {
 		"channel_vars": ["CDY", "CPM", "GTM", "HEC", "RMM", "RMR", "TPC"],
 		"fname_template": "candidate_pairs_%s_combined.txt",
-		"base_dir": "/lfs/1/krong/HectorMine/",
-		"data_folder": "partition/",
-		"out_folder": "network/"
+		"data_folder": "/lfs/1/krong/HectorMine/partition/",
+		"out_folder": "/lfs/1/krong/HectorMine/network/"
 	}
 }

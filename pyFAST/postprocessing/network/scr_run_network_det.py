@@ -41,26 +41,44 @@ def partition(fname):
         byte_positions = [0]
         while file_size - f.tell() > PARTITION_SIZE:
             f.seek(PARTITION_SIZE, 1) # jump PARTITION_SIZE bytes from current file position
-            f.readline() # read a line to make sure we're now at the beginning of a new line (if we end up in the middle of a line, now we're at the start of the following line)
+            # read a line to make sure we're now at the beginning of a new line
+            # (if we end up in the middle of a line, now we're at the start of the following line)
+            dummy = f.readline()
+            if dummy == '\n': # in the unlikely case that file_size - f.tell() == PARTITION_SIZE + 1
+                break # end of file is reached
             tmp = f.readline().strip().split()
+            if len(tmp) < 3: # in the unlikely case that dummy above ends up being the last line
+                break # end of file is reached
             dt = int(tmp[0])
-            prev_dt = dt
-            lines_read = 0
-            end_reached = False
-            while lines_read < PARTITION_SIZE:
+            # if remaining part is <= PARTITION_SIZE, just include it in the previous partition by breaking
+            if file_size - f.tell() <= PARTITION_SIZE:
+                break
+            f.seek(PARTITION_SIZE, 1) # jump to the boundary determining the biggest possible partition (PARTITION_SIZE * 2)
+            dummy = f.readline()
+            if dummy == '\n': # in the unlikely case that file_size - f.tell() == PARTITION_SIZE + 1
+                break # end of file is reached
+            tmp = f.readline().strip().split()
+            if len(tmp) < 3: # in the unlikely case that dummy above ends up being the last line
+                break # end of file is reached
+            curr_dt = int(tmp[0])
+            # if curr_dt is close to the original dt and we're already at PARTITION_SIZE * 2, just split here
+            if curr_dt - dt < PARTITION_GAP:
+                byte_positions.append(f.tell())
+                continue
+            direction = -1
+            jump_size = PARTITION_SIZE / 2
+            while jump_size > 1:
+                f.seek(jump_size * direction, 1)
                 line_start = f.tell()
-                line = f.readline()
-                if line == '':
-                    end_reached = True
-                    break
-                tmp = line.strip().split()
-                dt = int(tmp[0])
-                if dt - prev_dt > PARTITION_GAP:
-                    break
-                lines_read += 1
-                prev_dt = dt
-            if not end_reached: # this means the previous while loop ended either because we found a dt more than PARTITION_GAP away from prev_dt, or we read one more PARTITION_SIZE in which case we just split here
-                byte_positions.append(line_start)
+                f.readline()
+                tmp = f.readline().strip().split()
+                curr_dt = int(tmp[0])
+                if curr_dt - dt < PARTITION_GAP: # if within gap, jump forward to larger dt values
+                    direction = 1
+                else:
+                    direction = -1 # else jump backward to smaller dt values
+                jump_size /= 2
+            byte_positions.append(line_start) # this line_start value is the result after binary search converges
     return byte_positions
 
 def dict_to_numpy(d):
@@ -119,11 +137,13 @@ def detection(args):
     diags_dict = associator.clouds_to_network_diags_one_channel(
         curr_event_dict, cidx)
     del curr_event_dict
-    print "    Saving diags_dict to %s_byte_%d.npy" % (detdata_filenames[cidx], byte_pos)
+    print "    Saving diags_dict to %s%s%s_byte_%d.npy" % (out_folder, 'diags/', detdata_filenames[cidx], byte_pos)
+    if not os.path.exists(out_folder + "diags/"):
+        os.makedirs(out_folder + "diags/")
     arr = dict_to_numpy(diags_dict)
-    np.save('%s%s_byte_%d.npy' % (data_folder, detdata_filenames[cidx], byte_pos), arr)
+    np.save('%s%s%s_byte_%d.npy' % (out_folder, 'diags/', detdata_filenames[cidx], byte_pos), arr)
     del diags_dict, arr
-    return '%s%s_byte_%d.npy' % (data_folder, detdata_filenames[cidx], byte_pos)
+    return '%s%s%s_byte_%d.npy' % (out_folder, 'diags/', detdata_filenames[cidx], byte_pos)
 
 def process(cidx):
     print '  Extracting event-pairs for %s...' % detdata_filenames[cidx]

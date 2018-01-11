@@ -22,7 +22,7 @@ def get_min_sum(param_json):
 		param_json["network"]["min_dets"]
 
 def get_data_folder(param_json):
-	return param_json["io"]["base_dir"] + param_json["io"]["data_folder"]
+	return param_json["io"]["data_folder"]
 
 def get_output_folder(param_json):
-	return param_json["io"]["base_dir"] + param_json["io"]["out_folder"]
+	return param_json["io"]["out_folder"]

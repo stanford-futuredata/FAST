@@ -55,6 +55,8 @@ class EventCloudExtractor:
             lines = f.read(bytes_to_read).strip().split('\n')
             for line in lines:
                 tmp = line.split() # no need to strip() since that's already done above
+                if len(tmp) < 3: # make sure tmp is a valid line
+                    continue
                 ivals = int(tmp[2])
                 if ivals < ivals_thresh:
                     continue
