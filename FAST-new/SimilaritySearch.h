@@ -57,9 +57,9 @@ void InitializeDatabase(size_t mrows, size_t ncols, uint8_t ntbls, uint8_t nhash
 inline void insert_new_item(table *t, uint64_t const key, uint32_t const value);
 
 
-void SearchDatabase_voting(const size_t nquery, const size_t ncols, const uint32_t *query, const uint8_t ntbls,
+void SearchDatabase_voting(const uint32_t *query, const size_t nquery, const uint8_t ntbls,
         const uint32_t near_repeats, table *t, uint64_t const *keys,
-        const size_t threshold, const size_t limit, double *out_time, 
+        const size_t threshold, double *out_time, 
         const std::string& out_file, const size_t num_threads, 
         const size_t start_indice, const size_t end_indice,
         boost::dynamic_bitset<>* filter_flag, double noise_freq);

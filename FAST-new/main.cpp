@@ -133,8 +133,8 @@ void genMinhashSig(uint64_t *min_hash_sigs) {
 
 /* Initialize hash table and perform similarity search for a range of fingerprint
    indices or for selected fingerprints in a file. */
-void searchRange(size_t start_indice, size_t end_indice, 
-	uint32_t *query, size_t num_queries, uint64_t *min_hash_sigs, size_t ntimes,
+void searchRange(size_t start_indice, size_t end_indice,
+	uint32_t *query, size_t nquery, uint64_t *min_hash_sigs, size_t ntimes,
 	boost::dynamic_bitset<>* filter_flag) {
 	BOOST_LOG_TRIVIAL(info) << "Search fingerprints " << start_indice
 		<< "," << end_indice;
@@ -157,9 +157,9 @@ void searchRange(size_t start_indice, size_t end_indice,
 	stringStream << s.output_pairs_file << "(" << start_indice 
 		<< "," << end_indice << ")";
 	string fname = stringStream.str();
-	SearchDatabase_voting(num_queries, s.ncols, query,
+	SearchDatabase_voting(query, nquery,
 			s.ntbls, s.near_repeats, t, min_hash_sigs,
-			s.nvotes, s.limit, &out_time, fname, s.simsearch_threads,
+			s.nvotes, &out_time, fname, s.simsearch_threads,
 			start_indice, end_indice, filter_flag, s.noise_freq);
 	BOOST_LOG_TRIVIAL(info) << "Search took: " << out_time;
 
@@ -194,14 +194,14 @@ int main(int argc, char * argv[]) {
 	// Generate minhash signatures
 	genMinhashSig(min_hash_sigs);
 
-    boost::dynamic_bitset<> filter_flag(s.num_queries);
+    boost::dynamic_bitset<> filter_flag(s.ncols);
 
 	if (!s.output_pairs_file.empty()) {
 		if ((s.start_index > 0 && s.end_index > 0)) { // Search again specified indices
-			uint32_t *query =  new uint32_t[s.num_queries];
-			for (size_t i = 0; i < s.num_queries; i++) { query[i] = i; }
+			uint32_t *query =  new uint32_t[s.ncols];
+			for (size_t i = 0; i < s.ncols; i++) { query[i] = i; }
 
-			searchRange(s.start_index, s.end_index, query, s.num_queries,
+			searchRange(s.start_index, s.end_index, query, s.ncols,
 				min_hash_sigs, ntimes, &filter_flag);
 
 			delete[] query;

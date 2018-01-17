@@ -19,13 +19,10 @@ struct Settings {
 	uint64_t ncols = 86381;
 	size_t mrows = 4096;
 	size_t near_repeats = 5;
-	size_t num_queries;
-	uint32_t limit = 4e9;
 	size_t nvotes = 4;
 	size_t minhash_threads= 1;
 	size_t simsearch_threads= 1;
-	string input_file, input_mh_sigs_file, output_pairs_file, filter_file;
-	string output_mh_sigs_file = "minhash_sigs.txt";
+	string input_file, input_mh_sigs_file, output_mh_sigs_file, output_pairs_file, filter_file;
 	size_t num_partitions = 5;
 	size_t start_index = 0;
 	size_t end_index = 0;
@@ -47,8 +44,6 @@ Settings readOptions(int argc, char * argv[]) {
 		("ncols", po::value<uint64_t>(), "Number of hash functions")
 		("mrows", po::value<size_t>(), "Number of rows")
 		("near_repeats", po::value<size_t>(), "Near repeat limit")
-		("num_queries", po::value<size_t>(), "Number of indices to query in the similarity search")
-		("limit", po::value<uint32_t>(), "Limit")
 		("nvotes", po::value<size_t>(), "Number of votes")
 		("batch_size", po::value<size_t>(), "Batch size to read fingerprints")
 		("minhash_threads", po::value<size_t>(), "Maximum number of threads for minhash")
@@ -89,6 +84,7 @@ Settings readOptions(int argc, char * argv[]) {
 	if (vm.count("input_fp_file")) {
 		setting.input_file = vm["input_fp_file"].as<string>();
 		fs::path p = setting.input_file;
+		setting.output_mh_sigs_file = setting.input_file + "_minhash";
 		if(!fs::exists(p) || !fs::is_regular_file(p)){
 			BOOST_LOG_TRIVIAL(fatal) << "Input fp file does not exist";
 			exit(1);
@@ -166,23 +162,6 @@ Settings readOptions(int argc, char * argv[]) {
 		setting.near_repeats = vm["near_repeats"].as<size_t>();
 	}
 	BOOST_LOG_TRIVIAL(debug) << "near_repeats:\t" << setting.near_repeats;
-
-	if(vm.count("num_queries")) {
-		setting.num_queries = vm["num_queries"].as<size_t>();
-		if (setting.num_queries > setting.ncols) {
-			BOOST_LOG_TRIVIAL(fatal) << "num_queries(" << setting.num_queries<<")"
-				<< "cannot be greater than ncols(" << setting.ncols << ")";
-			exit(-1);
-		}
-	} else {
-		setting.num_queries = setting.ncols;
-	}
-	BOOST_LOG_TRIVIAL(debug) << "num_queries:\t" << setting.num_queries;
-
-	if (vm.count("limit")) {
-		setting.limit = vm["limit"].as<uint32_t>();
-	}
-	BOOST_LOG_TRIVIAL(debug) << "limit:\t" << setting.limit;
 
 	if (vm.count("nvotes")) {
 		setting.nvotes = vm["nvotes"].as<size_t>();

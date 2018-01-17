@@ -67,9 +67,9 @@ inline void insert_new_item(table *t, uint64_t const key, uint32_t const value) 
 
 
 // Search Database with voting
-void SearchDatabase_voting(const size_t nquery, const size_t ncols, const uint32_t *query, const uint8_t ntbls,
+void SearchDatabase_voting(const uint32_t *query, const size_t nquery, const uint8_t ntbls,
         const uint32_t near_repeats, table *t, uint64_t const *keys,
-        const size_t threshold, const size_t limit, double *out_time, 
+        const size_t threshold, double *out_time, 
         const std::string& out_file, const size_t num_threads,
         const size_t start_indice, const size_t end_indice, 
         boost::dynamic_bitset<>* filter_flag, double noise_freq) {
@@ -101,10 +101,9 @@ void SearchDatabase_voting(const size_t nquery, const size_t ncols, const uint32
             if (its == t1->end()) { continue; }
             size_t num_items = its->second.size();
             query_size += num_items;
-            size_t l = std::min(num_items,limit);
             //Add all matches that are not near-repeats
             vec_cit it = its->second.begin();
-            for(size_t k = 0; k != l; ++k) {
+            for(size_t k = 0; k != num_items; ++k) {
                 int64_t key = *it;
                 if ((key - query_index) >= near_repeats) {
                     map_it pt = votes.find(key);
