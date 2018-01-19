@@ -1,14 +1,11 @@
 import datetime
 import sys
-from dateutil.relativedelta import relativedelta
 import linecache
 import os
 from util import *
 from multiprocessing import Pool
+import json
 
-index_folder = 'global_indices/'
-fp_params = ['KHZ_HHZ.json', 'MQZ_HHZ.json', 'THZ_HHZ.json', 'OXZ_HHZ.json',
-	'LTZ_HHZ.json']
 
 def compute_global_index(param_file):
 	params = parse_json(param_file)
@@ -16,7 +13,8 @@ def compute_global_index(param_file):
 	station = params['data']['station']
 	channel = params['data']['channel']
 	_, ts_path = get_fp_ts_folders(params)
-	f = open('%s%s_%s_idx_mapping.txt' % (index_folder, station, channel), 'w')
+	f = open('%s%s_%s_idx_mapping.txt' % (config['index_folder'],
+		station, channel), 'w')
 	for fname in params['data']['fingerprint_files']:
 		ts_file = open(ts_path + get_ts_fname(fname), 'r')
 		for line in ts_file.readlines():
@@ -28,8 +26,9 @@ def compute_global_index(param_file):
 	f.close()
 
 if __name__ == '__main__':
+	config = parse_json(sys.argv[1])
 	min_time = None
-	for param_file in fp_params:
+	for param_file in config['fp_params']:
 		params = parse_json(param_file)
 		_, ts_path = get_fp_ts_folders(params)
 		ts_fname = ts_path + get_ts_fname(params['data']['fingerprint_files'][0])
@@ -41,13 +40,13 @@ if __name__ == '__main__':
 			min_time = tmp
 
 	# Save stats to file
-	if not os.path.exists(index_folder):
-		os.makedirs(index_folder)
-	f = open('%sglobal_idx_stats.txt' % index_folder, 'w')
+	if not os.path.exists(config['index_folder']):
+		os.makedirs(config['index_folder'])
+	f = open('%sglobal_idx_stats.txt' % config['index_folder'], 'w')
 	f.write('%s\n' % min_time.strftime("%Y-%m-%dT%H:%M:%S.%f"))
-	f.write('%s\n' % ','.join(fp_params))
+	f.write('%s\n' % ','.join(config['fp_params']))
 	f.close()
 
-	p = Pool(len(fp_params))
-	p.map(compute_global_index, fp_params)
+	p = Pool(len(config['fp_params']))
+	p.map(compute_global_index, config['fp_params'])
 	p.terminate()

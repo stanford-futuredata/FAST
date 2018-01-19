@@ -1,0 +1,5 @@
+{
+	"index_folder": "global_indices/",
+	"fp_params": ["KHZ_HHZ_10.json", "MQZ_HHZ_10.json", "THZ_HHZ_10.json",
+		"OXZ_HHZ_10.json", "LTZ_HHZ_10.json"]
+}
