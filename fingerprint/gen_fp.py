@@ -24,6 +24,9 @@ def call_mad(params):
 	output, error = process.communicate()
 	return output, error
 
+def gen_simsearch_config():
+	pass
+
 if __name__ == '__main__':
 	param_json = sys.argv[1]
 	params = parse_json(param_json)
@@ -41,8 +44,7 @@ if __name__ == '__main__':
 	ntimes = get_ntimes(params)
 	fp_in_bytes = params['fingerprint']['nfreq'] * ntimes / 4
 	fp_path, ts_path = get_fp_ts_folders(params)
-	final_fp_name = '%s%s.%s.fp' % (fp_path,
-		params['data']['station'], params['data']['channel'])
+	final_fp_name = '%s%s' %(fp_path, get_combined_fp_name(params))
 	if os.path.exists(final_fp_name):
 		os.remove(final_fp_name)
 	print "Combining into final fingerprint file %s" % final_fp_name
@@ -63,6 +65,7 @@ if __name__ == '__main__':
 	fsize = os.path.getsize(final_fp_name)
 	print "Fingerprint file size: %d bytes" % (fsize)
 	print "# fingerprints: %d" %(nfp)
+	ndim = fsize * 8 / nfp
 
-
-
+	# Save fingerprint stats
+	save_fp_stats(params, nfp, ndim)

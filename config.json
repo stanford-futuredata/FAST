@@ -1,0 +1,25 @@
+{
+	"lsh_param": {
+		"ntbl": 100,
+		"nhash": 4,
+		"nvote": 2,
+		"nthread": 8,
+		"npart": 1,
+		"repeat": 5
+	},
+
+	"io": {
+		"base_dir": "data/",
+		"global_index_dir": "global_indices/",
+		"fp_param_dir": "parameters/fingerprint/",
+		"simsearch_param_dir": "parameters/simsearch/",
+		"network_input_dir": "inputs_network/",
+		"network_output_dir": "network_detection/",
+
+		"channel_vars": ["CDY", "CPM", "GTM", "HEC", "RMM", "RMR", "TPC"],
+		"fp_params": ["fp_input_CI_TPC_EHZ.json", "fp_input_CI_RMR_EHZ.json", "fp_input_CI_RMM_EHZ.json",
+			"fp_input_CI_HEC_BHE.json", "fp_input_CI_HEC_BHN.json", "fp_input_CI_HEC_BHZ.json",
+			"fp_input_CI_CPM_EHZ.json", "fp_input_CI_GTM_EHZ.json", "fp_input_CI_CDY_EHZ.json"]
+	}
+
+}

@@ -32,6 +32,24 @@ def get_fp_fname(mseed_fname):
     idx = mseed_fname.rfind('.')
     return "fp_" + mseed_fname[:idx]
 
+def get_combined_fp_name(params):
+    final_fp_name = '%s.%s.fp' % (
+        params['data']['station'], params['data']['channel'])
+    return final_fp_name
+
+def get_fp_stats_file(params):
+    return '%s%s_%s.json' %(params["data"]["folder"], params["data"]["station"],
+        params["data"]["channel"])
+
+def save_fp_stats(params, nfp, ndim):
+    fp_stats = {"station": params["data"]["station"],
+        "channel": params["data"]["channel"],
+        "nfp": nfp,
+        "ndim": ndim}
+    fname = get_fp_stats_file(params)
+    with open(fname, 'w') as f:
+        json.dump(fp_stats, f)
+
 def get_data_files(params):
     path = abspath(join(dirname(__file__), params['data']['folder']))
     files = []

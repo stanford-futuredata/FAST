@@ -7,7 +7,7 @@ from multiprocessing import Pool
 import json
 
 def compute_global_index(param_file):
-	params = parse_json(config['fp_param_dir'] + param_file)
+	params = parse_json(param_file)
 	idx_interval = params['fingerprint']['fp_lag'] * params['fingerprint']['spec_lag']
 	station = params['data']['station']
 	channel = params['data']['channel']
@@ -29,7 +29,7 @@ if __name__ == '__main__':
 
 	min_time = None
 	for param_file in config['fp_params']:
-		params = parse_json(config['fp_param_dir'] + param_file)
+		params = parse_json(param_file)
 		_, ts_path = get_fp_ts_folders(params)
 		ts_fname = ts_path + get_ts_fname(params['data']['fingerprint_files'][0])
 		tmp = datetime.datetime.strptime(linecache.getline(ts_fname, 1).strip(), 
