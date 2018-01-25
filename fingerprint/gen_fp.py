@@ -40,8 +40,8 @@ if __name__ == '__main__':
 	nfp = 0
 	ntimes = get_ntimes(params)
 	fp_in_bytes = params['fingerprint']['nfreq'] * ntimes / 4
-	final_fp_name = '%s.%s.fp' % (params['data']['station'],
-				params['data']['channel'])
+	final_fp_name = '%s%s.%s.fp' % (params['data']['folder'],
+		params['data']['station'], params['data']['channel'])
 	fp_path, ts_path = get_fp_ts_folders(params)
 	if os.path.exists(final_fp_name):
 		os.remove(final_fp_name)

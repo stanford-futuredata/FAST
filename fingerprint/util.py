@@ -1,7 +1,7 @@
 import json
 import datetime
-from os import listdir
-from os.path import isfile, join, abspath, dirname
+from os import listdir, makedirs
+from os.path import isfile, join, abspath, dirname, exists
 from feature_extractor import FeatureExtractor
 import math
 
@@ -13,6 +13,11 @@ def parse_json(param_json):
 def should_include_file(f, params):
     return params['data']['station'] in f and \
         params['data']['channel'] in f
+
+def init_folder(folders):
+    for folder in folders:
+        if not exists(folder):
+            makedirs(folder)
 
 def get_fp_ts_folders(params):
     fp_folder = params['data']['folder'] + 'fingerprints/'
@@ -47,7 +52,9 @@ def get_start_end_times(params):
     return (start_time, end_time)
 
 def gen_mad_fname(params):
-    return 'mad%s_%s_%f_%.0f_%s_%s.txt' % (
+    mad_folder = params['data']['folder'] + 'mad/'
+    init_folder([mad_folder])
+    return mad_folder + 'mad%s_%s_%f_%.0f_%s_%s.txt' % (
         params['data']['station'],
         params['data']['channel'],
         params['fingerprint']['mad_sampling_rate'],

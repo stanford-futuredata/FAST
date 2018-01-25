@@ -31,15 +31,6 @@ def init_MAD_stats(mad_fname):
 		feats.haar_absdevs[i] = float(nums[1])
 	f.close()
 
-def init_fp_folders(params):
-	# Create timestamp and fingerprint folder if not exist
-	fp_folder, ts_folder = get_fp_ts_folders(params)
-	if not os.path.exists(fp_folder):
-		os.makedirs(fp_folder)
-	if not os.path.exists(ts_folder):
-		os.makedirs(ts_folder)
-	return fp_folder, ts_folder
-
 if __name__ == '__main__':
 	t_start = time.time()
 	fname = sys.argv[1]
@@ -51,7 +42,8 @@ if __name__ == '__main__':
 	mad_fname = gen_mad_fname(params)
 	init_MAD_stats(mad_fname)
 
-	fp_folder, ts_folder = init_fp_folders(params)
+	fp_folder, ts_folder = get_fp_ts_folders(params)
+	init_folder([fp_folder, ts_folder])
 
 	# read mseed
 	st = read(params['data']['folder'] + fname)
