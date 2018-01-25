@@ -40,9 +40,9 @@ if __name__ == '__main__':
 	nfp = 0
 	ntimes = get_ntimes(params)
 	fp_in_bytes = params['fingerprint']['nfreq'] * ntimes / 4
-	final_fp_name = '%s%s.%s.fp' % (params['data']['folder'],
-		params['data']['station'], params['data']['channel'])
 	fp_path, ts_path = get_fp_ts_folders(params)
+	final_fp_name = '%s%s.%s.fp' % (fp_path,
+		params['data']['station'], params['data']['channel'])
 	if os.path.exists(final_fp_name):
 		os.remove(final_fp_name)
 	print "Combining into final fingerprint file %s" % final_fp_name

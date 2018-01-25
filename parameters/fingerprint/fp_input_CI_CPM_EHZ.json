@@ -1,0 +1,32 @@
+{
+    "fingerprint": {
+        "sampling_rate": 20,
+        "min_freq": 1.0,
+        "max_freq": 10.0,
+        "spec_length": 6.0,
+        "spec_lag": 0.2,
+        "fp_length": 32,
+        "fp_lag": 5,
+        "k_coef": 200,
+        "nfreq": 32,
+        "mad_sampling_rate": 1,
+        "mad_sample_interval": 86400
+    },
+
+    "performance": {
+        "num_fp_thread": 8,
+        "partition_len": 86400
+    },
+
+    "data": {
+        "station": "CPM",
+        "channel": "EHZ",
+        "start_time": "99-10-15T13:00:00.0",
+        "end_time": "99-10-16T09:46:44.0",
+        "folder": "../data/waveformsCPM/",
+        "fingerprint_files": [
+	    "Deci5.Pick.19991015130000.CI.CPM.EHZ.sac.hp1"],
+        "MAD_sample_files": [
+	    "Deci5.Pick.19991015130000.CI.CPM.EHZ.sac.hp1"]
+    }
+}
