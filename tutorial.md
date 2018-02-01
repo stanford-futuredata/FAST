@@ -38,3 +38,19 @@ $ ./simsearch_input_HectorMine.sh
 ```
 
 ### Postprocessing
+Copy the helper scripts for postprocessing into the folder:
+```sh
+$ cd ../postprocessing
+$ cp ../parameters/postprocess/*.sh  .
+```
+The following scripts parse the binary output from similarity search to text files, and combine the three channel results for Station HEC to a single output. Finally, it copies the parsed outputs to directory ../data/input_network/.
+```sh
+$ ./output_HectorMine_pairs.sh
+$ ./combine_HectorMine_pairs.sh
+```
+
+Run network detection:
+```
+$ cp ../parameters/network/7sta_2stathresh_network_params.json .
+$ python scr_run_network_det.py 7sta_2stathresh_network_params.json
+```
