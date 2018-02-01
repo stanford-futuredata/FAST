@@ -6,6 +6,11 @@ minhash_template = "mh_%s_%s_%d.bin"
 pairs_template = "candidate_pairs_%s_%s_%d,%d.txt"
 input_network_template = "candidate_pairs_%s_combined.txt"
 
+def parse_json(param_json):
+    with open(param_json) as json_data_file:
+        params = json.load(json_data_file)
+    return params
+
 def get_global_index_dir(param):
     return param["io"]["base_dir"] + param["io"]["global_index_dir"]
 
