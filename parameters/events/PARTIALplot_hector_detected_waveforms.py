@@ -15,7 +15,7 @@ IND_LAST = int(sys.argv[2])
 print "PROCESSING:", IND_FIRST, IND_LAST
    
 
-times_dir = '/lfs/1/ceyoon/TimeSeries/HectorMine/network_detection/'
+times_dir = '../../data/network_detection/'
 [det_start_ind, det_end_ind, dL, nevents, nsta, tot_ndets, max_ndets, tot_vol, max_vol, peaksum, num_sta, diff_ind] = np.loadtxt(times_dir+'sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt', unpack=True)
 out_dir = times_dir+'7sta_2stathresh_NetworkWaveformPlots/'
 #[det_start_ind, det_end_ind, dL, nevents, nsta, tot_ndets, max_ndets, tot_vol, max_vol, peaksum, num_sta] = np.loadtxt(times_dir+'FINAL_7sta_Hector_events.txt', unpack=True)
@@ -30,8 +30,8 @@ diff_times = dt_fp * diff_ind
 print len(det_times)
 
 # Use filtered data for plotting
-sac_dir = '/lfs/1/ceyoon/TimeSeries/HectorMine/Filter_Detect/'
-st = read(sac_dir+'Deci5.Pick.*', format='SAC')
+sac_dir = '../../data/'
+st = read(sac_dir+'waveforms*/Deci5.Pick.*', format='SAC')
 print len(st)
 print st.__str__(extended=True)
 
