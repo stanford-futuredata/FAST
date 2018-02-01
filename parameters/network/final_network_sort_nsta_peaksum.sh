@@ -7,7 +7,7 @@
 #cd /lfs/1/ceyoon/TimeSeries/AllWenchuan/network_detection/
 #NETWORK_FILE=15sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
 
-cd /lfs/1/ceyoon/TimeSeries/HectorMine/network_detection/
+cd ../data/network_detection/
 NETWORK_FILE=7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
 
 #cd /lfs/1/ceyoon/TimeSeries/Diablo/network_detection/

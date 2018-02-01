@@ -12,7 +12,7 @@ import numpy as np
 #allfile_name = input_dir+'uniquestart_sorted_no_duplicates.txt'
 #outfile_name = input_dir+'15sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
 
-input_dir = '/lfs/1/ceyoon/TimeSeries/HectorMine/network_detection/'
+input_dir = '../data/network_detection/'
 allfile_name = input_dir+'uniquestart_sorted_no_duplicates.txt'
 outfile_name = input_dir+'7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
 

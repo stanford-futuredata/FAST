@@ -5,7 +5,7 @@
 #NETWORK_FILE=NetworkDetectionTimes_Filter_5sta_3stathresh_detlist_rank_by_peaksum.txt
 #NETWORK_FILE=NetworkDetectionTimes_Filter_6sta_3stathresh_detlist_rank_by_peaksum.txt
 
-cd /lfs/1/ceyoon/TimeSeries/HectorMine/network_detection/
+cd ../data/network_detection/
 NETWORK_FILE=NetworkDetectionTimes_7sta_2stathresh_detlist_rank_by_peaksum.txt
 
 #cd /lfs/1/ceyoon/TimeSeries/AllWenchuan/network_detection/
