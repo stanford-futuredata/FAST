@@ -22,7 +22,7 @@
 	"io": {
 		"channel_vars": ["CDY", "CPM", "GTM", "HEC", "RMM", "RMR", "TPC"],
 		"fname_template": "candidate_pairs_%s_combined.txt",
-		"base_dir": "/lfs/1/ceyoon/TimeSeries/HectorMine/",
+		"base_dir": "../data/",
 		"data_folder": "inputs_network/",
 		"out_folder": "network_detection/"
 	}

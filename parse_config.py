@@ -3,8 +3,7 @@ from os import listdir, makedirs
 from os.path import isfile, join, abspath, dirname, exists
 
 minhash_template = "mh_%s_%s_%d.bin"
-pairs_template = "candidate_pairs_%s_%s_%d,%d.txt"
-input_network_template = "candidate_pairs_%s_combined.txt"
+pairs_template = "candidate_pairs_%s_%s_%d,%d"
 
 def parse_json(param_json):
     with open(param_json) as json_data_file:
