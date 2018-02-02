@@ -5,7 +5,9 @@
 Raw SAC files for each station are stored under  ```data/waveforms${STATION}```. Station "HEC" has 3 components so it should have 3 time series data files; the other stations have only 1 component.
 
 ### Install 
+Copy the zip file to your home diretory, unzip and install the Python dependencies:
 ```sh
+~/$ unzip quake-tutorial.zip
 ~/$ cd quake-tutorial
 ~/quake-tutorial$ pip install -r requirements.txt
 ```
