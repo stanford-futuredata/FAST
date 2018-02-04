@@ -221,15 +221,25 @@ def filter_and_reduce_file(idx):
         _output_buffer(buf, f_out)
     f_out.close()
 
+def file_len(fname):
+    p = subprocess.Popen(['wc', '-l', fname], stdout=subprocess.PIPE,
+              stderr=subprocess.PIPE)
+    result, err = p.communicate()
+    if p.returncode != 0:
+        raise IOError(err)
+    return int(result.strip().split()[0])
+
 ''' Add up similarity and filter out those below threshold '''
 def filter_and_reduce(p):
     print "Filtering by threshold, outputing results to %s%s_combined.txt" \
         % (get_dirname(args.dir), args.prefix)
     start = time.time()
-    # Split into smaller files
+    # Split into number of processes files
+    fname = '%s%s_merged.txt' % (get_dirname(args.dir), args.prefix)
+    tot_lines = file_len(fname)
     subprocess.call(
-        ('split -d --number=l/%d %s%s_merged.txt %smerged_' % (
-            args.nprocs, get_dirname(args.dir), args.prefix, get_dirname(args.dir))).split())
+        ('split -d -l %d %s %smerged_' % (
+            tot_lines / args.nprocs + 1, fname, get_dirname(args.dir))).split())
     # Filter and reduce
     p.map(filter_and_reduce_file, range(args.nprocs))
     # (Optional) Concatenate back
