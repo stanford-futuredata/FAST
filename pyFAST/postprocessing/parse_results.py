@@ -185,7 +185,8 @@ def filter_and_reduce_file(idx):
         reduce_key, reduce_val = _parse_line(line)
         # Check the end of previous partition
         if idx > 0:
-            cmd = 'tail -n 1 %s' % (_get_combined_fname(idx - 1))
+            cmd = 'tail -n 1 %s%s' % (get_dirname(args.dir),
+                _get_combined_fname(idx - 1))
             proc = Popen(cmd.split(), stdout=PIPE, stderr=PIPE)
             output, err = proc.communicate()
             if reduce_key in output:
