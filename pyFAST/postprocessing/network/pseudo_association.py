@@ -28,15 +28,6 @@ class EventCloudExtractor:
       self.dL     = dL
       self.dW     = dW
 
-    def _assign_event_id(self, elems, eventID, dL, pid_prefix):
-        elems[0][2] = '%s-%d' % (pid_prefix, eventID)
-        if len(elems) >= 2:
-            for j in xrange(1, len(elems)):
-                if elems[j][0] - elems[j - 1][0] > dL:
-                    eventID += 1
-                elems[j][2] = '%s-%d' % (pid_prefix, eventID)
-        return elems, eventID
-
     def p_triplet_to_diags(self, fname, byte_pos, bytes_to_read, pid_prefix = None,
                            dL = None, dt_min = 0, dt_max = None, ivals_thresh = 0):
         if dt_max is None:
@@ -54,28 +45,26 @@ class EventCloudExtractor:
             f.seek(byte_pos)
             lines = f.read(bytes_to_read).strip().split('\n')
             for line in lines:
-                tmp = line.split() # no need to strip() since that's already done above
+                # no need to strip() since that's already done above
+                tmp = line.split()
                 ivals = int(tmp[2])
                 if ivals < ivals_thresh:
                     continue
                 dt = int(tmp[0])
-                idx2 = int(tmp[1])
-                idx1 = idx2 - dt
+                idx1 = int(tmp[1]) - dt
 
                 if dt != prev_key:
                     if len(elems) > 0:
-                        assigned_elems, assigned_eventID = self._assign_event_id(
-                            elems, eventID, dL, pid_prefix)
-                        diags[prev_key] = assigned_elems
+                        diags[prev_key] = elems
                         elems = []
-                        eventID = assigned_eventID + 1
+                        eventID += 1
                     prev_key = dt
-                elems.append([idx1, ivals, None])
+                if len(elems) > 0 and idx1 - elems[-1][0] > dL:
+                    eventID += 1
+                elems.append([idx1, ivals, '%s-%d' % (pid_prefix, eventID)])
 
         if len(elems) > 0:
-            assigned_elems, assigned_eventID = self._assign_event_id(
-                elems, eventID, dL, pid_prefix)
-            diags[prev_key] = assigned_elems
+            diags[prev_key] = elems
 
         return diags
 

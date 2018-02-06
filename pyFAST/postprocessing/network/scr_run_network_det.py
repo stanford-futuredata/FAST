@@ -28,7 +28,7 @@ M = 1 + 4 + 1 + 1 + 1 + 3
 
 ######################################################################### 
 ##                  Event-pair detection functions                     ##
-#########################################################################  
+#########################################################################
 
 def partition(fname):
     PARTITION_SIZE = param["performance"]["partition_size"]
@@ -39,15 +39,15 @@ def partition(fname):
     file_size = getsize(load_file)
     with open(load_file, 'rb') as f:
         byte_positions = [0]
-        while file_size - f.tell() > PARTITION_SIZE:
+        line_start = 0
+        while file_size - line_start > PARTITION_SIZE:
             f.seek(PARTITION_SIZE, 1) # jump PARTITION_SIZE bytes from current file position
             f.readline() # read a line to make sure we're now at the beginning of a new line (if we end up in the middle of a line, now we're at the start of the following line)
             tmp = f.readline().strip().split()
             dt = int(tmp[0])
             prev_dt = dt
-            lines_read = 0
             end_reached = False
-            while lines_read < PARTITION_SIZE:
+            while line_start - byte_positions[-1] < 2 * PARTITION_SIZE:
                 line_start = f.tell()
                 line = f.readline()
                 if line == '':
@@ -57,21 +57,33 @@ def partition(fname):
                 dt = int(tmp[0])
                 if dt - prev_dt > PARTITION_GAP:
                     break
-                lines_read += 1
                 prev_dt = dt
-            if not end_reached: # this means the previous while loop ended either because we found a dt more than PARTITION_GAP away from prev_dt, or we read one more PARTITION_SIZE in which case we just split here
+            # this means the previous while loop ended either because we found a dt more
+            # than PARTITION_GAP away from prev_dt, or we read 0.5x PARTITION_SIZE
+            # in which case we just split here
+            if not end_reached:
                 byte_positions.append(line_start)
     return byte_positions
 
 def dict_to_numpy(d):
     num_entries = sum(len(d[k]) for k in d)
-    arr = np.empty([num_entries, M], dtype=np.int32)
+    arr = np.empty([num_entries, M], dtype=np.int64)
     idx = 0
     for k in d:
         for event in d[k]:
             arr[idx, :] = [k, event[0][0], event[0][1], event[0][2],
                 event[0][3], event[1], hash(event[2]), -1,
                 event[4][0], event[4][1], event[4][2]]
+            idx += 1
+    return arr
+
+def event_dict_to_numpy(d):
+    num_entries = sum(len(d[k]) for k in d)
+    arr = np.empty([num_entries, 4], dtype=np.int64)
+    idx = 0
+    for eid in d:
+        for k, t1, sim in d[eid]:
+            arr[idx, :] = [hash(eid), k, t1, sim]
             idx += 1
     return arr
 
@@ -95,11 +107,11 @@ def detection(args):
 
     # get events - create hashtable
     pid_prefix = str(pid + process_counter.value * 1000)
-    diags = clouds.p_triplet_to_diags(fname, byte_pos, 
-        bytes_to_read, pid_prefix = pid_prefix, 
+    diags = clouds.p_triplet_to_diags(fname, byte_pos,
+        bytes_to_read, pid_prefix = pid_prefix,
         ivals_thresh = param["network"]["ivals_thresh"])
     #/ extract event-pair clouds
-    curr_event_dict = clouds.diags_to_event_list(diags, 
+    curr_event_dict = clouds.diags_to_event_list(diags,
         npass = param['network']["num_pass"])
     del diags
     #/ prune event-pairs
@@ -109,11 +121,12 @@ def detection(args):
     print '    Time taken for %s (byte %d):' % (detdata_filenames[cidx], byte_pos), time.time() - start
     #/ Save event-pairs for the single station case
     if nstations == 1:
-        with open('%s%s_byte_%d_event_pairs.dat' % (data_folder,
-            detdata_filenames[cidx], byte_pos), "wb") as f:
-            pickle.dump(curr_event_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
-        del curr_event_dict
-        return
+        arr = event_dict_to_numpy(curr_event_dict)
+        np.save('%s%s_byte_%d_event_pairs.npy' % (data_folder,
+            detdata_filenames[cidx], byte_pos), arr)
+        del curr_event_dict, arr
+        return '%s%s_byte_%d_event_pairs.npy' % (data_folder,
+            detdata_filenames[cidx], byte_pos)
 
     #/ get bounding boxes
     diags_dict = associator.clouds_to_network_diags_one_channel(
@@ -190,15 +203,15 @@ if __name__ == '__main__':
     print
     print '3. Extract network events...'
 
+    network_start_time = time.time()
     #/ Single station network detection
     if nstations == 1:
-        byte_positions = byte_positions_list[0] # get byte_positions corresponding to the single station
+        # get byte_positions corresponding to the single station
         event_dict = defaultdict(list)
-        for byte_pos in byte_positions:
-            fname = '%s%s_byte_%d_event_pairs.dat' % (data_folder, detdata_filenames[0], byte_pos)
-            event_pairs = pickle.load(open(fname, 'rb'))
-            for k in event_pairs:
-                event_dict[k].extend(event_pairs[k])
+        for fname in fnames:
+            event_pairs = np.load(fname)
+            for event in event_pairs:
+                event_dict[event[0]].append(event[1:])
 
         event_start, event_dt, event_stats, pair_list = event_resolution_single(
             event_dict, param["network"]["max_fp"])
@@ -213,6 +226,7 @@ if __name__ == '__main__':
             with open('%s_%s_pairs_list.dat' % (out_fname,
                 param["io"]["channel_vars"][0]), "wb") as f:
                 pickle.dump(pair_list, f, protocol=pickle.HIGHEST_PROTOCOL)
+        print '[TIMING] build network index:', time.time() - network_start_time
         exit(1)
 
     #/ map events to diagonals
