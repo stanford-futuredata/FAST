@@ -69,8 +69,8 @@ def partition(fname):
             jump_size = PARTITION_SIZE / 2
             while jump_size > 1:
                 f.seek(jump_size * direction, 1)
-                line_start = f.tell()
                 f.readline()
+                line_start = f.tell()
                 tmp = f.readline().strip().split()
                 curr_dt = int(tmp[0])
                 if curr_dt - dt < PARTITION_GAP: # if within gap, jump forward to larger dt values
