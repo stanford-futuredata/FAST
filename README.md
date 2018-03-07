@@ -1,11 +1,16 @@
 # FAST Detection Pipeline
 
+### Tutorial
+Please checkout the [tutorial](https://github.com/stanford-futuredata/quake/blob/tutorial/tutorial.md) branch for an end-to-end example of the pipeline. The tutorial takes input time series data and generates a list of plots of potential earthquake detections.  
+
+
 ### Dependencies
 
 ```
 c++ dependency: boost
 python dependencies: obspy, pywt, scipy, numpy, skimage, sklearn, linecache, dateutil
 ```
+
 
 ### Fingerprint
 Input time series files and fingerprint parameters are specified in a JSON format. See [sample_params.json](https://github.com/stanford-futuredata/quake/blob/master/pyFAST/fingerprint/sample_params.json) for an example. To generate fingerprints:
