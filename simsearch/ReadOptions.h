@@ -20,8 +20,7 @@ struct Settings {
 	size_t mrows = 4096;
 	size_t near_repeats = 5;
 	size_t nvotes = 4;
-	size_t minhash_threads= 1;
-	size_t simsearch_threads= 1;
+	size_t ncores= 1;
 	string input_file, input_mh_sigs_file, output_mh_sigs_file, output_pairs_file, filter_file;
 	size_t num_partitions = 5;
 	size_t start_index = 0;
@@ -46,8 +45,7 @@ Settings readOptions(int argc, char * argv[]) {
 		("near_repeats", po::value<size_t>(), "Near repeat limit")
 		("nvotes", po::value<size_t>(), "Number of votes")
 		("batch_size", po::value<size_t>(), "Batch size to read fingerprints")
-		("minhash_threads", po::value<size_t>(), "Maximum number of threads for minhash")
-		("simsearch_threads", po::value<size_t>(), "Maximum number of threads for simsearch and db init")
+		("ncores", po::value<size_t>(), "Maximum number of processes for minhash and similarity search")
 		("num_partitions", po::value<size_t>(), "Number of partitions for similarity search")
 		("start_index", po::value<size_t>(), "Start fingerprint index for the all to some search")
 		("end_index", po::value<size_t>(), "End fingerprint index for the all to some search")
@@ -130,12 +128,8 @@ Settings readOptions(int argc, char * argv[]) {
 		setting.batch_size = vm["batch_size"].as<size_t>();
 	}
 
-	if (vm.count("minhash_threads")) {
-		setting.minhash_threads = vm["minhash_threads"].as<size_t>();
-	}
-
-	if (vm.count("simsearch_threads")) {
-		setting.simsearch_threads = vm["simsearch_threads"].as<size_t>();
+	if (vm.count("ncores")) {
+		setting.ncores = vm["ncores"].as<size_t>();
 	}
 
 	if (vm.count("ntbls")) {

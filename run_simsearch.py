@@ -13,8 +13,7 @@ searchCommand = './main --input_fp_file=%s%s \
        --mrows %d \
        --near_repeats %d \
        --nvotes %d \
-       --minhash_threads %d \
-       --simsearch_threads %d \
+       --ncores %d \
        --num_partitions %d'
 
 if __name__ == '__main__':
@@ -48,7 +47,6 @@ if __name__ == '__main__':
 			fp_stats["ndim"],
 			config["lsh_param"]["repeat"],
 			config["lsh_param"]["nvote"],
-			config["lsh_param"]["nthread"],
 			config["lsh_param"]["nthread"],
 			config["lsh_param"]["npart"])
 		print cmd

@@ -83,7 +83,7 @@ void genMinhashSig(uint64_t *min_hash_sigs) {
 
 		uint64_t i;
 		// Reading fingerprints and compute minhashes in batches
-		omp_set_num_threads(s.minhash_threads);
+		omp_set_num_threads(s.ncores);
 #pragma omp parallel for default(none)\
 		private(i) shared(num_batches, insize, byte_per_fp, min_hash_sigs, hashes, s) 
 		for (i = 0; i < num_batches ; i++) {
@@ -91,7 +91,7 @@ void genMinhashSig(uint64_t *min_hash_sigs) {
 		}
 		delete[] hashes;
 		clock_t end = clock();
-		out_time += ((double)(end - begin)) / CLOCKS_PER_SEC / s.minhash_threads;
+		out_time += ((double)(end - begin)) / CLOCKS_PER_SEC / s.ncores;
 	}
 	BOOST_LOG_TRIVIAL(info) << "MinHash took: " << out_time;
 
@@ -123,10 +123,10 @@ void searchRange(size_t start_indice, size_t end_indice,
 	table *t = new table[s.ntbls];
 	if (!s.filter_file.empty()) {
 		InitializeDatabase(ntimes, s.ncols, s.ntbls, s.nhashfuncs, t, min_hash_sigs, 
-			&out_time, s.simsearch_threads, start_indice, end_indice, filter_flag);
+			&out_time, s.ncores, start_indice, end_indice, filter_flag);
 	} else {
 		InitializeDatabase(ntimes, s.ncols, s.ntbls, s.nhashfuncs, t, min_hash_sigs, 
-			&out_time, s.simsearch_threads, start_indice, end_indice);
+			&out_time, s.ncores, start_indice, end_indice);
 	}
 	BOOST_LOG_TRIVIAL(info) << "Initialize took: " << out_time;
 
@@ -138,7 +138,7 @@ void searchRange(size_t start_indice, size_t end_indice,
 	string fname = stringStream.str();
 	SearchDatabase_voting(query, nquery,
 			s.ntbls, s.near_repeats, t, min_hash_sigs,
-			s.nvotes, &out_time, fname, s.simsearch_threads,
+			s.nvotes, &out_time, fname, s.ncores,
 			start_indice, end_indice, filter_flag, s.noise_freq);
 	BOOST_LOG_TRIVIAL(info) << "Search took: " << out_time;
 

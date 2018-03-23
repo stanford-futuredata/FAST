@@ -53,8 +53,7 @@ Allowed options:
   --near_repeats arg             Near repeat limit
 
   --batch_size arg               Batch size to read fingerprints
-  --minhash_threads              Maximum number of threads for minhash
-  --simsearch_threads            Maximum number of threads for simsearch and db init
+  --ncores                       Maximum number of processes for minhash and simsearch
 
   --num_partitions               Number of (equally divided) partitions for similarity search (default to 5)
   --start_index                  Start fingerprint index for the all-to-some search

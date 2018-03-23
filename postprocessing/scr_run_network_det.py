@@ -31,12 +31,15 @@ M = 1 + 4 + 1 + 1 + 1 + 3
 #########################################################################
 
 def partition(fname):
-    PARTITION_SIZE = param["performance"]["partition_size"]
-    PARTITION_GAP = param["performance"]["partition_gap"]
 
     print '  Partitioning %s...' % fname
     load_file = data_folder + fname
     file_size = getsize(load_file)
+    PARTITION_GAP = param["network"]["max_width"]
+    PARTITION_SIZE = min(param["performance"]["partition_size"],
+        file_size / param["performance"]["num_cores"] / 2)
+    # Jump ahead size: around 100 lines
+    JUMP_SIZE = 400
     with open(load_file, 'rb') as f:
         byte_positions = [0]
         line_start = 0
@@ -48,8 +51,15 @@ def partition(fname):
             prev_dt = dt
             end_reached = False
             while line_start - byte_positions[-1] < 2 * PARTITION_SIZE:
-                line_start = f.tell()
+                while dt - prev_dt < PARTITION_GAP and line_start - byte_positions[-1] < 2 * PARTITION_SIZE:
+                    line_start = f.tell()
+                    f.seek(JUMP_SIZE, 1)
+                    f.readline() # read a line to make sure we're now at the beginning of a new line (if we end up in the middle of a line, now we're at the start of the following line)
+                    tmp = f.readline().strip().split()
+                    dt = int(tmp[0])
+                f.seek(line_start, 0)
                 line = f.readline()
+                line_start = f.tell()
                 if line == '':
                     end_reached = True
                     break
@@ -59,7 +69,7 @@ def partition(fname):
                     break
                 prev_dt = dt
             # this means the previous while loop ended either because we found a dt more
-            # than PARTITION_GAP away from prev_dt, or we read 0.5x PARTITION_SIZE
+            # than PARTITION_GAP away from prev_dt, or we read 2x PARTITION_SIZE
             # in which case we just split here
             if not end_reached:
                 byte_positions.append(line_start)
@@ -105,7 +115,7 @@ def detection(args):
     with process_counter.get_lock():
         process_counter.value += 1
 
-    # get events - create hashtable
+    # get events - create hash table
     pid_prefix = str(pid + process_counter.value * 1000)
     diags = clouds.p_triplet_to_diags(fname, byte_pos,
         bytes_to_read, pid_prefix = pid_prefix,
@@ -180,7 +190,8 @@ if __name__ == '__main__':
     # each list corresponding to one of detdata_filenames
     byte_positions_list = p.map(partition, detdata_filenames)
     with open('byte_positions_list.dat', 'wb') as f:
-        pickle.dump(byte_positions_list, f, protocol=pickle.HIGHEST_PROTOCOL)
+       pickle.dump(byte_positions_list, f, protocol=pickle.HIGHEST_PROTOCOL)
+    #byte_positions_list = pickle.load(open('byte_positions_list.dat', 'rb'))
     print '[TIMING] partition:', time.time() - grand_start_time
 
     ########################################################################

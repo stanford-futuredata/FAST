@@ -81,7 +81,6 @@ echo "NUM_PART="$NUM_PART
        --mrows $NDIM \
        --near_repeats $NREPEAT \
        --nvotes $NVOTES \
-       --minhash_threads $NTHREAD \
-       --simsearch_threads $NTHREAD \
+       --ncores $NTHREAD \
        --num_partitions $NUM_PART
 
