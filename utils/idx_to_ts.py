@@ -1,15 +1,23 @@
+#-------------------------------------------------------------------------#
+# Example script to convert a list of fingerprint indices to timestamps   #
+#-------------------------------------------------------------------------#
+
 import linecache
 import sys
 import os
 import datetime
 from dateutil.relativedelta import relativedelta
 
+
+# [CHANGE] Change INTERVAL, fname_format, fp_path, ts_path, channel
 INTERVAL = relativedelta(months=+1)
 fname_format = "ts_bp2to20.NZ.%s.10.%s__%s__%s"
 fp_path = 'bp2to20_waveforms%s/fingerprints/'
 ts_path = 'bp2to20_waveforms%s/timestamps/'
 channel = 'HHZ'
 
+# [CHANGE] Change this function to construct the waveform 
+# filename from a timestamp
 def construct_filename(t):
 	return fname_format % (station, channel, t.strftime('%Y%m%dT000000Z'), (t + INTERVAL).strftime('%Y%m%dT000000Z'))
 
