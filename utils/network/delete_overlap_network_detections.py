@@ -1,42 +1,8 @@
 import numpy as np
 
-#input_dir = '/lfs/1/ceyoon/TimeSeries/Wenchuan2/after/network_detection/'
-#input_dir = '/lfs/1/ceyoon/TimeSeries/Diablo/network_detection/'
-#outfile_name = input_dir+'15sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
-#outfile_name = input_dir+'4sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
-#outfile_name = input_dir+'5sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt'
-#outfile_name = input_dir+'6sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt'
-#offset = 40 # 80 seconds # If events are < 80 s apart, they will not be included
-
-#input_dir = '/lfs/1/ceyoon/TimeSeries/AllWenchuan/network_detection/'
-#allfile_name = input_dir+'uniquestart_sorted_no_duplicates.txt'
-#outfile_name = input_dir+'15sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
-
 input_dir = '../data/network_detection/'
 allfile_name = input_dir+'uniquestart_sorted_no_duplicates.txt'
 outfile_name = input_dir+'7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
-
-#input_dir = '/lfs/1/ceyoon/TimeSeries/Diablo/network_detection/'
-#allfile_name = input_dir+'uniquestart_sorted_no_duplicates.txt'
-#outfile_name = input_dir+'11sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
-
-#input_dir = '/lfs/1/ceyoon/TimeSeries/SaudiMonth/network_detection/'
-#allfile_name = input_dir+'uniquestart_sorted_no_duplicates.txt'
-#outfile_name = input_dir+'19sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
-
-#input_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/network_detection/'
-#allfile_name = input_dir+'uniquestart_sorted_no_duplicates.txt'
-##outfile_name = input_dir+'35sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
-#outfile_name = input_dir+'7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
-
-#input_dir = '/lfs/1/ceyoon/TimeSeries/ItalyDay/day303/network_detection/'
-#allfile_name = input_dir+'uniquestart_sorted_no_duplicates.txt'
-#outfile_name = input_dir+'22sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
-
-
-
-
-
 
 # Read all event lines into dictionary with start index as key
 # Later, we will delete overlapping events from this dictionary

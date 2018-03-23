@@ -73,6 +73,7 @@ def partition(fname):
             # in which case we just split here
             if not end_reached:
                 byte_positions.append(line_start)
+    print '     %s: %d partitions' % (fname, len(byte_positions))
     return byte_positions
 
 def dict_to_numpy(d):
@@ -325,4 +326,6 @@ if __name__ == '__main__':
     with open(out_fname + '.dat', "wb") as f:
         pickle.dump(mdict, f, protocol=pickle.HIGHEST_PROTOCOL)
 
-    print 'GRAND TOTAL TIME:', time.time() - grand_start_time
+    print ("[OUTPUT] Results saved to: %s" % (out_folder))
+
+    print '[TIMING] Total time: ', time.time() - grand_start_time

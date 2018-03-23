@@ -56,9 +56,9 @@ Alternatively, to run the similarity search for each station individually, copy 
 Copy the helper scripts for postprocessing into the folder:
 ```sh
 ~/quake-tutorial/simsearch$ cd ../postprocessing
-~/quake-tutorial/postprocessing$ cp ../parameters/postprocess/*.sh  .
+~/quake-tutorial/postprocessing$ cp ../parameters/postprocess/*  .
 ```
-The following scripts parse the binary output from similarity search to text files, and combine the three channel results for Station HEC to a single output. Finally, it copies the parsed outputs to directory ../data/input_network/.
+The following scripts parse the binary output from similarity search to text files, and combine the three channel results for Station HEC to a single output. Finally, it copies the parsed outputs to directory ```../data/input_network/```.
 ```sh
 ~/quake-tutorial/postprocessing$ ./output_HectorMine_pairs.sh
 ~/quake-tutorial/postprocessing$ ./combine_HectorMine_pairs.sh
@@ -66,24 +66,26 @@ The following scripts parse the binary output from similarity search to text fil
 
 Run network detection:
 ```sh
-~/quake-tutorial/postprocessing$ cp ../utils/network/* .
 ~/quake-tutorial/postprocessing$ python scr_run_network_det.py 7sta_2stathresh_network_params.json
 ```
+Results from the network detection are under ```data/network_detection/7sta_2stathresh_network_detlist*```. The file contains a list of potential detections including information about starting fingerprint index (global index, or time) at each station, number of stations where we found other events similar to this event (`nsta`), total number of similar fingerprint pairs mapped to the event (`tot_ndets`), total sum of the similarity values (`tot_vol`). Detailed format of the output can be found in the user guide. 
 
-To clean up the results from network detection:
+Optionally, to clean up the results from network detection:
 ```sh
+~/quake-tutorial/postprocessing$ cp ../utils/network/* .
 ~/quake-tutorial/postprocessing$ python arrange_network_detection_results.py
 ~/quake-tutorial/postprocessing$ ./remove_duplicates_after_network.sh
 ~/quake-tutorial/postprocessing$ python delete_overlap_network_detections.py
 ~/quake-tutorial/postprocessing$ ./final_network_sort_nsta_peaksum.sh
 
 ```
+The results from the above scripts can be found at ```data/network_detection/7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt```
 
-### Plotting  
+### Plotting
 To plot the waveforms from network detection:
 ```sh
 ~/quake-tutorial/postprocessing$ cd ../utils/events 
 ~/quake-tutorial/utils/events$ python PARTIALplot_hector_detected_waveforms.py 0 50
 ```
-You can view the images at data/network_detection/7sta_2stathresh_NetworkWaveformPlots/
+The above script plots the first 50 waveforms from the output. You can view the images at data/network_detection/7sta_2stathresh_NetworkWaveformPlots/
 
