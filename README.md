@@ -1,76 +1,105 @@
-# FAST Detection Pipeline
-
-### Tutorial
-Please checkout the [tutorial](https://github.com/stanford-futuredata/quake/blob/tutorial/tutorial.md) branch for an end-to-end example of the pipeline. The tutorial takes input time series data and generates a list of plots of potential earthquake detections.  
-
+# FAST tutorial
 
 ### Dependencies
-
+The pipeline is implemented in Python and C++, with the following dependencies:
 ```
 c++ dependency: boost
-python dependencies: obspy, pywt, scipy, numpy, skimage, sklearn, linecache, dateutil
+python dependencies: obspy, pywt, scipy, numpy, skimage, sklearn
 ```
+
+### Install
+Copy the zip file to your home diretory, unzip and install the Python dependencies:
+```sh
+~/$ unzip quake-tutorial.zip
+~/$ cd quake-tutorial
+~/quake-tutorial$ pip install -r requirements.txt
+```
+Install the C++ dependencies:
+```sh
+~/quake-tutorial$ sudo apt-get install cmake, build-essential, libboost-all-dev 
+```
+
+
+### Dataset
+
+Raw SAC files for each station are stored under  ```data/waveforms${STATION}```. Station "HEC" has 3 components so it should have 3 time series data files; the other stations have only 1 component.
+
 
 
 ### Fingerprint
-Input time series files and fingerprint parameters are specified in a JSON format. See [sample_params.json](https://github.com/stanford-futuredata/quake/blob/master/pyFAST/fingerprint/sample_params.json) for an example. To generate fingerprints:
+Parameters for each station is under ```parameters/fingerprint/```. To fingerprint all stations and generate the global index, you can call the wrapper script:
+```sh
+~/quake-tutorial$ python run_fp.py -c config.json
 ```
-cd pyFAST/fingerprint/
-python gen_fp.py sample_params.json
+The fingerprinting step takes less than 1 minute per waveform file on a 2.60GHz CPU. The generated fingerprints can be found at ```data/waveforms${STATION}/fingerprints/${STATION}${CHANNEL}.fp```. The json file ```data/waveforms${STATION}/${STATION}_${CHANNEL}.json``` contains information about the fingerprint file, including number of fingerprints (`nfp`) and dimension of each fingerprint (`ndim`).
+
+Alternatively, to fingerprint a specific stations, call the fingerprint script with the corresponding fingerprint parameter file:
+```sh
+~/quake-tutorial$ cd fingerprint/
+~/quake-tutorial/fingerprint$ python gen_fp.py ../parameters/fingerprint/fp_input_CI_CDY_EHZ.json
 ```
-In case of processing files from multiple stations, you can generate a mapping from local to global indices for each station by passing in all JSON files used for fingerprint generation to [global_index.py](https://github.com/stanford-futuredata/quake/blob/master/pyFAST/fingerprint/global_index.py).
+
+In addition to generating fingerprints, the wrapper script calls the global index generation script automatically. The global index (as opposed to index with a single component) is a consistent way to refer to fingerprint times at different components and stations. Global index generation should only be performed after you've generated fingerprints for *every* component and station that is used in the detection: 
+```sh
+~/quake-tutorial/fingerprint$ python global_index.py  ../parameters/fingerprint/global_indices.json
+```
+The resulting global index mapping for each component is stored at ```data/global_indices/${STATION}_${CHANNEL}_idx_mapping.txt```, where line `i` in the file represents the global index for fingerprint `i-1` in this component.
 
 ### Similarity Search
-To compile and run the similarity search code:
-```
-cd FAST-new/
-cmake .
-make
-./main
-```
-To change the parameters (input filename, number of hash tables, number of hash functions etc), you can run ```main``` with different command line arguments. For example
-```
-./main --input_fp_file=24hr.bin \
-        --output_pairs_file=candidate_pairs.txt \
-        --output_minhash_sigs_file=mh.bin 
+Compile and build the code for similarity search:
+```sh
+~/quake-tutorial$ cd simsearch
+~/quake-tutorial/simsearch$ cmake .
+~/quake-tutorial/simsearch$ make
 ```
 
-See the full list of command line arguments through ```./main --help```
-```
-Allowed options:
-  --help                         produce help message
-  --verbose                      verbose
-  --input_fp_file arg            name of input fingerprint file
-  --input_minhash_sigs_file arg  name of file from which to retrieve minhash sigs
-  --output_minhash_sigs_file arg name of file to store minhash sigs
-  --output_pairs_file arg        name of file to store candidate pairs
-
-  --ntbls arg                    Number of hash tables
-  --nhash arg                    Number of hash functions
-  --nvotes arg                   Number of matches in hash tables
-  --ncols arg                    Number of fingerprints
-  --mrows arg                    Dimension of each fingerprint
-  --near_repeats arg             Near repeat limit
-
-  --batch_size arg               Batch size to read fingerprints
-  --ncores                       Maximum number of processes for minhash and simsearch
-
-  --num_partitions               Number of (equally divided) partitions for similarity search (default to 5)
-  --start_index                  Start fingerprint index for the all-to-some search
-  --end_index                    End fingerprint index for the all-to-some search
-                                 (start_index and end_index overwrites the num_partition setting)
-
-  --filter_file                  Name of fingerprint binary filter file (each line represents whether 
-                                 the corresponding fingerprint should be put in the hash table or not)
-  --noise_freq                   Frequency above which fingerprints will be filtered out 
-                                 as correlated noise
+Call the wrapper script to run similarity search for all stations:
+```sh
+~/quake-tutorial/simsearch$ cd ..
+~/quake-tutorial$ python run_simsearch.py -c config.json
 ```
 
-### Postprocessing 
-For performance reason, the output of the similarity search is currently in binary format. Use [parse_results.py](https://github.com/stanford-futuredata/quake/blob/master/pyFAST/postprocessing/parse_results.py) to parse and sort results in the format of [abs(idx1 - idx2), max(idx1, idx2), #hash table matched].
+Alternatively, to run the similarity search for each station individually, copy the config file to the current directory, and uncomment corresponding blocks of parameters:
+```sh
+~/quake-tutorial$ cd simsearch
+~/quake-tutorial/simsearch$ cp ../parameters/simsearch/simsearch_input_HectorMine.sh  .
+~/quake-tutorial/simsearch$ ./simsearch_input_HectorMine.sh
 ```
-usage: parse_results.py [-h] [-d DIR] [-p PREFIX] [-t [THRESH]] [-i [IDX]]
-                        [-m MEM] [--parse [PARSE]] [--sort [SORT]]
-                        [-c COMBINE]
+
+### Postprocessing
+Copy the helper scripts for postprocessing into the folder:
+```sh
+~/quake-tutorial/simsearch$ cd ../postprocessing
+~/quake-tutorial/postprocessing$ cp ../parameters/postprocess/*  .
 ```
-Once the result pairs files are partitioned and *sorted (required)* by ```[abs(idx1 - idx2), max(idx1, idx2)]```, they can be fed into the [network detection script](https://github.com/stanford-futuredata/quake/blob/master/pyFAST/postprocessing/network/scr_run_network_det.py) for postprocessing.
+The following scripts parse the binary output from similarity search to text files, and combine the three channel results for Station HEC to a single output. Finally, it copies the parsed outputs to directory ```../data/input_network/```.
+```sh
+~/quake-tutorial/postprocessing$ ./output_HectorMine_pairs.sh
+~/quake-tutorial/postprocessing$ ./combine_HectorMine_pairs.sh
+```
+
+Run network detection:
+```sh
+~/quake-tutorial/postprocessing$ python scr_run_network_det.py 7sta_2stathresh_network_params.json
+```
+Results from the network detection are under ```data/network_detection/7sta_2stathresh_network_detlist*```. The file contains a list of potential detections including information about starting fingerprint index (global index, or time) at each station, number of stations where we found other events similar to this event (`nsta`), total number of similar fingerprint pairs mapped to the event (`tot_ndets`), total sum of the similarity values (`tot_vol`). Detailed format of the output can be found in the user guide. 
+
+Optionally, to clean up the results from network detection:
+```sh
+~/quake-tutorial/postprocessing$ cp ../utils/network/* .
+~/quake-tutorial/postprocessing$ python arrange_network_detection_results.py
+~/quake-tutorial/postprocessing$ ./remove_duplicates_after_network.sh
+~/quake-tutorial/postprocessing$ python delete_overlap_network_detections.py
+~/quake-tutorial/postprocessing$ ./final_network_sort_nsta_peaksum.sh
+
+```
+The results from the above scripts can be found at ```data/network_detection/7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt```
+
+### Plotting
+To plot the waveforms from network detection:
+```sh
+~/quake-tutorial/postprocessing$ cd ../utils/events 
+~/quake-tutorial/utils/events$ python PARTIALplot_hector_detected_waveforms.py 0 50
+```
+The above script plots the first 50 waveforms from the output. You can view the images at data/network_detection/7sta_2stathresh_NetworkWaveformPlots/
+
