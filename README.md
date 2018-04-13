@@ -19,7 +19,6 @@ Install the C++ dependencies:
 ~/quake$ sudo apt-get install cmake, build-essential, libboost-all-dev 
 ```
 
-
 ### Dataset
 
 Raw SAC files for each station are stored under  ```data/waveforms${STATION}```. Station "HEC" has 3 components so it should have 3 time series data files; the other stations have only 1 component.
@@ -103,3 +102,11 @@ To plot the waveforms from network detection:
 ```
 The above script plots the first 50 waveforms from the output. You can view the images at data/network_detection/7sta_2stathresh_NetworkWaveformPlots/
 
+
+### References
+You can find more details about the pipeline and guidelines for setting parameters in our extended [user guide](https://github.com/stanford-futuredata/quake/blob/master/FAST_userguide_v0.pdf). You may also check out the following papers:
++ **FAST Overview:** [Earthquake detection through computationally efficient similarity search](http://advances.sciencemag.org/content/1/11/e1501057)
++ **Fingerprint:** [Scalable Similarity Search in Seismology: A New Approach to Large-Scale Earthquake Detection](https://link.springer.com/chapter/10.1007/978-3-319-46759-7_23)
++ **Network Detection:** [Detecting Earthquakes over a Seismic Network using Single-Station Similarity Measures](https://doi.org/10.1093/gji/ggy100)
++ **FAST Application:** [Seismicity During the Initial Stages of the Guy‐Greenbrier, Arkansas, Earthquake Sequence](https://doi.org/10.1002/2017JB014946)
++ **Implementation and Performance:** [Locality-Sensitive Hashing for Earthquake Detection: A Case Study Scaling Data-Driven Science](https://arxiv.org/pdf/1803.09835.pdf)
