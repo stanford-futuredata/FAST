@@ -1,5 +1,7 @@
 # FAST tutorial
 
+The following instructions were only tested on **Linux** clusters; we do not currently support other operating systems. To efficiently process inputs spanning a long duration, we suggest running the pipeline on a server with multiple processes and sufficient memory. 
+
 ### Dependencies
 The pipeline is implemented in Python and C++, with the following dependencies:
 ```
