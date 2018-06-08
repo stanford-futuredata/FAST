@@ -174,7 +174,7 @@ int main(int argc, char * argv[]) {
     boost::dynamic_bitset<> filter_flag(s.ncols);
 
 	if (!s.output_pairs_file.empty()) {
-		if ((s.start_index > 0 && s.end_index > 0)) { // Search again specified indices
+		if ((s.start_index >= 0 && s.end_index > 0)) { // Search again specified indices
 			uint32_t *query =  new uint32_t[s.ncols];
 			for (size_t i = 0; i < s.ncols; i++) { query[i] = i; }
 

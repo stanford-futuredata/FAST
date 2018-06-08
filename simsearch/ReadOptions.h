@@ -23,8 +23,8 @@ struct Settings {
 	size_t ncores= 1;
 	string input_file, input_mh_sigs_file, output_mh_sigs_file, output_pairs_file, filter_file;
 	size_t num_partitions = 5;
-	size_t start_index = 0;
-	size_t end_index = 0;
+	size_t start_index = -1;
+	size_t end_index = -1;
 	double noise_freq = -1;
 };
 
