@@ -23,8 +23,8 @@ struct Settings {
 	size_t ncores= 1;
 	string input_file, input_mh_sigs_file, output_mh_sigs_file, output_pairs_file, filter_file;
 	size_t num_partitions = 5;
-	size_t start_index = -1;
-	size_t end_index = -1;
+	int64_t start_index = -1;
+	int64_t end_index = -1;
 	double noise_freq = -1;
 };
 
@@ -47,8 +47,8 @@ Settings readOptions(int argc, char * argv[]) {
 		("batch_size", po::value<size_t>(), "Batch size to read fingerprints")
 		("ncores", po::value<size_t>(), "Maximum number of processes for minhash and similarity search")
 		("num_partitions", po::value<size_t>(), "Number of partitions for similarity search")
-		("start_index", po::value<size_t>(), "Start fingerprint index for the all to some search")
-		("end_index", po::value<size_t>(), "End fingerprint index for the all to some search")
+		("start_index", po::value<int64_t>(), "Start fingerprint index for the all to some search")
+		("end_index", po::value<int64_t>(), "End fingerprint index for the all to some search")
 		("noise_freq", po::value<string>(), "Frequency above which fingerprints will be filtered out as correlated noise")
 		;
 	po::variables_map vm;
@@ -168,12 +168,12 @@ Settings readOptions(int argc, char * argv[]) {
 	BOOST_LOG_TRIVIAL(debug) << "num_partitions:\t" << setting.num_partitions;
 
 	if (vm.count("start_index")) {
-		setting.start_index = vm["start_index"].as<size_t>();
+		setting.start_index = vm["start_index"].as<int64_t>();
 	}
 	BOOST_LOG_TRIVIAL(debug) << "start_index:\t" << setting.start_index;
 
 	if (vm.count("end_index")) {
-		setting.end_index = vm["end_index"].as<size_t>();
+		setting.end_index = vm["end_index"].as<int64_t>();
 	}
 	BOOST_LOG_TRIVIAL(debug) << "end_index:\t" << setting.end_index;
 
