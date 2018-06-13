@@ -13,12 +13,11 @@
 ########################################################################################################
 
 import numpy as np
-import scipy as sp
 import pywt as wt
 import math
-from skimage.transform import resize
 from sklearn.preprocessing import normalize
 from copy import copy
+from scipy.signal import spectrogram
 from scipy.misc import imresize
 
 class FeatureExtractor(object):
@@ -75,9 +74,10 @@ class FeatureExtractor(object):
 
     #/ computes spectrogram from continous timeseries data
     def data_to_spectrogram(self, x_data, window_type = 'hanning'):
-        f, t, Sxx = sp.signal.spectrogram(x_data, fs=self.sampling_rate,
+        f, t, Sxx = spectrogram(x_data, fs=self.sampling_rate,
             window=window_type, nperseg=int(self.sampling_rate*self.window_len),
             noverlap = int(self.sampling_rate*(self.window_len - self.window_lag)))
+        # Truncate spectrogram, keep only passband frequencies
         if self.min_freq > 0:
             fidx_keep = (f >= self.min_freq)
             Sxx = Sxx[fidx_keep, :]
@@ -129,7 +129,7 @@ class FeatureExtractor(object):
         return haar_images
 
     #/ computes (normalized) haar_images from continous timeseries data
-    def data_to_haar_images(self, x_data, window_type = 'hamming'):
+    def data_to_haar_images(self, x_data):
         f, t, Sxx = self.data_to_spectrogram(x_data)
         spectral_images, nWindows, idx1, idx2 = self.spectrogram_to_spectral_images(Sxx)
         haar_images = self.spectral_images_to_wavelet(spectral_images)
@@ -157,7 +157,7 @@ class FeatureExtractor(object):
             return images
 
     def compute_haar_stats(self, haar_images,type = None):
-        if type is not 'Zscore':
+        if type is 'MAD':
             shape = haar_images.shape
             medians = []
             for i in range(shape[1]):
@@ -171,7 +171,7 @@ class FeatureExtractor(object):
             self.haar_absdevs  = np.array(mad)
 
             return self.haar_medians, self.haar_absdevs
-        if type is not 'MAD':
+        if type is 'Zscore':
             self.haar_means   = np.mean(haar_images,axis=0)
             self.haar_stddevs = np.std(haar_images,axis=0)
             return self.haar_means, self.haar_stddevs

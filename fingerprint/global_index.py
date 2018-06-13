@@ -29,7 +29,8 @@ if __name__ == '__main__':
 
 	min_time = None
 	for param_file in config['fp_params']:
-		params = parse_json(param_file)
+	        print config['fp_param_dir']+param_file
+		params = parse_json(config['fp_param_dir']+param_file)
 		_, ts_path = get_fp_ts_folders(params)
 		ts_fname = ts_path + get_ts_fname(params['data']['fingerprint_files'][0])
 		tmp = datetime.datetime.strptime(linecache.getline(ts_fname, 1).strip(), 
@@ -46,6 +47,10 @@ if __name__ == '__main__':
 	f.write('%s\n' % min_time.strftime("%Y-%m-%dT%H:%M:%S.%f"))
 	f.write('%s\n' % ','.join(config['fp_params']))
 	f.close()
+
+        # Attach input folder to filename
+	for ip,param_file in enumerate(config['fp_params']):
+                config['fp_params'][ip] = config['fp_param_dir']+param_file
 
 	p = Pool(len(config['fp_params']))
 	p.map(compute_global_index, config['fp_params'])

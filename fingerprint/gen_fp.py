@@ -49,12 +49,20 @@ if __name__ == '__main__':
 		os.remove(final_fp_name)
 	print "Combining into final fingerprint file %s" % final_fp_name
 
+	final_ts_name = '%s%s' %(ts_path, get_combined_ts_name(params))
+	if os.path.exists(final_ts_name):
+		os.remove(final_ts_name)
+	print "Combining into final timestamp file %s" % final_ts_name
+
 	for fname in files:
 		fp_file = fp_path + get_fp_fname(fname)
 		os.system("cat %s >> %s" % (fp_file, final_fp_name))
 
+		ts_file = ts_path + get_ts_fname(fname)
+		os.system("cat %s >> %s" % (ts_file, final_ts_name))
+
 		# Verify number of fingerprints
-		num_lines = sum(1 for line in open(ts_path + get_ts_fname(fname)))
+		num_lines = sum(1 for line in open(ts_file))
 		nfp += num_lines
 		fsize = os.path.getsize(fp_file)
 		if fsize / fp_in_bytes != num_lines:

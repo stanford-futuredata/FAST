@@ -15,17 +15,21 @@
 # Tel Grid Engine to join normal output and error output into one file
 #$ -j y
 
+echo "Entered at command line, Station: $1"
+echo "Entered at command line, Channel: $2"
 
-##STATION=CDY
+# Default values
+STATION=${1:-RMM}
+CHANNEL=${2:-EHZ}
+
+#STATION=CDY
 #STATION=RMM
 #CHANNEL=EHZ
 #NFP=74793
-#IN_STR=''
 
 #STATION=CPM
 #CHANNEL=EHZ
 #NFP=74796
-#IN_STR='.hp1'
 
 #STATION=HEC
 ##CHANNEL=BHE
@@ -33,40 +37,40 @@
 ##CHANNEL=BHN
 #CHANNEL=BHZ
 #NFP=74792
-#IN_STR='.hp2'
 
 #STATION=GTM
 #CHANNEL=EHZ
 #NFP=74796
-#IN_STR='.bp1to6'
 
 #STATION=RMR
 #CHANNEL=EHZ
 #NFP=74795
-#IN_STR='.bp1to6'
 
-STATION=TPC
-CHANNEL=EHZ
-NFP=74793
-IN_STR='.bp1to5'
+#STATION=TPC
+#CHANNEL=EHZ
+#NFP=74793
 
 
-DATA_DIR=../data/waveforms${STATION}/fingerprints
+BASE_DIR=../data/waveforms${STATION}
+DATA_DIR=${BASE_DIR}/fingerprints/
+echo $DATA_DIR
+
+FPDIM_FILE=${BASE_DIR}/${STATION}_${CHANNEL}.json
+NDIM=`cat "${FPDIM_FILE}" | jq '.ndim'`
+NFP=`cat "${FPDIM_FILE}" | jq '.nfp'`
 echo $STATION
 echo $CHANNEL
 echo "NFP="$NFP
-echo $DATA_DIR
+echo "NDIM="$NDIM
 
 NTBLS=100
 NHASH=4
-NDIM=2048
 NREPEAT=5
 NVOTES=2
 NTHREAD=8
 NUM_PART=1
 echo "NTBLS="$NTBLS
 echo "NHASH="$NHASH
-echo "NDIM="$NDIM
 echo "NREPEAT="$NREPEAT
 echo "NVOTES="$NVOTES
 echo "NTHREAD="$NTHREAD
@@ -83,4 +87,4 @@ echo "NUM_PART="$NUM_PART
        --nvotes $NVOTES \
        --ncores $NTHREAD \
        --num_partitions $NUM_PART
-
+echo "**********************************************************************************"

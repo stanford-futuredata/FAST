@@ -4,6 +4,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import os
+from matplotlib import rcParams
+
+rcParams['pdf.fonttype'] = 42
+print rcParams['pdf.fonttype']
 
 
 if len(sys.argv) != 3:
@@ -16,7 +20,7 @@ print "PROCESSING:", IND_FIRST, IND_LAST
    
 
 times_dir = '../../data/network_detection/'
-[det_start_ind, det_end_ind, dL, nevents, nsta, tot_ndets, max_ndets, tot_vol, max_vol, peaksum, num_sta, diff_ind] = np.loadtxt(times_dir+'sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt', unpack=True)
+[det_start_ind, det_end_ind, dL, nevents, nsta, tot_ndets, max_ndets, tot_vol, max_vol, peaksum, num_sta, diff_ind] = np.loadtxt(times_dir+'sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt', usecols=(0,1,2,3,4,5,6,7,8,9,10,11), unpack=True)
 out_dir = times_dir+'7sta_2stathresh_NetworkWaveformPlots/'
 #[det_start_ind, det_end_ind, dL, nevents, nsta, tot_ndets, max_ndets, tot_vol, max_vol, peaksum, num_sta] = np.loadtxt(times_dir+'FINAL_7sta_Hector_events.txt', unpack=True)
 #out_dir = times_dir+'Earthquakes_7sta_2stathresh_NetworkWaveformPlots/'
@@ -25,8 +29,8 @@ if not os.path.exists(out_dir):
 
 dt_fp = 1.0
 det_times = dt_fp * det_start_ind
-det_end_times = dt_fp * det_end_ind
 diff_times = dt_fp * diff_ind
+dL_dt = dt_fp * dL
 print len(det_times)
 
 # Use filtered data for plotting
@@ -53,5 +57,5 @@ for kk in range(IND_FIRST, IND_LAST):
 
    st_slice = st.slice(start_time, end_time)
 
-   out_file = out_dir+'event_rank'+format(kk,'04d')+'_nsta'+str(int(num_sta[kk]))+'_peaksum'+str(int(peaksum[kk]))+'_ind'+str(int(det_start_ind[kk]))+'_time'+str(det_times[kk])+'_'+str(det_end_times[kk])+'_'+ev_time.strftime('%Y-%m-%dT%H:%M:%S.%f')+'.png'
+   out_file = out_dir+'event_rank'+format(kk,'05d')+'_nsta'+str(int(num_sta[kk]))+'_peaksum'+str(int(peaksum[kk]))+'_ind'+str(int(det_start_ind[kk]))+'_time'+str(det_times[kk])+'_'+ev_time.strftime('%Y-%m-%dT%H:%M:%S.%f')+'.png'
    st_slice.plot(equal_scale=False, size=(out_width,out_height), outfile=out_file)

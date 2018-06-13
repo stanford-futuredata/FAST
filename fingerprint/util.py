@@ -37,6 +37,11 @@ def get_combined_fp_name(params):
         params['data']['station'], params['data']['channel'])
     return final_fp_name
 
+def get_combined_ts_name(params):
+    final_ts_name = '%s.%s.ts' % (
+        params['data']['station'], params['data']['channel'])
+    return final_ts_name
+
 def get_fp_stats_file(params):
     return '%s%s_%s.json' %(params["data"]["folder"], params["data"]["station"],
         params["data"]["channel"])

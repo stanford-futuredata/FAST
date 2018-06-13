@@ -12,6 +12,12 @@ except ImportError:
 def _get_det_list(ndets, timestamp_to_netid):
     det_start = np.where((ndets[:-1] == 0) & (ndets[1:] > 0))[0] + 1
     det_end   = np.where((ndets[:-1] > 0) & (ndets[1:] == 0))[0] + 1
+#====
+    n_det = min(len(det_start), len(det_end))
+    print 'len(det_start)=', len(det_start), ', len(det_end)=', len(det_end), ', n_det=', n_det
+    det_start = det_start[0:n_det]
+    det_end = det_end[0:n_det]
+#====
     det_dt    = det_end - det_start
     det_connect  = list()
     for x, y in izip(det_start, det_dt):
