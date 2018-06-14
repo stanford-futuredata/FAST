@@ -7,38 +7,44 @@ from detect_time_gaps import detect_time_gaps
 
 
 # ------------------- INPUTS ------------------------------------------------
-sac_dir = '/lfs/1/ceyoon/TimeSeries/ItalyDay/day303/'
-out_dir = '/lfs/1/ceyoon/TimeSeries/ItalyDay/day303/filled/'
-file_arr = glob.glob(sac_dir+'YR*.303')
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/ItalyDay/day303/'
+#out_dir = '/lfs/1/ceyoon/TimeSeries/ItalyDay/day303/filled/'
+#file_arr = glob.glob(ts_dir+'YR*.303')
+#format_str = 'MSEED'
 
-#sac_dir = '/lfs/raiders2/0/ceyoon/TimeSeries/Wenchuan/after/'
-#sac_dir = '/lfs/1/ceyoon/TimeSeries/Wenchuan2/ORIGINAL_DATA/' # after only
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/TanzaniaMonth/CES02/'
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/TanzaniaMonth/CES04/'
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/TanzaniaMonth/CES06/'
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/TanzaniaMonth/CES08/'
+ts_dir = '/lfs/1/ceyoon/TimeSeries/TanzaniaMonth/CES09/'
+out_dir = '/lfs/1/ceyoon/TimeSeries/TanzaniaMonth/filled/'
+file_arr = glob.glob(ts_dir+'TZ.*')
+format_str = 'MSEED'
+
+#ts_dir = '/lfs/raiders2/0/ceyoon/TimeSeries/Wenchuan/after/'
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/Wenchuan2/ORIGINAL_DATA/' # after only
 #out_dir = '/lfs/1/ceyoon/TimeSeries/Wenchuan2/after/' # after only
-#file_arr = glob.glob(sac_dir+'CombinedAfter*')
+#file_arr = glob.glob(ts_dir+'CombinedAfter*')
 
-#sac_dir = '/lfs/1/ceyoon/TimeSeries/AllWenchuan/ORIGINAL_DATA/'
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/AllWenchuan/ORIGINAL_DATA/'
 #out_dir = '/lfs/1/ceyoon/TimeSeries/AllWenchuan/after/'
-#file_arr = glob.glob(sac_dir+'*.BH*')
+#file_arr = glob.glob(ts_dir+'*.BH*')
 
-#sac_dir = '/lfs/1/ceyoon/TimeSeries/Ometepec/ORIGINAL_DATA/'
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/Ometepec/ORIGINAL_DATA/'
 #out_dir = '/lfs/1/ceyoon/TimeSeries/Ometepec/'
-#file_arr = glob.glob(sac_dir+'*.sac')
+#file_arr = glob.glob(ts_dir+'*.sac')
 
-#sac_dir = '/lfs/1/ceyoon/TimeSeries/SaudiMonth/data/2014-05-31-00-00-00/sac/'
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/SaudiMonth/data/2014-05-31-00-00-00/sac/'
 #out_dir = '/lfs/1/ceyoon/TimeSeries/SaudiMonth/data/filled/'
-#file_arr = glob.glob(sac_dir+'*.SAC')
+#file_arr = glob.glob(ts_dir+'*.SAC')
 
-#sac_dir = '/lfs/1/ceyoon/TimeSeries/SaudiFull/SA.UMJS/'
-#out_dir = sac_dir+'filled/'
-#file_arr = glob.glob(sac_dir+'*.seed')
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/SaudiFull/SA.UMJS/'
+#out_dir = ts_dir+'filled/'
+#file_arr = glob.glob(ts_dir+'*.seed')
 
-#sac_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveformsENWF/'
-#out_dir = sac_dir+'filled/'
-#file_arr = glob.glob(sac_dir+'*.mseed')
-
-#sac_dir = '/lfs/1/ceyoon/TimeSeries/TanzaniaMonth/CES09/'
-#out_dir = '/lfs/1/ceyoon/TimeSeries/TanzaniaMonth/filled/'
-#file_arr = glob.glob(sac_dir+'TZ.*')
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveformsENWF/'
+#out_dir = ts_dir+'filled/'
+#file_arr = glob.glob(ts_dir+'*.mseed')
 
 # ------------------- INPUTS ------------------------------------------------
 
@@ -51,7 +57,7 @@ for ifile in file_arr:
 
    file_str = os.path.basename(ifile)
    print file_str
-   file_name = sac_dir+file_str
+   file_name = ts_dir+file_str
 
 
 
@@ -74,7 +80,7 @@ for ifile in file_arr:
 
    # ------------------- FILL TIME GAPS WITH UNCORRELATED NOISE  ------------------------------------------------
 
-   st = read(file_name)
+   st = read(file_name, format=format_str)
 
    ntest = 2000 # Number of test samples in data - assume they are noise
    for igap in range(num_gaps):
@@ -105,7 +111,6 @@ for ifile in file_arr:
       st[0].data[gap_start_ind[igap]:gap_end_ind[igap]+1] = gap_x
 
    if (num_gaps):
-      st.write(out_dir+'Filled.'+file_str)
-#      st.write(out_dir+'Filled.'+file_str, format='MSEED')
+      st.write(out_dir+'Filled.'+file_str, format=format_str)
 #   else:
 #      os.system('cp '+file_name+' '+out_dir+'Filled.'+file_str)

@@ -18,8 +18,12 @@ if __name__ == '__main__':
 
 
 # ------------------- INPUTS ------------------------------------------------
-ts_dir = '/lfs/1/ceyoon/TimeSeries/ItalyDay/day303/'
-file_arr = glob.glob(ts_dir+'*YR.'+station+'..'+channel+'*')
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/ItalyDay/day303/'
+#file_arr = glob.glob(ts_dir+'*YR.'+station+'..'+channel+'*')
+#format_str = 'MSEED'
+
+ts_dir = '/lfs/1/ceyoon/TimeSeries/TanzaniaMonth/'+station+'/'
+file_arr = glob.glob(ts_dir+'*TZ.'+station+'..'+channel+'*')
 format_str = 'MSEED'
 
 #ts_dir = '/lfs/raiders2/0/ceyoon/TimeSeries/Wenchuan/after/'
