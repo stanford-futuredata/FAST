@@ -36,26 +36,57 @@ def get_haar_image(fname):
 			sample_haar_images.append(haar_images)
 
 	# Randomly sample sample_length proportion of data from each input file 
-	# at each specified sample interval
+	#path + get_ts_fname(fname))) at each specified sample interval
 	else:
-		sample_interval = p['mad_sample_interval']
-		sample_length = max(sample_interval * p['mad_sampling_rate'], min_fp_length)
-		curr_time = st[0].stats.starttime
-		file_endtime = st[len(st) - 1].stats.endtime
-		while file_endtime - curr_time >= sample_interval:
-			start_offset = random.randint(0, sample_interval - sample_length)
-			segment = st.slice(curr_time + start_offset,
-				curr_time + start_offset + sample_length)
-			if len(segment) > 0:
-				data = segment[0].data
-				for i in range(1, len(segment)):
-					data = np.append(data, segment[i].data)
-				haar_images, nWindows, idx1, idx2, Sxx, t = feats.data_to_haar_images(data)
-				sample_haar_images.append(haar_images)
-			curr_time = curr_time + sample_interval
+	        MAX_SAMPLE_ITER = 1000
+	        min_fp_samples = int(min_fp_length * p['sampling_rate']) # Minimum number of time series samples required to make at least one fingerprint
 
-	total_haar_images = np.concatenate(sample_haar_images, axis=0)
-	np.save('%s_sample' % fname, total_haar_images)
+                # Check that this file has enough time series data for at least one fingerprint
+                # If not, don't even bother sampling this file
+		flag_sample = False
+		for i in range(len(st)):
+			if st[i].stats.endtime - st[i].stats.starttime > min_fp_length:
+				flag_sample = True
+			        break
+
+	        if (flag_sample):
+			sample_interval = p['mad_sample_interval']
+			sample_length = max(sample_interval * p['mad_sampling_rate'], min_fp_length)
+			curr_time = st[0].stats.starttime
+			file_endtime = st[len(st) - 1].stats.endtime
+			n_iter = 0
+			while (True):
+				if (n_iter > MAX_SAMPLE_ITER): # avoid infinite loop
+					print "WARNING: File ", fname, " exceeded maximum number of iterations =", MAX_SAMPLE_ITER, " for MAD random sampling"
+					break
+				n_iter += 1
+
+				start_offset = random.randint(0, sample_interval - sample_length)
+				segment = st.slice(curr_time + start_offset,
+					curr_time + start_offset + sample_length)
+				if len(segment) > 0:
+					data = segment[0].data
+					for i in range(1, len(segment)):
+						data = np.append(data, segment[i].data)
+					if (len(data) > min_fp_samples): # Make sure there is enough time series data to make at least one fingerprint
+						haar_images, nWindows, idx1, idx2, Sxx, t = feats.data_to_haar_images(data)
+						sample_haar_images.append(haar_images)
+					else: # Next time, hit a time segment long enough for at least one fingerprint?
+						continue
+				else: # Next time, don't hit a time gap?
+					continue
+
+				curr_time = curr_time + sample_interval
+				if (file_endtime - curr_time < sample_interval):
+					break
+		else:
+	        	print "WARNING: File ", fname, " not enough time series data for MAD random sampling"
+
+	if (len(sample_haar_images)):
+		total_haar_images = np.concatenate(sample_haar_images, axis=0)
+		np.save(mad_folder+'%s_sample.npy' % fname, total_haar_images)
+	else:
+		print "WARNING: File ", fname, " NOT SAMPLED FOR MAD CALCULATION"
 
 def get_haar_stats():
 	ntimes = get_ntimes(params)
@@ -65,12 +96,16 @@ def get_haar_stats():
 	pool.map(get_haar_image, files)
 	sample_haar_images = []
 	for file in files:
-		partial = np.load('%s_sample.npy' % file)
-		sample_haar_images.append(partial)
-		os.remove('%s_sample.npy' % file)
+	        file_name = mad_folder+'%s_sample.npy' % file
+	        if os.path.isfile(file_name):
+		        partial = np.load(file_name)
+			sample_haar_images.append(partial)
+			os.remove(file_name)
+	        else:
+		        print "WARNING: File not included in MAD SAMPLE", file_name
 
 	total_haar_images = np.concatenate(sample_haar_images, axis=0)
-	return feats.compute_haar_stats(total_haar_images)
+	return feats.compute_haar_stats(total_haar_images, type='MAD')
 
 
 if __name__ == '__main__':
@@ -78,6 +113,10 @@ if __name__ == '__main__':
 	param_json = sys.argv[1]
 	params = parse_json(param_json)
 	feats = init_feature_extractor(params)
+
+        mad_folder = params['data']['folder'] + 'mad/'
+        if not os.path.exists(mad_folder):
+		os.makedirs(mad_folder)
 
 	median, mad = get_haar_stats()
 	# Output MAD stats to file

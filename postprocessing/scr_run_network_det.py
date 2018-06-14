@@ -190,7 +190,7 @@ if __name__ == '__main__':
     # list of lists of byte positions,
     # each list corresponding to one of detdata_filenames
     byte_positions_list = p.map(partition, detdata_filenames)
-    with open('byte_positions_list.dat', 'wb') as f:
+    with open('%s/byte_positions_list.dat' % out_folder, 'wb') as f:
        pickle.dump(byte_positions_list, f, protocol=pickle.HIGHEST_PROTOCOL)
     #byte_positions_list = pickle.load(open('byte_positions_list.dat', 'rb'))
     print '[TIMING] partition:', time.time() - grand_start_time
@@ -255,7 +255,7 @@ if __name__ == '__main__':
     all_diags = all_diags[inds, ...]
 
     print "  Saving all_diags_dict to all_diags_dict.npy"
-    np.save("all_diags_dict.npy", all_diags)
+    np.save("%s/all_diags_dict.npy" % out_folder, all_diags)
     print '[TIMING] build network index:', time.time() - t4
 
     #########################################################################
@@ -271,15 +271,15 @@ if __name__ == '__main__':
     del all_diags
 
     print "  Saving network event to network_event.dat"
-    with open('network_event.dat', "wb") as f:
+    with open('%s/network_event.dat' % out_folder, "wb") as f:
         pickle.dump(network_events, f, protocol=pickle.HIGHEST_PROTOCOL)
     print '[TIMING] pseudo-association:', time.time() - t5
 
     ########################################################################
     #         EVENT RESOLUTION - detections                              ##
     ########################################################################
-    # network_events = pickle.load(open('network_event.dat', 'rb'))
-    # print "Loaded network event"
+#    network_events = pickle.load(open('%s/network_event.dat' % out_folder, 'rb'))
+#    print "Loaded network event"
 
     gc.collect()
     #/ Get network events

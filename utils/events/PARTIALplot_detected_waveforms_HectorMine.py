@@ -11,7 +11,7 @@ print rcParams['pdf.fonttype']
 
 
 if len(sys.argv) != 3:
-   print "Usage: python PARTIALplot_detected_hector_waveforms.py <start_ind> <end_ind>"
+   print "Usage: python PARTIALplot_detected_waveforms_HectorMine.py <start_ind> <end_ind>"
    sys.exit(1)
 
 IND_FIRST = int(sys.argv[1])
@@ -19,7 +19,7 @@ IND_LAST = int(sys.argv[2])
 print "PROCESSING:", IND_FIRST, IND_LAST
    
 
-times_dir = '../../data/network_detection/'
+times_dir = '/lfs/1/ceyoon/TimeSeries/HectorMine/network_detection/'
 [det_start_ind, det_end_ind, dL, nevents, nsta, tot_ndets, max_ndets, tot_vol, max_vol, peaksum, num_sta, diff_ind] = np.loadtxt(times_dir+'sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt', usecols=(0,1,2,3,4,5,6,7,8,9,10,11), unpack=True)
 out_dir = times_dir+'7sta_2stathresh_NetworkWaveformPlots/'
 #[det_start_ind, det_end_ind, dL, nevents, nsta, tot_ndets, max_ndets, tot_vol, max_vol, peaksum, num_sta] = np.loadtxt(times_dir+'FINAL_7sta_Hector_events.txt', unpack=True)
@@ -34,14 +34,12 @@ dL_dt = dt_fp * dL
 print len(det_times)
 
 # Use filtered data for plotting
-sac_dir = '../../data/'
+sac_dir = '/lfs/1/ceyoon/TimeSeries/HectorMine/'
 st = read(sac_dir+'waveforms*/Deci5.Pick.*', format='SAC')
 print len(st)
 print st.__str__(extended=True)
 
 init_time = UTCDateTime('1999-10-15T13:00:00.676000') # global start time for all channels
-#wtime_before = 30
-#wtime_after = 60
 wtime_before = 10
 wtime_after = 40
 

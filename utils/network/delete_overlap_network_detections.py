@@ -1,8 +1,17 @@
 import numpy as np
 
-input_dir = '../data/network_detection/'
+# ---------------------------------------------------INPUTS --------------------------------------------
+input_dir = '../../data/network_detection/'
 allfile_name = input_dir+'uniquestart_sorted_no_duplicates.txt'
 outfile_name = input_dir+'7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
+
+#input_dir = '/lfs/1/ceyoon/TimeSeries/HectorMine/network_detection/'
+#allfile_name = input_dir+'uniquestart_sorted_no_duplicates.txt'
+#outfile_name = input_dir+'7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
+
+# Output detection time at each station to file (avoid this if there are many stations)
+flag_each_station = False
+# ---------------------------------------------------INPUTS --------------------------------------------
 
 # Read all event lines into dictionary with start index as key
 # Later, we will delete overlapping events from this dictionary
@@ -12,8 +21,13 @@ with open(allfile_name, 'r') as fin:
       evline = line.split()
       key = int(evline[0]) # key is start index
       val = []
+      iq = 0
       for vv in evline[1:]:
-	 val.append(int(vv)) # val: end_index, dL, nevents, nsta, tot_ndets, max_ndets, tot_vol, max_vol, peaksum
+	 if (iq >= 11):
+	    val.append(vv) # keep as string
+	 else:
+	    val.append(int(vv)) # val: end_index, dL, nevents, nsta, tot_ndets, max_ndets, tot_vol, max_vol, peaksum
+	 iq += 1
       event_dict[key] = val
 print "Initial number of event lines:", len(event_dict)
 
@@ -58,21 +72,8 @@ out_key_list = sorted(event_dict.keys())
 with open(outfile_name, 'w') as fout:
    for kkey in out_key_list:
       value = event_dict[kkey]
-      fout.write(('%12d %12d %12d %12d %12d %12d %12d %12d %12d %12d %12d %12d\n') % (kkey, value[0], value[1], value[2], value[3], value[4], value[5], value[6], value[7], value[8], value[9], value[10]))
-#      fout.write(('%12d %12d %12d %12d %12d %12d %12d %12d %12d %12d %12d\n') % (kkey, value[0], value[1], value[2], value[3], value[4], value[5], value[6], value[7], value[8], value[9]))
-#      fout.write(('%12d %12d %12d %12d %12d %12d %12d %12d %12d %12d\n') % (kkey, value[0], value[1], value[2], value[3], value[4], value[5], value[6], value[7], value[8]))
-
-
-#all_times = np.loadtxt(allfile_name, usecols=(0,), dtype=np.int)
-#diff_all_times = all_times[1:] - all_times[0:-1]
-#print "Number of events including duplicates: ", len(all_times)
-#
-#all_keep_times = []
-#all_keep_times.append(all_times[0])
-#for iev in range(len(diff_all_times)):
-#   if (diff_all_times[iev] >= offset):
-#      all_keep_times.append(all_times[iev+1])
-#print "Number of events kept, all times: ", len(all_keep_times)
-#
-#np.savetxt(outfile_name, np.transpose(all_keep_times), fmt='%d')
-
+      fout.write(('%12d %12d %12d %12d %12d %12d %12d %12d %12d %12d %12d %12d') % (kkey, value[0], value[1], value[2], value[3], value[4], value[5], value[6], value[7], value[8], value[9], value[10]))
+      if (flag_each_station):
+	 for ista in range(n_sta):
+	    fout.write('%12s' % value[11+ista])
+      fout.write('\n')

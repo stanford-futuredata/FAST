@@ -51,7 +51,7 @@ CHANNEL=${2:-EHZ}
 #NFP=74793
 
 
-BASE_DIR=../data/waveforms${STATION}
+BASE_DIR=/lfs/1/ceyoon/TimeSeries/HectorMine/waveforms${STATION}
 DATA_DIR=${BASE_DIR}/fingerprints/
 echo $DATA_DIR
 

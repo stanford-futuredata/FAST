@@ -36,8 +36,6 @@ if __name__ == '__main__':
 		"fp_param_dir": param_dir,
 		"fp_params": fp_params}
 	idx_config_fname = param_dir + "global_indices.json"
-	with open(idx_config_fname, 'w') as f:
-		json.dump(idx_config, f)
 	process = subprocess.Popen((idxCommand % (idx_config_fname)),
 			stdout=subprocess.PIPE, shell=True)
 	output, error = process.communicate()

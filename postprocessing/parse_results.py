@@ -139,7 +139,7 @@ def parse_chunk(tup):
 def sort(fname):
     print "Sorting %s" % fname
     start = time.time()
-    subprocess.call(['sort', '-k1,1n', '-k2,2n', '-o', fname + '_sorted', fname])
+    subprocess.call(['sort', '-T', get_dirname(args.dir), '-k1,1n', '-k2,2n', '-o', fname + '_sorted', fname])
     print "Done sorting %s, time taken:" % fname, time.time() - start
     os.remove(fname)
 

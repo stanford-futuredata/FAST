@@ -28,9 +28,14 @@ Raw SAC files for each station are stored under  ```data/waveforms${STATION}```.
 
 
 ### Fingerprint
-Parameters for each station is under ```parameters/fingerprint/```. To fingerprint all stations and generate the global index, you can call the wrapper script:
+Parameters for each station is under ```parameters/fingerprint/```. To fingerprint all stations and generate the global index, you can call the wrapper script (Python):
 ```sh
 ~/quake$ python run_fp.py -c config.json
+```
+Another option for the fingerprint wrapper script (bash):
+```sh
+~/quake$ cd fingerprint/
+~/quake/fingerprint$ ../parameters/fingerprint/run_fp_HectorMine.sh
 ```
 The fingerprinting step takes less than 1 minute per waveform file on a 2.60GHz CPU. The generated fingerprints can be found at ```data/waveforms${STATION}/fingerprints/${STATION}${CHANNEL}.fp```. The json file ```data/waveforms${STATION}/${STATION}_${CHANNEL}.json``` contains information about the fingerprint file, including number of fingerprints (`nfp`) and dimension of each fingerprint (`ndim`).
 
@@ -59,50 +64,53 @@ Call the wrapper script to run similarity search for all stations:
 ~/quake-tutorial/simsearch$ cd ..
 ~/quake-tutorial$ python run_simsearch.py -c config.json
 ```
+Another option for the similarity search wrapper script (bash):
+```sh
+~/quake$ cd simsearch/
+~/quake/simsearch$ ../parameters/simsearch/run_simsearch_HectorMine.sh
+```
+The fingerprinting step takes less than 1 minute per waveform file on a 2.60GHz CPU. The generated fingerprints can be found at ```data/waveforms${STATION}/fingerprints/${STATION}${CHANNEL}.fp```. The json file ```data/waveforms${STATION}/${STATION}_${CHANNEL}.json``` contains information about the fingerprint file, including number of fingerprints (`nfp`) and dimension of each fingerprint (`ndim`).
 
-Alternatively, to run the similarity search for each station individually, copy the config file to the current directory, and uncomment corresponding blocks of parameters:
+Alternatively, to run the similarity search for each station individually:
 ```sh
 ~/quake$ cd simsearch
-~/quake/simsearch$ cp ../parameters/simsearch/simsearch_input_HectorMine.sh  .
-~/quake/simsearch$ ./simsearch_input_HectorMine.sh
+~/quake/simsearch$ ../parameters/simsearch/simsearch_input_HectorMine.sh CDY EHZ
 ```
 
 ### Postprocessing
-Copy the helper scripts for postprocessing into the folder:
-```sh
-~/quake/simsearch$ cd ../postprocessing
-~/quake/postprocessing$ cp ../parameters/postprocess/*  .
-```
 The following scripts parse the binary output from similarity search to text files, and combine the three channel results for Station HEC to a single output. Finally, it copies the parsed outputs to directory ```../data/input_network/```.
 ```sh
-~/quake/postprocessing$ ./output_HectorMine_pairs.sh
-~/quake/postprocessing$ ./combine_HectorMine_pairs.sh
+~/quake$ cd postprocessing/
+~/quake/postprocessing$ ../parameters/postprocess/output_HectorMine_pairs.sh
+~/quake/postprocessing$ ../parameters/postprocess/combine_HectorMine_pairs.sh
 ```
 
 Run network detection:
 ```sh
-~/quake/postprocessing$ python scr_run_network_det.py 7sta_2stathresh_network_params.json
+~/quake/postprocessing$ python scr_run_network_det.py ../parameters/postprocess/7sta_2stathresh_network_params.json
 ```
 Results from the network detection are under ```data/network_detection/7sta_2stathresh_network_detlist*```. The file contains a list of potential detections including information about starting fingerprint index (global index, or time) at each station, number of stations where we found other events similar to this event (`nsta`), total number of similar fingerprint pairs mapped to the event (`tot_ndets`), total sum of the similarity values (`tot_vol`). Detailed format of the output can be found in the user guide. 
 
-Optionally, to clean up the results from network detection:
+Optionally, to clean up the results from network detection (need to modify inputs within each script file):
 ```sh
-~/quake/postprocessing$ cp ../utils/network/* .
-~/quake/postprocessing$ python arrange_network_detection_results.py
-~/quake/postprocessing$ ./remove_duplicates_after_network.sh
-~/quake/postprocessing$ python delete_overlap_network_detections.py
-~/quake/postprocessing$ ./final_network_sort_nsta_peaksum.sh
-
+~/quake$ cd utils/network/
+~/quake/utils/network$ python arrange_network_detection_results.py
+~/quake/utils/network$ ./remove_duplicates_after_network.sh
+~/quake/utils/network$ python delete_overlap_network_detections.py
+~/quake/utils/network$ ./final_network_sort_nsta_peaksum.sh
 ```
 The results from the above scripts can be found at ```data/network_detection/7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt```
 
 ### Plotting
 To plot the waveforms from network detection:
 ```sh
-~/quake/postprocessing$ cd ../utils/events 
+~/quake$ cd utils/events/ 
 ~/quake/utils/events$ python PARTIALplot_hector_detected_waveforms.py 0 50
 ```
-The above script plots the first 50 waveforms from the output. You can view the images at data/network_detection/7sta_2stathresh_NetworkWaveformPlots/
+The above script plots the first 50 waveforms from the output.
+The plot file names are sorted in descending order by: num_sta (number of stations that detected this event), peaksum (peak total similarity) 
+You can view the images at data/network_detection/7sta_2stathresh_NetworkWaveformPlots/
+Inspect the waveforms in order to set detection thresholds.
 
 
 ### References
