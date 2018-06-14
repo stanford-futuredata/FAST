@@ -1,0 +1,5 @@
+{
+	"index_folder": "/lfs/1/ceyoon/TimeSeries/NCSN/CCOB/global_indices/",
+	"fp_param_dir": "../parameters/fingerprint/NCSNSynthetic/",
+	"fp_params": ["fp_input_NCSN_CCOB_EHN_synthetic.json"]
+}

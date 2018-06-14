@@ -1,0 +1,32 @@
+{
+    "fingerprint": {
+        "sampling_rate": 20,
+        "min_freq": 4.0,
+        "max_freq": 10.0,
+        "spec_length": 10.0,
+        "spec_lag": 0.1,
+        "fp_length": 100,
+        "fp_lag": 10,
+        "k_coef": 400,
+        "nfreq": 32,
+        "mad_sampling_rate": 1,
+        "mad_sample_interval": 43200
+    },
+
+    "performance": {
+        "num_fp_thread": 1,
+        "partition_len": 43200
+    },
+
+    "data": {
+        "station": "CCOB",
+        "channel": "EHN",
+        "start_time": "11-01-08T00:00:00.0",
+        "end_time": "11-01-08T12:00:00.0",
+        "folder": "/lfs/1/ceyoon/TimeSeries/NCSN/CCOB/",
+        "fingerprint_files": [
+            "synthetic.12hr.24.36.amp0.03.NC.CCOB.EHN.D.bp4to10.deci5.SAC"],
+        "MAD_sample_files": [
+            "synthetic.12hr.24.36.amp0.03.NC.CCOB.EHN.D.bp4to10.deci5.SAC"]
+    }
+}
