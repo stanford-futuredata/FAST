@@ -33,6 +33,11 @@ diff_times = dt_fp * diff_ind
 dL_dt = dt_fp * dL
 print len(det_times)
 
+sac_dir = '/lfs/1/ceyoon/TimeSeries/ItalyDay/day303/'
+st = read(sac_dir+'Deci4.bp2to20.YR*HHZ*')
+print len(st)
+print st.__str__(extended=True)
+
 # Window length (seconds) for event plot
 init_time = UTCDateTime('2016-10-29T00:00:06.840000') # global start time for all channels
 wtime_before = 10
