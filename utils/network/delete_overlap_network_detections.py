@@ -9,6 +9,10 @@ outfile_name = input_dir+'7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
 #allfile_name = input_dir+'uniquestart_sorted_no_duplicates.txt'
 #outfile_name = input_dir+'7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
 
+#input_dir = '/lfs/1/ceyoon/TimeSeries/ItalyDay/day303/network_detection/'
+#allfile_name = input_dir+'uniquestart_sorted_no_duplicates.txt'
+#outfile_name = input_dir+'22sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
+
 # Output detection time at each station to file (avoid this if there are many stations)
 flag_each_station = False
 # ---------------------------------------------------INPUTS --------------------------------------------

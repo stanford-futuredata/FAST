@@ -9,6 +9,10 @@ nsta = 7
 #network_file = '7sta_2stathresh_detlist_rank_by_peaksum.txt'
 #nsta = 7
 
+#det_dir = '/lfs/1/ceyoon/TimeSeries/ItalyDay/day303/network_detection/'
+#network_file = '22sta_2stathresh_detlist_rank_by_peaksum.txt'
+#nsta = 22
+
 # Output detection time at each station to file (avoid this if there are many stations)
 flag_each_station = False
 # ---------------------------------------------------INPUTS --------------------------------------------

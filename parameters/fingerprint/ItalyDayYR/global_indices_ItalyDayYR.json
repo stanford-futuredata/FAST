@@ -1,0 +1,12 @@
+{
+	"index_folder": "/lfs/1/ceyoon/TimeSeries/ItalyDay/day303/global_indices/",
+	"fp_param_dir": "../parameters/fingerprint/ItalyDayYR/",
+        "fp_params": ["fp_input_YR_ED01_HHZ.json", "fp_input_YR_ED02_HHZ.json", "fp_input_YR_ED03_HHZ.json",
+	     "fp_input_YR_ED04_HHZ.json", "fp_input_YR_ED05_HHZ.json", "fp_input_YR_ED06_HHZ.json",
+	     "fp_input_YR_ED07_HHZ.json", "fp_input_YR_ED09_HHZ.json", "fp_input_YR_ED10_HHZ.json",
+	     "fp_input_YR_ED11_HHZ.json", "fp_input_YR_ED12_HHZ.json", "fp_input_YR_ED14_HHZ.json",
+	     "fp_input_YR_ED15_HHZ.json", "fp_input_YR_ED16_HHZ.json", "fp_input_YR_ED17_HHZ.json",
+	     "fp_input_YR_ED18_HHZ.json", "fp_input_YR_ED19_HHZ.json", "fp_input_YR_ED20_HHZ.json",
+	     "fp_input_YR_ED21_HHZ.json", "fp_input_YR_ED23_HHZ.json", "fp_input_YR_ED24_HHZ.json",
+	     "fp_input_YR_ED25_HHZ.json"]
+}
