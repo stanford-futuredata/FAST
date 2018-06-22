@@ -36,6 +36,10 @@ def partition(fname):
     load_file = data_folder + fname
     file_size = getsize(load_file)
     PARTITION_GAP = param["network"]["max_width"]
+    if param["performance"]["num_cores"] == 1:
+        # No parallelization
+        print '     %s: %d partition' % (fname, 1)
+        return [0]
     PARTITION_SIZE = min(param["performance"]["partition_size"],
         file_size / param["performance"]["num_cores"] / 2)
     # Jump ahead size: around 100 lines
@@ -71,7 +75,7 @@ def partition(fname):
             # this means the previous while loop ended either because we found a dt more
             # than PARTITION_GAP away from prev_dt, or we read 2x PARTITION_SIZE
             # in which case we just split here
-            if not end_reached:
+            if not end_reached and line_start > 0:
                 byte_positions.append(line_start)
     print '     %s: %d partitions' % (fname, len(byte_positions))
     return byte_positions
