@@ -13,6 +13,10 @@ nsta = 7
 #network_file = '22sta_2stathresh_detlist_rank_by_peaksum.txt'
 #nsta = 22
 
+#det_dir = '/lfs/1/ceyoon/TimeSeries/SaudiMonth/data/network_detection/'
+#network_file = '19sta_2stathresh_detlist_rank_by_peaksum.txt'
+#nsta = 19
+
 # Output detection time at each station to file (avoid this if there are many stations)
 flag_each_station = False
 
