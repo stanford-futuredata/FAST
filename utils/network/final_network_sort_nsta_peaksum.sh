@@ -12,6 +12,9 @@ NETWORK_FILE=7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
 
 #cd /lfs/1/ceyoon/TimeSeries/TanzaniaMonth/network_detection/
 #NETWORK_FILE=5sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
+
+#cd /lfs/1/ceyoon/TimeSeries/SaudiMonth/data/network_detection/
+#NETWORK_FILE=19sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
 # ---------------------------------------------------INPUTS --------------------------------------------
 
 # Sort in descending order of number of stations (column 11), then descending order of peaksum (column 10)
