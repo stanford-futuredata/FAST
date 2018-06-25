@@ -15,7 +15,6 @@
 
 	"performance": {
 		"partition_size": 214748364800,
-		"partition_gap": 5,
 		"num_cores": 1
 	},
 
