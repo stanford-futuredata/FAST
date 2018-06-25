@@ -30,8 +30,8 @@ dt_fp = 1.0
 #dt_fp = 1.2
 
 #times_dir = '/lfs/1/ceyoon/TimeSeries/TanzaniaMonth/network_detection/'
-#infile_name = 'EQ_sort_nsta_peaksum_5sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
-#outfile_name = times_dir+'FINAL_Detection_List_TanzaniaMonth_5sta_2stathresh.txt'
+#infile_name = 'EQ_sort_nsta_peaksum_5sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt'
+#outfile_name = times_dir+'FINAL_Detection_List_TanzaniaMonth_5sta_3stathresh.txt'
 #init_time = UTCDateTime('2016-07-31T00:00:06.840000') # global start time for all channels
 #dt_fp = 1.2
 
