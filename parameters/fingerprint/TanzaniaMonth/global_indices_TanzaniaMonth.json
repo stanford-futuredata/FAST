@@ -1,0 +1,9 @@
+{
+	"index_folder": "/lfs/1/ceyoon/TimeSeries/TanzaniaMonth/global_indices/",
+	"fp_param_dir": "../parameters/fingerprint/TanzaniaMonth/",
+        "fp_params": ["fp_input_TZ_CES02_HNE.json", "fp_input_TZ_CES02_HNN.json", "fp_input_TZ_CES02_HNZ.json",
+             "fp_input_TZ_CES04_HNE.json", "fp_input_TZ_CES04_HNN.json", "fp_input_TZ_CES04_HNZ.json",
+             "fp_input_TZ_CES06_HNE.json", "fp_input_TZ_CES06_HNN.json", "fp_input_TZ_CES06_HNZ.json",
+             "fp_input_TZ_CES08_HNE.json", "fp_input_TZ_CES08_HNN.json", "fp_input_TZ_CES08_HNZ.json",
+             "fp_input_TZ_CES09_HNE.json", "fp_input_TZ_CES09_HNN.json", "fp_input_TZ_CES09_HNZ.json"]
+}

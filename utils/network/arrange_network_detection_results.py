@@ -15,6 +15,14 @@ nsta = 7
 
 # Output detection time at each station to file (avoid this if there are many stations)
 flag_each_station = False
+
+#-------
+#det_dir = '/lfs/1/ceyoon/TimeSeries/TanzaniaMonth/network_detection/'
+#network_file = '5sta_2stathresh_detlist_rank_by_peaksum.txt'
+#nsta = 5
+#flag_each_station = True
+#-------
+
 # ---------------------------------------------------INPUTS --------------------------------------------
 
 out_file = 'NetworkDetectionTimes_'+network_file
