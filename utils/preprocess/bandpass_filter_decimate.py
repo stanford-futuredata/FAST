@@ -22,20 +22,22 @@ if __name__ == '__main__':
 #file_arr = glob.glob(ts_dir+'*YR.'+station+'..'+channel+'*')
 #format_str = 'MSEED'
 
-ts_dir = '/lfs/1/ceyoon/TimeSeries/TanzaniaMonth/'+station+'/'
-file_arr = glob.glob(ts_dir+'*TZ.'+station+'..'+channel+'*')
-format_str = 'MSEED'
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/TanzaniaMonth/'+station+'/'
+#file_arr = glob.glob(ts_dir+'*TZ.'+station+'..'+channel+'*')
+#format_str = 'MSEED'
+
+ts_dir = '/lfs/1/ceyoon/TimeSeries/SaudiMonth/data/waveforms'+station+'/'
+file_arr = glob.glob(ts_dir+'*'+network+'.'+station+'..'+channel+'.D.SAC')
+format_str = 'SAC'
 
 #ts_dir = '/lfs/raiders2/0/ceyoon/TimeSeries/Wenchuan/after/'
 #ts_dir = '/lfs/1/ceyoon/TimeSeries/Wenchuan2/after/' # after only
 #ts_dir = '/lfs/1/ceyoon/TimeSeries/AllWenchuan/after/'
 #ts_dir = '/lfs/1/ceyoon/TimeSeries/Ometepec/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/SaudiMonth/data/filled/'
 #ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/filled/'
 
 #file_arr = glob.glob(ts_dir+'Filled.CombinedAfter*')
 #file_arr = glob.glob(ts_dir+'Filled.*')
-#file_arr = glob.glob(ts_dir+'Filled.*'+network+'.'+station+'..'+channel+'.D.SAC')
 #file_arr = glob.glob(ts_dir+'Filled.*'+network+'.'+station+'.'+channel+'.sac')
 
 # Ometepec

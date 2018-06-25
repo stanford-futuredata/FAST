@@ -1,0 +1,23 @@
+{
+	"index_folder": "/lfs/1/ceyoon/TimeSeries/SaudiMonth/data/global_indices/",
+	"fp_param_dir": "../parameters/fingerprint/SaudiMonth/",
+        "fp_params": ["fp_input_SA_LNY01_HHE.json", "fp_input_SA_LNY01_HHN.json", "fp_input_SA_LNY01_HHZ.json",
+	     "fp_input_SA_LNY02_HHE.json", "fp_input_SA_LNY02_HHN.json", "fp_input_SA_LNY02_HHZ.json",
+	     "fp_input_SA_LNY03_HHE.json", "fp_input_SA_LNY03_HHN.json", "fp_input_SA_LNY03_HHZ.json",
+	     "fp_input_SA_LNY04_HHE.json", "fp_input_SA_LNY04_HHN.json", "fp_input_SA_LNY04_HHZ.json",
+	     "fp_input_SA_LNY05_HHE.json", "fp_input_SA_LNY05_HHN.json", "fp_input_SA_LNY05_HHZ.json",
+	     "fp_input_SA_LNY06_HHE.json", "fp_input_SA_LNY06_HHN.json", "fp_input_SA_LNY06_HHZ.json",
+	     "fp_input_SA_LNY07_HHE.json", "fp_input_SA_LNY07_HHN.json", "fp_input_SA_LNY07_HHZ.json",
+	     "fp_input_SA_LNY08_HHE.json", "fp_input_SA_LNY08_HHN.json", "fp_input_SA_LNY08_HHZ.json",
+	     "fp_input_SA_LNY09_HHE.json", "fp_input_SA_LNY09_HHN.json", "fp_input_SA_LNY09_HHZ.json",
+	     "fp_input_SA_LNY10_HHE.json", "fp_input_SA_LNY10_HHN.json", "fp_input_SA_LNY10_HHZ.json",
+	     "fp_input_SA_LNY11_HHE.json", "fp_input_SA_LNY11_HHN.json", "fp_input_SA_LNY11_HHZ.json",
+	     "fp_input_SA_LNY12_HHE.json", "fp_input_SA_LNY12_HHN.json", "fp_input_SA_LNY12_HHZ.json",
+	     "fp_input_SA_LNY13_HHE.json", "fp_input_SA_LNY13_HHN.json", "fp_input_SA_LNY13_HHZ.json",
+	     "fp_input_SA_LNY14_HHE.json", "fp_input_SA_LNY14_HHN.json", "fp_input_SA_LNY14_HHZ.json",
+	     "fp_input_SA_LNY15_HHE.json", "fp_input_SA_LNY15_HHN.json", "fp_input_SA_LNY15_HHZ.json",
+	     "fp_input_SA_LNY16_HHE.json", "fp_input_SA_LNY16_HHN.json", "fp_input_SA_LNY16_HHZ.json",
+	     "fp_input_SA_LNY17_HHE.json", "fp_input_SA_LNY17_HHN.json", "fp_input_SA_LNY17_HHZ.json",
+	     "fp_input_SA_LNYS_HHE.json", "fp_input_SA_LNYS_HHN.json", "fp_input_SA_LNYS_HHZ.json",
+	     "fp_input_SA_TRAS_HHE.json", "fp_input_SA_TRAS_HHN.json", "fp_input_SA_TRAS_HHZ.json"]
+}
