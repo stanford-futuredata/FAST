@@ -26,16 +26,12 @@ out_dir = times_dir+'22sta_2stathresh_NetworkWaveformPlots/'
 if not os.path.exists(out_dir):
    os.makedirs(out_dir)
 
+# Times
 dt_fp = 1.2
 det_times = dt_fp * det_start_ind
 diff_times = dt_fp * diff_ind
 dL_dt = dt_fp * dL
 print len(det_times)
-
-sac_dir = '/lfs/1/ceyoon/TimeSeries/ItalyDay/day303/'
-st = read(sac_dir+'Deci4.bp2to20.YR*HHZ*')
-print len(st)
-print st.__str__(extended=True)
 
 # Window length (seconds) for event plot
 init_time = UTCDateTime('2016-10-29T00:00:06.840000') # global start time for all channels
@@ -46,6 +42,11 @@ wtime_after = 50
 out_width = 800
 out_height = 2000
 
+# Read in data and plot
+ts_dir = '/lfs/1/ceyoon/TimeSeries/ItalyDay/day303/'
+st = read(ts_dir+'Deci4.bp2to20.YR*HHZ*')
+print len(st)
+print st.__str__(extended=True)
 for kk in range(IND_FIRST, IND_LAST):
    ev_time = init_time + det_times[kk]
    start_time = ev_time - wtime_before
