@@ -6,10 +6,6 @@ NETWORK_FILE=7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
 
 #cd /lfs/1/ceyoon/TimeSeries/HectorMine/network_detection/
 #NETWORK_FILE=7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
-# ---------------------------------------------------INPUTS --------------------------------------------
-
-#cd /lfs/1/ceyoon/TimeSeries/HectorMine/network_detection/
-#NETWORK_FILE=7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
 
 #cd /lfs/1/ceyoon/TimeSeries/ItalyDay/day303/network_detection/
 #NETWORK_FILE=22sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt

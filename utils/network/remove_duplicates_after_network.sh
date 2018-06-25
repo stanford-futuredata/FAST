@@ -6,10 +6,6 @@ NETWORK_FILE=NetworkDetectionTimes_7sta_2stathresh_detlist_rank_by_peaksum.txt
 
 #cd /lfs/1/ceyoon/TimeSeries/HectorMine/network_detection/
 #NETWORK_FILE=NetworkDetectionTimes_7sta_2stathresh_detlist_rank_by_peaksum.txt
-# ---------------------------------------------------INPUTS --------------------------------------------
-
-#cd /lfs/1/ceyoon/TimeSeries/HectorMine/network_detection/
-#NETWORK_FILE=NetworkDetectionTimes_7sta_2stathresh_detlist_rank_by_peaksum.txt
 
 #cd /lfs/1/ceyoon/TimeSeries/ItalyDay/day303/network_detection/
 #NETWORK_FILE=NetworkDetectionTimes_22sta_2stathresh_detlist_rank_by_peaksum.txt
