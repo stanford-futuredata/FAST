@@ -13,40 +13,14 @@ if __name__ == '__main__':
    max_freq = int(sys.argv[5])
    dec_factor = int(sys.argv[6])
    print network, station, channel
-   print 'bandpass:', min_freq, '-', max_freq, 'Hz, decimate factor:', dec_factor
+   print 'bandstop:', min_freq, '-', max_freq, 'Hz, decimate factor:', dec_factor
 
 
 
 # ------------------- INPUTS ------------------------------------------------
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/ItalyDay/day303/'
-#file_arr = glob.glob(ts_dir+'*YR.'+station+'..'+channel+'*')
-#format_str = 'MSEED'
-
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/TanzaniaMonth/'+station+'/'
-#file_arr = glob.glob(ts_dir+'*TZ.'+station+'..'+channel+'*')
-#format_str = 'MSEED'
-
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/SaudiMonth/data/waveforms'+station+'/'
-#file_arr = glob.glob(ts_dir+'*'+network+'.'+station+'..'+channel+'.D.SAC')
-#format_str = 'SAC'
-
 ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/waveforms'+station+'/'
 file_arr = glob.glob(ts_dir+'*.'+network+'.'+station+'.'+channel+'.sac')
 format_str = 'SAC'
-
-#ts_dir = '/lfs/raiders2/0/ceyoon/TimeSeries/Wenchuan/after/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/Wenchuan2/after/' # after only
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/AllWenchuan/after/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/Ometepec/'
-
-#file_arr = glob.glob(ts_dir+'Filled.CombinedAfter*')
-#file_arr = glob.glob(ts_dir+'Filled.*')
-#file_arr = glob.glob(ts_dir+'Filled.*'+network+'.'+station+'.'+channel+'.sac')
-
-# Ometepec
-#min_freq = 3
-#max_freq = 20
-#dec_factor = 1
 # ------------------- INPUTS ------------------------------------------------
 
 str_prefix = 'Deci'+str(int(dec_factor))+'.bp'+str(int(min_freq))+'to'+str(int(max_freq))+'.'
@@ -76,8 +50,9 @@ for ifile in file_arr:
    st.detrend(type='demean')
    st.detrend(type='linear')
 
-   # Bandpass filter and decimate
-   st.filter('bandpass', freqmin=min_freq, freqmax=max_freq)
+   # Bandstop filter and decimate
+   print "APPLYING BANDSTOP FILTER", min_freq, max_freq, file_str
+   st.filter('bandstop', freqmin=min_freq, freqmax=max_freq)
    st.decimate(dec_factor)
 
    # Write filtered data to file
