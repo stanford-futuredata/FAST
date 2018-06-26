@@ -22,12 +22,6 @@ echo "Entered at command line, Channel: $2"
 STATION=${1:-LNY02}
 CHANNEL=${2:-HHZ}
 
-# Avoid:
-#STATION=${1:-LNY11}
-#CHANNEL=${2:-HHZ}
-#CHANNEL=${2:-HHE}
-
-
 BASE_DIR=/lfs/1/ceyoon/TimeSeries/SaudiMonth/data/waveforms${STATION}
 DATA_DIR=${BASE_DIR}/fingerprints/
 echo $DATA_DIR
