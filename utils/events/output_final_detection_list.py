@@ -23,7 +23,7 @@ dt_fp = 1.0
 #init_time = UTCDateTime('2016-10-29T00:00:06.840000') # global start time for all channels
 #dt_fp = 1.2
 
-#times_dir = '/lfs/1/ceyoon/TimeSeries/SaudiMonth/network_detection/'
+#times_dir = '/lfs/1/ceyoon/TimeSeries/SaudiMonth/data/network_detection/'
 #infile_name = 'EQ_sort_nsta_peaksum_19sta_4stathresh_FinalUniqueNetworkDetectionTimes.txt'
 #outfile_name = times_dir+'FINAL_Detection_List_SaudiMonth_19sta_4stathresh.txt'
 #init_time = UTCDateTime('2014-05-01T00:00:06.840000') # global start time for all channels
