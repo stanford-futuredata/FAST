@@ -74,6 +74,7 @@ def get_positions(fname):
     start = time.time()
     # File size in bytes
     file_size = os.path.getsize(fname)
+    partition_memory = min(file_size, parse_memory(args.mem)) / args.nprocs
     with open(fname, 'r') as f:
         pos_list = [] # list of positions of idx values, in bytes
         pointer = 4 # 5th byte, second uint32, first count
@@ -110,7 +111,6 @@ def parse_chunk(tup):
         buf = f.read(read_size)
         a = np.frombuffer(buf, dtype=np.uint32)
         i = 0
-        lines = []
         while i < len(a):
             idx = a[i]
             i += 1
@@ -125,13 +125,12 @@ def parse_chunk(tup):
                 if args.thresh is None or sim >= args.thresh:
                     # Map station fingerprint index to global index
                     if args.idx:
-                        lines.append('%d %d %d\n' %(
+                        pairs_file.write('%d %d %d\n' %(
                             abs(idx_map[idx2] - global_idx), max(idx_map[idx2], global_idx), sim))
                     # Use station index
                     else:
-                        lines.append('%d %d %d\n' %(abs(idx2 - idx), max(idx2, idx), sim))
+                        pairs_file.write('%d %d %d\n' %(abs(idx2 - idx), max(idx2, idx), sim))
             i += counts
-    pairs_file.writelines(lines)
     pairs_file.close()
     print "Time to parse %s at (%d,%d):" % (filename, first_pos, last_pos), time.time() - start
     return pairs_file_name
@@ -305,7 +304,6 @@ if __name__ == '__main__':
         if args.prefix in f and isfile(join(args.dir, f)):
             fnames.append(join(args.dir, f))
 
-    partition_memory = parse_memory(args.mem) / args.nprocs
     p = multiprocessing.Pool(args.nprocs)
     out_fnames = fnames
     # Parse
