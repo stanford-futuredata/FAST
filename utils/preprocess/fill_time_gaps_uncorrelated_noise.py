@@ -56,32 +56,28 @@ from detect_time_gaps import detect_time_gaps
 #file_arr = glob.glob(ts_dir+'*.SAC')
 #format_str = 'SAC'
 
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110101/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110102/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110103/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110104/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110105/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110106/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110107/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110108/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110109/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110110/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110111/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110112/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110113/'
-ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110114/'
-out_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/filled/'
-file_arr = glob.glob(ts_dir+'2011*.sac')
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110101/'
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110102/'
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110103/'
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110104/'
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110105/'
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110106/'
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110107/'
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110108/'
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110109/'
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110110/'
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110111/'
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110112/'
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110113/'
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/20110114/'
+#out_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/filled/'
+#file_arr = glob.glob(ts_dir+'2011*.sac')
+#format_str = 'SAC'
+
+ts_dir = '/lfs/1/ceyoon/TimeSeries/AllWenchuan/ORIGINAL_DATA/'
+out_dir = '/lfs/1/ceyoon/TimeSeries/AllWenchuan/after/'
+file_arr = glob.glob(ts_dir+'*.BH*')
 format_str = 'SAC'
-
-#ts_dir = '/lfs/raiders2/0/ceyoon/TimeSeries/Wenchuan/after/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/Wenchuan2/ORIGINAL_DATA/' # after only
-#out_dir = '/lfs/1/ceyoon/TimeSeries/Wenchuan2/after/' # after only
-#file_arr = glob.glob(ts_dir+'CombinedAfter*')
-
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/AllWenchuan/ORIGINAL_DATA/'
-#out_dir = '/lfs/1/ceyoon/TimeSeries/AllWenchuan/after/'
-#file_arr = glob.glob(ts_dir+'*.BH*')
 
 #ts_dir = '/lfs/1/ceyoon/TimeSeries/Ometepec/ORIGINAL_DATA/'
 #out_dir = '/lfs/1/ceyoon/TimeSeries/Ometepec/'
