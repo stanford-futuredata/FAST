@@ -1,0 +1,58 @@
+{
+    "fingerprint": {
+        "sampling_rate": 40,
+        "min_freq": 5.0,
+        "max_freq": 20.0,
+        "spec_length": 10.0,
+        "spec_lag": 0.2,
+        "fp_length": 128,
+        "fp_lag": 10,
+        "k_coef": 800,
+        "nfreq": 32,
+        "mad_sampling_rate": 0.1,
+        "mad_sample_interval": 86400
+    },
+
+    "performance": {
+        "num_fp_thread": 24,
+        "partition_len": 86400
+    },
+
+    "data": {
+        "station": "CIA",
+        "channel": "BHZ",
+        "start_time": "11-01-01T00:00:00.0",
+        "end_time": "11-01-15T00:00:00.0",
+        "folder": "/lfs/1/ceyoon/TimeSeries/OBSTest/waveformsCIA/",
+        "fingerprint_files": [
+	    "Deci1.bp5to20.20110101000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110102000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110103000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110104000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110105000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110106000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110107000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110108000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110109000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110110000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110111000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110112000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110113000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110114000000.CI.CIA.BHZ.sac"],
+        "MAD_sample_files": [
+	    "Deci1.bp5to20.20110101000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110102000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110103000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110104000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110105000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110106000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110107000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110108000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110109000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110110000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110111000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110112000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110113000000.CI.CIA.BHZ.sac",
+	    "Deci1.bp5to20.20110114000000.CI.CIA.BHZ.sac"]
+    }
+}
