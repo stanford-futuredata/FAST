@@ -35,6 +35,12 @@ dt_fp = 1.0
 #init_time = UTCDateTime('2016-07-31T00:00:06.840000') # global start time for all channels
 #dt_fp = 1.2
 
+#times_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/network_detection/'
+#infile_name = 'EQ_sort_nsta_peaksum_35sta_15stathresh_FinalUniqueNetworkDetectionTimes.txt'
+#outfile_name = times_dir+'FINAL_Detection_List_OBSTest_35sta_15stathresh.txt'
+#init_time = UTCDateTime('2011-01-01T00:00:17.800000') # global start time for all channels
+#dt_fp = 2.0
+
 # ---------------------------------------------------INPUTS --------------------------------------------
 
 # ================================================================

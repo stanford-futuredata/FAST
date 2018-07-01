@@ -17,6 +17,10 @@ nsta = 7
 #network_file = '19sta_2stathresh_detlist_rank_by_peaksum.txt'
 #nsta = 19
 
+#det_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/network_detection/'
+#network_file = '35sta_2stathresh_detlist_rank_by_peaksum.txt'
+#nsta = 35
+
 # Output detection time at each station to file (avoid this if there are many stations)
 flag_each_station = False
 
