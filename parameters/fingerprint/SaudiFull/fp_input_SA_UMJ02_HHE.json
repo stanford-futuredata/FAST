@@ -1,0 +1,32 @@
+{
+    "fingerprint": {
+        "sampling_rate": 50,
+        "min_freq": 4.0,
+        "max_freq": 20.0,
+        "spec_length": 6.0,
+        "spec_lag": 0.12,
+        "fp_length": 64,
+        "fp_lag": 10,
+        "k_coef": 400,
+        "nfreq": 32,
+        "mad_sampling_rate": 1,
+        "mad_sample_interval": 86400
+    },
+
+    "performance": {
+        "num_fp_thread": 1,
+        "partition_len": 86400
+    },
+
+    "data": {
+        "station": "UMJ02",
+        "channel": "HHE",
+        "start_time": "17-05-21T00:00:00.0",
+        "end_time": "17-05-22T00:00:00.0",
+        "folder": "/lfs/1/ceyoon/TimeSeries/SaudiFull/SA.UMJ02/",
+        "fingerprint_files": [
+	    "Deci2.bp4to20.SA.UMJ02.HHE_20170521_000000.seed"],
+        "MAD_sample_files": [
+	    "Deci2.bp4to20.SA.UMJ02.HHE_20170521_000000.seed"]
+    }
+}

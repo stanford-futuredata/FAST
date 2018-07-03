@@ -1,0 +1,28 @@
+{
+	"network": {
+		"max_fp": 10736786,
+		"dt_fp": 1.2,
+		"dgapL": 10,
+		"dgapW": 3,
+		"num_pass": 2,
+		"min_dets": 3,
+		"min_sum_multiplier": 1,
+		"max_width": 8,
+		"ivals_thresh": 6,
+		"nsta_thresh": 3,
+		"input_offset": 15
+	},
+
+	"performance": {
+		"partition_size": 201474836480,
+		"num_cores": 1
+	},
+
+	"io": {
+                "channel_vars": ["LNY01", "LNY02", "LNY03", "LNY04", "LNY05", "LNY06", "LNY07", "LNY08", "LNY09", "LNY10", "LNY11", "LNY12", "LNY13", "LNY14", "LNY15", "LNY16", "LNY17", "LNYS", "EWJHS", "MURBA", "NUMJS", "OLAS", "SUMJS", "UMJS", "UMJ01", "UMJ02", "UMJ03", "UMJ04", "UMJ05", "UMJ06", "UMJ07", "UMJ08", "UMJ09", "UMJ10", "UMJ11", "UMJ12"],
+		"fname_template": "candidate_pairs_%s_combined.txt",
+		"base_dir": "/lfs/1/ceyoon/TimeSeries/SaudiFull/",
+		"data_folder": "inputs_network/",
+		"out_folder": "network_detection/"
+	}
+}
