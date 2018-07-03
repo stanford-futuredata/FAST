@@ -1,0 +1,64 @@
+{
+    "fingerprint": {
+        "sampling_rate": 50,
+        "min_freq": 4.0,
+        "max_freq": 20.0,
+        "spec_length": 6.0,
+        "spec_lag": 0.12,
+        "fp_length": 64,
+        "fp_lag": 10,
+        "k_coef": 400,
+        "nfreq": 32,
+        "mad_sampling_rate": 0.1,
+        "mad_sample_interval": 86400
+    },
+
+    "performance": {
+        "num_fp_thread": 56,
+        "partition_len": 86400
+    },
+
+    "data": {
+        "station": "UMJ04",
+        "channel": "HHZ",
+        "start_time": "17-05-14T00:00:00.0",
+        "end_time": "17-05-31T00:00:00.0",
+        "folder": "/lfs/1/ceyoon/TimeSeries/SaudiFull/SA.UMJ04/",
+        "fingerprint_files": [
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170514_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170515_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170516_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170517_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170518_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170519_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170520_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170521_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170522_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170523_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170524_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170525_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170526_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170527_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170528_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170529_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170530_000000.seed"],
+        "MAD_sample_files": [
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170514_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170515_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170516_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170517_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170518_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170519_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170520_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170521_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170522_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170523_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170524_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170525_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170526_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170527_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170528_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170529_000000.seed",
+	    "Deci2.bp4to20.SA.UMJ04.HHZ_20170530_000000.seed"]
+    }
+}
