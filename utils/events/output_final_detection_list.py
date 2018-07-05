@@ -41,6 +41,12 @@ dt_fp = 1.0
 #init_time = UTCDateTime('2011-01-01T00:00:17.800000') # global start time for all channels
 #dt_fp = 2.0
 
+times_dir = '/lfs/1/ceyoon/TimeSeries/AllWenchuan/network_detection/'
+infile_name = 'EQ_sort_nsta_peaksum_15sta_2stathresh_ChannelCount_FinalUniqueNetworkDetectionTimes.txt'
+outfile_name = times_dir+'FINAL_Detection_List_AllWenchuan_15sta_2stathresh.txt'
+init_time = UTCDateTime('2008-04-01T00:00:17.800000') # global start time for all channels
+dt_fp = 2.0
+
 # ---------------------------------------------------INPUTS --------------------------------------------
 
 # ================================================================
