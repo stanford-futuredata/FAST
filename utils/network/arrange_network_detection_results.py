@@ -29,6 +29,10 @@ nsta = 7
 #network_file = '36sta_3stathresh_detlist_rank_by_peaksum.txt'
 #nsta = 36
 
+#det_dir = '/lfs/1/ceyoon/TimeSeries/Diablo/network_detection/'
+#network_file = '11sta_2stathresh_mindets3_dgapL10_inputoffset15_detlist_rank_by_peaksum.txt'
+#nsta = 11
+
 # Output detection time at each station to file (avoid this if there are many stations)
 flag_each_station = False
 
