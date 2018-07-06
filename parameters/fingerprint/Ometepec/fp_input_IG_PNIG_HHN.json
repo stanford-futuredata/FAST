@@ -1,0 +1,38 @@
+{
+    "fingerprint": {
+        "sampling_rate": 100,
+        "min_freq": 3.0,
+        "max_freq": 20.0,
+        "spec_length": 6.0,
+        "spec_lag": 0.2,
+        "fp_length": 128,
+        "fp_lag": 10,
+        "k_coef": 800,
+        "nfreq": 32,
+        "mad_sampling_rate": 0.1,
+        "mad_sample_interval": 86400
+    },
+
+    "performance": {
+        "num_fp_thread": 4,
+        "partition_len": 86400
+    },
+
+    "data": {
+        "station": "PNIG",
+        "channel": "HHN",
+        "start_time": "12-01-01T00:00:00.0",
+        "end_time": "12-05-01T00:00:00.0",
+        "folder": "/lfs/1/ceyoon/TimeSeries/Ometepec/waveformsPNIG/",
+        "fingerprint_files": [
+	    "Deci1.bp3to20.Filled.20120101000000.IG.PNIG.HHN.sac",
+	    "Deci1.bp3to20.Filled.20120201000000.IG.PNIG.HHN.sac",
+	    "Deci1.bp3to20.Filled.20120301000000.IG.PNIG.HHN.sac",
+	    "Deci1.bp3to20.Filled.20120401000000.IG.PNIG.HHN.sac"],
+        "MAD_sample_files": [
+	    "Deci1.bp3to20.Filled.20120101000000.IG.PNIG.HHN.sac",
+	    "Deci1.bp3to20.Filled.20120201000000.IG.PNIG.HHN.sac",
+	    "Deci1.bp3to20.Filled.20120301000000.IG.PNIG.HHN.sac",
+	    "Deci1.bp3to20.Filled.20120401000000.IG.PNIG.HHN.sac"]
+    }
+}

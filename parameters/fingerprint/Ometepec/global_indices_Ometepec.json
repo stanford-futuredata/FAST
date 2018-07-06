@@ -1,0 +1,5 @@
+{
+	"index_folder": "/lfs/1/ceyoon/TimeSeries/Ometepec/global_indices/",
+	"fp_param_dir": "../parameters/fingerprint/Ometepec/",
+        "fp_params": ["fp_input_IG_PNIG_HHE.json", "fp_input_IG_PNIG_HHN.json", "fp_input_IG_PNIG_HHZ.json"]
+}
