@@ -119,10 +119,15 @@ from detect_time_gaps import detect_time_gaps
 #file_arr = glob.glob(ts_dir+'*.seed')
 #format_str = 'MSEED'
 
-ts_dir = '/lfs/1/ceyoon/TimeSeries/Ometepec/ORIGINAL_DATA/'
-out_dir = '/lfs/1/ceyoon/TimeSeries/Ometepec/waveformsPNIG/'
-file_arr = glob.glob(ts_dir+'*.sac')
-format_str = 'SAC'
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/Ometepec/ORIGINAL_DATA/'
+#out_dir = '/lfs/1/ceyoon/TimeSeries/Ometepec/waveformsPNIG/'
+#file_arr = glob.glob(ts_dir+'*.sac')
+#format_str = 'SAC'
+
+ts_dir = '/lfs/1/ceyoon/TimeSeries/BrazilAcre/CZSB/'
+out_dir = '/lfs/1/ceyoon/TimeSeries/BrazilAcre/CZSB/'
+file_arr = glob.glob(ts_dir+'BR*')
+format_str = 'MSEED'
 
 #ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveformsENWF/'
 #out_dir = ts_dir+'filled/'
