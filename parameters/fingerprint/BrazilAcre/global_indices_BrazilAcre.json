@@ -1,0 +1,5 @@
+{
+	"index_folder": "/lfs/1/ceyoon/TimeSeries/BrazilAcre/global_indices/",
+	"fp_param_dir": "../parameters/fingerprint/BrazilAcre/",
+        "fp_params": ["fp_input_BR_CZSB_HHE.json", "fp_input_BR_CZSB_HHN.json", "fp_input_BR_CZSB_HHZ.json"]
+}
