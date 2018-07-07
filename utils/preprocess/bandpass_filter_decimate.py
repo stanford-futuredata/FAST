@@ -42,9 +42,13 @@ if __name__ == '__main__':
 #file_arr = glob.glob(ts_dir+'*SA.'+station+'.'+channel+'*')
 #format_str = 'MSEED'
 
-ts_dir = '/lfs/1/ceyoon/TimeSeries/Ometepec/waveforms'+station+'/'
-file_arr = glob.glob(ts_dir+'Filled.*'+network+'.'+station+'.'+channel+'.sac')
-format_str = 'SAC'
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/Ometepec/waveforms'+station+'/'
+#file_arr = glob.glob(ts_dir+'Filled.*'+network+'.'+station+'.'+channel+'.sac')
+#format_str = 'SAC'
+
+ts_dir = '/lfs/1/ceyoon/TimeSeries/Diablo/waveforms'+station+'/'
+file_arr = glob.glob(ts_dir+network+'.'+station+'..'+channel+'__20*')
+format_str = 'MSEED'
 
 #file_arr = glob.glob(ts_dir+'Filled.CombinedAfter*')
 #file_arr = glob.glob(ts_dir+'Filled.*')
