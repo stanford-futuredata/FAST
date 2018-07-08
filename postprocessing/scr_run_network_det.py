@@ -235,9 +235,14 @@ if __name__ == '__main__':
         events = {'event_start': event_start, 'event_dt': event_dt,
             'event_stats': event_stats}
         print "  Outputting results to %s*" % out_fname
-        with open('%s_%s_events.dat' % (out_fname,
-            param["io"]["channel_vars"][0]), "wb") as f:
-            pickle.dump(events, f, protocol=pickle.HIGHEST_PROTOCOL)
+        f = open('%s_%s_events.txt' % (out_fname,
+            param["io"]["channel_vars"][0]), 'w')
+        f.write('event_start, event_dt, event_stats[0],' 
+            + ' event_stats[1], event_stats[2]\n')
+        for i in range(len(event_start)):
+            f.write('%d,%d,%d,%d,%d\n' % (event_start[i], event_dt[i], 
+                event_stats[i][0], event_stats[i][1], event_stats[i][2]))
+        f.close()
         if pair_list is not None:
             with open('%s_%s_pairs_list.dat' % (out_fname,
                 param["io"]["channel_vars"][0]), "wb") as f:
