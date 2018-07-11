@@ -1,0 +1,8 @@
+{
+	"index_folder": "/lfs/1/ceyoon/TimeSeries/Okmok/global_indices/",
+	"fp_param_dir": "../parameters/fingerprint/Okmok/",
+        "fp_params": ["fp_input_AVO_OKFG_BHE.json", "fp_input_AVO_OKFG_BHN.json", "fp_input_AVO_OKFG_BHZ.json",
+	              "fp_input_AVO_OKSO_BHE.json", "fp_input_AVO_OKSO_BHN.json", "fp_input_AVO_OKSO_BHZ.json",
+	              "fp_input_AVO_OKAK_EHZ.json", "fp_input_AVO_OKRE_EHZ.json", "fp_input_AVO_OKSP_EHZ.json", 
+	              "fp_input_AVO_OKWE_EHZ.json", "fp_input_AVO_OKWR_EHZ.json"]
+}

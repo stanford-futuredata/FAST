@@ -33,6 +33,10 @@ nsta = 7
 #network_file = '11sta_2stathresh_mindets3_dgapL10_inputoffset15_detlist_rank_by_peaksum.txt'
 #nsta = 11
 
+#det_dir = '/lfs/1/ceyoon/TimeSeries/Okmok/network_detection/'
+#network_file = '7sta_2stathresh_detlist_rank_by_peaksum.txt'
+#nsta = 7
+
 # Output detection time at each station to file (avoid this if there are many stations)
 flag_each_station = False
 

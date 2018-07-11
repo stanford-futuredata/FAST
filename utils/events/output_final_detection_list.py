@@ -53,6 +53,12 @@ dt_fp = 1.0
 #init_time = UTCDateTime('2017-01-01T00:00:06.840000') # global start time for all channels
 #dt_fp = 1.2
 
+#times_dir = '/lfs/1/ceyoon/TimeSeries/Okmok/network_detection/'
+#infile_name = 'EQ_sort_nsta_peaksum_7sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt'
+#outfile_name = times_dir+'FINAL_Detection_List_Okmok_7sta_3stathresh.txt'
+#init_time = UTCDateTime('2008-07-18T00:00:06.840000') # global start time for all channels
+#dt_fp = 1.2
+
 # ---------------------------------------------------INPUTS --------------------------------------------
 
 # ================================================================
