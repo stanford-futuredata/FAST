@@ -59,10 +59,17 @@ print "NETWORK: ", network, ", STATION: ", station, ", CHANNEL: ", channel
 #data_folder = '/lfs/1/ceyoon/TimeSeries/Diablo/waveforms'+station+'/'
 #input_files = sorted(glob.glob(data_folder+network+'.'+station+'..'+channel+'__20*'))
 
-data_folder = '/lfs/1/ceyoon/TimeSeries/BrazilAcre/'+station+'/'
-input_files = sorted(glob.glob(data_folder+network+'.'+station+'..'+channel+'*'))
+#data_folder = '/lfs/1/ceyoon/TimeSeries/BrazilAcre/'+station+'/'
+#input_files = sorted(glob.glob(data_folder+network+'.'+station+'..'+channel+'*'))
 
-#data_folder = '/lfs/1/ceyoon/TimeSeries/NEP/waveforms'+sta_str+'/'
+#data_folder = '/lfs/1/ceyoon/TimeSeries/Okmok/data/waveforms'+station+'/'
+#input_files = sorted(glob.glob(data_folder+network+'.'+station+'..'+channel+'*.mseed'))
+
+#data_folder = '/lfs/1/ceyoon/TimeSeries/Groningen/data/waveforms'+station+'/'
+#input_files = sorted(glob.glob(data_folder+network+'.'+station+'..'+channel+'*.mseed'))
+
+data_folder = '/lfs/1/ceyoon/TimeSeries/NEP/'+station+'/'
+input_files = sorted(glob.glob(data_folder+network+'.'+station+'..'+channel+'*'))
 # ------------------- INPUTS ------------------------------------------------
 
 

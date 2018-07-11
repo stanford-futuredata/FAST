@@ -50,18 +50,21 @@ if __name__ == '__main__':
 #file_arr = glob.glob(ts_dir+network+'.'+station+'..'+channel+'__20*')
 #format_str = 'MSEED'
 
-ts_dir = '/lfs/1/ceyoon/TimeSeries/BrazilAcre/'+station+'/'
-file_arr = glob.glob(ts_dir+network+'.'+station+'..'+channel+'*')
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/BrazilAcre/'+station+'/'
+#file_arr = glob.glob(ts_dir+network+'.'+station+'..'+channel+'*')
+#format_str = 'MSEED'
+
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/Okmok/data/waveforms'+station+'/'
+#file_arr = glob.glob(ts_dir+network+'.'+station+'..'+channel+'*.mseed')
+#format_str = 'MSEED'
+
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/Groningen/data/waveforms'+station+'/'
+#file_arr = glob.glob(ts_dir+network+'.'+station+'..'+channel+'*.mseed')
+#format_str = 'MSEED'
+
+ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveforms'+station+'/'
+file_arr = sorted(glob.glob(ts_dir+network+'.'+station+'..'+channel+'*.mseed'))
 format_str = 'MSEED'
-
-#file_arr = glob.glob(ts_dir+'Filled.CombinedAfter*')
-#file_arr = glob.glob(ts_dir+'Filled.*')
-#file_arr = glob.glob(ts_dir+'Filled.*'+network+'.'+station+'.'+channel+'.sac')
-
-# Ometepec
-#min_freq = 3
-#max_freq = 20
-#dec_factor = 1
 # ------------------- INPUTS ------------------------------------------------
 
 str_prefix = 'Deci'+str(int(dec_factor))+'.bp'+str(int(min_freq))+'to'+str(int(max_freq))+'.'
@@ -94,6 +97,14 @@ for ifile in file_arr:
    # Bandpass filter and decimate
    st.filter('bandpass', freqmin=min_freq, freqmax=max_freq)
    st.decimate(dec_factor)
+
+##   Decimate for NEP only - different sampling rates on same station
+#   for itr in range(len(st)):
+#      if (int(round(st[itr].stats.sampling_rate)) == 200):
+#	 st[itr].decimate(2*dec_factor)
+#	 print "sampling rate is 200 Hz, decimate twice"
+#      else:
+#	 st[itr].decimate(dec_factor)
 
    # Write filtered data to file
    if (format_str == 'MSEED'):
