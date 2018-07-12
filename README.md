@@ -69,8 +69,6 @@ Another option for the similarity search wrapper script (bash):
 ~/FAST$ cd simsearch/
 ~/FAST/simsearch$ ../parameters/simsearch/run_simsearch_HectorMine.sh
 ```
-The fingerprinting step takes less than 1 minute per waveform file on a 2.60GHz CPU. The generated fingerprints can be found at ```data/waveforms${STATION}/fingerprints/${STATION}${CHANNEL}.fp```. The json file ```data/waveforms${STATION}/${STATION}_${CHANNEL}.json``` contains information about the fingerprint file, including number of fingerprints (`nfp`) and dimension of each fingerprint (`ndim`).
-
 Alternatively, to run the similarity search for each station individually:
 ```sh
 ~/FAST$ cd simsearch

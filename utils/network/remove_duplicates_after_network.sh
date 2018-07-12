@@ -8,6 +8,34 @@ NETWORK_FILE=NetworkDetectionTimes_7sta_2stathresh_detlist_rank_by_peaksum.txt
 #NETWORK_FILE=NetworkDetectionTimes_7sta_2stathresh_detlist_rank_by_peaksum.txt
 # ---------------------------------------------------INPUTS --------------------------------------------
 
+#cd /lfs/1/ceyoon/TimeSeries/HectorMine/network_detection/
+#NETWORK_FILE=NetworkDetectionTimes_7sta_2stathresh_detlist_rank_by_peaksum.txt
+
+#cd /lfs/1/ceyoon/TimeSeries/ItalyDay/day303/network_detection/
+#NETWORK_FILE=NetworkDetectionTimes_22sta_2stathresh_detlist_rank_by_peaksum.txt
+
+#cd /lfs/1/ceyoon/TimeSeries/TanzaniaMonth/network_detection/
+#NETWORK_FILE=NetworkDetectionTimes_5sta_2stathresh_detlist_rank_by_peaksum.txt
+
+#cd /lfs/1/ceyoon/TimeSeries/SaudiMonth/data/network_detection/
+#NETWORK_FILE=NetworkDetectionTimes_19sta_2stathresh_detlist_rank_by_peaksum.txt
+
+#cd /lfs/1/ceyoon/TimeSeries/OBSTest/network_detection/
+#NETWORK_FILE=NetworkDetectionTimes_35sta_2stathresh_detlist_rank_by_peaksum.txt
+
+#cd /lfs/1/ceyoon/TimeSeries/AllWenchuan/network_detection/
+#NETWORK_FILE=NetworkDetectionTimes_15sta_2stathresh_detlist_rank_by_peaksum.txt
+
+#cd /lfs/1/ceyoon/TimeSeries/SaudiFull/network_detection/
+#NETWORK_FILE=NetworkDetectionTimes_36sta_3stathresh_detlist_rank_by_peaksum.txt
+
+#cd /lfs/1/ceyoon/TimeSeries/Diablo/network_detection/
+#NETWORK_FILE=NetworkDetectionTimes_11sta_2stathresh_mindets3_dgapL10_inputoffset15_detlist_rank_by_peaksum.txt
+
+#cd /lfs/1/ceyoon/TimeSeries/Okmok/network_detection/
+#NETWORK_FILE=NetworkDetectionTimes_7sta_2stathresh_detlist_rank_by_peaksum.txt
+# ---------------------------------------------------INPUTS --------------------------------------------
+
 # Remove exact duplicate pairs (for matching start and end times of each event)
 awk '!seen[$1, $2]++' ${NETWORK_FILE} > tmp_no_duplicates.txt
 

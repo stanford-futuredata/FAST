@@ -23,16 +23,40 @@ dt_fp = 1.0
 #init_time = UTCDateTime('2016-10-29T00:00:06.840000') # global start time for all channels
 #dt_fp = 1.2
 
-#times_dir = '/lfs/1/ceyoon/TimeSeries/SaudiMonth/network_detection/'
+#times_dir = '/lfs/1/ceyoon/TimeSeries/SaudiMonth/data/network_detection/'
 #infile_name = 'EQ_sort_nsta_peaksum_19sta_4stathresh_FinalUniqueNetworkDetectionTimes.txt'
 #outfile_name = times_dir+'FINAL_Detection_List_SaudiMonth_19sta_4stathresh.txt'
 #init_time = UTCDateTime('2014-05-01T00:00:06.840000') # global start time for all channels
 #dt_fp = 1.2
 
 #times_dir = '/lfs/1/ceyoon/TimeSeries/TanzaniaMonth/network_detection/'
-#infile_name = 'EQ_sort_nsta_peaksum_5sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
-#outfile_name = times_dir+'FINAL_Detection_List_TanzaniaMonth_5sta_2stathresh.txt'
+#infile_name = 'EQ_sort_nsta_peaksum_5sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt'
+#outfile_name = times_dir+'FINAL_Detection_List_TanzaniaMonth_5sta_3stathresh.txt'
 #init_time = UTCDateTime('2016-07-31T00:00:06.840000') # global start time for all channels
+#dt_fp = 1.2
+
+#times_dir = '/lfs/1/ceyoon/TimeSeries/OBSTest/network_detection/'
+#infile_name = 'EQ_sort_nsta_peaksum_35sta_15stathresh_FinalUniqueNetworkDetectionTimes.txt'
+#outfile_name = times_dir+'FINAL_Detection_List_OBSTest_35sta_15stathresh.txt'
+#init_time = UTCDateTime('2011-01-01T00:00:17.800000') # global start time for all channels
+#dt_fp = 2.0
+
+#times_dir = '/lfs/1/ceyoon/TimeSeries/AllWenchuan/network_detection/'
+#infile_name = 'EQ_sort_nsta_peaksum_15sta_2stathresh_ChannelCount_FinalUniqueNetworkDetectionTimes.txt'
+#outfile_name = times_dir+'FINAL_Detection_List_AllWenchuan_15sta_2stathresh.txt'
+#init_time = UTCDateTime('2008-04-01T00:00:17.800000') # global start time for all channels
+#dt_fp = 2.0
+
+#times_dir = '/lfs/1/ceyoon/TimeSeries/SaudiFull/network_detection/'
+#infile_name = 'EQ_sort_nsta_peaksum_36sta_3stathresh_ChannelCount_FinalUniqueNetworkDetectionTimes.txt'
+#outfile_name = times_dir+'FINAL_Detection_List_SaudiFull_36sta_3stathresh.txt'
+#init_time = UTCDateTime('2017-01-01T00:00:06.840000') # global start time for all channels
+#dt_fp = 1.2
+
+#times_dir = '/lfs/1/ceyoon/TimeSeries/Okmok/network_detection/'
+#infile_name = 'EQ_sort_nsta_peaksum_7sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt'
+#outfile_name = times_dir+'FINAL_Detection_List_Okmok_7sta_3stathresh.txt'
+#init_time = UTCDateTime('2008-07-18T00:00:06.840000') # global start time for all channels
 #dt_fp = 1.2
 
 # ---------------------------------------------------INPUTS --------------------------------------------

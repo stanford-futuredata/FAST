@@ -15,7 +15,7 @@
 
 	"performance": {
 		"partition_size": 201474836480,
-		"num_cores": 4
+		"num_cores": 1
 	},
 
 	"io": {

@@ -1,0 +1,14 @@
+{
+	"index_folder": "/lfs/1/ceyoon/TimeSeries/Diablo/global_indices/",
+	"fp_param_dir": "../parameters/fingerprint/Diablo/",
+        "fp_params": ["fp_input_PG_DCD_EHE.json", "fp_input_PG_DCD_EHN.json", "fp_input_PG_DCD_EHZ.json",
+	     "fp_input_PG_DPD_EHE.json", "fp_input_PG_DPD_EHN.json", "fp_input_PG_DPD_EHZ.json",
+	     "fp_input_PG_EFD_EHE.json", "fp_input_PG_EFD_EHN.json", "fp_input_PG_EFD_EHZ.json",
+	     "fp_input_PG_LMD_EHE.json", "fp_input_PG_LMD_EHN.json", "fp_input_PG_LMD_EHZ.json",
+	     "fp_input_PG_LSD_EHE.json", "fp_input_PG_LSD_EHN.json", "fp_input_PG_LSD_EHZ.json",
+	     "fp_input_PG_MLD_EHE.json", "fp_input_PG_MLD_EHN.json", "fp_input_PG_MLD_EHZ.json",
+	     "fp_input_PG_SHD_EHE.json", "fp_input_PG_SHD_EHN.json", "fp_input_PG_SHD_EHZ.json",
+	     "fp_input_PG_VPD_EHE.json", "fp_input_PG_VPD_EHN.json", "fp_input_PG_VPD_EHZ.json",
+	     "fp_input_PG_EC_EHZ.json", "fp_input_PG_SH_EHZ.json",
+	     "fp_input_NC_PPB_EHZ.json", "fp_input_NC_PABB_EHZ.json"]
+}

@@ -1,0 +1,58 @@
+{
+    "fingerprint": {
+        "sampling_rate": 50,
+        "min_freq": 4.0,
+        "max_freq": 25.0,
+        "spec_length": 10.0,
+        "spec_lag": 0.2,
+        "fp_length": 128,
+        "fp_lag": 10,
+        "k_coef": 800,
+        "nfreq": 32,
+        "mad_sampling_rate": 0.1,
+        "mad_sample_interval": 86400
+    },
+
+    "performance": {
+        "num_fp_thread": 24,
+        "partition_len": 86400
+    },
+
+    "data": {
+        "station": "OBS05",
+        "channel": "SXH",
+        "start_time": "11-01-01T00:00:00.0",
+        "end_time": "11-01-15T00:00:00.0",
+        "folder": "/lfs/1/ceyoon/TimeSeries/OBSTest/waveformsOBS05/",
+        "fingerprint_files": [
+	    "Deci1.bp4to25.20110101000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110102000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110103000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110104000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110105000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110106000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110107000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110108000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110109000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110110000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110111000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.Filled.20110112000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110113000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110114000000.2D.OBS05.SXH.sac"],
+        "MAD_sample_files": [
+	    "Deci1.bp4to25.20110101000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110102000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110103000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110104000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110105000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110106000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110107000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110108000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110109000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110110000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110111000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.Filled.20110112000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110113000000.2D.OBS05.SXH.sac",
+	    "Deci1.bp4to25.20110114000000.2D.OBS05.SXH.sac"]
+    }
+}

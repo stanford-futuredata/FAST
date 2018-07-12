@@ -1,0 +1,32 @@
+{
+    "fingerprint": {
+        "sampling_rate": 25,
+        "min_freq": 2.0,
+        "max_freq": 20.0,
+        "spec_length": 6.0,
+        "spec_lag": 0.12,
+        "fp_length": 64,
+        "fp_lag": 10,
+        "k_coef": 400,
+        "nfreq": 32,
+        "mad_sampling_rate": 1,
+        "mad_sample_interval": 86400
+    },
+
+    "performance": {
+        "num_fp_thread": 16,
+        "partition_len": 86400
+    },
+
+    "data": {
+        "station": "ED14",
+        "channel": "HHZ",
+        "start_time": "16-10-29T00:00:00.0",
+        "end_time": "16-10-30T00:00:00.0",
+        "folder": "/lfs/1/ceyoon/TimeSeries/ItalyDay/day303/",
+        "fingerprint_files": [
+	    "Deci4.bp2to20.YR.ED14..HHZ.D.2016.303"],
+        "MAD_sample_files": [
+	    "Deci4.bp2to20.YR.ED14..HHZ.D.2016.303"]
+    }
+}
