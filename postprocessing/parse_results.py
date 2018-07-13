@@ -214,7 +214,7 @@ def filter_and_reduce_file(idx):
             line = f_next.next()
         f_next.close()
    # Add last element
-    if buf[-1][0] != reduce_key:
+    if len(buf) == 0 or buf[-1][0] != reduce_key:
         buf.append([reduce_key, reduce_val])
     # Flush remaining buffer
     if len(buf) > 0:
@@ -316,7 +316,7 @@ if __name__ == '__main__':
     if args.sort:
         p.map(sort, out_fnames)
         out_fnames = map(_get_sorted_fname, out_fnames)
-    # Merge sorted partitinos
+    # Merge sorted partitions
     merge(out_fnames)
     # Combine results from multiple channels
     if args.combine:
