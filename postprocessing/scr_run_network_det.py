@@ -237,11 +237,14 @@ if __name__ == '__main__':
         print "  Outputting results to %s*" % out_fname
         f = open('%s_%s_events.txt' % (out_fname,
             param["io"]["channel_vars"][0]), 'w')
-        f.write('event_start, event_dt, event_stats[0],' 
-            + ' event_stats[1], event_stats[2]\n')
+#        f.write('event_start, event_dt, event_stats[0],' 
+#            + ' event_stats[1], event_stats[2]\n')
+        f.write(' event_start     event_dt        ndets      peaksum          vol\n') 
         for i in range(len(event_start)):
-            f.write('%d,%d,%d,%d,%d\n' % (event_start[i], event_dt[i], 
+            f.write('%12d %12d %12d %12d %12d\n' % (event_start[i], event_dt[i], 
                 event_stats[i][0], event_stats[i][1], event_stats[i][2]))
+#            f.write('%d,%d,%d,%d,%d\n' % (event_start[i], event_dt[i], 
+#                event_stats[i][0], event_stats[i][1], event_stats[i][2]))
         f.close()
         if pair_list is not None:
             with open('%s_%s_pairs_list.dat' % (out_fname,
