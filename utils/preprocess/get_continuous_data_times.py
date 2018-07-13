@@ -34,10 +34,15 @@ if __name__ == '__main__':
 #out_dir = '/lfs/1/ceyoon/TimeSeries/BrazilAcre/continuous_duration/'
 #start_time = UTCDateTime('2015-10-28T00:00:21.340000')
 
-ts_dir = '/lfs/1/ceyoon/TimeSeries/Groningen/data/waveforms'+station+'/'
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/Groningen/data/waveforms'+station+'/'
+#file_arr = sorted(glob.glob(ts_dir+network+'.'+station+'..'+channel+'*.mseed'))
+#out_dir = '/lfs/1/ceyoon/TimeSeries/Groningen/continuous_duration/'
+#start_time = UTCDateTime('2018-01-01T00:00:04.500000')
+
+ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveforms'+station+'/'
 file_arr = sorted(glob.glob(ts_dir+network+'.'+station+'..'+channel+'*.mseed'))
-out_dir = '/lfs/1/ceyoon/TimeSeries/Groningen/continuous_duration/'
-start_time = UTCDateTime('2018-01-01T00:00:04.500000')
+out_dir = '/lfs/1/ceyoon/TimeSeries/NEP/continuous_duration/'
+start_time = UTCDateTime('2010-10-13T22:59:16.820000')
 
 # ------------------- INPUTS ------------------------------------------------
 
