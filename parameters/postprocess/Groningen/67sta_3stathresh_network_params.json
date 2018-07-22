@@ -1,0 +1,28 @@
+{
+	"network": {
+		"max_fp": 8497516,
+		"dt_fp": 1.2,
+		"dgapL": 10,
+		"dgapW": 3,
+		"num_pass": 2,
+		"min_dets": 3,
+		"min_sum_multiplier": 1,
+		"max_width": 8,
+		"ivals_thresh": 6,
+		"nsta_thresh": 3,
+		"input_offset": 15
+	},
+
+	"performance": {
+		"partition_size": 201474836480,
+		"num_cores": 2
+	},
+
+	"io": {
+                "channel_vars": ["ENM4", "ENV4", "G014", "G024", "G034", "G044", "G054", "G064", "G074", "G084", "G094", "G104", "G114", "G134", "G144", "G164", "G174", "G184", "G194", "G204", "G214", "G224", "G234", "G244", "G264", "G274", "G304", "G314", "G324", "G344", "G364", "G374", "G394", "G404", "G414", "G424", "G434", "G444", "G454", "G464", "G494", "G504", "G514", "G524", "G534", "G544", "G554", "G564", "G574", "G584", "G594", "G604", "G614", "G624", "G634", "G644", "G654", "G664", "G674", "G684", "G694", "HWF4", "T014", "T034", "T054", "VLW4", "ZLV4"],
+		"fname_template": "candidate_pairs_%s_combined.txt",
+		"base_dir": "/lfs/1/ceyoon/TimeSeries/Groningen/",
+		"data_folder": "inputs_network/",
+		"out_folder": "network_detection/"
+	}
+}

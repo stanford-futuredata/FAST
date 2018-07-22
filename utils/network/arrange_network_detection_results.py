@@ -37,6 +37,10 @@ nsta = 7
 #network_file = '7sta_2stathresh_detlist_rank_by_peaksum.txt'
 #nsta = 7
 
+#det_dir = '/lfs/1/ceyoon/TimeSeries/Groningen/network_detection/'
+#network_file = '67sta_3stathresh_detlist_rank_by_peaksum.txt'
+#nsta = 67
+
 # Output detection time at each station to file (avoid this if there are many stations)
 flag_each_station = False
 

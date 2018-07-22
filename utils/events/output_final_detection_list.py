@@ -59,6 +59,12 @@ dt_fp = 1.0
 #init_time = UTCDateTime('2008-07-18T00:00:06.840000') # global start time for all channels
 #dt_fp = 1.2
 
+#times_dir = '/lfs/1/ceyoon/TimeSeries/Groningen/network_detection/'
+#infile_name = 'EQ_sort_nsta_peaksum_67sta_12stathresh_FinalUniqueNetworkDetectionTimes.txt'
+#outfile_name = times_dir+'FINAL_Detection_List_Groningen_67sta_12stathresh.txt'
+#init_time = UTCDateTime('2018-01-01T00:00:04.500000') # global start time for all channels
+#dt_fp = 1.2
+
 # ---------------------------------------------------INPUTS --------------------------------------------
 
 # ================================================================
