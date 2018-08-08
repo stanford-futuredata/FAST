@@ -27,7 +27,7 @@ if not os.path.exists(out_dir):
    os.makedirs(out_dir)
 
 # Times   
-dt_fp = 1.2
+dt_fp = 1.5
 det_times = dt_fp * det_start_ind
 diff_times = dt_fp * diff_ind
 dL_dt = dt_fp * dL

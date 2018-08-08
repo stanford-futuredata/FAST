@@ -1,7 +1,7 @@
 {
 	"network": {
-		"max_fp": 8497516,
-		"dt_fp": 1.2,
+		"max_fp": 6798013,
+		"dt_fp": 1.5,
 		"dgapL": 10,
 		"dgapW": 3,
 		"num_pass": 2,
@@ -15,7 +15,7 @@
 
 	"performance": {
 		"partition_size": 201474836480,
-		"num_cores": 2
+		"num_cores": 1
 	},
 
 	"io": {
