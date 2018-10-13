@@ -2,6 +2,7 @@ import numpy as np
 import time
 from collections import defaultdict
 from itertools import izip, count
+from os.path import getsize
 
 ######################################################################### 
 ##               functions                                            ##
@@ -41,12 +42,20 @@ class EventCloudExtractor:
         eventID = 0
         prev_key = None
         elems = []
+        if bytes_to_read == -1:
+            bytes_to_read = getsize(fname) - byte_pos
         with open(fname, 'r') as f:
             f.seek(byte_pos)
-            lines = f.read(bytes_to_read).strip().split('\n')
-            for line in lines:
+            line = f.readline()
+            line_start = f.tell()
+            while line_start - byte_pos < bytes_to_read:
                 # no need to strip() since that's already done above
                 tmp = line.split()
+                if len(tmp) < 3:
+                    print "Corrupted line before: %d" %line_start
+                    line = f.readline()
+                    line_start = f.tell()
+                    continue
                 ivals = int(tmp[2])
                 if ivals < ivals_thresh:
                     continue
@@ -62,6 +71,8 @@ class EventCloudExtractor:
                 if len(elems) > 0 and idx1 - elems[-1][0] > dL:
                     eventID += 1
                 elems.append([idx1, ivals, '%s-%d' % (pid_prefix, eventID)])
+                line = f.readline()
+                line_start = f.tell()
 
         if len(elems) > 0:
             diags[prev_key] = elems

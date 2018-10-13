@@ -111,6 +111,11 @@ def detection(args):
     bytes_to_read = args[1]
     cidx = args[2]
     fname = data_folder + detdata_filenames[cidx]
+    eventpair_fname = '%s_byte_%d.npy' % (fname, byte_pos)
+    if isfile(eventpair_fname):
+        print "%s already exists; skipping..." % eventpair_fname
+        return eventpair_fname
+
     start = time.time()
     pid = os.getpid()
     associator =  NetworkAssociator()
@@ -125,10 +130,12 @@ def detection(args):
     diags = clouds.p_triplet_to_diags(fname, byte_pos,
         bytes_to_read, pid_prefix = pid_prefix,
         ivals_thresh = param["network"]["ivals_thresh"])
+
     #/ extract event-pair clouds
     curr_event_dict = clouds.diags_to_event_list(diags,
         npass = param['network']["num_pass"])
     del diags
+
     #/ prune event-pairs
     min_sum = get_min_sum(param)
     prune_events(curr_event_dict, param["network"]["min_dets"], 
@@ -149,9 +156,9 @@ def detection(args):
     del curr_event_dict
     print "    Saving diags_dict to %s_byte_%d.npy" % (detdata_filenames[cidx], byte_pos)
     arr = dict_to_numpy(diags_dict)
-    np.save('%s%s_byte_%d.npy' % (data_folder, detdata_filenames[cidx], byte_pos), arr)
+    np.save(eventpair_fname, arr)
     del diags_dict, arr
-    return '%s%s_byte_%d.npy' % (data_folder, detdata_filenames[cidx], byte_pos)
+    return eventpair_fname
 
 def process(cidx):
     print '  Extracting event-pairs for %s...' % detdata_filenames[cidx]
@@ -196,7 +203,7 @@ if __name__ == '__main__':
     byte_positions_list = p.map(partition, detdata_filenames)
     with open('%s/byte_positions_list.dat' % out_folder, 'wb') as f:
        pickle.dump(byte_positions_list, f, protocol=pickle.HIGHEST_PROTOCOL)
-    #byte_positions_list = pickle.load(open('byte_positions_list.dat', 'rb'))
+    #byte_positions_list = pickle.load(open('%s/byte_positions_list.dat' % out_folder, 'rb'))
     print '[TIMING] partition:', time.time() - grand_start_time
 
     ########################################################################
