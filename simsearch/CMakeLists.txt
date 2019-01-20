@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.5)
 
 project(FAST)
 set(SOURCE_FILES MurmurHash3.cpp MurmurHash3.h ReadOptions.h MinHash.cpp MinHash.h SimilaritySearch.cpp SimilaritySearch.h main.cpp)
