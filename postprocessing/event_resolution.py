@@ -109,6 +109,11 @@ def event_resolution_single(event_dict, max_fp, pairwise_info = True):
 
     event_start = np.where( (countval[1:] > 0) & (countval[:-1] == 0))[0] + 1
     event_end   = np.where( (countval[1:] == 0) & (countval[:-1] > 0))[0] 
+    # Edge cases 
+    if countval[0]: # Event at the beginning
+        event_start = np.insert(event_start, 0, 0)
+    if countval[max_fp - 1]: # Event at the end
+        event_end = np.append(event_end , max_fp - 1)
     event_dt = event_end - event_start
 
     nDets = len(event_dt)
