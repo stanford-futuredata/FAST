@@ -7,16 +7,16 @@ import os
 from matplotlib import rcParams
 
 rcParams['pdf.fonttype'] = 42
-print rcParams['pdf.fonttype']
-
+print(rcParams['pdf.fonttype'])
+plt.switch_backend('agg')
 
 if len(sys.argv) != 3:
-   print "Usage: python PARTIALplot_hector_detected_waveforms.py <start_ind> <end_ind>"
+   print("Usage: python PARTIALplot_hector_detected_waveforms.py <start_ind> <end_ind>")
    sys.exit(1)
 
 IND_FIRST = int(sys.argv[1])
 IND_LAST = int(sys.argv[2])
-print "PROCESSING:", IND_FIRST, IND_LAST
+print("PROCESSING:", IND_FIRST, IND_LAST)
    
 
 # Inputs
@@ -33,7 +33,7 @@ dt_fp = 1.0
 det_times = dt_fp * det_start_ind
 diff_times = dt_fp * diff_ind
 dL_dt = dt_fp * dL
-print len(det_times)
+print(len(det_times))
 
 # Window length (seconds) for event plot
 init_time = UTCDateTime('1999-10-15T13:00:00.676000') # global start time for all channels
@@ -48,8 +48,8 @@ out_height = 800
 # Use filtered data for plotting
 ts_dir = '../../data/'
 st = read(ts_dir+'waveforms*/Deci5.Pick.*', format='SAC')
-print len(st)
-print st.__str__(extended=True)
+print(len(st))
+print(st.__str__(extended=True))
 
 for kk in range(IND_FIRST, IND_LAST):
    ev_time = init_time + det_times[kk]

@@ -1,43 +1,38 @@
 import subprocess
 from multiprocessing import Pool
 import sys
-import datetime
-import json
 import os
-import time
-from util import *
+from config import *
 
 madStatsCommand= 'python MAD.py %s'
 fingerprintCommand = 'python finger_print.py %s %s'
 
+
 def call_fingerprint(args):
-	print "Fingerprinting " + str(args)
 	process = subprocess.Popen((fingerprintCommand % (args, param_json)),
 			stdout=subprocess.PIPE, shell=True)
-	output, error = process.communicate()
-	return output, error
+	process.communicate()
 
-def call_mad(params):
-	print "Processing for MAD"
+
+def call_mad(param_json):
+	print("Processing for MAD")
 	process = subprocess.Popen((madStatsCommand % (param_json)),
 			stdout=subprocess.PIPE, shell=True)
 	output, error = process.communicate()
-	return output, error
+	print(output.decode('UTF-8').strip())
 
-def gen_simsearch_config():
-	pass
 
 if __name__ == '__main__':
 	param_json = sys.argv[1]
 	params = parse_json(param_json)
 
 	# Preprocess to calculate MAD
-	print (call_mad(params))
+	call_mad(param_json)
 
 	# Fingerprint
 	files = params['data']['fingerprint_files']
 	p = Pool(min(params['performance']['num_fp_thread'], len(files)))
-	print (p.map(call_fingerprint, files))
+	p.map(call_fingerprint, files)
 
 	# Stich fingerprint files
 	nfp = 0
@@ -47,12 +42,12 @@ if __name__ == '__main__':
 	final_fp_name = '%s%s' %(fp_path, get_combined_fp_name(params))
 	if os.path.exists(final_fp_name):
 		os.remove(final_fp_name)
-	print "Combining into final fingerprint file %s" % final_fp_name
+	print("Combining into final fingerprint file %s" % final_fp_name)
 
 	final_ts_name = '%s%s' %(ts_path, get_combined_ts_name(params))
 	if os.path.exists(final_ts_name):
 		os.remove(final_ts_name)
-	print "Combining into final timestamp file %s" % final_ts_name
+	print("Combining into final timestamp file %s" % final_ts_name)
 
 	for fname in files:
 		fp_file = fp_path + get_fp_fname(fname)
@@ -66,13 +61,13 @@ if __name__ == '__main__':
 		nfp += num_lines
 		fsize = os.path.getsize(fp_file)
 		if fsize / fp_in_bytes != num_lines:
-			print "Exception: # fingerprints in %s don't match" % fname
-			print "Fingerprint file: %d, timestamp file: %d" %(fsize / fp_in_bytes, num_lines)
+			print("Exception: # fingerprints in %s don't match" % fname)
+			print("Fingerprint file: %d, timestamp file: %d" %(fsize / fp_in_bytes, num_lines))
 			exit(1)
 
 	fsize = os.path.getsize(final_fp_name)
-	print "Fingerprint file size: %d bytes" % (fsize)
-	print "# fingerprints: %d" %(nfp)
+	print("Fingerprint file size: %d bytes" % (fsize))
+	print("# fingerprints: %d" %(nfp))
 	ndim = fsize * 8 / nfp
 
 	# Save fingerprint stats

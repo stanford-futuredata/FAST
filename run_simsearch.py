@@ -18,10 +18,8 @@ searchCommand = './main --input_fp_file=%s%s \
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
-	parser.add_argument('-c',
-                        '--config',
-                        help='name of the global config file',
-                        default='config.json')
+	parser.add_argument('-c', '--config', help='name of the global config file',
+		default='config.json')
 	args = parser.parse_args()
 	config = parse_json(args.config)
 
@@ -49,9 +47,9 @@ if __name__ == '__main__':
 			config["lsh_param"]["nvote"],
 			config["lsh_param"]["nthread"],
 			config["lsh_param"]["npart"])
-		print cmd
+		print(cmd)
 		process = subprocess.Popen(cmd,
 				stdout=subprocess.PIPE, shell=True)
 		output, error = process.communicate()
-		print output
+		print(output.decode('UTF-8'))
 

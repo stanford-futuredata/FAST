@@ -1,4 +1,4 @@
-from os import listdir, chdir
+from os import chdir
 import subprocess
 import argparse
 from parse_config import *
@@ -8,10 +8,8 @@ idxCommand = 'python global_index.py %s'
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
-	parser.add_argument('-c',
-                        '--config',
-                        help='name of the global config file',
-                        default='config.json')
+	parser.add_argument('-c', '--config',
+		help='name of the global config file', default='config.json')
 	args = parser.parse_args()
 	config = parse_json(args.config)
 
@@ -23,15 +21,15 @@ if __name__ == '__main__':
 	# Fingerprinting
 	chdir('fingerprint')
 	for param in fp_params:
-		print "Fingerprinting %s" % param
+		print("Fingerprinting %s" % param)
 		process = subprocess.Popen((fpCommand % (param)),
 			stdout=subprocess.PIPE, shell=True)
 		output, error = process.communicate()
-		print output
+		print(output.decode('UTF-8'))
 
 	# Generate global index
 	idx_dir = get_global_index_dir(config)
-	print "Writing global index to %s" % idx_dir
+	print("Writing global index to %s" % idx_dir)
 	idx_config = {"index_folder": "../" + idx_dir,
 		"fp_param_dir": param_dir,
 		"fp_params": fp_params}

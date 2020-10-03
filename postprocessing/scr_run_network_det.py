@@ -6,14 +6,12 @@
 ##             loads necessary libraries                               ##
 ######################################################################### 
 
-import cPickle as pickle
+import pickle
 import sys
 import gc
 import time
 import numpy as np
 from collections import defaultdict
-from itertools import count, islice
-from operator import itemgetter
 import multiprocessing
 import os
 from pseudo_association import *
@@ -31,17 +29,16 @@ M = 1 + 4 + 1 + 1 + 1 + 3
 #########################################################################
 
 def partition(fname):
-
-    print '  Partitioning %s...' % fname
+    print('  Partitioning %s...' % fname)
     load_file = data_folder + fname
     file_size = getsize(load_file)
     PARTITION_GAP = param["network"]["max_width"]
     if param["performance"]["num_cores"] == 1:
         # No parallelization
-        print '     %s: %d partition' % (fname, 1)
+        print('     %s: %d partition' % (fname, 1))
         return [0]
     PARTITION_SIZE = min(param["performance"]["partition_size"],
-        file_size / param["performance"]["num_cores"] / 2)
+        file_size // param["performance"]["num_cores"] // 2)
     # Jump ahead size: around 100 lines
     JUMP_SIZE = 400
     with open(load_file, 'rb') as f:
@@ -77,7 +74,7 @@ def partition(fname):
             # in which case we just split here
             if not end_reached and line_start > 0:
                 byte_positions.append(line_start)
-    print '     %s: %d partitions' % (fname, len(byte_positions))
+    print('     %s: %d partitions' % (fname, len(byte_positions)))
     return byte_positions
 
 def dict_to_numpy(d):
@@ -113,7 +110,7 @@ def detection(args):
     fname = data_folder + detdata_filenames[cidx]
     eventpair_fname = '%s_byte_%d.npy' % (fname, byte_pos)
     if isfile(eventpair_fname):
-        print "%s already exists; skipping..." % eventpair_fname
+        print("%s already exists; skipping..." % eventpair_fname)
         return eventpair_fname
 
     start = time.time()
@@ -140,7 +137,7 @@ def detection(args):
     min_sum = get_min_sum(param)
     prune_events(curr_event_dict, param["network"]["min_dets"], 
         min_sum, param["network"]["max_width"])
-    print '    Time taken for %s (byte %d):' % (detdata_filenames[cidx], byte_pos), time.time() - start
+    print('    Time taken for %s (byte %d):' % (detdata_filenames[cidx], byte_pos), time.time() - start)
     #/ Save event-pairs for the single station case
     if nstations == 1:
         arr = event_dict_to_numpy(curr_event_dict)
@@ -154,14 +151,14 @@ def detection(args):
     diags_dict = associator.clouds_to_network_diags_one_channel(
         curr_event_dict, cidx)
     del curr_event_dict
-    print "    Saving diags_dict to %s_byte_%d.npy" % (detdata_filenames[cidx], byte_pos)
+    print("    Saving diags_dict to %s_byte_%d.npy" % (detdata_filenames[cidx], byte_pos))
     arr = dict_to_numpy(diags_dict)
     np.save(eventpair_fname, arr)
     del diags_dict, arr
     return eventpair_fname
 
 def process(cidx):
-    print '  Extracting event-pairs for %s...' % detdata_filenames[cidx]
+    print('  Extracting event-pairs for %s...' % detdata_filenames[cidx])
     t0 = time.time()
     byte_positions = byte_positions_list[cidx]
     args = []
@@ -174,7 +171,7 @@ def process(cidx):
         initializer=detection_init)
     output_files = pool.map(detection, args)
     pool.terminate()
-    print '    [TIMING] %s:' % (detdata_filenames[cidx]), time.time() - t0
+    print('    [TIMING] %s:' % (detdata_filenames[cidx]), time.time() - t0)
     return output_files
 
 
@@ -195,7 +192,7 @@ if __name__ == '__main__':
     #                  Partition                                          ##
     ########################################################################
 
-    print "1. Partition"
+    print("1. Partition")
     detdata_filenames = get_pairs_filenames(param)
     p = multiprocessing.Pool(nstations)
     # list of lists of byte positions,
@@ -204,27 +201,25 @@ if __name__ == '__main__':
     with open('%s/byte_positions_list.dat' % out_folder, 'wb') as f:
        pickle.dump(byte_positions_list, f, protocol=pickle.HIGHEST_PROTOCOL)
     #byte_positions_list = pickle.load(open('%s/byte_positions_list.dat' % out_folder, 'rb'))
-    print '[TIMING] partition:', time.time() - grand_start_time
+    print('[TIMING] partition:', time.time() - grand_start_time)
 
     ########################################################################
     #                  Event-pair detection                               ##
     ########################################################################
 
-    print
-    print "2. Extract event-pairs"
+    print("\n2. Extract event-pairs")
     process_start_time = time.time()
     fnames = []
-    for i in xrange(nstations):
+    for i in range(nstations):
         fnames.extend(process(i))
 
-    print '[TIMING] event-pair exatraction:', time.time() - process_start_time
+    print('[TIMING] event-pair exatraction:', time.time() - process_start_time)
     #########################################################################
     ##                         Network detection                           ##
     #########################################################################
 
     gc.collect()
-    print
-    print '3. Extract network events...'
+    print('\n3. Extract network events...')
 
     network_start_time = time.time()
     #/ Single station network detection
@@ -241,7 +236,7 @@ if __name__ == '__main__':
         # TODO: Save to prettier formats
         events = {'event_start': event_start, 'event_dt': event_dt,
             'event_stats': event_stats}
-        print "  Outputting results to %s*" % out_fname
+        print("  Outputting results to %s*" % out_fname)
         f = open('%s_%s_events.txt' % (out_fname,
             param["io"]["channel_vars"][0]), 'w')
         f.write('event_start, event_dt, event_stats[0],' 
@@ -254,7 +249,7 @@ if __name__ == '__main__':
             with open('%s_%s_pairs_list.dat' % (out_fname,
                 param["io"]["channel_vars"][0]), "wb") as f:
                 pickle.dump(pair_list, f, protocol=pickle.HIGHEST_PROTOCOL)
-        print '[TIMING] build network index:', time.time() - network_start_time
+        print('[TIMING] build network index:', time.time() - network_start_time)
         exit(1)
 
     #/ map events to diagonals
@@ -262,7 +257,7 @@ if __name__ == '__main__':
 
     all_arrs = []
     for file in fnames:
-        print "  %s" % file
+        print("  %s" % file)
         arr = np.load(file)
         all_arrs.append(arr)
     all_diags = np.concatenate(all_arrs)
@@ -270,9 +265,9 @@ if __name__ == '__main__':
     inds = np.lexsort([all_diags[:,3], all_diags[:,0]])
     all_diags = all_diags[inds, ...]
 
-    print "  Saving all_diags_dict to all_diags_dict.npy"
+    print("  Saving all_diags_dict to all_diags_dict.npy")
     np.save("%s/all_diags_dict.npy" % out_folder, all_diags)
-    print '[TIMING] build network index:', time.time() - t4
+    print('[TIMING] build network index:', time.time() - t4)
 
     #########################################################################
     ##                         pseudo-association                          ##
@@ -280,16 +275,15 @@ if __name__ == '__main__':
     associator =  NetworkAssociator()
     #/ pseudo-association
     t5 = time.time()
-    print
-    print '4. Network pseudo-association'
+    print('\n4. Network pseudo-association')
     icount, network_events = associator.associate_network_diags(
         all_diags, nstations = nstations, offset = param["network"]["input_offset"])
     del all_diags
 
-    print "  Saving network event to network_event.dat"
+    print("  Saving network event to network_event.dat")
     with open('%s/network_event.dat' % out_folder, "wb") as f:
         pickle.dump(network_events, f, protocol=pickle.HIGHEST_PROTOCOL)
-    print '[TIMING] pseudo-association:', time.time() - t5
+    print('[TIMING] pseudo-association:', time.time() - t5)
 
     ########################################################################
     #         EVENT RESOLUTION - detections                              ##
@@ -342,6 +336,6 @@ if __name__ == '__main__':
     with open(out_fname + '.dat', "wb") as f:
         pickle.dump(mdict, f, protocol=pickle.HIGHEST_PROTOCOL)
 
-    print ("[OUTPUT] Results saved to: %s" % (out_folder))
+    print("[OUTPUT] Results saved to: %s" % (out_folder))
 
-    print '[TIMING] Total time: ', time.time() - grand_start_time
+    print('[TIMING] Total time: ', time.time() - grand_start_time)

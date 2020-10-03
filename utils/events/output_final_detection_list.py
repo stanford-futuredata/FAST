@@ -66,7 +66,7 @@ dt_fp = 1.0
 # Get original detection list data
 [det_start_ind, det_end_ind, dL, nevents, nsta, tot_ndets, max_ndets, tot_vol, max_vol, peaksum, num_sta, diff_ind] = np.loadtxt(times_dir+infile_name, usecols=(0,1,2,3,4,5,6,7,8,9,10,11), unpack=True)
 det_times = dt_fp * det_start_ind
-print len(det_times)
+print(len(det_times))
 
 # Output detection list with only necessary data
 with open(outfile_name, 'w') as fout:

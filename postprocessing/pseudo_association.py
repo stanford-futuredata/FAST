@@ -1,7 +1,11 @@
 import numpy as np
 import time
 from collections import defaultdict
-from itertools import izip, count
+from itertools import count
+try:
+    from itertools import izip
+except ImportError:
+    izip = zip
 from os.path import getsize
 
 ######################################################################### 
@@ -52,7 +56,7 @@ class EventCloudExtractor:
                 # no need to strip() since that's already done above
                 tmp = line.split()
                 if len(tmp) < 3:
-                    print "Corrupted line before: %d" %line_start
+                    print("Corrupted line before: %d" % line_start)
                     line = f.readline()
                     line_start = f.tell()
                     continue
@@ -86,14 +90,14 @@ class EventCloudExtractor:
         else:
             dt_min = pairs[dt_min]
             dt_max = pairs[dt_max]
-        for p in xrange(npass):
+        for p in range(npass):
             if p % 2 == 0: #/ forward pass
                 t0 = time.time()
-                for qidx in xrange(dt_min, dt_max):
+                for qidx in range(dt_min, dt_max):
                     diags[qidx], diags[qidx+1] = self.merge_diags(diags[qidx], diags[qidx+1], self.dW)
             else: #/ backward pass
                 t0 = time.time()
-                for qidx in xrange(dt_max-1, dt_min-1, -1):
+                for qidx in range(dt_max-1, dt_min-1, -1):
                     diags[qidx+1], diags[qidx] = self.merge_diags(diags[qidx+1], diags[qidx], self.dW)
         event_dict = defaultdict(list)
         for k in diags:
@@ -127,9 +131,9 @@ class EventCloudExtractor:
                     eventID0[i] = newEventID  #/ update for next iteration
                     eventID1[j] = newEventID
                     #/ updates eventIDs (in all triplets)
-                    for ridx0 in xrange(first_idx0[i], last_idx0[i] + 1):
+                    for ridx0 in range(first_idx0[i], last_idx0[i] + 1):
                         diag0[ridx0][2] = newEventID
-                    for ridx1 in xrange(first_idx1[j], last_idx1[j] + 1):
+                    for ridx1 in range(first_idx1[j], last_idx1[j] + 1):
                         diag1[ridx1][2] = newEventID
         return diag0, diag1 #, event_equivalence
 
@@ -169,7 +173,7 @@ class NetworkAssociator:
             prev_idx = idx
         map_to_indices[diags[-1]] = range(prev_idx + 1, len(diags))
         network_events = defaultdict(list)
-        for k in xrange(q1, q2):
+        for k in range(q1, q2):
             if k in map_to_indices:
                 k_indices = map_to_indices[k]
                 diags_k = all_diags[k_indices]
@@ -228,7 +232,7 @@ class NetworkAssociator:
 
         #/ compiles list of events detected on multiple stations
         network_events = defaultdict(list)
-        for k in xrange(q1, q2):
+        for k in range(q1, q2):
             if k in map_to_indices:
                 diags_k = all_diags[map_to_indices[k]]
             else:

@@ -1,16 +1,16 @@
 from obspy import read
 import numpy as np
 from obspy.core import UTCDateTime
-import os
 import sys
-import datetime
 import time
-from util import *
+from config import *
+from feature_extractor import *
 
 def write_timestamp(t, idx1, idx2, starttime, ts_file):
 	fp_timestamp = np.asarray([t[int(np.mean((idx1[j], idx2[j])))] for j in range(len(idx1))])
 	for ts in fp_timestamp:
 		ts_file.write((starttime + datetime.timedelta(seconds = ts)).strftime('%y-%m-%dT%H:%M:%S.%f') + '\n')
+
 
 def normalize_and_fingerprint(haar_images, fp_file):
 	std_haar_images = feats.standardize_haar(haar_images, type = 'MAD')
@@ -19,6 +19,7 @@ def normalize_and_fingerprint(haar_images, fp_file):
 	# Write to file
 	b = np.packbits(binaryFingerprints)
 	fp_file.write(b.tobytes())
+
 
 def init_MAD_stats(mad_fname):
 	ntimes = get_ntimes(params)
@@ -31,13 +32,14 @@ def init_MAD_stats(mad_fname):
 		feats.haar_absdevs[i] = float(nums[1])
 	f.close()
 
+
 if __name__ == '__main__':
 	t_start = time.time()
 	fname = sys.argv[1]
 	param_json = sys.argv[2]
 	params = parse_json(param_json)
 
-	feats = init_feature_extractor(params)
+	feats = init_feature_extractor(params, get_ntimes(params))
 
 	mad_fname = gen_mad_fname(params)
 	init_MAD_stats(mad_fname)
@@ -48,7 +50,7 @@ if __name__ == '__main__':
 	# read mseed
 	st = read(params['data']['folder'] + fname)
 	ts_file = open(ts_folder + get_ts_fname(fname), "w")
-	fp_file = open(fp_folder + get_fp_fname(fname), "w")
+	fp_file = open(fp_folder + get_fp_fname(fname), "wb")
 	time_padding = get_partition_padding(params)
 	min_fp_length = get_min_fp_length(params)
 

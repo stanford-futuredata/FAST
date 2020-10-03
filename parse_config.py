@@ -13,7 +13,7 @@ def parse_json(param_json):
 def get_global_index_dir(param):
     return param["io"]["base_dir"] + param["io"]["global_index_dir"]
 
-def get_fp_dir(fp_param):
+def get_fp_dir(param):
 	return param['data']['folder'] + 'fingerprints/'
 
 def get_search_output_files(param, fp_param):
