@@ -14,7 +14,7 @@ def _get_det_list(ndets, timestamp_to_netid):
     det_end   = np.where((ndets[:-1] > 0) & (ndets[1:] == 0))[0] + 1
 #====
     n_det = min(len(det_start), len(det_end))
-    print 'len(det_start)=', len(det_start), ', len(det_end)=', len(det_end), ', n_det=', n_det
+    print('len(det_start)=', len(det_start), ', len(det_end)=', len(det_end), ', n_det=', n_det)
     det_start = det_start[0:n_det]
     det_end = det_end[0:n_det]
 #====
@@ -22,7 +22,7 @@ def _get_det_list(ndets, timestamp_to_netid):
     det_connect  = list()
     for x, y in izip(det_start, det_dt):
         tmp = list()
-        for z in xrange(x,x+y+1):
+        for z in range(x,x+y+1):
             [tmp.append(q) for q in timestamp_to_netid[z]]
         det_connect.append(sorted(list(set(tmp))))
     return det_start, det_dt, det_connect
@@ -66,9 +66,12 @@ def prune_network_events(network_events, nsta_thresh):
     eliminates network events based on station threshold criterion
     '''
     networkID = network_events.keys()
+    del_ids = []
     for nid in networkID:
         if len(np.unique([ x[1] for x in network_events[nid]])) < nsta_thresh:
-            del network_events[nid]
+            del_ids.append(nid)
+    for nid in del_ids:
+        del network_events[nid]
 
 
 ################################################################################
@@ -155,7 +158,7 @@ rather than for every timestamp associated with the event-pair
 def get_network_events_final(network_events, max_fp, nstations, nsta_thresh):
     networkID = network_events.keys()
     timestamp_to_netid = dict()
-    for i in xrange(nstations):
+    for i in range(nstations):
         timestamp_to_netid[i] = defaultdict(list) #/ keeps track of which network eventIDs are observed at each time
 
     ndets = np.zeros((nstations, max_fp),dtype=bool)
@@ -176,10 +179,10 @@ def get_network_events_final(network_events, max_fp, nstations, nsta_thresh):
 
     #/ counts number of detections for each time interval (for each station)
     network_events_final = defaultdict(lambda: defaultdict(list))
-    for stid in xrange(nstations):
+    for stid in range(nstations):
          det_data = _get_det_list(ndets[stid,:], timestamp_to_netid[stid]) #/ gets list of detections - may need to be updated depending on dataset
         #/ map back to network_events_final (i.e. assign detections at each station to the corresponding "network detection"
-         for j in xrange(len(det_data[0])):
+         for j in range(len(det_data[0])):
             for nid in det_data[2][j]:
                 network_events_final[nid][stid].append(det_data[0][j])
 
@@ -214,7 +217,7 @@ def get_network_events_final_by_station(network_events, max_fp, nstations, nsta_
     networkID = network_events.keys()
     network_events_final = defaultdict(lambda: defaultdict(list))
 
-    for stid in xrange(nstations):
+    for stid in range(nstations):
         timestamp_to_netid= defaultdict(list) #/ keeps track of which network eventIDs are observed at each time
         ndets = np.zeros(max_fp,dtype=bool)
         for nid in networkID:
@@ -234,7 +237,7 @@ def get_network_events_final_by_station(network_events, max_fp, nstations, nsta_
         #/ counts number of detections for each time interval (for each station)
         det_data = _get_det_list(ndets, timestamp_to_netid) #/ gets list of detections - may need to be updated depending on dataset
         #/ map back to network_events_final (i.e. assign detections at each station to the corresponding "network detection"
-        for j in xrange(len(det_data[0])):
+        for j in range(len(det_data[0])):
             for nid in det_data[2][j]:
                 network_events_final[nid][stid].append(det_data[0][j])
 
@@ -255,7 +258,7 @@ def event_to_list_and_dedup(network_events_final, nstations):
     out = np.nan + np.ones((2*len(networkIDs), nstations + 1))
     for i, nid in enumerate(networkIDs):
         tmp_dt =  network_events_final[nid]['dt']
-        for stid in xrange(nstations):
+        for stid in range(nstations):
             if network_events_final[nid][stid]:
                 if  len(network_events_final[nid][stid]) == 2:
                     out[2*i,stid] =  network_events_final[nid][stid][0]
@@ -279,7 +282,7 @@ def event_to_list_and_dedup(network_events_final, nstations):
     out2      = out[:, 0:nstations]
     netids2   = list( out[:,nstations].astype(int) )
 
-    for sta in xrange(nstations):
+    for sta in range(nstations):
         row_sort0 = np.argsort( out2[:,sta] )
         out2      = out2[row_sort0,:]
         netids2   = [ netids2[x] for x in row_sort0]
@@ -287,7 +290,7 @@ def event_to_list_and_dedup(network_events_final, nstations):
         keep_row = np.zeros(n1, dtype = bool)
         network_eventlist = list()
         tmp_neventlist = list()
-        for i in xrange(n1-1):
+        for i in range(n1-1):
             if np.all((out2[i,:] == out2[i+1,:]) | np.isnan(out2[i,:]) | np.isnan(out2[i+1,:] ) ) & np.any(out2[i,:] == out2[i+1,:]):  #/ if match or nan
                 out2[i+1,:] = np.nanmin((out2[i,:], out2[i+1,:]),axis=0) #/ fill in nans
                 tmp_neventlist.append(netids2[i])
