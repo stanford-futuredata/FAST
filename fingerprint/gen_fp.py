@@ -2,7 +2,7 @@ import subprocess
 from multiprocessing import Pool
 import sys
 import os
-from util import *
+from config import *
 
 madStatsCommand= 'python MAD.py %s'
 fingerprintCommand = 'python finger_print.py %s %s'
@@ -19,7 +19,7 @@ def call_mad(param_json):
 	process = subprocess.Popen((madStatsCommand % (param_json)),
 			stdout=subprocess.PIPE, shell=True)
 	output, error = process.communicate()
-	print(output.decode('UTF-8'))
+	print(output.decode('UTF-8').strip())
 
 
 if __name__ == '__main__':

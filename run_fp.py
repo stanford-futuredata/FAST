@@ -1,4 +1,4 @@
-from os import listdir, chdir
+from os import chdir
 import subprocess
 import argparse
 from parse_config import *

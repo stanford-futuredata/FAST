@@ -3,8 +3,8 @@ import numpy as np
 from obspy.core import UTCDateTime
 import sys
 import time
-from util import *
-
+from config import *
+from feature_extractor import *
 
 def write_timestamp(t, idx1, idx2, starttime, ts_file):
 	fp_timestamp = np.asarray([t[int(np.mean((idx1[j], idx2[j])))] for j in range(len(idx1))])
@@ -39,7 +39,7 @@ if __name__ == '__main__':
 	param_json = sys.argv[2]
 	params = parse_json(param_json)
 
-	feats = init_feature_extractor(params)
+	feats = init_feature_extractor(params, get_ntimes(params))
 
 	mad_fname = gen_mad_fname(params)
 	init_MAD_stats(mad_fname)

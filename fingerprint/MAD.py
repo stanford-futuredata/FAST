@@ -6,7 +6,8 @@ from multiprocessing import Pool
 import os
 import sys
 import random
-from util import *
+from config import *
+from feature_extractor import *
 
 
 def get_segment(st, starttime, endtime, sample_length):
@@ -112,7 +113,7 @@ if __name__ == '__main__':
 	t_start = time.time()
 	param_json = sys.argv[1]
 	params = parse_json(param_json)
-	feats = init_feature_extractor(params)
+	feats = init_feature_extractor(params, get_ntimes(params))
 
 	mad_folder = params['data']['folder'] + 'mad/'
 	if not os.path.exists(mad_folder):

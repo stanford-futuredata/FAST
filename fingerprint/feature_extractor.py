@@ -18,6 +18,20 @@ from sklearn.preprocessing import normalize
 from scipy.signal import spectrogram
 from scipy.misc import imresize
 
+
+def init_feature_extractor(params, ntimes):
+    feats = FeatureExtractor(sampling_rate=params['fingerprint']['sampling_rate'],
+        window_length=params['fingerprint']['spec_length'],
+        window_lag=params['fingerprint']['spec_lag'],
+        fingerprint_length=params['fingerprint']['fp_length'],
+        fingerprint_lag=params['fingerprint']['fp_lag'],
+        min_freq=params['fingerprint']["min_freq"],
+        max_freq=params['fingerprint']["max_freq"],
+        nfreq=params['fingerprint']['nfreq'],
+        ntimes=ntimes)
+    return feats
+
+
 class FeatureExtractor(object):
 
     def __init__(self, sampling_rate, window_length, window_lag, fingerprint_length, fingerprint_lag, 

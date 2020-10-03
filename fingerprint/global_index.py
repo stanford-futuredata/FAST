@@ -1,7 +1,7 @@
 import sys
 import linecache
 import os
-from util import *
+from config import *
 from multiprocessing import Pool
 
 

@@ -12,33 +12,39 @@ import struct
 
 MB_TO_BYTES = 1024 * 1024
 
+
 def str2bool(v):
   return v.lower() in ("yes", "true", "t", "1")
+
 
 def get_dirname(d):
     if d[-1] == '/':
         return d
     return d + '/'
 
+
 ''' Helper function that defines the sorting order '''
 def _get_sort_key(line):
     nums = line.split()
     return (int(nums[0]), int(nums[1]))
 
+
 ''' Helper function to get names of all intermediate (sorted) files '''
 def _get_sorted_fname(fname):
-    return fname + "_sorted"
+    return fname + "_sorted_tmp"
 
 ''' Helper function to get names of all intermediate (sorted) files '''
 def _get_pairs_fname(fname):
-    return fname + "_pairs"
+    return fname + "_pairs_tmp"
 
 def _get_combined_fname(i):
     return 'merged_%02d' % i
 
+
 def _parse_line(line):
     idx = line.rfind(' ')
     return line[:idx], int(line[idx+1:])
+
 
 def _output_buffer(buf, f_out):
     lines = []
@@ -51,6 +57,7 @@ def _output_buffer(buf, f_out):
             lines.append("%s %d\n" % (elem[0], elem[1]))
     f_out.writelines(lines)
 
+
 def get_global_index_map(idx_fname):
     f = open(idx_fname, 'r')
     idx_map = {}
@@ -58,6 +65,7 @@ def get_global_index_map(idx_fname):
         idx_map[i] = int(line.strip())
     f.close()
     return idx_map
+
 
 def parse_memory(string):
     if string[-1].lower() == 'k':
@@ -69,13 +77,14 @@ def parse_memory(string):
     else:
         return int(string)
 
+
 def get_positions(fname):
-    print "Getting positions %s" % fname
+    print("Getting positions %s" % fname)
     start = time.time()
     # File size in bytes
     file_size = os.path.getsize(fname)
     partition_memory = min(file_size, parse_memory(args.mem)) / args.nprocs
-    with open(fname, 'r') as f:
+    with open(fname, 'rb') as f:
         pos_list = [] # list of positions of idx values, in bytes
         pointer = 4 # 5th byte, second uint32, first count
         while pointer < file_size:
@@ -92,21 +101,23 @@ def get_positions(fname):
             first_pos = pos
         prev_pos = pos
     final_list.append((fname, first_pos, prev_pos))
-    print "Time to get positions:", time.time() - start
+    print("Time to get positions:", time.time() - start)
     return final_list
+
 
 def parse_chunk(tup):
     filename = tup[0]
     first_pos = tup[1]
     last_pos = tup[2]
-    print "Parsing %s at (%d,%d)" % (filename, first_pos, last_pos)
+    print("Parsing %s at (%d,%d)" % (filename, first_pos, last_pos))
     start = time.time()
     pairs_file_name = _get_pairs_fname("%s_(%d,%d)" % (filename, first_pos, last_pos))
     pairs_file = open(pairs_file_name, 'w')
-    with open(filename, 'r') as f:
+    with open(filename, 'rb') as f:
         f.seek(last_pos + 4) # seek the position of the last count
         last_count = struct.unpack('I', f.read(4))[0]
-        read_size = last_pos + (last_count + 2) * 4 - first_pos # size of chunk to read in bytes
+        # size of chunk to read in bytes
+        read_size = last_pos + (last_count + 2) * 4 - first_pos
         f.seek(first_pos)
         buf = f.read(read_size)
         a = np.frombuffer(buf, dtype=np.uint32)
@@ -118,7 +129,7 @@ def parse_chunk(tup):
             i += 1
             if args.idx:
                 global_idx = idx_map[idx]
-            for j in range(counts / 2):
+            for j in range(counts // 2):
                 # Only add things that are above specified thresholds
                 sim = a[i + j * 2 + 1]
                 idx2 = a[i + j * 2]
@@ -132,18 +143,20 @@ def parse_chunk(tup):
                         pairs_file.write('%d %d %d\n' %(abs(idx2 - idx), max(idx2, idx), sim))
             i += counts
     pairs_file.close()
-    print "Time to parse %s at (%d,%d):" % (filename, first_pos, last_pos), time.time() - start
+    print("Time to parse %s at (%d,%d):" % (filename, first_pos, last_pos), time.time() - start)
     return pairs_file_name
 
+
 def sort(fname):
-    print "Sorting %s" % fname
+    print("Sorting %s" % fname)
     start = time.time()
-    subprocess.call(['sort', '-T', get_dirname(args.dir), '-k1,1n', '-k2,2n', '-o', fname + '_sorted', fname])
-    print "Done sorting %s, time taken:" % fname, time.time() - start
+    subprocess.call(['sort', '-T', get_dirname(args.dir), '-k1,1n', '-k2,2n', '-o', _get_sorted_fname(fname), fname])
+    print("Done sorting %s, time taken:" % fname, time.time() - start)
     os.remove(fname)
 
+
 def merge_chunk(chunk_filenames):
-    print "Merging chunk"
+    print("Merging chunk")
     merged_fname = '%s_merged.txt' % (chunk_filenames[0])
     subprocess.call(
         ['sort', '-m'] + chunk_filenames + \
@@ -152,13 +165,14 @@ def merge_chunk(chunk_filenames):
         map(lambda f: os.remove(f), chunk_filenames)
     return merged_fname
 
+
 def merge(sorted_filenames):
-    print "Merging files"
+    print("Merging files")
     start = time.time()
-    # Too many input files
     l = len(sorted_filenames)
+    # Too many input files
     if len(sorted_filenames) > args.nprocs:
-        n = l / args.nprocs
+        n = l // args.nprocs
         merged_fnames = p.map(merge_chunk,
             [sorted_filenames[i:i + n] for i in range(0, l, n)])
         subprocess.call(
@@ -171,9 +185,11 @@ def merge(sorted_filenames):
             ['sort', '-m'] + sorted_filenames + \
             ['-T', get_dirname(args.dir), '-k1,1n', '-k2,2n', 
             '-o', '%s%s_merged.txt' % (get_dirname(args.dir), args.prefix)])
-        if args.sort:
-            map(lambda f: os.remove(f), sorted_filenames)
-    print "Done merging, time taken:", time.time() - start
+    if args.sort:
+        for f in sorted_filenames:
+            os.remove(f)
+    print("Done merging, time taken:", time.time() - start)
+
 
 def filter_and_reduce_file(idx):
     fname = _get_combined_fname(idx)
@@ -184,11 +200,10 @@ def filter_and_reduce_file(idx):
         reduce_key, reduce_val = _parse_line(line)
         # Check the end of previous partition
         if idx > 0:
-            cmd = 'tail -n 1 %s%s' % (get_dirname(args.dir),
-                _get_combined_fname(idx - 1))
+            cmd = 'tail -n 1 %s%s' % (get_dirname(args.dir), _get_combined_fname(idx - 1))
             proc = Popen(cmd.split(), stdout=PIPE, stderr=PIPE)
             output, err = proc.communicate()
-            if reduce_key in output:
+            if reduce_key in output.decode("UTF-8"):
                 while reduce_key in line:
                     line = f.next()
                 reduce_key, reduce_val = _parse_line(line)
@@ -207,11 +222,11 @@ def filter_and_reduce_file(idx):
     # Check the start of next partition
     if idx < args.nprocs - 1:
         f_next = open('%s%s' % (get_dirname(args.dir), _get_combined_fname(idx + 1)), 'r')
-        line = f_next.next()
+        line = f_next.readline()
         while reduce_key in line:
             key, val = _parse_line(line)
             reduce_val += val
-            line = f_next.next()
+            line = f_next.readline()
         f_next.close()
    # Add last element
     if len(buf) == 0 or buf[-1][0] != reduce_key:
@@ -221,6 +236,7 @@ def filter_and_reduce_file(idx):
         _output_buffer(buf, f_out)
     f_out.close()
 
+
 def file_len(fname):
     p = subprocess.Popen(['wc', '-l', fname], stdout=subprocess.PIPE,
               stderr=subprocess.PIPE)
@@ -229,10 +245,11 @@ def file_len(fname):
         raise IOError(err)
     return int(result.strip().split()[0])
 
+
 ''' Add up similarity and filter out those below threshold '''
 def filter_and_reduce(p):
-    print "Filtering by threshold, outputing results to %s%s_combined.txt" \
-        % (get_dirname(args.dir), args.prefix)
+    print("Filtering by threshold, outputing results to %s%s_combined.txt" \
+        % (get_dirname(args.dir), args.prefix))
     start = time.time()
     # Split into number of processes files
     fname = '%s%s_merged.txt' % (get_dirname(args.dir), args.prefix)
@@ -251,7 +268,22 @@ def filter_and_reduce(p):
         os.remove(fname)
         os.remove('%s%s' % (get_dirname(args.dir), _get_combined_fname(i)))
     os.remove('%s%s_merged.txt' % (get_dirname(args.dir), args.prefix))
-    print "Done filtering, time taken:", time.time() - start
+    print("Done filtering, time taken:", time.time() - start)
+
+
+def getfiles_and_cleanup(args):
+    fnames = []
+    to_remove = []
+    for f in os.listdir(args.dir):
+        if args.prefix in f and isfile(join(args.dir, f)):
+            if 'tmp' in f or ('merged' in f and args.parse):
+                to_remove.append(join(args.dir, f))
+            else:
+                fnames.append(join(args.dir, f))
+    for f in to_remove:
+        os.remove(f)
+    return fnames
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -284,11 +316,7 @@ if __name__ == '__main__':
                         type=str2bool,
                         default=False,
                         help='whether to combine similarity for the same pair')
-    parser.add_argument('-n',
-                       '--nprocs',
-                       type=int,
-                       default=multiprocessing.cpu_count() / 2,
-                       help='number of processes')
+    parser.add_argument('-n', '--nprocs', type=int, default=2, help='number of processes')
     args = parser.parse_args()
 
     grand_start_time = time.time()
@@ -299,27 +327,25 @@ if __name__ == '__main__':
         idx_map = get_global_index_map(args.idx)
 
     # Get input files
-    fnames = []
-    for f in os.listdir(args.dir):
-        if args.prefix in f and isfile(join(args.dir, f)):
-            fnames.append(join(args.dir, f))
+    fnames = getfiles_and_cleanup(args)
 
     p = multiprocessing.Pool(args.nprocs)
     out_fnames = fnames
     # Parse
     if args.parse:
-        file_chunks = p.map(get_positions, fnames) # list of lists, where each list is a list of tuples of the form (fname, first_pos, last_pos)
+        # list of lists, where each list is a list of tuples of the form (fname, first_pos, last_pos)
+        file_chunks = p.map(get_positions, fnames)
         file_chunks = [chunk for chunk_list in file_chunks for chunk in chunk_list] # flatten the list
         # Parse each binary output partition
         out_fnames = p.map(parse_chunk, file_chunks)
     # Sort each partition
     if args.sort:
         p.map(sort, out_fnames)
-        out_fnames = map(_get_sorted_fname, out_fnames)
+        out_fnames = list(map(_get_sorted_fname, out_fnames))
     # Merge sorted partitions
     merge(out_fnames)
     # Combine results from multiple channels
     if args.combine:
         filter_and_reduce(p)
 
-    print "Total time taken:", time.time() - grand_start_time
+    print("Total time taken:", time.time() - grand_start_time)

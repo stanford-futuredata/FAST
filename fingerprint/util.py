@@ -2,7 +2,6 @@ import json
 import datetime
 from os import listdir, makedirs
 from os.path import isfile, join, abspath, dirname, exists
-from feature_extractor import FeatureExtractor
 import math
 
 
@@ -107,19 +106,6 @@ def lower_power_2(n):
 
 def get_ntimes(params):
     return lower_power_2(params['fingerprint']['fp_length'])
-
-
-def init_feature_extractor(params):
-    feats = FeatureExtractor(sampling_rate=params['fingerprint']['sampling_rate'],
-        window_length=params['fingerprint']['spec_length'],
-        window_lag=params['fingerprint']['spec_lag'],
-        fingerprint_length=params['fingerprint']['fp_length'],
-        fingerprint_lag=params['fingerprint']['fp_lag'],
-        min_freq=params['fingerprint']["min_freq"],
-        max_freq=params['fingerprint']["max_freq"],
-        nfreq = params['fingerprint']['nfreq'], 
-        ntimes = get_ntimes(params))
-    return feats
 
 
 def get_partition_padding(params):
