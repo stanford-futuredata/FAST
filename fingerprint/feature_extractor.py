@@ -14,16 +14,14 @@
 
 import numpy as np
 import pywt as wt
-import math
 from sklearn.preprocessing import normalize
-from copy import copy
 from scipy.signal import spectrogram
 from scipy.misc import imresize
 
 class FeatureExtractor(object):
 
     def __init__(self, sampling_rate, window_length, window_lag, fingerprint_length, fingerprint_lag, 
-        min_freq = 0, max_freq = None, nfreq = 32, ntimes = 64):
+                min_freq = 0, max_freq = None, nfreq = 32, ntimes = 64):
         self.sampling_rate = sampling_rate             #/ sampling rate
         self.window_len    = window_length             #/ length of window (seconds) used in spectrogram
         self.window_lag    = window_lag                #/ window lag (seconds) used in spectrogram
@@ -49,8 +47,8 @@ class FeatureExtractor(object):
         if hasattr(self, field):
             setattr(self, field, value)
         else:
-             print 'WARNING: object has no attribute: ' + field
-             print 'object has the following attributes:' + self.__dict__.keys()
+             print('WARNING: object has no attribute: ' + field)
+             print('object has the following attributes:' + self.__dict__.keys())
         return
 
     def get_params(self):
@@ -148,7 +146,7 @@ class FeatureExtractor(object):
     def _vectors_to_images(self, vectors, d1, d2):
         N,D = np.shape(vectors)
         if D != d1*d2:
-            print 'warning: invalid dimensions'
+            print('warning: invalid dimensions')
             return vectors
         else:
             images = np.zeros([N,d1,d2])
@@ -184,7 +182,7 @@ class FeatureExtractor(object):
             haar_images = (haar_images - self.haar_medians)/self.haar_absdevs
             return haar_images
         else:
-            print 'Warning: invalid type - select type MAD or Zscore'
+            print('Warning: invalid type - select type MAD or Zscore')
             return None
 
     def binarize_vectors_topK_sign(self, coeff_vectors, K):
@@ -225,73 +223,3 @@ class FeatureExtractor(object):
     def jaccard_sim(self, vec1, vec2):
         return sum(vec1 & vec2)/ (1.0*sum(vec1 | vec2))
 
-########################################################################
-##     FOR COMPUTING DATA STATISTICS                                  ##
-########################################################################
-
-# parallel computation of mean and standard deviation
-#   from Chan, Golub & LeVeque (1979) 
-#   mean_X, std_X, are matrixes - each column represents a
-#     different segment (rows are means/stds within that segment)
-
-def combine_mean_std( mean_X, std_X, n_X):    
-   # TODO: error checks on size of variables
-    nVal, nSeg  = np.shape(mean_X)
-    n_Z   = np.sum(n_X)    
-    niter = int(np.ceil(math.log(nSeg,2)))   
-    tmpMeans = copy(mean_X)
-    tmpStds  = copy(std_X)
-    tmpN     = copy(n_X)
-    tmpSeg   = nSeg    
-    for k in range(niter):
-        #permute order (circular shift by 1) to avoid isolated columns
-        #permidx = np.roll(np.arange(tmpSeg),1) 
-        permidx = np.arange(tmpSeg)        
-        #/ store previous combined values
-        prevTmpMeans = tmpMeans[:,permidx]
-        prevTmpStds  = tmpStds[:,permidx]
-        prevTmpN     = tmpN[permidx]  
-        print prevTmpMeans
-        print prevTmpStds
-        print prevTmpN
-        #/ bookkeeping
-        nPairs   = int(np.floor(tmpSeg/2.0))
-        nCol     = int(np.ceil(tmpSeg/2.0))
-        print nPairs, nCol, tmpSeg
-        #/ initialize storage for new combine values
-        tmpMeans = np.zeros((nVal, nCol))
-        tmpStds  = np.zeros((nVal, nCol))
-        tmpN     = np.zeros(nCol)        
-        #/ combine mean/std/n for pairs of segments:
-        for p in range(nCol):            
-            pidx = p*2
-            #print k, p, pidx, nPairs, nCol
-            #/ unpaired 
-            if p >= nPairs:
-                tmpMeans[:,p] = prevTmpMeans[:,pidx]
-                tmpStds[:,p]  = prevTmpStds[:,pidx]
-                tmpN[p]       = prevTmpN[pidx];
-            #/ combine pairs
-            else: 
-                tmpMeans[:,p], tmpStds[:,p], tmpN[p] = _combine_pair_mean_std( prevTmpMeans[:,pidx], prevTmpStds[:,pidx],
-                    prevTmpN[pidx], prevTmpMeans[:,pidx+1], prevTmpStds[:,pidx+1], prevTmpN[pidx+1])     
-        tmpSeg = nCol
-        print tmpMeans
-        print tmpStds            
-    mean_Z = tmpMeans
-    std_Z  = tmpStds
-    return mean_Z, std_Z, n_Z 
-
-## helper function: combine mean/standard deviation for single pair of segments 
-#     parallel computation of mean and standard deviation
-#     from Chan, Golub & LeVeque (1979)
-def _combine_pair_mean_std( mean1, std1, n1, mean2, std2, n2):
-    n12    = n1 + n2
-    T1     = n1 * mean1  #/ sum
-    T2     = n2 * mean2  #/ sum
-    mean12 = (T1 + T2 ) / n12 #/ combined mean        
-    SS1    = n1*np.square(std1)  #/ sum of squares of differences
-    SS2    = n2*np.square(std2)  #/ sum of squares of differences
-    SS12   = SS1 + SS2 + (1.0*n1/(n2*n12))*np.square( (1.0*n2/n1)*T1 - T2)
-    std12  = np.sqrt( SS12 / n12)  
-    return mean12, std12, n12
