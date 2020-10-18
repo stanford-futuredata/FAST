@@ -99,6 +99,8 @@ Optionally, to clean up the results from network detection (need to modify input
 ```
 The results from the above scripts can be found at ```data/network_detection/7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt```
 
+The above section only works with detection results with **multitple stations**. For single station detections, you can parse the results in the [output file](https://github.com/stanford-futuredata/FAST/blob/master/postprocessing/scr_run_network_det.py#L240). The schema of the output file is: event_start (starting fingerprint index), event_dt,  ndets (total number of event-pairs that include this event), peaksum (peak total similarity), and volume (sum of all similarity values for all event-pairs containing this event). Large peaksums usuallly correspond to higher confidence. 
+
 ### Plotting
 To plot the waveforms from network detection:
 ```sh
@@ -109,6 +111,9 @@ The above script plots the first 50 waveforms from the output.
 The plot file names are sorted in descending order by: num_sta (number of stations that detected this event), peaksum (peak total similarity) 
 You can view the images at data/network_detection/7sta_2stathresh_NetworkWaveformPlots/
 Inspect the waveforms in order to set detection thresholds.
+
+Similarly, to plot results for single station detection, we need a global start time (t0) from global_idx_stats.txt, dt_fp in seconds:
+- Event time = t0 + dt_fp*(start fingerprint index)
 
 
 ### References
