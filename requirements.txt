@@ -1,7 +1,7 @@
 PyWavelets
 obspy
 numpy
-scipy
+scipy==1.1.0
 scikit-image
-sklearn
+scikit-learn
 python-dateutil
