@@ -2,7 +2,7 @@ from os import chdir
 import subprocess
 import argparse
 from parse_config import *
-from fingerprint.util import *
+from fingerprint.config import *
 
 searchCommand = './main --input_fp_file=%s%s \
        --output_minhash_sigs_file=%s%s \
