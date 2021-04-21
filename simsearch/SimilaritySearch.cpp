@@ -18,8 +18,7 @@ void InitializeDatabase(size_t mrows, size_t ncols, uint8_t ntbls, uint8_t nhash
 
     omp_set_num_threads(num_threads);
     //Insert pairs (key, id) into hash tables
-#pragma omp parallel for default(none)\
-    private(j) shared(ntbls, t, keys, filter_flag)
+#pragma omp parallel for private(j) shared(ntbls, t, keys, filter_flag)
     for (j = 0; j < ntbls; ++j) {
         for (size_t i = start_indice; i < end_indice; ++i) {
             if (!filter_flag->test(i)) {
@@ -42,8 +41,7 @@ void InitializeDatabase(size_t mrows, size_t ncols, uint8_t ntbls, uint8_t nhash
 
     omp_set_num_threads(num_threads);
     //Insert pairs (key, id) into hash tables
-#pragma omp parallel for default(none)\
-    private(j) shared(ntbls, ncols, t, keys)
+#pragma omp parallel for private(j) shared(ntbls, ncols, t, keys)
     for (j = 0; j < ntbls; ++j) {
         for (size_t i = start_indice; i < end_indice; ++i) {
             insert_new_item(&t[j], keys[j + i * ntbls], i);
@@ -82,8 +80,7 @@ void SearchDatabase_voting(const uint32_t *query, const size_t nquery, const uin
     omp_set_num_threads(num_threads);
     double lookups = 0;
 
-#pragma omp parallel for default(none)\
-    private(i) shared(lookups, query, t, keys, ofile, noise_freq, filter_flag) \
+#pragma omp parallel for private(i) shared(lookups, query, t, keys, ofile, noise_freq, filter_flag) \
     schedule(dynamic, CHUNK)
     for (i = 0; i < nquery; ++i) {
         uint32_t query_index = query[i];
