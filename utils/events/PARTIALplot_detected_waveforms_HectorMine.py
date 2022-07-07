@@ -20,7 +20,7 @@ print("PROCESSING:", IND_FIRST, IND_LAST)
    
 
 # Inputs
-times_dir = '/lfs/1/ceyoon/TimeSeries/HectorMine/network_detection/'
+times_dir = '../../data/network_detection/'
 [det_start_ind, det_end_ind, dL, nevents, nsta, tot_ndets, max_ndets, tot_vol, max_vol, peaksum, num_sta, diff_ind] = np.loadtxt(times_dir+'sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt', usecols=(0,1,2,3,4,5,6,7,8,9,10,11), unpack=True)
 out_dir = times_dir+'7sta_2stathresh_NetworkWaveformPlots/'
 #[det_start_ind, det_end_ind, dL, nevents, nsta, tot_ndets, max_ndets, tot_vol, max_vol, peaksum, num_sta] = np.loadtxt(times_dir+'FINAL_7sta_Hector_events.txt', unpack=True)
@@ -46,7 +46,7 @@ out_height = 800
 
 # Read in data and plot
 # Use filtered data for plotting
-ts_dir = '/lfs/1/ceyoon/TimeSeries/HectorMine/'
+ts_dir = '../../data/'
 st = read(ts_dir+'waveforms*/Deci5.Pick.*', format='SAC')
 print(len(st))
 print(st.__str__(extended=True))
