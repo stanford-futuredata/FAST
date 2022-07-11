@@ -1,0 +1,33 @@
+site_name: FAST User Guide
+markdown_extensions:
+    - attr_list
+plugins:
+    - search
+theme:
+    name: readthedocs
+    highlightjs: true
+    titles_only: true
+    nav_style: dark
+    navigation_depth: 2
+extra_css:
+    - css/extra.css
+nav:
+    - FAST Overview: index.md
+    - Installation and Configuration:
+        - Install Jiggle: install.md
+        - Configuring Jiggle:
+            - Property Files: property_files.md
+            - Minimal Customization: minimal_setup.md
+            - Alphabetical list of Properties: properties.md
+        - Other Configuration:
+            - Event Catalog: configuration/event-selection-prop.md
+            - Magnitude: configuration/magnitude-prop.md
+            - Origin Types: configuration/origin-type.md
+    - Using Jiggle:
+        - Getting Started with Jiggle: tabviews.md
+        - Events:
+            - Edit Origin Type: event/edit-origin-type.md
+            - Set Event Type: event/set-event-type.md
+        - Tips: tips.md
+    - Other:
+        - List of Acronyms: acronyms.md
