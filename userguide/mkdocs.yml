@@ -1,33 +1,105 @@
-site_name: FAST User Guide
+site_name: FAST 
 markdown_extensions:
     - attr_list
+    - markdown.extensions.toc:
+        baselevel: 1
+        permalink: true
+    
+    - pymdownx.arithmatex:
+        generic: true
+    - pymdownx.betterem:
+        smart_enable: all
+    - pymdownx.caret
+    - pymdownx.details
+    - pymdownx.emoji:
+        emoji_index: !!python/name:materialx.emoji.twemoji
+        emoji_generator: !!python/name:materialx.emoji.to_svg
+    - pymdownx.highlight
+    - pymdownx.inlinehilite
+    - pymdownx.keys
+    - pymdownx.mark
+    - pymdownx.smartsymbols
+    - pymdownx.superfences
+    - pymdownx.tabbed:
+        alternate_style: true
+    - pymdownx.tasklist:
+        custom_checkbox: true
+    - pymdownx.tilde
 plugins:
     - search
+    # - git-revision-date-localized
 theme:
-    name: readthedocs
+    name: material
     highlightjs: true
     titles_only: true
     nav_style: dark
     navigation_depth: 2
+    logo: /img/f_2.png
+    favicon: /img/favicon.png
+    features:
+        - content.code.annotate
+        - content.tooltips
+        - navigation.indexes
+        - navigation.sections
+        - navigation.tabs
+        - navigation.expand
+        - navigation.top
+        - navigation.tracking
+        - search.highlight
+        - search.share
+        - search.suggest
+        - toc.follow
+        - toc.integrate
+    palette:
+        primary: red
+        toggle:
+            icon: material/brightness-7
+            name: Switch to dark mode
+    font:
+        text: Roboto
+        code: Roboto Mono
 extra_css:
     - css/extra.css
+    - stylesheets/extra.css
 nav:
-    - FAST Overview: index.md
-    - Installation and Configuration:
-        - Install Jiggle: install.md
-        - Configuring Jiggle:
-            - Property Files: property_files.md
-            - Minimal Customization: minimal_setup.md
-            - Alphabetical list of Properties: properties.md
-        - Other Configuration:
-            - Event Catalog: configuration/event-selection-prop.md
-            - Magnitude: configuration/magnitude-prop.md
-            - Origin Types: configuration/origin-type.md
-    - Using Jiggle:
+    - FAST Overview: 
+        - What is FAST: what_is_fast.md
+        - Standard Earthquake Detection (STA/LTA): standard_earthquake_detection.md
+        - Waveform Similarity: waveform_similarity.md
+        - Efficient Search: efficient_search.md
+        - What can and can't FAST do?: fast_uses.md
+    - Installation:
+        - Install with Google Colab: setup_colab.md
+        #     - Requirements: reqs_colab.md
+        #     - Installation: install_colab.md
+        - Install with Linux: setup_linux.md
+            # - Requirements: reqs_linux.md
+            # - Installation: install_linux.md
+        - Install with Docker: setup_docker.md
+            # - Why Docker?: why_docker.md
+            # - Requirements: reqs_docker.md
+            # - Installation: install_docker.md
+        # - Install Jiggle: install.md
+        # - Configuring Jiggle:
+        #     - Property Files: property_files.md
+        #     - Minimal Customization: minimal_setup.md
+        #     - Alphabetical list of Properties: properties.md
+        # - Other Configuration:
+        #     - Event Catalog: configuration/event-selection-prop.md
+        #     - Magnitude: configuration/magnitude-prop.md
+        #     - Origin Types: configuration/origin-type.md
+    - Tutorial:
         - Getting Started with Jiggle: tabviews.md
         - Events:
             - Edit Origin Type: event/edit-origin-type.md
             - Set Event Type: event/set-event-type.md
         - Tips: tips.md
-    - Other:
-        - List of Acronyms: acronyms.md
+    - How to Set Parameters:
+        # - List of Acronyms: acronyms.md
+        - Input and Preprocessing: input_and_preprocessing.md
+        - Fingerprint: fingerprint.md
+        - Similarity Search: sim_search.md
+        - Network Detection: net_detect.md
+        - Example Parameters: ex_params.md
+    - References: references.md
+    - Supplementary: supplementary.md
