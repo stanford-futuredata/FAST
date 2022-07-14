@@ -1,0 +1,54 @@
+site_name: FAST
+repo_name: FAST GitHub
+repo_url: https://github.com/stanford-futuredata/FAST
+
+extra_css:
+  - css/extra.css
+
+nav:
+  - FAST Overview: fast_overview.md
+  - Install:
+    - Google Colab: setup_colab.md
+    - Linux: setup_linux.md
+    - Docker: setup_docker.md
+  - Tutorial: tutorial.md
+  - How to Set Parameters:
+    - Input and Preprocessing: input_and_preprocess.md
+    - Feature Extraction: f_e.md
+    - Similarity Search: sim_search.md
+    - Example Parameters: ex_params.md
+  - References: references.md
+  - Supplementary: supplementary.md
+
+theme: 
+  name: material
+  logo: /img/f_2.png
+  favicon: /img/favicon.png
+  features:
+    - content.tabs.link
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: red
+      accent: red
+      toggle:
+        icon: material/lightbulb-outline
+        name: "Switch to dark mode"
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: red
+      accent: red
+      toggle:
+        icon: material/lightbulb
+        name: "Switch to light mode"
+
+markdown_extensions:
+  - attr_list
+  - markdown.extensions.toc:
+      baselevel: 1
+      permalink: true
+  - md_in_html
+  - tables
+
+plugins:
+  - search

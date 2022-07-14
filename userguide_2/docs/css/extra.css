@@ -1,0 +1,32 @@
+img[alt=image] {
+    float: right;
+    height: 450px;
+}
+
+img[alt=sta_s] {
+    width : 750px;
+    height: 400px;
+}
+
+img[alt=sta_u] {
+    width : 750px;
+    height: 400px;
+}
+
+img[alt=supervised_matching] {
+    width : auto;
+    height: auto;
+}
+
+img[alt=unsupervised_matching] {
+    width : auto;
+    height: auto;
+}
+
+img[alt=efficient_search] {
+    width: auto;
+}
+
+figcaption {
+    text-align: center;
+}
