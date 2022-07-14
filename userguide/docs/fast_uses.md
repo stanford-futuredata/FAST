@@ -1,1 +1,0 @@
-# What can and can't FAST do?

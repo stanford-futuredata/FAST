@@ -1,1 +1,0 @@
-# Installing FAST with Linux
