@@ -1,6 +1,6 @@
 site_name: FAST
 repo_name: FAST GitHub
-repo_url: https://github.com/stanford-futuredata/FAST
+repo_url: https://github.com/ttapparo/FAST
 
 extra_css:
   - css/extra.css
