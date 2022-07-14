@@ -22,8 +22,8 @@ nav:
 
 theme: 
   name: material
-  logo: /img/f_2.png
-  favicon: /img/favicon.png
+  logo: /docs/img/f_2.png
+  favicon: /docs/img/favicon.png
   features:
     - content.tabs.link
   palette:
