@@ -27,6 +27,32 @@ img[alt=efficient_search] {
     width: auto;
 }
 
+img[alt=colab_jupyter] {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+img[alt=hector_mine_plot] {
+    float: left;
+    height: 450px;
+}
+
+img[alt=data_process] {
+    float: left;
+    width: 25%;
+    height: 400px;
+}
+
+img[alt=continuous_data] {
+    float: center;
+}
+
+img[alt=gen_fp] {
+    margin-left: 15%;
+}
+
 figcaption {
     text-align: center;
 }

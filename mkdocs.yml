@@ -14,7 +14,7 @@ nav:
   - Tutorial: tutorial.md
   - How to Set Parameters:
     - Input and Preprocessing: input_and_preprocess.md
-    - Feature Extraction: f_e.md
+    - Fingerprint: f_p.md
     - Similarity Search: sim_search.md
     - Example Parameters: ex_params.md
   - References: references.md
@@ -49,6 +49,12 @@ markdown_extensions:
       permalink: true
   - md_in_html
   - tables
+  - admonition
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
 
 plugins:
   - search
