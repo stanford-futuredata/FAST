@@ -53,6 +53,16 @@ img[alt=gen_fp] {
     margin-left: 15%;
 }
 
+img[alt=simsearch_process] {
+    float: left;
+    width: 25%;
+    height: 400px;
+}
+
+img[alt=fast_index_2] {
+    height: 100%;
+}
+
 figcaption {
     text-align: center;
 }

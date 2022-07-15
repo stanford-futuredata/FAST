@@ -1,7 +1,13 @@
 # FAST User Guide
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+<p align="center">Welcome to the <b>FAST</b> User Guide.</p>
 
+![fast_index](img/fast_index_page.png)
+
+FAST is an end-to-end and unsupervised earthquake detection pipeline. It is a useful tool for seismologists to extract more small earthquakes from continuous seismic data.
+
+![fast_index_2](img/fast_index_page_2.png)
+<!-- 
 ## Commands
 
 * `mkdocs new [dir-name]` - Create a new project.
@@ -14,4 +20,4 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
     mkdocs.yml    # The configuration file.
     docs/
         index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+        ...       # Other markdown pages, images and other files. -->
