@@ -1,9 +1,9 @@
 ## What is Colab?
 
-[Colab](https://www.tutorialspoint.com/google_colab/index.htm) is a free Jupyter notebook evironment that runs entirely in the cloud. It lets you and your team members edit documents the way you work with Google Docs. Colab supports many popular machine learning libraries which can be easily loaded in your notebook.
+[Colab](https://www.tutorialspoint.com/google_colab/index.htm) is a free Jupyter notebook environment that runs entirely in the cloud. It lets you and your team members edit documents the way you work with Google Docs and also run code on a data set and visualize the results. Colab supports many popular machine learning libraries which can be easily loaded in your notebook.
 
 ![colab_jupyter](img/colab_jupyter.png)
-<figcaption>The relationship between iPython, Jupter Notebook, and Google Colab.</figcaption>
+<figcaption>The relationship between iPython, Jupyter Notebook, and Google Colab. <a href="https://blog.educationecosystem.com/what-is-google-colab/#:~:text=Google%20Colab%20is%20a%20specialized%20version%20of%20the,Jupyter%20Notebook%2C%20and%20Google%20Colab%20is%20shown%20below%3B">Link</a> to the source.</figcaption>
 
 ## Run FAST in Colab
 
