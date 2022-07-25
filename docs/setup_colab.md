@@ -3,7 +3,7 @@
 [Colab](https://www.tutorialspoint.com/google_colab/index.htm) is a free Jupyter notebook environment that runs entirely in the cloud. It lets you and your team members edit documents the way you work with Google Docs and also run code on a data set and visualize the results. Colab supports many popular machine learning libraries which can be easily loaded in your notebook.
 
 ![colab_jupyter](img/colab_jupyter.png)
-<figcaption>The relationship between iPython, Jupyter Notebook, and Google Colab. <a href="https://blog.educationecosystem.com/what-is-google-colab/#:~:text=Google%20Colab%20is%20a%20specialized%20version%20of%20the,Jupyter%20Notebook%2C%20and%20Google%20Colab%20is%20shown%20below%3B">Link</a> to the source.</figcaption>
+<figcaption>The relationship between iPython, Jupyter Notebook, and Google Colab. (<a href="https://blog.educationecosystem.com/what-is-google-colab/#:~:text=Google%20Colab%20is%20a%20specialized%20version%20of%20the,Jupyter%20Notebook%2C%20and%20Google%20Colab%20is%20shown%20below%3B">Source</a>)</figcaption>
 
 ## Run FAST in Colab
 
@@ -13,4 +13,4 @@ The Colab uses a small example data set from the Hector Mine with 7 stations and
 
 If you want to learn how to use FAST as a beginner, using the Hector Mine example data set is suggested since a bigger data set might take hours, which is not useful.
 
-Use the instructions in the [How to Set Parameters](/docs/input_and_preprocess.md) section to prepare and test your own data set.
+Use the instructions in the [How to Set Parameters](input_and_preprocess.md) section to prepare and test your own data set.

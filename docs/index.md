@@ -1,14 +1,45 @@
 # FAST User Guide
 
-<p align="center">Welcome to the <b>FAST</b> User Guide.</p>
-
 ![fast_index](img/fast_index_page.png)
 
-FAST is an end-to-end and unsupervised earthquake detection pipeline. It is a useful tool for seismologists to extract more small earthquakes from continuous seismic data.
+**Welcome to FAST's documentation**
+=========================================
 
-![fast_index_2](img/fast_index_page_2.png)
-<!-- 
-## Commands
+**FAST** is an end-to-end and unsupervised earthquake detection pipeline. It is a useful tool for seismologists to extract more small earthquakes from continuous seismic data.
+
+**Github development page:**
+------------------------
+https://github.com/stanford-futuredata/FAST
+
+**Contents**
+------------
+1.  [FAST Overview](fast_overview.md)
+
+1.  Install
+
+    1.  [Google Colab](setup_colab.md)
+
+    2.  [Linux](setup_linux.md)
+
+    3.  [Docker](setup_docker.md)
+
+1.  [Tutorial](tutorial.md)
+
+1.  How to Set Parameters
+
+    1.  [Input and Preprocessing](input_and_preprocess.md)
+
+    2.  [Fingerprint](f_p.md)
+
+    3.  [Similarity Search](sim_search.md)
+
+    4.  [Example Parameters](ex_params.md)
+
+1.  [References](references.md)
+
+1.  [Supplementary](supplementary.md)
+
+<!-- ## Commands
 
 * `mkdocs new [dir-name]` - Create a new project.
 * `mkdocs serve` - Start the live-reloading docs server.

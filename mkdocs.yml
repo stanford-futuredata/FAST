@@ -43,18 +43,22 @@ theme:
         name: "Switch to light mode"
 
 markdown_extensions:
+  - admonition
   - attr_list
+  - def_list
   - markdown.extensions.toc:
       baselevel: 1
       permalink: true
+  - markdown.extensions.attr_list
   - md_in_html
   - tables
-  - admonition
   - pymdownx.critic
   - pymdownx.caret
   - pymdownx.keys
   - pymdownx.mark
   - pymdownx.tilde
+  - pymdownx.tasklist:
+      custom_checkbox: true
 
 plugins:
   - search

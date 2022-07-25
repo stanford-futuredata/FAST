@@ -14,7 +14,7 @@
 ## **File Structure Overview**
 
 ### *Code*  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fingerprint: <span style="color: red;">fingerprint/</span>  
+<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fingerprint: <span style="color: red;">fingerprint/</span>  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Similarity Search: <span style="color: red;">simsearch/  </span>  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Postprocessing: <span style="color: red;">postprocessing/</span>  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Utility Functions:  
@@ -22,18 +22,38 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">utils/network</span>  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">utils/events</span>  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">run_fp.py</span>  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">run_simsearcg.py</span>  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">run_simsearch.py</span>   -->
+
+    fingerprint/          # Fingerprint
+    simsearch/            # Similarity Search
+    postprocessing/       # Postprocessing
+    utils/                # Utility Functions
+        preprocess/       
+        network/          
+        events/           
+        run_fp.py         
+        run_simsearch.py  
+
 
 ### *Configuration and Parameters*  
-<span style="color: red;">
+<!-- <span style="color: red;">
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">parameters/</span>  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">ufingerprint/</span>  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">usimsearch/</span>  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">upostprocess/</span>  
-</span>
+</span> -->
+
+    parameters/            
+        fingerprint/       
+        simsearch/         
+        postprocess/       
 
 ### *Data*  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">data/waveforms${STATION}/Deci5*</span>
+<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">data/waveforms${STATION}/Deci5*</span> -->
+
+    data/
+        waveforms${STATION}/
+            Deci5*
 
 ## **Feature Extraction**  
 
@@ -67,8 +87,6 @@
 ~/quake_tutorial$ cd fingerprint/
 ~/quake_tutorial/fingerprint$ python gen_fp.py ../parameters/fingerprint/fp_input_CI_CDY_EHZ.json
 ```
-
-![gen_fp](img/generate_fp.png)
 
 ### **Global Index**
 
