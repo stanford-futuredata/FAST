@@ -13,3 +13,18 @@ You should see the `Hello from Docker!` message displayed. Otherwise, refer to D
 
 !!! warning
     By default, Docker for Mac allocates **2.00GB of RAM**. We recommend increasing the default RAM limit to **4.00GB**. Please refer to [**Docker's Docker Desktop for Mac user manual**](https://docs.docker.com/desktop/mac/#resources) for more information on how to increase the allocated memory.
+
+## **Setting up Docker for FAST**
+
+### Create a directory for FAST code and outputs
+
+``` 
+$ mkdir DockerFAST
+```  
+
+Change permissions so that Docker can write to this directory
+
+```
+$ chmod 777 DockerFAST
+```
+
