@@ -1,4 +1,4 @@
-# References
+# **References**
 
 **(FAST Overview)** C. Yoon, O. O’Reilly, K. Bergen and G. C. Beroza (2015) [Earthquake
 detection through computationally efficient similarity search](https://www.science.org/doi/10.1126/sciadv.1501057#:~:text=FAST%20detection%20results%20%20%20%20Metric%20,%20%2043%20%203%20more%20rows%20), Sci. Adv. 1, e1501057.

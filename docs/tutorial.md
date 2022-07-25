@@ -1,3 +1,5 @@
+# **Tutorial**
+
 ## **Example Data: Hector Mine Foreshocks**
 
 ![hector_mine_plot](img/hector_mine_plot.png)

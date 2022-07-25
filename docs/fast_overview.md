@@ -1,4 +1,4 @@
-# FAST Overview
+# **FAST Overview**
 
 ## **What is FAST?**
 

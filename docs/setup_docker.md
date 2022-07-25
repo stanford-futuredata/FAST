@@ -1,4 +1,4 @@
-# ** Installation for Docker**
+# **Installation for Docker**
 
 [Docker](https://www.docker.com/) is an open-source project for automating the deployment of applications as portable, self-sufficient containers that can run on the cloud or on-premises. ([Source](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/container-docker-introduction/docker-defined))
 

@@ -1,1 +1,1 @@
-# Similarity Search
+# **Similarity Search**
