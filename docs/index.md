@@ -13,9 +13,12 @@
 
 **Contents**
 ------------
-1.  [FAST Overview](fast_overview.md)
+1.  [FAST Overview](fast_overview.md).  
+   **Click here for a summary of the FAST algorithm and why you might want to use it on your seismic data.**
 
-1.  Install
+2.  Install  
+  
+    **Go here to learn how to install and run the FAST software on your computer.**
 
     1.  [Google Colab](setup_colab.md)
 
@@ -23,9 +26,13 @@
 
     3.  [Docker](setup_docker.md)
 
-1.  [Tutorial](tutorial.md)
+3.  [Tutorial](tutorial.md)  
+  
+    **Learn how FAST detects earthquakes on the Hector Mine data set.**
 
-1.  How to Set Parameters
+4.  How to Set Parameters  
+  
+    **Click here to learn how to test FAST on your own data sets.**
 
     1.  [Input and Preprocessing](input_and_preprocess.md)
 
@@ -35,9 +42,10 @@
 
     4.  [Example Parameters](ex_params.md)
 
-1.  [References](references.md)
+5.  [References](references.md)  
+    **Read publications about FAST here.**
 
-1.  [Supplementary](supplementary.md)
+6.  [Supplementary](supplementary.md)
 
 <!-- ## Commands
 
