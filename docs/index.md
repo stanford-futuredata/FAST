@@ -17,7 +17,6 @@
    **Click here for a summary of the FAST algorithm and why you might want to use it on your seismic data.**
 
 2.  Install  
-  
     **Go here to learn how to install and run the FAST software on your computer.**
 
     1.  [Google Colab](setup_colab.md)
@@ -27,11 +26,9 @@
     3.  [Docker](setup_docker.md)
 
 3.  [Tutorial](tutorial.md)  
-  
     **Learn how FAST detects earthquakes on the Hector Mine data set.**
 
 4.  How to Set Parameters  
-  
     **Click here to learn how to test FAST on your own data sets.**
 
     1.  [Input and Preprocessing](input_and_preprocess.md)
