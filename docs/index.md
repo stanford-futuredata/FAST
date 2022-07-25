@@ -9,7 +9,7 @@
 
 **Github development page:**
 ------------------------
-https://github.com/stanford-futuredata/FAST
+[https://github.com/stanford-futuredata/FAST](https://github.com/stanford-futuredata/FAST)
 
 **Contents**
 ------------
