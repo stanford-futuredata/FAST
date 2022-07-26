@@ -63,6 +63,10 @@ img[alt=fast_index_2] {
     height: 100%;
 }
 
+img[alt=postproc_weight] {
+    margin-left: 20%;
+}
+
 figcaption {
     text-align: center;
 }
