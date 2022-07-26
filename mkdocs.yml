@@ -18,7 +18,6 @@ nav:
     - Similarity Search: sim_search.md
     - Example Parameters: ex_params.md
   - References: references.md
-  - Supplementary: supplementary.md
 
 theme: 
   name: material

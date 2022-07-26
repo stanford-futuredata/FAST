@@ -42,7 +42,6 @@
 5.  [References](references.md)  
     **Read publications about FAST here.**
 
-6.  [Supplementary](supplementary.md)
 
 <!-- ## Commands
 

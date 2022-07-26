@@ -12,11 +12,11 @@ docker run hello-world
 You should see the `Hello from Docker!` message displayed. Otherwise, refer to Docker's documentation for getting started [here](https://www.docker.com/get-started/).
 
 !!! warning
-    By default, Docker for Mac allocates **2.00GB of RAM**. We recommend increasing the default RAM limit to **4.00GB**. Please refer to [**Docker's Docker Desktop for Mac user manual**](https://docs.docker.com/desktop/mac/#resources) for more information on how to increase the allocated memory.
+    By default, Docker for Mac allocates **2.00GB of RAM**. The more memory available on Docker, the faster FAST will run. Please refer to [**Docker's Docker Desktop for Mac user manual**](https://docs.docker.com/desktop/mac/#resources) for more information on how to increase the allocated memory.
 
 ## **Setting up Docker for FAST**
 
-### Create a directory for FAST code and outputs
+ Create a directory for FAST code and outputs
 
 ``` 
 $ mkdir DockerFAST
@@ -28,3 +28,10 @@ Change permissions so that Docker can write to this directory
 $ chmod 777 DockerFAST
 ```
 
+Clone the FAST repository frm GitHub
+
+```
+git clone https://github.com/stanford-futuredata/FAST
+```
+
+## **Running FAST with Docker**
