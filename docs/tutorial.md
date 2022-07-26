@@ -16,15 +16,6 @@
 ## **File Structure Overview**
 
 ### *Code*  
-<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fingerprint: <span style="color: red;">fingerprint/</span>  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Similarity Search: <span style="color: red;">simsearch/  </span>  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Postprocessing: <span style="color: red;">postprocessing/</span>  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Utility Functions:  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">utils/preprocess</span>  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">utils/network</span>  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">utils/events</span>  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">run_fp.py</span>  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">run_simsearch.py</span>   -->
 
     fingerprint/          # Fingerprint
     simsearch/            # Similarity Search
@@ -38,12 +29,6 @@
 
 
 ### *Configuration and Parameters*  
-<!-- <span style="color: red;">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">parameters/</span>  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">ufingerprint/</span>  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">usimsearch/</span>  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">upostprocess/</span>  
-</span> -->
 
     parameters/            
         fingerprint/       
@@ -51,7 +36,6 @@
         postprocess/       
 
 ### *Data*  
-<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">data/waveforms${STATION}/Deci5*</span> -->
 
     data/
         waveforms${STATION}/
@@ -101,9 +85,9 @@
 $ python global_index.py global indices.json
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - <span style="color: red;">global_index.py</span> **in** <span style="color: red;">fingerprint/</span>  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - <span style="color: red;">global_indices.json</span> **in** <span style="color: red;">parameters/fingerprint/</span>  
-
+  - `global_index.py` **in** `fingerprint/`
+  - `global_indices.json` **in** `parameters/fingerprint/`  
+<br>
 * Continuous data start/end times may be different, and time gaps may happen at different times, at different components and stations.  
 * Global index: consistent way to refer to times of fingerprints at different components and stations.  
 
