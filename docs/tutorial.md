@@ -43,21 +43,7 @@
 
 ## **Feature Extraction**  
 
-![data_process](img/feature_ex_process.png)
-
-### *Input*  
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continuous seismic data from a channel
-
-### *Output*  
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a binary fingerprint for each overlapping segment of the original &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;waveform
-
-### *Key Property*  
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;similarity of the binary fingerprints approximates that of the &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;original waveforms  
-
-![continuous_data](img/continuous_data.png)
+![fp_step](img/fp_step.png)
 
 ### **Generate Fingerprints**
 
@@ -93,22 +79,7 @@ $ python global_index.py global indices.json
 
 ## **Similarity Search**
 
-![simsearch_process](img/simsearch_process.png)
-
-### *Input*  
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;binary fingerprints from one seismic channel
-
-### *Output*  
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;all pairs of binary fingerprints whose (Jaccard) similarity is above the &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;threshold  
-
-### *Efficient approximate similarity search*  
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MinHash (probabilistic estimate of Jaccard similarity)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Locality Sensitive Hashing (LSH)  
-
-![simsearch_fp](img/simsearch_fp.png)
+![simsearch_step](img/simsearch_step.png)
 
 ### **Search for Similar Earthquake Pairs**
 
@@ -137,13 +108,37 @@ $ python global_index.py global indices.json
 
 ### FAST Similarity Search Output (1 Channel)  
 
-• <span style="color: red;"> data/waveforms${STATION}/fingerprints</span>  
+`data/waveforms${STATION}/fingerprints`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — MinHash Signatures (can delete these later)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: red;">mh_${STATION}_${CHANNEL}_${nhash}.bin</span>  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: red;">Example: mh_CDY_EHZ_4.bin</span>  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• `mh_${STATION}_${CHANNEL}_${nhash}.bin`  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Example: `mh_CDY_EHZ_4.bin`  
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — Binary files with similarity search output (npart files, one per partition, with first and last fingerprint index for the partition in filename):  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <span style="color: red;">candidate_pairs_${STATION}_${CHANNEL}_${nhash},${ntbl}(${FIRST_FP_INDEX},${LAST_FP_INDEX})</span>  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Example: <span style="color: red;">candiate_pairs_CDY_EHZ_4,2(0,74793)</span>  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• `candidate_pairs_${STATION}_${CHANNEL}_${nhash},${ntbl}(${FIRST_FP_INDEX},${LAST_FP_INDEX})`   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Example: `andiate_pairs_CDY_EHZ_4,2(0,74793)`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• For efficiency, the output is binary format; need parsing to convert similarity search &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output to text files
+
+### Parse FAST Similarity Search Output: [Binary --> Text File]
+
+* Use the wrapper script to parse all 9 channels (7 stations)
+```
+~/quake_tutorial$ cd postprocessing
+~/quake_tutorial/postprocessing$ ../parameters/postprocess/*.sh .
+~/quake_tutorial/postprocessing$ ./output_HectorMine_pairs.sh
+```
+
+* Parse a Specific Channel
+```
+python parse_results.py –d <folder_with_binary_sim_search_files> -p <sim_search_filename_prefix> -i <global_index_file>
+```
+
+* Example input file: `candidate_pairs_CDY_EHZ_4,2(0,74793)`  
+* Example command: 
+```
+$ python parse_results.py –d ../data/waveformsCDY/fingerprints/ candidate_pairs_CDY_EHZ –i ../data/global_indices/CDY_EHZ_idx_mapping.txt
+```
+
+## **Postprocessing**
+
+![postproc_step](img/postproc_step.png)
 
