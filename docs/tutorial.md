@@ -2,7 +2,11 @@
 
 ## **Example Data: Hector Mine Foreshocks**
 
-![hector_mine_plot](img/hector_mine_plot.png)
+![hectormin_ex](img/hectormine_ex.png)  
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;waveform data: `data/waveforms${STATION}/Deci5*`  
+
+<!-- ![hector_mine_plot](img/hector_mine_plot.png)
 
 <br></br>
 
@@ -11,7 +15,7 @@
 
 <br></br>
 
-<p align="center">waveform data: <span style="color: red;">data/waveforms${STATION}/Deci5*</span></p>
+<p align="center">waveform data: <span style="color: red;">data/waveforms${STATION}/Deci5*</span></p> -->
 
 ## **File Structure Overview**
 
