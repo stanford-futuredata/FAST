@@ -90,4 +90,5 @@
 
 * 4-12 Hz generally works well as default
 
-### **Example:** Bandpass filter selection, given sample spectrogram
+### **Example:** Bandpass filter selection, given sample spectrogram  
+
