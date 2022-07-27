@@ -214,15 +214,73 @@ Input file: `7sta_2stathresh_network_params.json`
         2. `Diff_ind`: Difference between first and last fingerprint index
     3. **Example output:** `NetworkDetectionTimes_7sta_2stathresh_detlist_rank_by_peaksum.txt`
 
-1. `~/quake_tutorial/postprocessing$ ./remove_duplicates_after_network.sh`  
+2. `~/quake_tutorial/postprocessing$ ./remove_duplicates_after_network.sh`  
     1. Remove events with duplicate start fingerprint index (keep events with highest num_sta then peaksum)
     2. **Example output:** `uniquestart_sorted_no_duplicates.txt`
 
-2. `~/quake_tutorial/postprocessing$ python delete_overlap_network_detections.py`  
+3. `~/quake_tutorial/postprocessing$ python delete_overlap_network_detections.py`  
     1. Remove events with overlapping times: where start time of one event is before end time of another event
     2. **Example output:** `7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt`
 
-3. `~/quake_tutorial/postprocessing$ ./final_network_sort_nsta_peaksum.sh`  
+4. `~/quake_tutorial/postprocessing$ ./final_network_sort_nsta_peaksum.sh`  
     1. Sort events in descending order of num_sta (number of stations that detected event), then peaksum (maximum similarity for this event)
     2. Should no longer have duplicate events
     3. **Example output:** `sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt`
+
+### Final Thresholds: Visual/Manual Inspection
+
+Now we have a list of detections — but are they actually earthquakes? We need to plot and visually inspect them.  
+
+**Example script, view first 100 events:**  
+```
+~/quake_tutorial/utils/events$ python PARTIALplot_hector_detected_waveforms.py 0 100
+```
+
+   * Input finger indices from `sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt`  
+   * Need global start time (t0) from global_idx_stats.txt, dt_fp in seconds  
+   * Here t0 = UTCDateTime('1999-10-15T13:00:00.676000')  
+   * Event time = t0 + dt_fp * (start finger print index)  
+   * Cut short time window around event waveform in filtered data, plot across all stations, save image to png file with names ordered in descending order of num_sta, peaksum – does it look like an earthquake?  
+
+Set final thresholds for num_sta, peaksum  
+
+* **Example Output (first 50 events):**
+
+```
+EQ_sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
+```  
+
+Additional post-processing scripts to remove false positive detections?  
+
+### Final Event Detection List
+
+**Example Script:**  
+```
+~/quake_tutorial/utils/events$ python output_final_detection_list.py
+```  
+
+**Example Input:**  
+```
+EQ_sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
+```
+
+**Example Output:**  
+```
+FINAL_Detection_List_HectorMine_7sta_2stathresh.txt
+```
+
+* Column 1: YYYY-MM-DDTHH:MM:SS.SSSS for event detection time. This is an approximate arrival time for the event (NOT origin time)  
+* Column 2: Event detection time (seconds) since the start time for the first fingerprint, which for this data set is UTCDateTime('1999-10-15T13:00:00.676000')  
+* Column 3: First fingerprint index (integer) for this event. Multiply by dt_fp = 1 second to get the time in column 2. Columns 1, 2, 3 basically represent the same information.  
+* Column 4: Last fingerprint index (integer) for this event from the network-detection
+* Column 5: Fingerprint index duration; column5 = column4-column3. Some sense of event duration
+* Column 6: Number of stations at which the event was similar enough for a detection, the higher the better (nsta_thresh = 2)  
+* Column 7: Peak sum of similarity for this event over all stations where it was detected, the higher the better (more similar to some other event).
+* Detection list is ordered in descending order of number of stations (Column 6), then in descending order of peaksum similarity (Column 7).  
+
+Further processing is required for P/S phase picking and location:  
+
+  * Cut SAC files  
+  * Pick phases (automatic or manual)  
+  * Locate earthquakes  
+  * Compute magnitudes  
