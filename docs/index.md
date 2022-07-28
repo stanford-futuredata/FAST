@@ -1,4 +1,4 @@
-# FAST User Guide
+# **FAST User Guide
 
 ![fast_index](img/fast_index_page.png)
 

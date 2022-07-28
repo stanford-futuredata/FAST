@@ -153,6 +153,26 @@ img[alt=correlated_noise] {
     margin-left: 15%;
 }
 
+img[alt=association_det] {
+    margin-left: 5%;
+}
+
+img[alt=multi_network] {
+    margin-left: 5%;
+}
+
+img[alt=multi_net_illustration] {
+    margin-left: 5%;
+}
+
+img[alt=event_pair_extraction] {
+    margin-left: 28%;
+}
+
+img[alt=event_pair_extraction_2] {
+    margin-left: 28%;
+}
+
 figcaption {
     text-align: center;
 }
