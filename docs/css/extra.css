@@ -67,6 +67,44 @@ img[alt=postproc_weight] {
     margin-left: 20%;
 }
 
+img[alt=minhash] {
+    height: 400px;
+    width: 75%;
+    margin-left: 15%;
+}
+
+img[alt=minhash_prob] {
+    margin-left: 27%;
+}
+
+img[alt=minhash_ex] {
+    height: 400px;
+    width: 75%;
+    margin-left: 10%;
+}
+
+img[alt=lsh_ex] {
+    height: 400px;
+    width: 75%;
+    margin-left: 10%;
+}
+
+img[alt=simsearch_database] {
+    height: 400px;
+    width: 75%;
+    margin-left: 10%;
+}
+
+img[alt=prob_detection] {
+    height: 400px;
+    width: 75%;
+    margin-left: 10%;
+}
+
+img[alt=jaccard_sim] {
+    margin-left: 3%;
+}
+
 figcaption {
     text-align: center;
 }
