@@ -105,6 +105,19 @@ img[alt=jaccard_sim] {
     margin-left: 3%;
 }
 
+img[alt=p_impact_1] {
+    margin-left: 3%;
+}
+
+img[alt=p_impact_2] {
+    margin-left: 3%;
+}
+
+img[alt=p_impact_ex] {
+    margin-left: 3%;
+}
+
+
 figcaption {
     text-align: center;
 }

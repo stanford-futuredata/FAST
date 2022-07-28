@@ -62,3 +62,20 @@
 * `repeat`: Near-repeat exclusion parameter  
     * Avoid detecting any fingerprint with itself (or slight offset to itself), which is guaranteed to be similar  
     * 5 samples is good default value (Multiply by `dt_fp` to get value in seconds)  
+
+![func_tables](img/func_tables.png)
+
+<figcaption>The Jaccard similarity threshold (fast increasing part of the S-curve) increases with the increase of number of hash functions (r), number of votes (v) and the decrease of number of tables (b)</figcaption>  
+
+### Performance Impact of LSH Parameters
+
+![p_impact_1](img/p_impact_1.png)  
+
+![p_impact_2](img/p_impact_2.png)  
+
+### Performance Impact of LSH Parameters (Explanation)  
+
+![p_impact_ex](img/p_impact_ex.png)  
+
+<figcaption>Larger nfuncs --> more non-empty hash buckets<figcaption>  
+
