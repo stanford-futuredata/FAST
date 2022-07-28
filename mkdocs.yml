@@ -16,6 +16,8 @@ nav:
     - Input and Preprocessing: input_and_preprocess.md
     - Fingerprint: f_p.md
     - Similarity Search: sim_search.md
+    - Network Detection: network_detection.md
+    - Output: output.md
     - Example Parameters: ex_params.md
   - References: references.md
 

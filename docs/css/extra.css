@@ -117,6 +117,41 @@ img[alt=p_impact_ex] {
     margin-left: 3%;
 }
 
+img[alt=p_impact_ex_2] {
+    margin-left: 13%;
+}
+
+img[alt=lsh_params] {
+    margin-left: 2%;
+}
+
+img[alt=lsh_params_2] {
+    margin-left: 2%;
+}
+
+img[alt=lsh_det_1] {
+    margin-left: 20%;
+}
+
+img[alt=lsh_det_2] {
+    margin-left: 19%;
+}
+
+img[alt=lsh_det_3] {
+    margin-left: 19%;
+}
+
+img[alt=lsh_guidance] {
+    margin-left: 5%;
+}
+
+img[alt=memory_usage] {
+    margin-left: 5%;
+}
+
+img[alt=correlated_noise] {
+    margin-left: 15%;
+}
 
 figcaption {
     text-align: center;
