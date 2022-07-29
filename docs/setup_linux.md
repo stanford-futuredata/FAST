@@ -10,7 +10,7 @@ The code will benefit from running on machines with more memory and CPUs.
 
 * Consider using instances from Amazon AWS or Google Cloud  
 
-### Install
+## Install
 
 Download the FAST code from GitHub  
 
