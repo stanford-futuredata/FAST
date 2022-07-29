@@ -177,6 +177,10 @@ img[alt=pseudo_params] {
     margin-left: 17%;
 }
 
+img[alt=data_table_1] {
+    margin-left: 10%;
+}
+
 figcaption {
     text-align: center;
 }
