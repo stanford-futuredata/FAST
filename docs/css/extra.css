@@ -181,6 +181,14 @@ img[alt=data_table_1] {
     margin-left: 10%;
 }
 
+img[alt=data_table_3] {
+    margin-left: 5%;
+}
+
+img[alt=data_table_5] {
+    margin-left: 37%;
+}
+
 figcaption {
     text-align: center;
 }
