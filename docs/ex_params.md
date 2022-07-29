@@ -42,3 +42,8 @@ Table S2: FAST input parameters for Italy earthquake detection: single-channel a
 
 Table S3: Network detection input parameters for Italy earthquakes at 22 YR stations (HHZ channel only), after getting similar pairs of fingerprints from FAST for each station.  
 
+![data_table_2](img/data_table_2.png)  
+
+![distribution_1](img/distribution_1.png)  
+
+<figcaption>Figure 3: Distribution of FAST detections in central Italy continuous data on 2016-10-29. FAST detected a total of 1,485 earthquakes during this day.</figcaption>
