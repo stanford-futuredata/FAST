@@ -180,3 +180,142 @@ Example script to generate fingerprints on one channel (HHZ) at one station (LNY
        "end_time": "17-05-31T00:00:00.0",
        "folder": "/lfs/1/ceyoon/TimeSeries/SaudiFull/SA.LNY03/",
 ```  
+
+There are a total of 106 fp_input_NETWORK_STATION_CHANNEL.json fingerprint input files, one for each channel and station, all with the same input fingerprint parameters in Table S12.  
+
+Median/MAD output files: `mad/mad*.txt`  
+
+Table S12: Fingerprint input parameters for SaudiFull earthquake detection: 3-component at 36 stations (except for SA.UMJ02), after applying station-specific bandpass filter (Table S11), and sampled at 50 Hz. The fingerprint sampling period is dt_fp = 1.2 seconds.  
+
+![data_table_11](img/data_table_11.png)  
+
+Fingerprints (binary files): `fingerprints/LNY03.HHZ.fp`  
+Timestamps at each fingerprint index (text files): `timestamps/LNY03.HHZ.ts`  
+
+Finally, to create global indices for the SaudiFull data set, so that fingerprint indices from different channels (all 106) and stations are referenced to a common starting time:  
+
+```
+$ python global_index.py ../parameters/fingerprint/SaudiFull/global_indices_SaudiFull.json  
+```  
+
+The common starting time is in `global_idx_stats.txt`: 2017-01-01T00:00:06.840000 UTC  
+
+### 0.5.3 Similarity Search  
+
+Master script to run similarity search on each channel (out of 106 total):  
+
+```
+~/FAST/simsearch/$ ../parameters/simsearch/SaudiFull/run_simsearch_SaudiFull.sh  
+```  
+
+Table S13: Similarity search input parameters for SaudiFull earthquake detection: 106 channels at 36 stations (3 components each, except SA.UMJ02). The occurrence filter, specified by the FREQ_NOISE parameter, was applied only for selected stations and channels (Table S14).  
+
+![data_table_12](img/data_table_12.png)  
+
+Example script to run similarity search on one channel (HHZ) at one station (LNY03), called by the master script `run_simsearch_SaudiFull.sh`:  
+
+```
+~/FAST/simsearch/$ ../parameters/simsearch/SaudiFull/simsearch_input_SaudiFull.sh LNY03 HHZ
+NTBLS=100
+NHASH=4
+NREPEAT=5
+NVOTES=2
+NTHREAD=56
+NUM_PART=1
+```  
+
+We first ran similarity search with the same input parameters on all 106 channels, without the occurrence filter. For 18 selected channels (Table S14), where the `candidate_pairs` similarity search outputs were especially large because of correlated noise, we ran similarity search with the occurrence filter (FREQ_NOISE=0.01), which significantly reduced the similarity search output file sizes. A fingerprint that matches over 1% of other fingerprints is excluded from the similarity search, in order to avoid detecting noise that repeats often in time. For example, the occurrence filter was applied for station LNY01 channel HHZ by calling the script `filt_simsearch_input_SaudiFull.sh` from the master script `run_simsearch_SaudiFull.sh`:  
+
+```
+
+~/FAST/simsearch/$ ../parameters/simsearch/SaudiFull/filt_simsearch_input_SaudiFull.sh LNY03 HHZ
+NTBLS=100
+NHASH=4
+NREPEAT=5
+NVOTES=2
+NTHREAD=56
+NUM_PART=1
+FREQ_NOISE=0.01
+```  
+
+Table S14: Selected stations and channels from SaudiFull data set where we applied the occurrence filter with FREQ_ NOISE=0.01.  
+
+![data_table_13](img/data_table_13.png)  
+
+### 0.5.4 Postprocessing  
+
+First, run the master script to convert similarity search output from binary format to text format (3 columns: dt = idx1 − idx2, idx1, sim, sorted in increasing dt order) for each channel (106 total):  
+
+```
+~/FAST/postprocessing/$ ../parameters/postprocess/SaudiFull/output_SaudiFull_pairs.sh
+```  
+
+For example, on one channel (HHZ) at one station (LNY03), all on one line:  
+
+```
+~/FAST/postprocessing/$ python parse_results.py
+-d /lfs/1/ceyoon/TimeSeries/SaudiFull/SA.LNY03/fingerprints/
+-p candidate_pairs_LNY03_HHZ -i /lfs/1/ceyoon/TimeSeries/SaudiFull/global_indices/LNY03_HHZ_idx_mapping.txt
+```  
+
+Output file for example (large size at channel level): `/lfs/1/ceyoon/TimeSeries/SaudiFull/SA.LNY03/fingerprints/candidate_pairs_LNY03_HHZ_merged.txt`  
+
+Second, run the master script to combine similarity output from all 3 components at a given station, for all 36 stations:  
+
+```
+~/FAST/postprocessing/$ ../parameters/postprocess/SaudiFull/combine_SaudiFull_pairs.sh  
+```  
+
+For example, on three channels (HHE, HHN, HHZ) at one station (LNY03), first move the similarity output text files to the inputs_network/ directory:  
+
+```
+$ cd /lfs/1/ceyoon/TimeSeries/SaudiFull/SA.LNY03/fingerprints/
+$ mv candidate_pairs_LNY03_HH*_merged.txt ../../../inputs_network/
+```  
+
+Then for each similar fingerprint pair, add the similarity from all 3 components at the same station, with a similarity threshold of 6 = (3 components)*(v=2 votes/component, Table S13). Note: this step will delete the c`andidate_ pairs_LNY03_HH*_merged.txt` files.  
+
+```
+~/FAST/postprocessing/$ python parse_results.py
+-d /lfs/1/ceyoon/TimeSeries/SaudiFull/inputs_network/
+-p candidate_pairs_LNY03 --sort true --parse false -c true -t 6
+```  
+
+Output file for example (smaller size at station level): `/lfs/1/ceyoon/TimeSeries/SaudiFull/inputs_network/ candidate_pairs_LNY03_combined.txt`  
+
+For station SA.UMJ02, which has only 1 component (HHE), multiply the similarity sim by 3 to give this station an equal weight as the other 3-component stations:  
+
+```
+~/FAST/postprocessing/$ awk ’{print $1, $2, 3*$3}’
+/lfs/1/ceyoon/TimeSeries/SaudiFull/SA.UMJ02/fingerprints/candidate_pairs_UMJ02_HHE_merged.txt
+> /lfs/1/ceyoon/TimeSeries/SaudiFull/SA.UMJ02/fingerprints/candidate_pairs_UMJ02_combined.txt
+```  
+
+Finally, detect similar fingerprints across the network of 36 stations, using the input parameters in Table S15:  
+
+```
+~/FAST/postprocessing/$
+python scr_run_network_det.py ../parameters/postprocess/SaudiFull/36sta_3stathresh_network_params.json
+       "network": {
+              "max_fp": 10736786,
+              "dt_fp": 1.2, (seconds)
+              "dgapL": 10, (12 s)
+              "dgapW": 3, (3.6 s)
+              "num_pass": 2,
+              "min_dets": 3,
+              "min_sum_multiplier": 1,
+              "max_width": 8, (9.6 s)
+              "ivals_thresh": 6,
+              "nsta_thresh": 3,
+              "input_offset": 15 (18 s)
+},
+```  
+
+Network detection output file for example (smaller size at station level): `/lfs/1/ceyoon/TimeSeries/SaudiFull/ network_detection/36sta_3stathresh_detlist_rank_by_peaksum.txt` (21,498 events)  
+
+At this point, FAST earthquake detection processing is done.  
+
+Table S15: Network detection input parameters for SaudiFull at 36 stations. max_fp = 10736786 is the largest fingerprint index over all channels from *mapping.txt files in the global_indices directory. dt_fp = 1.2 seconds is the fingerprint sampling period from Table S12.  
+
+![data_table_14](img/data_table_14.png)  
+
