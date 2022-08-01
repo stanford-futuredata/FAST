@@ -19,15 +19,15 @@ Earthquake pair at different stations: consistent inter-event time dt Reduce fal
 ### Event-Pair Extraction Parameters  
 
 ```
-    "network": {
-        "dgapL": 3,                 # Longest allowed along-diagonal time gap (samples)  
-        ”dgapW": 3,                 # Longest allowed cross-diagonal time gap (samples)  
-        ”num_pass": 2,              # Adjacent diagonal merge iterations  
-        ”ivals_thresh": 6,          # Minimum similarity (number of votes)  
-        “min_dets": 4,              # Minimum number of fingerprint-pairs in a cluster  
-        ”min_sum_multiplier": 1,    # Minimum total similarity multiplier for a cluster  
-        "max_width": 8,             # Maximum bounding box width (samples)  
-    }
+"network": {
+    "dgapL": 3,                 # Longest allowed along-diagonal time gap (samples)  
+    ”dgapW": 3,                 # Longest allowed cross-diagonal time gap (samples)  
+    ”num_pass": 2,              # Adjacent diagonal merge iterations  
+    ”ivals_thresh": 6,          # Minimum similarity (number of votes)  
+    “min_dets": 4,              # Minimum number of fingerprint-pairs in a cluster  
+    ”min_sum_multiplier": 1,    # Minimum total similarity multiplier for a cluster  
+    "max_width": 8,             # Maximum bounding box width (samples)  
+}
 ```  
 
 **Guidelines for setting parameters:**  
@@ -38,13 +38,13 @@ Earthquake pair at different stations: consistent inter-event time dt Reduce fal
 * dgapW: **should be small, equivalent to a few seconds (3-4 seconds)** 
 
 ```
-    "network": {
-        “max_fp": 74797,    # Max fingerprint index over all stations  
-        ”dt_fp": 1.0,       # Fingerprint lag (s)  
-        "dgapL": 3,         # Longest allowed along-diagonal time gap (samples)  
-        ”dgapW": 3,         # Longest allowed cross-diagonal time gap (samples)  
-        ”num_pass": 2,      # Adjacent diagonal merge iterations
-    },
+"network": {
+    “max_fp": 74797,    # Max fingerprint index over all stations  
+    ”dt_fp": 1.0,       # Fingerprint lag (s)  
+    "dgapL": 3,         # Longest allowed along-diagonal time gap (samples)  
+    ”dgapW": 3,         # Longest allowed cross-diagonal time gap (samples)  
+    ”num_pass": 2,      # Adjacent diagonal merge iterations
+},
 ```  
 
 ![event_pair_extraction](img/event_pair_extraction.png)  
@@ -61,12 +61,12 @@ Earthquake pair at different stations: consistent inter-event time dt Reduce fal
 ![event_pair_samples](img/event_pair_samples.png)  
 
 ```
-    "network": {
-        ”ivals_thresh": 6,              # Minimum similarity (number of votes)  
-        “min_dets": 4,                  # Minimum number of fingerprint-pairs in a cluster  
-        ”min_sum_multiplier": 1,        # Minimum total similarity multiplier for a cluster  
-        "max_width": 8,                 # Maximum bounding box width (samples)  
-    },
+"network": {
+    ”ivals_thresh": 6,              # Minimum similarity (number of votes)  
+    “min_dets": 4,                  # Minimum number of fingerprint-pairs in a cluster  
+    ”min_sum_multiplier": 1,        # Minimum total similarity multiplier for a cluster  
+    "max_width": 8,                 # Maximum bounding box width (samples)  
+},
 ```  
 
 ![event_pair_extraction_2](img/event_pair_extraction_2.png)  
@@ -80,10 +80,10 @@ Earthquake pair at different stations: consistent inter-event time dt Reduce fal
 ### Network Detection Performance Parameter Guidance
 
 ```
-    "performance": {
-        "partition_size": 2147483648,  
-        "num_cores": 4  
-    }
+"performance": {
+    "partition_size": 2147483648,  
+    "num_cores": 4  
+}
 ```  
 
 * `partition_size`: Maximum size of each partition (bytes), if entire list of similarity search output pairs does not fit into memory
@@ -94,10 +94,10 @@ Earthquake pair at different stations: consistent inter-event time dt Reduce fal
 ### Pseudo-Association Parameters (Multiple stations)  
 
 ```
-    ”network": { 
-        ”nsta_thresh": 2,       # Minimum number of stations for detection  
-        “input_offset": 3,      # Arrival time constraint: maximum time gap (samples)
-    },
+”network": { 
+    ”nsta_thresh": 2,       # Minimum number of stations for detection  
+    “input_offset": 3,      # Arrival time constraint: maximum time gap (samples)
+},
 ```
 
 ![pseudo_params](img/pseudo_params.png)  

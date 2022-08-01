@@ -27,14 +27,14 @@
 ![prob_detection](img/prob_detection.png)  
 
 ```
-    "lsh_param": {
-        "ntbl": 100,        # b: Number of hash tables  
-        "nhash": 4,         # r: Number of hash functions per table  
-        "nvote": 2,         # v: Number of votes  
-        "nthread": 8,       # Number of threads for parallel processing  
-        "npart": 1,         # Number of partitions for the database  
-        "repeat": 5         # Near-repeat exclusion parameter (samples)  
-    },
+"lsh_param": {
+    "ntbl": 100,        # b: Number of hash tables  
+    "nhash": 4,         # r: Number of hash functions per table  
+    "nvote": 2,         # v: Number of votes  
+    "nthread": 8,       # Number of threads for parallel processing  
+    "npart": 1,         # Number of partitions for the database  
+    "repeat": 5         # Near-repeat exclusion parameter (samples)  
+},
 ```
 
 ![jaccard_sim](img/jaccard_sim.png)  
