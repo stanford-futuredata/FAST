@@ -244,7 +244,7 @@ Table S14: Selected stations and channels from SaudiFull data set where we appli
 
 ### 0.5.4 Postprocessing  
 
-First, run the master script to convert similarity search output from binary format to text format (3 columns: dt = idx1 − idx2, idx1, sim, sorted in increasing dt order) for each channel (106 total):  
+**First**, run the master script to convert similarity search output from binary format to text format (3 columns: dt = idx1 − idx2, idx1, sim, sorted in increasing dt order) for each channel (106 total):  
 
 ```
 ~/FAST/postprocessing/$ ../parameters/postprocess/SaudiFull/output_SaudiFull_pairs.sh
@@ -258,22 +258,23 @@ For example, on one channel (HHZ) at one station (LNY03), all on one line:
 -p candidate_pairs_LNY03_HHZ -i /lfs/1/ceyoon/TimeSeries/SaudiFull/global_indices/LNY03_HHZ_idx_mapping.txt
 ```  
 
-Output file for example (large size at channel level): `/lfs/1/ceyoon/TimeSeries/SaudiFull/SA.LNY03/fingerprints/candidate_pairs_LNY03_HHZ_merged.txt`  
+==Output file for example (large size at channel level):== `/lfs/1/ceyoon/TimeSeries/SaudiFull/SA.LNY03/fingerprints/candidate_pairs_LNY03_HHZ_merged.txt`  
 
-Second, run the master script to combine similarity output from all 3 components at a given station, for all 36 stations:  
+**Second**, run the master script to combine similarity output from all 3 components at a given station, for all 36 stations:  
 
 ```
 ~/FAST/postprocessing/$ ../parameters/postprocess/SaudiFull/combine_SaudiFull_pairs.sh  
 ```  
 
-For example, on three channels (HHE, HHN, HHZ) at one station (LNY03), first move the similarity output text files to the inputs_network/ directory:  
+!!! example
+    For example, on three channels (HHE, HHN, HHZ) at one station (LNY03), first move the similarity output text files to the inputs_network/ directory:  
 
 ```
 $ cd /lfs/1/ceyoon/TimeSeries/SaudiFull/SA.LNY03/fingerprints/
 $ mv candidate_pairs_LNY03_HH*_merged.txt ../../../inputs_network/
 ```  
 
-Then for each similar fingerprint pair, add the similarity from all 3 components at the same station, with a similarity threshold of 6 = (3 components)*(v=2 votes/component, Table S13). Note: this step will delete the c`andidate_ pairs_LNY03_HH*_merged.txt` files.  
+**Then** for each similar fingerprint pair, add the similarity from all 3 components at the same station, with a similarity threshold of 6 = (3 components)*(v=2 votes/component, Table S13). Note: this step will delete the c`andidate_ pairs_LNY03_HH*_merged.txt` files.  
 
 ```
 ~/FAST/postprocessing/$ python parse_results.py
@@ -281,7 +282,7 @@ Then for each similar fingerprint pair, add the similarity from all 3 components
 -p candidate_pairs_LNY03 --sort true --parse false -c true -t 6
 ```  
 
-Output file for example (smaller size at station level): `/lfs/1/ceyoon/TimeSeries/SaudiFull/inputs_network/ candidate_pairs_LNY03_combined.txt`  
+==Output file for example (smaller size at station level):== `/lfs/1/ceyoon/TimeSeries/SaudiFull/inputs_network/ candidate_pairs_LNY03_combined.txt`  
 
 For station SA.UMJ02, which has only 1 component (HHE), multiply the similarity sim by 3 to give this station an equal weight as the other 3-component stations:  
 
@@ -291,7 +292,7 @@ For station SA.UMJ02, which has only 1 component (HHE), multiply the similarity 
 > /lfs/1/ceyoon/TimeSeries/SaudiFull/SA.UMJ02/fingerprints/candidate_pairs_UMJ02_combined.txt
 ```  
 
-Finally, detect similar fingerprints across the network of 36 stations, using the input parameters in Table S15:  
+**Finally**, detect similar fingerprints across the network of 36 stations, using the input parameters in Table S15:  
 
 ```
 ~/FAST/postprocessing/$
@@ -313,9 +314,87 @@ python scr_run_network_det.py ../parameters/postprocess/SaudiFull/36sta_3stathre
 
 Network detection output file for example (smaller size at station level): `/lfs/1/ceyoon/TimeSeries/SaudiFull/ network_detection/36sta_3stathresh_detlist_rank_by_peaksum.txt` (21,498 events)  
 
-At this point, FAST earthquake detection processing is done.  
+At this point, FAST earthquake detection processing is **done**.  
 
 Table S15: Network detection input parameters for SaudiFull at 36 stations. max_fp = 10736786 is the largest fingerprint index over all channels from *mapping.txt files in the global_indices directory. dt_fp = 1.2 seconds is the fingerprint sampling period from Table S12.  
 
 ![data_table_14](img/data_table_14.png)  
+
+### 0.5.5 Remove Duplicates After Network Detection  
+
+!!! info 
+    The network detection output still contains many duplicate events, so we need to remove these using a few scripts, where you need to modify the hard-coded paths. (These are scripts I quickly came up with on the fly to help me analyze the detection output. Feel free to come up with improved scripts that would better suit your needs.)  
+
+**First**, save only first and last time indices for each detection. For the last 2 columns: output the number of stations that detected event (num_sta) and difference between first and last index (diff_ind).  
+
+```
+~/FAST/utils/network/$ python arrange_network_detection_results.py
+```  
+
+==Output:== `NetworkDetectionTimes_36sta_3stathresh_detlist_rank_by_peaksum.txt (21,498 events)`  
+
+**Second**, remove duplicate events. First remove events with exact first and last detection time indices. Then remove events with duplicate start times; for each start time, keep only the event with the highest num_sta (number of stations that detected the event) and peaksum (peak similarity).  
+
+```
+~/FAST/utils/network/$ ./remove_duplicates_after_network.sh  
+```  
+
+==Output:== `uniquestart_sorted_no_duplicates.txt (15,054 events)`  
+
+**Third**, remove events that overlap between the first and last detection time indices, keeping the event with the highest
+num_sta and peaksum.  
+
+```
+~/FAST/utils/network/$ python delete_overlap_network_detections.py  
+``` 
+
+==Output:== `36sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt` (11,597 events)  
+
+**Fourth**, since different channels in the network have different durations (for example, in Figure 7, stations UMJ01-UMJ12 were active only during May 2017, while many of the other stations were active from January to May 2017), we calculate a normalized measure of the number of stations that detected the event: frac_ch, which is the fraction of channels that were active at each detection time. This is done by reading in files that were generated during preprocessing by get_continuous_data_times.py. This normalization step would not be necessary if all stations and channels in the network recorded the same duration of data.  
+
+```
+~/FAST/utils/network/$ python get_station_count_detections.py
+```  
+
+==Output:== `36sta_3stathresh_ChannelCount_FinalUniqueNetworkDetectionTimes.txt` (11,597 events)  
+
+**Finally**, sort remaining events in descending order of num_sta, then frac_ch, then peaksum, for the final detection
+list.  
+
+```
+~/FAST/utils/network/$ ./final_network_sort_nsta_fracch_peaksum.sh
+```  
+
+==Output:== `sort_nsta_peaksum_36sta_3stathresh_ChannelCount_FinalUniqueNetworkDetectionTimes.txt` (11,597 events)  
+
+### 0.5.6 Visual Inspection and Final Detections  
+
+Plot event waveforms in the final detection list, ranked in descending order of num_sta, then peaksum, for visual inspection. Need to verify by looking at the waveforms that these are indeed earthquakes, and also enables setting final detection thresholds (Table S16).  
+
+```
+~/FAST/utils/events/$ python PARTIALplot_detected_waveforms_SaudiFull.py 0 11597
+```  
+
+==Output:== `.png` image files in `36sta_3stathresh_NetworkWaveformPlots/`  
+
+Table S16: Final thresholds for SaudiFull applied to network detection parameters num_sta (number of stations that detected event pair) and peaksum (total similarity score at all stations) to determine list of earthquakes, set empirically after visual inspection. For each value of num_sta, a different threshold for peaksum can be applied.  
+
+![data_table_15](img/data_table_15.png)  
+
+After visual inspection, 4634 events are above thresholds in Table S16.  
+
+* `EQ_sort_nsta_peaksum_36sta_3stathresh_ChannelCount_FinalUniqueNetworkDetectionTimes.txt`: 4543 events that look like earthquake waveforms  
+* `FALSE_sort_nsta_peaksum_36sta_3stathresh_ChannelCount_FinalUniqueNetworkDetectionTimes.txt`: 91 false detections above thresholds that do not look like earthquakes  
+
+For the 4543 earthquake events, output an event catalog (Figure 8):  
+
+```
+~/FAST/utils/events/$ python output_final_detection_list.py
+```  
+
+==Output:== `FINAL_Detection_List_SaudiFull_36sta_3stathresh.txt` (4543 events)  
+
+![distribution_4](img/distribution_4.png)  
+
+<figcaption>Figure 8: Saudi Arabia earthquake detections from 2017-01-01 to 2017-05-31. The vertical axis indicates a measure of network FAST similarity: nsta*peaksum (Table S16). FAST detected a total of 4,543 earthquakes during this month.</figcaption>  
 
