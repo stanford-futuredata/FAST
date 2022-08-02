@@ -18,7 +18,17 @@ nav:
     - Similarity Search: sim_search.md
     - Network Detection: network_detection.md
     - Output: output.md
-    - Example Parameters: ex_params.md
+    - Example Parameters: 
+      - ex_params_intro.md
+      - italy_day_yr_dataset.md
+      - tanzania_dataset.md
+      - saudi_dataset.md
+      - saudifull_dataset.md
+      - ometepec_dataset.md
+      - wenchuan_dataset.md
+      - groningen_dataset.md
+      - brazil_dataset.md
+      - newzealand_dataset.md
   - References: references.md
 
 theme: 
