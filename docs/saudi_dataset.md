@@ -1,4 +1,4 @@
-# 0.4 sSaudi Arabia, May 2014
+# 0.4 Saudi Arabia, May 2014
 
 ![ex_param_3](img/ex_param_3.png)
 
