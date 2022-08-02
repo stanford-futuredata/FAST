@@ -1,4 +1,4 @@
-# Groningen Data Set  
+# 0.8 Groningen Data Set  
 
 * Location: Netherlands (gas production field)  
 * Duration: 4 months (119 days): 2018-01-01 to 2018-04-30  

@@ -1,4 +1,4 @@
-# Ometepec, Mexico, January - April 2012  
+# 0.6 Ometepec, Mexico, January - April 2012  
 
 ![ex_param_4](img/ex_param_4.png)  
 

@@ -1,4 +1,4 @@
-# SaudiFull Data Set: Saudi Arabia, January - May 2017  
+# 0.5 SaudiFull Data Set: Saudi Arabia, January - May 2017  
 
 * Location: Saudi Arabia, January - May 2017 (volcanic area with dikes)  
 * Duration: up to 5 months (151 days): 2017-01-01 to 2017-05-30  

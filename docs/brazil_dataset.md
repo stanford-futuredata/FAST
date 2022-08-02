@@ -1,4 +1,4 @@
-# BrazilAcre Data Set  
+# 0.9 BrazilAcre Data Set  
 
 * Location: Acre, Brazil (search for intermediate-depth and deep earthquakes)  
 * Duration: about 3 months (with time gaps): 2015-05-28 to 2016-02-01  
