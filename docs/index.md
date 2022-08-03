@@ -37,7 +37,12 @@
 
     3.  [Similarity Search](sim_search.md)
 
-    4.  [Example Parameters](ex_params.md)
+    4.  [Network Detection](network_detection.md)  
+
+    5.  [Output](output.md)  
+
+    6.  [Example Parameters](ex_params.md)
+
 
 5.  [References](references.md)  
     **Read publications about FAST here.**
