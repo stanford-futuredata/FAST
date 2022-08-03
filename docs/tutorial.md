@@ -281,13 +281,13 @@ EQ_sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
 FINAL_Detection_List_HectorMine_7sta_2stathresh.txt
 ```
 
-* Column 1: YYYY-MM-DDTHH:MM:SS.SSSS for event detection time. This is an approximate arrival time for the event (NOT origin time)  
-* Column 2: Event detection time (seconds) since the start time for the first fingerprint, which for this data set is UTCDateTime('1999-10-15T13:00:00.676000')  
-* Column 3: First fingerprint index (integer) for this event. Multiply by dt_fp = 1 second to get the time in column 2. Columns 1, 2, 3 basically represent the same information.  
-* Column 4: Last fingerprint index (integer) for this event from the network-detection
-* Column 5: Fingerprint index duration; column5 = column4-column3. Some sense of event duration
-* Column 6: Number of stations at which the event was similar enough for a detection, the higher the better (nsta_thresh = 2)  
-* Column 7: Peak sum of similarity for this event over all stations where it was detected, the higher the better (more similar to some other event).
+* **Column 1**: YYYY-MM-DDTHH:MM:SS.SSSS for event detection time. This is an approximate arrival time for the event (NOT origin time)  
+* **Column 2**: Event detection time (seconds) since the start time for the first fingerprint, which for this data set is UTCDateTime('1999-10-15T13:00:00.676000')  
+* **Column 3**: First fingerprint index (integer) for this event. Multiply by dt_fp = 1 second to get the time in column 2. Columns 1, 2, 3 basically represent the same information.  
+* **Column 4**: Last fingerprint index (integer) for this event from the network-detection
+* **Column 5**: Fingerprint index duration; column5 = column4-column3. Some sense of event duration
+* **Column 6**: Number of stations at which the event was similar enough for a detection, the higher the better (nsta_thresh = 2)  
+* **Column 7**: Peak sum of similarity for this event over all stations where it was detected, the higher the better (more similar to some other event).
 * Detection list is ordered in descending order of number of stations (Column 6), then in descending order of peaksum similarity (Column 7).  
 
 Further processing is required for P/S phase picking and location:  
