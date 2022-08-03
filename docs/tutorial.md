@@ -182,9 +182,17 @@ $ python parse_results.py –d ../data/waveformsCDY/fingerprints/ candidate_pair
     * `~/quake_tutorial/postprocessing$ cp ../parameters/network/* .`  
     * `~/quake_tutorial/postprocessing$ python scr_run_network_det.py 7sta_2stathresh_network_params.json`  
 
-Input file: `7sta_2stathresh_network_params.json`
+Input file: `7sta_2stathresh_network_params.json`  
 
-![input)file_network](img/input_file_network.png)
+```
+"io": {
+    "channel_vars": ["CDY", "CPM", "GTM", "HEC", "RMM", "RMR", "TPC"],  # Station names
+    "fname_template": "candidate_pairs_%s_combined.txt",                # Input file (to fill w/station name) 
+    "base_dir": ”../data/",                                             # Base directory
+    "data_folder": "inputs_network/",                                   # Input file directory
+    "out_folder": "network_detection/"                                  # Output file directory
+}
+```  
 
 ### Network Detection Outputs
 

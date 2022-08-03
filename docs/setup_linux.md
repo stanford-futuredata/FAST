@@ -37,7 +37,7 @@ Raw SAC files for each station are stored under `data/waveforms${STATION}`. Stat
 
 ### Fingerprint  
 
-Parameters for each station is under `parameters/fingerprint/`. To fingerprint all stations and generate the global index, you can call the wrapper script (Python):  
+Parameters for each station are under `parameters/fingerprint/`. To fingerprint all stations and generate the global index, you can call the wrapper script (Python):  
 
 ```
 ~/FAST$ python run_fp.py -c config.json  
