@@ -1,5 +1,8 @@
 # **Installation for Google Colab**
 
+!!! info 
+    If you are new to FAST, testing out FAST in Google Colab is a great way to get an overview of the software and learn how to test your own data.  
+
 ## What is Colab?
 
 [Colab](https://www.tutorialspoint.com/google_colab/index.htm) is a free Jupyter notebook environment that runs entirely in the cloud. It lets you and your team members edit documents the way you work with Google Docs and also run code on a data set and visualize the results. Colab supports many popular machine learning libraries which can be easily loaded in your notebook.
