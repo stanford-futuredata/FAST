@@ -178,7 +178,15 @@ img[alt=pseudo_params] {
 }
 
 img[alt=data_table_1] {
-    margin-left: 10%;
+    margin-left: 15%;
+}
+
+img[alt=distribution_1] {
+    margin-left: 8%;
+}
+
+img[alt=data_table_2] {
+    margin-left: 6%;
 }
 
 img[alt=data_table_3] {
@@ -206,7 +214,7 @@ img[alt=data_table_6] {
 }
 
 img[alt=data_table_7] {
-    margin-left: 5%;
+    margin-left: 4%;
 }
 
 img[alt=data_table_8] {
@@ -222,7 +230,7 @@ img[alt=distribution_3] {
 }
 
 img[alt=saudi_fig_7] {
-    margin-left: 20%;
+    margin-left: 25%;
 }
 
 img[alt=data_table_10] {
@@ -258,7 +266,7 @@ img[alt=ex_param_4] {
 }
 
 img[alt=data_table_16] {
-    margin-left: 20%;
+    margin-left: 18%;
 }
 
 img[alt=ex_param_5] {

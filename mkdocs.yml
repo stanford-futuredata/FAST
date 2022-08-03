@@ -56,6 +56,7 @@ theme:
 markdown_extensions:
   - admonition
   - attr_list
+  - codehilite
   - def_list
   - markdown.extensions.toc:
       baselevel: 1
