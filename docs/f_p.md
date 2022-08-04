@@ -75,12 +75,14 @@
 * Filter can be different for different stations and components  
 * Contain as much of your desired earthquake signal as possible; not too narrowband  
 * Remove frequencies with repeated noise: ^^important^^  
-  * View sample spectrograms to empirically determine these noisy frequencies (output as .png image files):
-  ```
+  * View sample spectrograms to empirically determine these noisy frequencies (output as .png image files):  
+
+```
 parameters/preprocess_utils/sample_spectrograms_daily _NEP.py
-  ```
-      * Twice a day (day and night: cultural noise variations)
-      * Once a month or once a day – sample randomly
+```  
+
+  * Twice a day (day and night: cultural noise variations)
+  * Once a month or once a day – sample randomly
 
   * Usually 0-2 Hz has repeated noise; sometimes >20 Hz
   * ^^Without this step, similar noise signals will dominate your detections --> you will not find earthquakes^^  
@@ -225,6 +227,12 @@ parameters/preprocess_utils/sample_spectrograms_daily _NEP.py
     * Global index files for each channel, containing global index of each fingerprint: `${STATION}_${CHANNEL}_idx_mapping.txt`
 
 ![fp_global](img/fp_global.png)  
+
+## Default Fingerprint Parameters
+
+Find a default fingerprint parameters json file [here](https://github.com/ttapparo/FAST/blob/master/parameters/fingerprint/fp_input_NETWORK_STATION_CHANNEL.json).  
+
+You can duplicate this file for each component and change the parameters as needed. You ^^must^^ edit the data section of the file for each component.  
 
 ## Fingerprint Examples from GitHub
 
