@@ -43,7 +43,7 @@
 
 ![measure_sim](img/measure_sim.png)  
 
-### Fingerprint parameters
+## Fingerprint parameters
 
 ```
 {
