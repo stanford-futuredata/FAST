@@ -77,7 +77,7 @@
 * Remove frequencies with repeated noise: ^^important^^  
   * View sample spectrograms to empirically determine these noisy frequencies (output as .png image files):
   ```
-    parameters/preprocess_utils/sample_spectrograms_daily _NEP.py
+parameters/preprocess_utils/sample_spectrograms_daily _NEP.py
   ```
       * Twice a day (day and night: cultural noise variations)
       * Once a month or once a day – sample randomly
@@ -95,10 +95,10 @@
 ![bandpass_filter_ex](img/bandpass_filter_ex.png)  
 
 ```
-    "spec_length": 6.0,     # Time window length (s) for spectrogram
-    "spec_lag": 0.2,        # Time window lag (s) for spectrogram
-    "fp_length": 32,        # Spectral image length (samples)
-    "fp_lag": 5,             # Spectral image lag (samples)
+"spec_length": 6.0,     # Time window length (s) for spectrogram
+"spec_lag": 0.2,        # Time window lag (s) for spectrogram
+"fp_length": 32,        # Spectral image length (samples)
+"fp_lag": 5,             # Spectral image lag (samples)
 ```  
 
 ![spec_length_lag](img/spec_length_lag.png)
@@ -122,8 +122,8 @@
 ![waveforms_ex](img/waveforms_ex.png)  
 
 ```
-    "k_coef": 200,      # Number of wavelet coefficients to keep  
-    "nfreq": 32,        # Final spectral image width (samples)  
+"k_coef": 200,      # Number of wavelet coefficients to keep  
+"nfreq": 32,        # Final spectral image width (samples)  
 ```  
 
 * Spectral image width will be resized (usually downsampled) to `nfreq` samples  
@@ -141,8 +141,8 @@
 ![sparsity_param](img/sparsity_param.png)
 
 ```
-    "mad_sampling_rate": 1,          # Median/MAD sampling fraction of data
-    "mad_sample_interval": 86400,    # Median/MAD sampling interval (s)
+"mad_sampling_rate": 1,          # Median/MAD sampling fraction of data
+"mad_sample_interval": 86400,    # Median/MAD sampling interval (s)
 ```
 
 * For each coefficient, compute median/MAD statistics over entire data set. This step determines which `k_coef` wavelet coefficients to keep.  
@@ -166,10 +166,10 @@
 ![runtime_tradeoff](img/runtime_tradeoff.png)  
 
 ```
-    "performance": {
-        "num_fp_thread": 8,         # Number of parallel processes  
-        "partition_len": 86400      # Continuous data partition (s)  
-    },
+"performance": {
+    "num_fp_thread": 8,         # Number of parallel processes  
+    "partition_len": 86400      # Continuous data partition (s)  
+},
 ```  
 
 * Can generate fingerprints in parallel by setting `num_fp_thread` > 1  
@@ -182,17 +182,17 @@
 * Changing these “performance” parameters should not affect the final results  
 
 ```
-    "data": {
-        "station": "CDY",  
-        "channel": "EHZ",  
-        "start_time": "99-10-15T13:00:00.0",                    # Time format: YY-MM-DDTHH:MM:SS.S  
-        "end_time": "99-10-16T09:46:44.0",  
-        "folder": "../data/waveformsCDY/",                      # folder with input data  
-        "fingerprint_files": [                                  # Usually finerprint_files, MAD_samples_files should be the same; can have list of multiple files for input continuous data
-            "Deci5.Pick.19991015130000.CI.CDY.EHZ.sac"],  
-            "MAD_sample_files": [  
-                "Deci5.Pick.19991015130000.CI.CDY.EHZ.sac"]  
-    }
+"data": {
+    "station": "CDY",  
+    "channel": "EHZ",  
+    "start_time": "99-10-15T13:00:00.0",                    # Time format: YY-MM-DDTHH:MM:SS.S  
+    "end_time": "99-10-16T09:46:44.0",  
+    "folder": "../data/waveformsCDY/",                      # folder with input data  
+    "fingerprint_files": [                                  # Usually finerprint_files, MAD_samples_files should be the same; can have list of multiple files for input continuous data
+        "Deci5.Pick.19991015130000.CI.CDY.EHZ.sac"],  
+        "MAD_sample_files": [  
+            "Deci5.Pick.19991015130000.CI.CDY.EHZ.sac"]  
+}
 ```
 
 * **OUTPUTS** 
@@ -209,15 +209,15 @@
 * Input file: `global_indices.json`  
 
 ```
-    {
-        "index_folder": "../data/global_indices/",                              # Output folder
-        "fp_param_dir": "../parameters/fingerprint/",                           # Input folder
-        "fp_params": ["fp_input_CI_TPC_EHZ.json", "fp_input_CI_RMR_EHZ.json",   # Fingerprint input files for all components and stations to use for detection
-        "fp_input_CI_RMM_EHZ.json”, "fp_input_CI_HEC_BHE.json“, 
-        "fp_input_CI_HEC_BHN.json", "fp_input_CI_HEC_BHZ.json“, 
-        "fp_input_CI_CPM_EHZ.json", "fp_input_CI_GTM_EHZ.json", 
-        "fp_input_CI_CDY_EHZ.json"]
-    }
+{
+    "index_folder": "../data/global_indices/",                              # Output folder
+    "fp_param_dir": "../parameters/fingerprint/",                           # Input folder
+    "fp_params": ["fp_input_CI_TPC_EHZ.json", "fp_input_CI_RMR_EHZ.json",   # Fingerprint input files for all components and stations to use for detection
+    "fp_input_CI_RMM_EHZ.json”, "fp_input_CI_HEC_BHE.json“, 
+    "fp_input_CI_HEC_BHN.json", "fp_input_CI_HEC_BHZ.json“, 
+    "fp_input_CI_CPM_EHZ.json", "fp_input_CI_GTM_EHZ.json", 
+    "fp_input_CI_CDY_EHZ.json"]
+}
 ```
 
 * Outputs:
@@ -225,3 +225,19 @@
     * Global index files for each channel, containing global index of each fingerprint: `${STATION}_${CHANNEL}_idx_mapping.txt`
 
 ![fp_global](img/fp_global.png)  
+
+## Fingerprint Examples from GitHub
+
+Click [here](https://github.com/stanford-futuredata/FAST/tree/master/parameters/fingerprint) for more example fingerprint parameters such as:  
+
+![ex_fp_param](img/ex_fp_param.png)  
+
+!!! info
+    File can be found in `FAST/parameters/fingerprint/fp_input_CI_CDY_EHZ.json`  
+
+Click [here](https://github.com/stanford-futuredata/FAST/blob/master/parameters/fingerprint/run_fp_HectorMine.sh) for an example fingerprint script such as:  
+
+![ex_script](img/ex_script.png)  
+
+!!! info
+    File can be found in `FAST/parameters/fingerprint/run_fp_HectorMine.sh`  
