@@ -234,6 +234,8 @@ Find a sample fingerprint parameters json file [here](https://github.com/stanfor
 
 You can duplicate this file for each component and change the parameters as needed. You ^^must^^ edit the data section of the file and change the filename for each component.  
 
+Follow the file naming convention: `fp_input_NETWORK_STATION_CHANNEL.json`   
+
 Example fingerprint parameter settings:  
 
 ```
