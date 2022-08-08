@@ -14,7 +14,7 @@
 
 ![minhash_ex](img/minh_ex.png)
 
-### LSH* Example: Constructing Database
+### LSH Example: Constructing Database
 
 ![lsh_ex](img/lsh_ex.png)
 
@@ -83,7 +83,7 @@
 
 <figcaption>Larger “nfuncs” --> more non-empty hash buckets, but “largest” hash buckets are smaller (i.e. fingerprints are more “spread out” within hash table) --> faster runtime for similarity search but lower detection threshold (fingerprints must have higher Jaccard similarity for hash collisions).</figcaption>  
 
-### LSH parameters and Detection Results  
+### LSH Parameters and Detection Results  
 
 The **sensitivity** of the FAST detector depends on the combination of ==nfuncs== and ==nvotes==. The table below shows how the number of detections identified by multi-station FAST on the Iquique foreshock data set from Bergen & Beroza (2018a) changes as the nfuncs and nvotes parameters are varied. The first row (highlighted in blue) gives the parameter values used in Bergen & Beroza (2018a).  
 

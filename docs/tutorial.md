@@ -4,22 +4,11 @@
 
 ![hectormin_ex](img/hectormine_ex.png)  
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;waveform data: `data/waveforms${STATION}/Deci5*`  
-
-<!-- ![hector_mine_plot](img/hector_mine_plot.png)
-
-<br></br>
-
-* 20 hours of continuous data from 7 stations (9 components). <br>
-* The data is already bandpass filtered, decimated to 20 Hz. HEC is 3-components; other stations are 1-component.
-
-<br></br>
-
-<p align="center">waveform data: <span style="color: red;">data/waveforms${STATION}/Deci5*</span></p> -->
+waveform data: `data/waveforms${STATION}/Deci5*`  
 
 ## **File Structure Overview**
 
-### *Code*  
+### Code  
 
     fingerprint/          # Fingerprint
     simsearch/            # Similarity Search
@@ -31,15 +20,14 @@
         run_fp.py         
         run_simsearch.py  
 
-
-### *Configuration and Parameters*  
+### Configuration and Parameters  
 
     parameters/            
         fingerprint/       
         simsearch/         
         postprocess/       
 
-### *Data*  
+### Data  
 
     data/
         waveforms${STATION}/
@@ -53,13 +41,13 @@
 
 * Create fingerprints for each of the 9 channels (7 stations) + global index, using wrapper
   
-``` bash
+```
 ~/quake_tutorial$ python run_fp.py -c config.json
 ```
 
 * Alternatively, to fingerprint a specific station, call the fingerprint script with the corresponding fingerprint parameter file:
 
-``` bash
+``` 
 ~/quake_tutorial$ cd fingerprint/
 ~/quake_tutorial/fingerprint$ python gen_fp.py ../parameters/fingerprint/fp_input_CI_CDY_EHZ.json
 ```
@@ -71,7 +59,7 @@
 
 * Complete this step only ^^after^^ you have finished computing ^^fingerprints^^ for ^^every^^ component and station you want to use for detection.  
   
-``` bash
+``` 
 $ python global_index.py global indices.json
 ```
 
