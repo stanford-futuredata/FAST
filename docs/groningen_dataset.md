@@ -176,8 +176,12 @@ python scr_run_network_det.py ../parameters/postprocess/Groningen/67sta_3stathre
               "dgapL": 10, (15 s)
               "dgapW": 3, (4.5 s)
               "num_pass": 2,
-            
-28
+              "min_dets": 3,
+              "min_sum_multiplier": 1,
+              "max_width": 8, (12 s)
+              "ivals_thresh": 6,
+              "nsta_thresh": 3,
+              "input_offset": 15 (22.5 s)
 },
 ```  
 
