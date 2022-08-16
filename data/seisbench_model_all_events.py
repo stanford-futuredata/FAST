@@ -44,28 +44,42 @@ with open('picks_detections.txt', 'w') as f:
 
             fig = plt.figure(figsize=(15, 5))
             ax = fig.add_subplot(111)
-            for i in range(3):
+            for i in range(len(stream)):
                 ax.plot(stream[i].times(), stream[i].data, label=stream[i].stats.channel)
             ax.legend()
 
             plt.savefig('waveform_' + d + '.png')
             plt.close()
 
+            '''
+                SeisBench models can generate characteristic curves, i.e., 
+                curves providing the probability of a pick at a certain time. For 
+                this, the annotate function is used. Annotate automatically transforms 
+                the trace into a compatible format for the model and merges the predictions
+                into traces. For example, annotate will determine the correct component order 
+                and resample the trace to the required sampling rate.
+            '''
+
             annotations = model.annotate(stream)
             print(annotations)
 
             fig = plt.figure(figsize=(15, 10))
-            axs = fig.subplots(2, 1, sharex=True, gridspec_kw={'hspace': 0})
+            axs = fig.subplots(10, 1, sharex=True, gridspec_kw={'hspace': 0})
 
             offset = annotations[0].stats.starttime - stream[0].stats.starttime
-            for i in range(3):
-                axs[0].plot(stream[i].times(), stream[i].data, label=stream[i].stats.channel)
-                if annotations[i].stats.channel[-1] != "N":  # Do not plot noise curve
-                    axs[1].plot(annotations[i].times() + offset, annotations[i].data, label=annotations[i].stats.channel)
+            for i in range(len(stream)):
+
+                axs[i].plot(stream[i].times(), stream[i].data, label=stream[i].stats.channel)
+                axs[i].legend([str(stream[i].stats.station) + "_" + stream[i].stats.channel], loc ="upper right")
+
+                if i < len(annotations):
+                    if annotations[i].stats.channel[-1] != "N":  # Do not plot noise curve
+                        axs[9].plot(annotations[i].times() + offset, annotations[i].data, label=annotations[i].stats.channel)
 
             axs[0].legend()
-            axs[1].legend()
+            axs[9].legend(loc ="upper right")
 
+            fig.tight_layout()
             plt.savefig('annotations_' + d + '.png')
             plt.close()
 
@@ -88,20 +102,9 @@ with open('picks_detections.txt', 'w') as f:
             for detection in detections:
                 f.write(str(detection) +'\n')
 
-            # print('\nFiles in: event_ids/' + d)
-
-            # for e in event_id_list:
-            #     if e != '.DS_Store':
-            #         # print(e)
 
 
 
-
-# stream = read('event_ids/00000000/00000000_19991015144323_6203.0_*_*.sac')
-
-# print(len(stream))
-
-# stream = read('event_ids/00000000/00000000_*_*_HEC_*.sac')
 
 # 1 component vertical (EHZ) only data: make copies and change channel name
 # if (len(stream) == 1):
@@ -124,77 +127,6 @@ with open('picks_detections.txt', 'w') as f:
 #     print(st_temp)
 #     stream = st_temp
 
-# plt.style.use('ggplot')
 
-# fig = plt.figure(figsize=(15, 5))
-# ax = fig.add_subplot(111)
-# for i in range(3):
-#     ax.plot(stream[i].times(), stream[i].data, label=stream[i].stats.channel)
-# ax.legend()
 
-# plt.savefig('waveform.png')
 
-'''
-    Plot all of the HEC channels for all events in
-    event_ids
-'''
-
-# count = 0
-
-# for i in range(0, len(stream), 3):
-#     fig = plt.figure(figsize=(15, 5))
-#     ax = fig.add_subplot(111)
-#     for i in range(3):
-#         ax.plot(stream[count].times(), stream[count].data, label=stream[count].stats.channel)
-#         count += 1
-#     ax.legend()
-
-#     plt.savefig('waveform' + '_' + str(count) + '.png')
-#     plt.close()
-
-'''
-    SeisBench models can generate characteristic curves, i.e., 
-    curves providing the probability of a pick at a certain time. For 
-    this, the annotate function is used. Annotate automatically transforms 
-    the trace into a compatible format for the model and merges the predictions
-    into traces. For example, annotate will determine the correct component order 
-    and resample the trace to the required sampling rate.
-'''
-
-# annotations = model.annotate(stream)
-# print(annotations)
-
-# fig = plt.figure(figsize=(15, 10))
-# axs = fig.subplots(2, 1, sharex=True, gridspec_kw={'hspace': 0})
-
-# offset = annotations[0].stats.starttime - stream[0].stats.starttime
-# for i in range(3):
-#     axs[0].plot(stream[i].times(), stream[i].data, label=stream[i].stats.channel)
-#     if annotations[i].stats.channel[-1] != "N":  # Do not plot noise curve
-#         axs[1].plot(annotations[i].times() + offset, annotations[i].data, label=annotations[i].stats.channel)
-
-# axs[0].legend()
-# axs[1].legend()
-
-# plt.savefig('annotations.png')
-
-# picks, detections = model.classify(stream, D_threshold=0.3 ,P_threshold=0.1, S_threshold=0.1)
-
-# print("Picks:")
-# for pick in picks:
-#     print(pick)
-
-# print("\nDetections:")    
-# for detection in detections:
-#     print(detection)
-
-# # Write picks and detections to a file
-
-# with open('picks_detections.txt', 'w') as f:
-#     f.write("Picks:\n")
-#     for pick in picks:
-#         f.write(str(pick) + '\n')
-
-#     f.write("\nDetections: \n")
-#     for detection in detections:
-#         f.write(str(detection) +'\n')
