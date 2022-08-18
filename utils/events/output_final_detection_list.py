@@ -72,4 +72,4 @@ print(len(det_times))
 with open(outfile_name, 'w') as fout:
    for kk in range(len(det_times)):
       event_time = init_time + det_times[kk]
-      fout.write(('%s %12.2f %12d %12d %12d %12d %12d\n') % (event_time.strftime('%Y-%m-%dT%H:%M:%S.%f'), det_times[kk], det_start_ind[kk], dL[kk], diff_ind[kk], num_sta[kk], peaksum[kk]))
+      fout.write(('%s %s %12.2f %12d %12d %12d %12d %12d\n') % (str(kk).zfill(8), event_time.strftime('%Y-%m-%dT%H:%M:%S.%f'), det_times[kk], det_start_ind[kk], dL[kk], diff_ind[kk], num_sta[kk], peaksum[kk]))
