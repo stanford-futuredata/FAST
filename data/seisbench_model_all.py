@@ -12,9 +12,9 @@ import json
 import pandas as pd
 import datetime
 
+dir_list = os.listdir('event_ids')
 seisbench_picks = {'SeisBench_Picks': {}}
-
-init_time = UTCDateTime('1999-10-15T13:00:00.676000')
+trace_id = " "
 
 stations = ['CDY', 'CPM', 'GTM', 'RMM', 'RMR', 'TPC']
 
@@ -41,27 +41,18 @@ print(model.weights_docstring)
 '''
    SeisBench models can directly annotate obspy streams. 
 '''
-dir_list = os.listdir('event_ids')
 
 # make directory for annotation plots
-annotations_dir = 'annotations/'
+annotations_dir = 'seisbench_picks/'
 if not os.path.exists(annotations_dir):
     os.makedirs(annotations_dir)
-     
-trace_id = " "
-
-
     
 with open("event_picks.json", "w") as json_file:
-    
     for d in dir_list:
-        
         if d != '.DS_Store':
             seisbench_picks['SeisBench_Picks'][str(d)] = {}
             seisbench_picks['SeisBench_Picks'][str(d)]['P_Origin_Time'] = " "
             
-            event_id_list = os.listdir('event_ids/' + d)
-
             st = Stream()
 
             stream = read('event_ids/' + d + '/*.sac')
@@ -84,8 +75,6 @@ with open("event_picks.json", "w") as json_file:
                 else:
                     st += stream[i]
                     
-
-                
             plt.style.use('ggplot')
 
             # Plot all waveforms for every event
@@ -106,7 +95,6 @@ with open("event_picks.json", "w") as json_file:
             # plt.cla()
             # plt.clf()
             
-
             '''
                 SeisBench models can generate characteristic curves, i.e., 
                 curves providing the probability of a pick at a certain time. For 
@@ -118,7 +106,6 @@ with open("event_picks.json", "w") as json_file:
 
             fig = plt.figure(figsize=(30, 15))
             axs = fig.subplots(14, 1, sharex=True, gridspec_kw={'hspace' : 0.5})
-
             fig.suptitle('Event ID: ' + str(d), fontsize=30)
 
             count = 0
@@ -146,8 +133,7 @@ with open("event_picks.json", "w") as json_file:
                         axs[count].legend(bbox_to_anchor=(1,1), loc="upper left")
                         
                         trace_id = st[j].stats.network + '.' + st[j].stats.station
-                        seisbench_picks['SeisBench_Picks'][str(d)][trace_id] = []
-
+                        # seisbench_picks['SeisBench_Picks'][str(d)][trace_id] = []
 
                 for k in range(len(annotations)):
                     if annotations[k].stats.channel[-1] != "N" and count < 14:  # Do not plot noise curve
@@ -157,54 +143,12 @@ with open("event_picks.json", "w") as json_file:
                         plt.ylim([0, 1])
                         plt.xlabel("Time (s) starting at " + str(st[i].stats.starttime), size = 16,)
                         
+                plt.savefig(annotations_dir + 'annotations_' + d + '.png')
 
-                fig.tight_layout()
-                # plt.savefig(annotations_dir + 'annotations_' + d + '.png')
-
-                count += 2
+                seisbench_picks['SeisBench_Picks'][str(d)][trace_id] = []
 
                 picks, detections = model.classify(st_temp, D_threshold=0.3 ,P_threshold=0.1, S_threshold=0.1)
-                
-                # trace_id = st_temp[0].stats.station + '.' + st_temp[0].stats.channel
-                
-                # seisbench_picks[str(d)][trace_id] = {}
-                
-                
-    #             if len(picks) > 0:
-    #                 p = picks[0].__dict__
-    #                 trace_id =p['trace_id']
-                
-    #                 seisbench_picks[str(d)][trace_id] = {}
 
-    #                 print("\nPicks:")
-    #                 for pick in picks:
-    #                     print(pick)
-                        
-    #                     p = pick.__dict__
-                        
-    #                     x = {
-    #                             'start_time': str(p['start_time']),
-    #                             'end_time': str(p['end_time']), 
-    #                             'peak_time': str(p['peak_time']), 
-    #                             'peak_value': str(p['peak_value']), 
-    #                             'phase': p['phase']
-    #                         }
-                            
-                        
-                        
-    #                     # x =  {
-    #                     #         p['trace_id']: {
-    #                     #             'start_time': str(p['start_time']),
-    #                     #             'end_time': str(p['end_time']), 
-    #                     #             'peak_time': str(p['peak_time']), 
-    #                     #             'peak_value': str(p['peak_value']), 
-    #                     #             'phase': p['phase']
-    #                     #             }
-    #                     #     }
-                                                
-    #                     seisbench_picks[str(d)][p['trace_id']].update(x)
-
-                
                 print("\nPicks:")
                 for pick in picks:
                     print(pick)
@@ -239,16 +183,13 @@ with open("event_picks.json", "w") as json_file:
                     
                     num_of_stations += 1
                     
-
+                count += 2
 
             if len(station_origin_times) > 0:
                 avg = pd.to_datetime(pd.Series(station_origin_times)).mean()
                 utc_to_str = str(UTCDateTime(avg))[:-1]
 
                 seisbench_picks['SeisBench_Picks'][str(d)]['P_Origin_Time'] = utc_to_str
-
-
-            # break
         
     json.dump(seisbench_picks, json_file, indent=4)
     
