@@ -12,6 +12,7 @@ nav:
     - Linux: setup_linux.md
     - Docker: setup_docker.md
   - Tutorial: tutorial.md
+  - PyGMT Example: hectormine_pygmt.ipynb
   - How to Set Parameters:
     - Input and Preprocessing: input_and_preprocess.md
     - Fingerprint: f_p.md
@@ -74,3 +75,4 @@ markdown_extensions:
 
 plugins:
   - search
+  - mkdocs-jupyter
