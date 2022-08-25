@@ -12,7 +12,6 @@ nav:
     - Linux: setup_linux.md
     - Docker: setup_docker.md
   - Tutorial: tutorial.md
-  - Hector Mine PyGMT Example: hectormine_pygmt_example.md
   - How to Set Parameters:
     - Input and Preprocessing: input_and_preprocess.md
     - Fingerprint: f_p.md
