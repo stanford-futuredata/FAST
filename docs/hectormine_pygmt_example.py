@@ -152,3 +152,9 @@ with fig.inset(position="jTR+o0.1c",
              
 fig.show()
 
+
+# In[254]:
+
+
+fig.savefig('hectormine_pygmt.png')
+
