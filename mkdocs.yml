@@ -18,6 +18,8 @@ nav:
     - Similarity Search: sim_search.md
     - Network Detection: network_detection.md
     - Output: output.md
+    - Phase Picking: phase_picking.md
+    - Earthquake Location: earthquake_location.md
     - Example Parameters: 
       - ex_params_intro.md
       - italy_day_yr_dataset.md
