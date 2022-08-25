@@ -146,7 +146,7 @@ fig.show()
 
 
     
-![png](output_6_0.png)
+![png](img/output_6_0.png)
     
 
 
