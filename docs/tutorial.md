@@ -284,3 +284,31 @@ Further processing is required for P/S phase picking and location:
   * Pick phases (automatic or manual)  
   * Locate earthquakes  
   * Compute magnitudes  
+
+## **Phase Picking**  
+
+### Cut SAC Files  
+
+* Cut the continuous seismic data based on the detection results from FAST  
+
+```
+~/quake_tutorial/utils/events$ python cut_event_files.py
+```  
+
+* Check for cut files in:  
+
+```
+~/quake_tutorial/utils/events$ cd ..
+~/quake_tutorial/utils/events$ cd ..
+~/quake_tutorial/utils/events$ cd data/event_ids
+```
+
+* Example:  
+
+![ex_files](img/ex_files.png)
+
+### Pick Phases (automatically)  
+
+## **Earthquake Location**  
+
+### Locate Earthquakes  
