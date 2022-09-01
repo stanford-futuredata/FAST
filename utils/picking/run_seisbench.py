@@ -12,10 +12,11 @@ import json
 import pandas as pd
 import datetime
 
-dir_list = os.listdir('event_ids')
+dir_list = os.listdir('../../data/event_ids')
 seisbench_picks = {'SeisBench_Picks': {}}
 trace_id = " "
 
+# List of stations that do not have 3 components
 stations = ['CDY', 'CPM', 'GTM', 'RMM', 'RMR', 'TPC']
 
 model = sbm.EQTransformer()
@@ -43,7 +44,7 @@ print(model.weights_docstring)
 '''
 
 # make directory for annotation plots
-annotations_dir = 'seisbench_picks/'
+annotations_dir = '../../data/seisbench_picks/'
 if not os.path.exists(annotations_dir):
     os.makedirs(annotations_dir)
     
@@ -55,10 +56,11 @@ with open("event_picks.json", "w") as json_file:
             
             st = Stream()
 
-            stream = read('event_ids/' + d + '/*.sac')
+            stream = read('../../data/event_ids/' + d + '/*.sac')
             
             for i in range(len(stream)):
                 
+                # make copies of one-component stations to work with SeisBench
                 if stream[i].stats.station in stations:
                     st_temp = Stream()
                     tr_temp_e = stream[i].copy()
@@ -105,7 +107,7 @@ with open("event_picks.json", "w") as json_file:
             '''
 
             fig = plt.figure(figsize=(30, 15))
-            axs = fig.subplots(14, 1, sharex=True, gridspec_kw={'hspace' : 0.5})
+            axs = fig.subplots((int(len(st) / 3) * 2), 1, sharex=True, gridspec_kw={'hspace' : 0.5})
             fig.suptitle('Event ID: ' + str(d), fontsize=30)
 
             count = 0
@@ -136,7 +138,7 @@ with open("event_picks.json", "w") as json_file:
                         # seisbench_picks['SeisBench_Picks'][str(d)][trace_id] = []
 
                 for k in range(len(annotations)):
-                    if annotations[k].stats.channel[-1] != "N" and count < 14:  # Do not plot noise curve
+                    if annotations[k].stats.channel[-1] != "N" and count < (int(len(st) / 3 * 2)):  # Do not plot noise curve
                         axs[count + 1].plot(annotations[k].times() + offset, annotations[k].data, label=annotations[k].stats.channel)
                         axs[count + 1].set_title('EQTransformer: ' + st[i].stats.station)
                         axs[count + 1].legend(bbox_to_anchor=(1,1), loc="upper left")
