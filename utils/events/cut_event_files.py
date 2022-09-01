@@ -55,14 +55,6 @@ for data in EQ_data:
     diff_ind = line[5]
     nsta = line[6]
     peaksum = line[7]
-    # ev_id = data[0:8].strip()
-    # det_time = data[9:35].strip()
-    # det_start_ind = data[40: 45].strip()
-    # det_end_ind = data[56:62].strip()
-    # dL = data[72: 75].strip()
-    # diff_ind = data[84:88].strip()
-    # nsta = data[99:101].strip()
-    # peaksum = data[109:114].strip()
 
     det_times.append(int(det_start_ind) * dt_fp)
     diff_times.append(int(diff_ind) * dt_fp)
@@ -79,11 +71,6 @@ print(st.__str__(extended=True))
 
 print("\n ------------------- OUTPUT CUT EVENT FILES --------------------------\n")
 
-
-# stations_ = json.load(open(in_station_file))
-
-# det_times = EQ_detections.det_start_in
-
 i_load = 0
 
 for kk in range(len(EQ_detections)):
@@ -99,29 +86,10 @@ for kk in range(len(EQ_detections)):
     i_load += 1
 
 #    Read in time window for event files from daylong .sac files
-#     st_all = Stream()
     for ista in stations:
-#         net = val['network']
-#         ev_origin_date = datetime.datetime(ev_origin_time.year, ev_origin_time.month, ev_origin_time.day)
-#         origin_date_str = datetime.datetime.strftime(ev_origin_date, '%Y%m%d')
-#         mseed_files = glob.glob(in_mseed_dir+'*/'+sta+'/'+net+'.'+sta+'*__'+origin_date_str+'T000000Z'+'__*')
-#         if (len(mseed_files) > 0):
-#             st = read(in_mseed_dir+'*/'+sta+'/'+net+'.'+sta+'*__'+origin_date_str+'T000000Z'+'__*mseed')
-#             st_slice = st.slice(start_time, end_time)
-
         st_slice = st.slice(start_time, end_time)
-#       # Filter the cut data
-        # st_slice.detrend(type='demean')
-        # st_slice.detrend(type='linear')
-#         st_slice.filter('bandpass', freqmin=2, freqmax=10, corners=2, zerophase=False)
 
-#         # Output event files in SAC format, in their own event directory
-#         out_ev_dir = out_dir+str(ev_id_list[kk])+'/'
-#         if not os.path.exists(out_ev_dir):
-#         os.makedirs(out_ev_dir)
-#         output_event_name = out_ev_dir+'event'+format(ev_id_list[kk],'06d')+'_'+ev_origin_time.strftime('%Y%m%dT%H%M%S.%f')
         for tr in st_slice:
-
             timestamp = str(ev_time.year) + str(ev_time.month) + str(ev_time.day) + str(ev_time.hour).zfill(2) + str(ev_time.minute).zfill(2) + str(ev_time.second).zfill(2)
 
             out_file = out_dir + "/" + curr_ev
@@ -129,7 +97,6 @@ for kk in range(len(EQ_detections)):
             tr.write(output_file_name, format='SAC')
 
             plot_file = 'plots/' + curr_ev + '_' + timestamp + '_' + str(det_times[kk]) + '_' + tr.stats.station + '_' + tr.stats.channel + '.png'
-            # st_slice.plot(equal_scale=False, size=(400,800), outfile=plot_file)
             tr.plot(equal_scale=False, size=(400,800), outfile=plot_file)
 
 print ("Number of event waveforms loaded =", i_load) 
