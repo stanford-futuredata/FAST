@@ -41,7 +41,7 @@ Build the Docker image
     Building the Docker image with Dockerfile with set up all FAST dependencies (Linux Ubuntu 18.04, CMake compiler, C++ boost, conda for python virtual environment and libraries).
 
 ```
-$ docker build -f Dockerfile -t fast_image:0.1
+$ docker build -f Dockerfile -t fast_image:0.1 .
 ```
 
 * `-f` - Name of the Dockerfile
