@@ -301,6 +301,10 @@ img[alt=ex_files] {
     margin-left: 15%;
 }
 
+img[alt=json_file_picks] {
+    margin-left: 12%;
+}
+
 figcaption {
     text-align: center;
 }

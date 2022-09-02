@@ -298,9 +298,7 @@ Further processing is required for P/S phase picking and location:
 * Check for cut files in:  
 
 ```
-~/quake_tutorial/utils/events$ cd ..
-~/quake_tutorial/utils/events$ cd ..
-~/quake_tutorial/utils/events$ cd data/event_ids
+~/quake_tutorial/data/event_ids/  
 ```
 
 * Example:  
@@ -308,6 +306,39 @@ Further processing is required for P/S phase picking and location:
 ![ex_files](img/ex_files.png)
 
 ### Pick Phases (automatically)  
+
+* Run SeisBench script for all events and all stations
+
+```
+~/quake_tutorial/utils/events$ cd ..
+~/quake_tutorial/utils$ cd picking
+~/quake_tutorial/utils/picking$ python run_seisbench.py
+```  
+
+* Annotated plots are found in:  
+
+```
+~/quake_tutorial/data/seisbench_picks
+```
+![example_pics](img/example_picks.png)
+
+* Example annotated plot from event 00000000:  
+
+![example_pick_1](img/example_pick_1.png)
+
+### Saved SeisBench Picks 
+
+Output saved in:
+
+```
+~/quake_tutorial/utils/picking/event_picks.json/
+```  
+Example output:  
+
+![json_file_picks](img/json_file_picks.png)
+
+* "peak_time": Arrival time of pick
+* "peak_value": Probability of pick
 
 ## **Earthquake Location**  
 
