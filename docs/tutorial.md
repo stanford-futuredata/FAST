@@ -353,5 +353,5 @@ To begin earthquake location run the following to format the phase picks for HYP
 ```
 ~/quake_tutorial/utils/picking$ cd ..
 ~/quake_tutorial/utils$ cd location
-~/quake_tutorial/utils/location$ SeisBench2hypoinverse.py
+~/quake_tutorial/utils/location$ python SeisBench2hypoinverse.py
 ```
