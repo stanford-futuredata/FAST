@@ -6,6 +6,6 @@ dependencies:
   - python=3.7
   - obspy
   - pywavelets 
-  - scipy=1.1.0
+  - scipy
   - scikit-learn
 
