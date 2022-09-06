@@ -21,6 +21,36 @@ Your continuous seismic data should be found in `/FAST/data/waveforms*/Deci5.Pic
 
 ## Pick Phases Over All Input  
 
+!!! note
+    If stations in your dataset do not have 3 channels, you will need to alter `run_seisbench.py` to make .sac file copies for stations without 3 channels.
+
+In the Hector Mine dataset, only the HEC station has 3 channels. On line 20 of `run_seisbench.py`, the stations that only have one component are in a list, which is iterated through to make channel copies for phase picking.  
+
+``` py linenums="20"
+stations = ['CDY', 'CPM', 'GTM', 'RMM', 'RMR', 'TPC'] # List of stations that do not have 3 components
+```  
+
+To make sure `run_seisbench.py` runs correctly on your dataset, edit the following code in the script to account for missing station channels:  
+
+
+``` py linenums="64"  
+if stream[i].stats.station in stations:
+    st_temp = Stream()
+    tr_temp_e = stream[i].copy()
+    tr_temp_n = stream[i].copy()
+    tr_temp_z = stream[i].copy()
+    tr_temp_e.stats.channel = 'EHE'
+    st_temp.append(tr_temp_e)
+    tr_temp_n.stats.channel = 'EHN'
+    st_temp.append(tr_temp_n)
+    tr_temp_z.stats.channel = 'EHZ'
+    st_temp.append(tr_temp_z)
+    
+    st += st_temp
+else:
+    st += stream[i] 
+```  
+
 Run the SeisBench script:  
 
 ```
