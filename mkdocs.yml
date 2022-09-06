@@ -17,7 +17,7 @@ nav:
     - Fingerprint: f_p.md
     - Similarity Search: sim_search.md
     - Network Detection: network_detection.md
-    - Output: output.md
+    - FAST Output: FAST_output.md
     - Phase Picking: phase_picking.md
     - Earthquake Location: earthquake_location.md
     - Example Parameters: 

@@ -39,7 +39,7 @@
 
     4.  [Network Detection](network_detection.md)  
 
-    5.  [Output](output.md)  
+    5.  [FAST Output](FAST_output.md)  
 
     6.  [Phase Picking](phase_picking.md)  
 
