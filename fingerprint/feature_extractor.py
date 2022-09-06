@@ -16,8 +16,9 @@ import numpy as np
 import pywt as wt
 from sklearn.preprocessing import normalize
 from scipy.signal import spectrogram
-from scipy.misc import imresize
+from PIL import Image
 
+# resample=PIL.Image.Resampling.BILINEAR
 
 def init_feature_extractor(params, ntimes):
     feats = FeatureExtractor(sampling_rate=params['fingerprint']['sampling_rate'],
@@ -118,7 +119,10 @@ class FeatureExtractor(object):
     def _resize_spectral_images(self, spectral_images, new_d1, new_d2):
         new_spectral_images = np.zeros([self.nwindows,new_d1,new_d2])
         for i in range(self.nwindows):
-            new_spectral_images[i,:,:] = imresize(spectral_images[i,:,:], (new_d1, new_d2), interp='bilinear', mode='F')
+            # new_spectral_images[i,:,:] = imresize(spectral_images[i,:,:], (new_d1, new_d2), interp='bilinear', mode='F')
+            # new_spectral_images[i,:,:] = np.array(Image.fromarray(spectral_images[i,:,:]).resize(size=(new_d1, new_d2), resample=PIL.Image.Resampling.BILINEAR))
+            new_spectral_images[i,:,:] = np.array(Image.fromarray(spectral_images[i,:,:]).resize(size=(new_d1, new_d2), resample=Image.Resampling.BILINEAR))
+
         return new_spectral_images
 
     #/ reshapes output from PyWavelets 2d wavelet transform into image
