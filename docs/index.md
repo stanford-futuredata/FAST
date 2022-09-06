@@ -41,7 +41,11 @@
 
     5.  [Output](output.md)  
 
-    6.  [Example Parameters](ex_params_intro.md)  
+    6.  [Phase Picking](phase_picking.md)  
+
+    7.  [Earthquake Location](earthquake_location.md)  
+
+    8.  [Example Parameters](ex_params_intro.md)  
         **Click here to see data sets FAST has been used on to detect earthquakes.**
 
 5.  [References](references.md)  
