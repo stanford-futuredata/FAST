@@ -63,7 +63,7 @@ st = read('waveforms*/Deci5.Pick.*', format='SAC')
 print(len(st))
 print(st.__str__(extended=True))
 
-print("\n ------------------- OUTPUT CUT EVENT FILES --------------------------\n")
+# print("\n ------------------- OUTPUT CUT EVENT FILES --------------------------\n")
 
 i_load = 0
 

@@ -342,4 +342,6 @@ Example output:
 
 ## **Earthquake Location**  
 
+The output from `run_seisbench.py` in the `event_picks.json` file contains the information needed to locate the detected earthquakes from the FAST final detection list.
+
 ### Locate Earthquakes  
