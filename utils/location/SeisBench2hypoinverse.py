@@ -21,7 +21,7 @@ def _weighcalculator_prob(pr):
 
 
 in_real_phase_file = '../picking/event_picks.json'
-out_hinv_phase_file = 'EQT_19991015_test.txt'
+out_hinv_phase_file = 'EQT_19991015_test.txt' # Change file name
 
 
 fout = open(out_hinv_phase_file, 'w')

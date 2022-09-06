@@ -342,6 +342,16 @@ Example output:
 
 ## **Earthquake Location**  
 
-The output from `run_seisbench.py` in the `event_picks.json` file contains the information needed to locate the detected earthquakes from the FAST final detection list.
+The output from `run_seisbench.py` in the `event_picks.json` file contains the information needed to locate the detected earthquakes from the FAST final detection list. We use HYPOINVERSE to locate earthquakes from the picks found with `run_seisbench.py`.  
+
+HYPOINVERSE is the standard location program supplied with the Earthworm seismic acquisition and processing system (AQMS). Read more about it [here](https://www.usgs.gov/software/hypoinverse-earthquake-location).  
 
 ### Locate Earthquakes  
+
+To begin earthquake location run the following to format the phase picks for HYPOINVERSE:  
+
+```
+~/quake_tutorial/utils/picking$ cd ..
+~/quake_tutorial/utils$ cd location
+~/quake_tutorial/utils/location$ SeisBench2hypoinverse.py
+```
