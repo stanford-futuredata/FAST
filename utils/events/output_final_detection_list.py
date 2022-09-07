@@ -1,6 +1,7 @@
 from obspy import read
 from obspy import UTCDateTime
 import numpy as np
+import os
 
 # Output final detection list
 
@@ -72,4 +73,10 @@ print(len(det_times))
 with open(outfile_name, 'w') as fout:
    for kk in range(len(det_times)):
       event_time = init_time + det_times[kk]
+      
+      out_dir = '../../data/event_ids/' + str(kk).zfill(8) + '/'
+      
+      if not os.path.exists(out_dir):
+         os.makedirs(out_dir)
+
       fout.write(('%s %s %12.2f %12d %12d %12d %12d %12d\n') % (str(kk).zfill(8), event_time.strftime('%Y-%m-%dT%H:%M:%S.%f'), det_times[kk], det_start_ind[kk], dL[kk], diff_ind[kk], num_sta[kk], peaksum[kk]))
