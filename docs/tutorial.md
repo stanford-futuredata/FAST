@@ -279,11 +279,13 @@ FINAL_Detection_List_HectorMine_7sta_2stathresh.txt
 * Detection list is ordered in descending order of number of stations (Column 6), then in descending order of peaksum similarity (Column 7).  
 
 Further processing is required for P/S phase picking and location:  
-
   * Cut SAC files  
   * Pick phases (automatic or manual)  
   * Locate earthquakes  
   * Compute magnitudes  
+
+!!! info
+    The following sections of the tutorial are not a part of FAST but are optional steps to take for phase picking and earthquake location.
 
 ## **Phase Picking**  
 
@@ -305,6 +307,12 @@ Further processing is required for P/S phase picking and location:
 
 ![ex_files](img/ex_files.png)
 
+### Install SeisBench  
+
+```
+~/quake_tutorial$ pip install SeisBench
+```
+
 ### Pick Phases (automatically)  
 
 * Run SeisBench script for all events and all stations
@@ -325,8 +333,6 @@ Further processing is required for P/S phase picking and location:
 * Example annotated plot from event 00000000:  
 
 ![example_pick_1](img/example_pick_1.png)
-
-### Saved SeisBench Picks 
 
 Output saved in:
 
@@ -356,7 +362,13 @@ To begin earthquake location run the following to format the phase picks for HYP
 ~/quake_tutorial/utils/location$ python SeisBench2hypoinverse.py
 ```  
 
-Check the gfortran is installed:  
+### Install and Run HYPOINVERSE
+
+1. Download HYPOINVERSE [here](https://www.usgs.gov/software/hypoinverse-earthquake-location)    
+2. Expand the hyp1.40.tar file
+3. Move to `~/quake_tutorial/utils/location`
+
+Check that GFortran is installed:  
 
 ```
 ~/quake_tutorial$ gfortran --version
@@ -367,3 +379,36 @@ Example expected output:
 GNU Fortran (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0.
 ```  
 
+If GFortran is not installed, run:  
+```
+~/quake_tutorial$ apt-get install gfortran  
+```
+
+Make changes to `makefile` in `~/quake_tutorial/utils/location/hyp1.40/source`:  
+   * Comment lines **16** and **230**  
+
+```  py linenums="16"
+# cp hyp1.40 /home/calnet/klein/bin
+```  
+
+```  py linenums="230"
+# cp p2sdly /home/calnet/klein/bin
+```  
+Save changes and exit.  
+
+
+
+Get Hector Mine Station List as a json file:  
+```
+~/quake_tutorial/utils/location$ python eqt_get_station_list_hectormine.py
+```
+
+Output:  
+```
+station_list.json
+```
+
+Convert `station_list.json` to `station_list.sta`:  
+```
+~/quake_tutorial/utils/location$ python output_station_file.py
+```  
