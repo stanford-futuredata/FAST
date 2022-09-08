@@ -354,4 +354,16 @@ To begin earthquake location run the following to format the phase picks for HYP
 ~/quake_tutorial/utils/picking$ cd ..
 ~/quake_tutorial/utils$ cd location
 ~/quake_tutorial/utils/location$ python SeisBench2hypoinverse.py
+```  
+
+Check the gfortran is installed:  
+
 ```
+~/quake_tutorial$ gfortran --version
+```  
+
+Example expected output:  
+```
+GNU Fortran (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0.
+```  
+
