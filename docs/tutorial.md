@@ -396,7 +396,33 @@ Make changes to `makefile` in `~/quake_tutorial/utils/location/hyp1.40/source`:
 ```  
 Save changes and exit.  
 
+Check that HYPOINVERSE works:  
 
+* Compile hypoinverse:  
+```
+~/quake_tutorial/utils/location/hyp1.40/source$ make 
+```  
+
+* Make it executable:  
+```
+~/quake_tutorial/utils/location/hyp1.40/source$ chmod +x hyp1.40
+```  
+
+* Run HYPOINVERSE:  
+```
+~/quake_tutorial/utils/location/hyp1.40/source$ ./hyp1.40
+```  
+
+* Expcted output:  
+```
+HYPOINVERSE 2000 STARTING
+6/2014 VERSION 1.40 (geoid depth possible)
+ COMMAND?
+```   
+
+If you have this output, HYPOINVERSE is running correctly. Press ctrl-c to exit.
+
+### Formatting data for HYPOINVERSE
 
 Get Hector Mine Station List as a json file:  
 ```
@@ -412,3 +438,31 @@ Convert `station_list.json` to `station_list.sta`:
 ```
 ~/quake_tutorial/utils/location$ python output_station_file.py
 ```  
+
+### Run HYPOINVERSE  
+
+To run HYPOINVERSE:  
+```
+~/quake_tutorial/utils/location/hyp1.40/source$ ./hyp1.40
+```  
+
+Use **@locate_event.hyp** as input:
+```
+HYPOINVERSE 2000 STARTING
+6/2014 VERSION 1.40 (geoid depth possible)
+ COMMAND? @locate_events.hyp
+```  
+
+Expected output:
+![hypo_output](img/hypo_output.png)   
+
+You should see output files called locate_events.sum and locate_events.arc, but these are difficult to read.  
+
+!!! note
+    locate_events.arc has the event info, and phase pick info for each event. locate_events.sum has only the event info, no phase pick info.
+
+Use `output_hypoinverse_as_text.py` to output `locate_events.sum` in a more readable format.  
+
+```
+~/quake_tutorial/utils/location$ python output_hypoinverse_as_text.py  
+```
