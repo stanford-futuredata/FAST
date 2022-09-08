@@ -310,7 +310,7 @@ Further processing is required for P/S phase picking and location:
 ### Install SeisBench  
 
 ```
-~/quake_tutorial$ pip install SeisBench
+~/quake_tutorial$ pip install seisbench
 ```
 
 ### Pick Phases (automatically)  
