@@ -135,7 +135,6 @@ root@555d364b63d7:/app/FAST/utils/events# cat ../../data/network_detection/FINAL
 !!! info
     The following tutorials are not a part of FAST but are optional steps to take for phase picking and earthquake location using SeisBench, HYPOINVERSE, and PyGMT.
 
-
 ## **Phase Picking**  
 
 ### Cut SAC Files  
@@ -216,7 +215,7 @@ root@555d364b63d7:/app/utils/location# python SeisBench2hypoinverse.py
 
 1. Download HYPOINVERSE [here](https://www.usgs.gov/software/hypoinverse-earthquake-location)    
 2. Expand the hyp1.40.tar file
-3. Move to `~/quake_tutorial/utils/location`
+3. Move to `root@555d364b63d7:/app/utils/location`
 
 Check that GFortran is installed:  
 
@@ -322,7 +321,7 @@ root@555d364b63d7:/app/utils/location# python output_hypoinverse_as_text.py
 ### Install PyGMT
 
 ```
-root@555d364b63d7:/app# conda install pygmt
+root@555d364b63d7:/app# conda install -c conda-forge pygmt
 ```  
 
 ## **Exiting the Docker Container**

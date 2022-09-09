@@ -470,5 +470,5 @@ Use `output_hypoinverse_as_text.py` to output `locate_events.sum` in a more read
 ### Install PyGMT  
 
 ```
-~/quake_tutorial$ conda install pygmt
+~/quake_tutorial$ conda install -c conda-forge pygmt
 ```
