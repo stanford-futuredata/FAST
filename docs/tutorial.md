@@ -467,4 +467,8 @@ Use `output_hypoinverse_as_text.py` to output `locate_events.sum` in a more read
 
 ## **Plotting Earthquake Locations with PyGMT**
 
-### Install PyGMT
+### Install PyGMT  
+
+```
+~/quake_tutorial$ conda install pygmt
+```

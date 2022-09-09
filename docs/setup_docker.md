@@ -321,6 +321,10 @@ root@555d364b63d7:/app/utils/location# python output_hypoinverse_as_text.py
 
 ### Install PyGMT
 
+```
+root@555d364b63d7:/app# conda install pygmt
+```  
+
 ## **Exiting the Docker Container**
 
 ```
