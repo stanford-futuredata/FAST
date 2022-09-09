@@ -217,7 +217,8 @@ root@555d364b63d7:/app/utils/location# python SeisBench2hypoinverse.py
 2. Expand the hyp1.40.tar file
 3. Move to `root@555d364b63d7:/app/utils/location`
 
-Move the following files from `root@555d364b63d7:/app/utils/location/` to `root@555d364b63d7:/app/utils/location/hyp1.40/source/`:
+Move the following files from `root@555d364b63d7:/app/utils/location/` to `root@555d364b63d7:/app/utils/location/hyp1.40/source/`:  
+
    *   eqt_get_station_list_hectormine.py
    *   locate_events.hyp
    *   output_hypoinverse_as_text.py
