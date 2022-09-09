@@ -130,6 +130,197 @@ root@555d364b63d7:/app/FAST/utils/events# python output_final_detection_list.py
 root@555d364b63d7:/app/FAST/utils/events# cat ../../data/network_detection/FINAL_Detection_List_HectorMine_7sta_2stathresh.txt
 ```
 
+<br></br>
+
+!!! info
+    The following tutorials are not a part of FAST but are optional steps to take for phase picking and earthquake location using SeisBench, HYPOINVERSE, and PyGMT.
+
+
+## **Phase Picking**  
+
+### Cut SAC Files  
+
+* Cut the continuous seismic data based on the detection results from FAST  
+
+```
+root@555d364b63d7:/app/utils/events# python cut_event_files.py
+```  
+
+* Check for cut files in:  
+
+```
+root@555d364b63d7:/app/data/event_ids#  
+```
+
+* Example:  
+
+![ex_files](img/ex_files.png)
+
+### Install SeisBench  
+
+```
+root@555d364b63d7:/app/utils/events# cd ../..
+root@555d364b63d7:/app# pip install seisbench
+```
+
+### Pick Phases (automatically)  
+
+* Run SeisBench script for all events and all stations
+
+```
+root@555d364b63d7:/app# cd utils/picking
+root@555d364b63d7:/app/utils/picking# python run_seisbench.py
+```  
+
+* Annotated plots are found in:  
+
+```
+root@555d364b63d7:/app/data/seisbench_picks
+```  
+
+![example_pics](img/example_picks.png)
+
+* Example annotated plot from event 00000000:  
+
+![example_pick_1](img/example_pick_1.png)
+
+Output saved in:
+
+```
+root@555d364b63d7:/app/utils/picking/event_picks.json/
+```  
+Example output:  
+
+![json_file_picks](img/json_file_picks.png)
+
+* "peak_time": Arrival time of pick
+* "peak_value": Probability of pick
+
+## **Earthquake Location**  
+
+The output from `run_seisbench.py` in the `event_picks.json` file contains the information needed to locate the detected earthquakes from the FAST final detection list. We use HYPOINVERSE to locate earthquakes from the picks found with `run_seisbench.py`.  
+
+HYPOINVERSE is the standard location program supplied with the Earthworm seismic acquisition and processing system (AQMS). Read more about it [here](https://www.usgs.gov/software/hypoinverse-earthquake-location).  
+
+### Locate Earthquakes  
+
+To begin earthquake location run the following to format the phase picks for HYPOINVERSE:  
+
+```
+root@555d364b63d7:/app/utils/picking# cd ..
+root@555d364b63d7:/app/utils# cd location
+root@555d364b63d7:/app/utils/location# python SeisBench2hypoinverse.py
+```  
+
+### Install and Run HYPOINVERSE
+
+1. Download HYPOINVERSE [here](https://www.usgs.gov/software/hypoinverse-earthquake-location)    
+2. Expand the hyp1.40.tar file
+3. Move to `~/quake_tutorial/utils/location`
+
+Check that GFortran is installed:  
+
+```
+root@555d364b63d7:/app# gfortran --version
+```  
+
+Example expected output:  
+==GNU Fortran (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0==  
+
+If GFortran is not installed, run:  
+```
+root@555d364b63d7:/app# apt-get install gfortran  
+```
+
+Make changes to `makefile` in `root@555d364b63d7:/app/utils/location/hyp1.40/source`:  
+
+* Comment lines **16** and **230**  
+
+```  py linenums="16"
+# cp hyp1.40 /home/calnet/klein/bin
+```  
+
+```  py linenums="230"
+# cp p2sdly /home/calnet/klein/bin
+```  
+
+* Save changes and exit  
+
+Check that HYPOINVERSE works:  
+
+* Compile hypoinverse:  
+```
+root@555d364b63d7:/app/utils/location/hyp1.40/source# make 
+```  
+
+* Make it executable:  
+```
+root@555d364b63d7:/app/utils/location/hyp1.40/source# chmod +x hyp1.40
+```  
+
+* Run HYPOINVERSE:  
+```
+root@555d364b63d7:/app/utils/location/hyp1.40/source# ./hyp1.40
+```  
+
+* Expcted output:  
+```
+HYPOINVERSE 2000 STARTING
+6/2014 VERSION 1.40 (geoid depth possible)
+ COMMAND?
+```   
+
+If you have this output, HYPOINVERSE is running correctly. Press ctrl-c to exit.
+
+### Formatting data for HYPOINVERSE
+
+Get Hector Mine Station List as a json file:  
+```
+root@555d364b63d7:/app/utils/location# python eqt_get_station_list_hectormine.py
+```
+
+Output:  
+```
+station_list.json
+```
+
+Convert `station_list.json` to `station_list.sta`:  
+```
+root@555d364b63d7:/app/utils/location# python output_station_file.py
+```  
+
+### Run HYPOINVERSE  
+
+To run HYPOINVERSE:  
+```
+root@555d364b63d7:/app/utils/location/hyp1.40/source# ./hyp1.40
+```  
+
+Use **@locate_event.hyp** as input:
+```
+HYPOINVERSE 2000 STARTING
+6/2014 VERSION 1.40 (geoid depth possible)
+ COMMAND? @locate_events.hyp
+```  
+
+Expected output:
+![hypo_output](img/hypo_output.png)   
+
+You should see output files called locate_events.sum and locate_events.arc, but these are difficult to read.  
+
+!!! note
+    locate_events.arc has the event info, and phase pick info for each event. locate_events.sum has only the event info, no phase pick info.
+
+Use `output_hypoinverse_as_text.py` to output `locate_events.sum` in a more readable format.  
+
+```
+root@555d364b63d7:/app/utils/location# python output_hypoinverse_as_text.py  
+```
+
+## **Plotting Earthquake Locations with PyGMT**
+
+### Install PyGMT
+
 ## **Exiting the Docker Container**
 
 ```

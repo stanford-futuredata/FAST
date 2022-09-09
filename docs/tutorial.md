@@ -375,9 +375,7 @@ Check that GFortran is installed:
 ```  
 
 Example expected output:  
-```
-GNU Fortran (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0.
-```  
+==GNU Fortran (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0==  
 
 If GFortran is not installed, run:  
 ```
