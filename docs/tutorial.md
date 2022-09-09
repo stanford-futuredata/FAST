@@ -368,6 +368,13 @@ To begin earthquake location run the following to format the phase picks for HYP
 2. Expand the hyp1.40.tar file
 3. Move to `~/quake_tutorial/utils/location`
 
+Move the following files from `~/quake_tutorial/utils/location/` to `~/quake_tutorial/utils/location/hyp1.40/source/`:
+   *   eqt_get_station_list_hectormine.py
+   *   locate_events.hyp
+   *   output_hypoinverse_as_text.py
+   *   output_station_file.py
+   *   utils_hypoinverse.py
+
 Check that GFortran is installed:  
 
 ```
