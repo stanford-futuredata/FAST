@@ -235,6 +235,7 @@ To begin earthquake location run the following to format the phase picks for HYP
 Move the following files from `~/FAST$/utils/location/` to `~/FAST$/utils/location/hyp1.40/source/`:  
 
    *   eqt_get_station_list_hectormine.py
+   *   hadley.crh
    *   locate_events.hyp
    *   output_hypoinverse_as_text.py
    *   output_station_file.py
