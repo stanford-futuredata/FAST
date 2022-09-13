@@ -253,9 +253,9 @@ Make changes to `makefile` in `root@555d364b63d7:/app/utils/location/hyp1.40/sou
 
 * Find and replace: g77 with gfortran
 
-* Save changes and exit  
+Save changes and exit  
 
-Check that HYPOINVERSE works:  
+**Check that HYPOINVERSE works**:  
 
 * Compile hypoinverse:  
 ```
