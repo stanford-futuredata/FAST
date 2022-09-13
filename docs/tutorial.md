@@ -370,7 +370,7 @@ To begin earthquake location run the following to format the phase picks for HYP
 
 Move the following files from `~/quake_tutorial/utils/location/` to `~/quake_tutorial/utils/location/hyp1.40/source/`:  
 
-   *   eqt_get_station_list_hectormine.py
+   *   eqt_get_station_list.py
    *   hadley.crh
    *   locate_events.hyp
    *   output_hypoinverse_as_text.py
@@ -437,7 +437,7 @@ If you have this output, HYPOINVERSE is running correctly. Press ctrl-c to exit.
 
 Get Hector Mine Station List as a json file:  
 ```
-~/quake_tutorial/utils/location$ python eqt_get_station_list_hectormine.py
+~/quake_tutorial/utils/location$ python eqt_get_station_list.py
 ```
 
 Output:  

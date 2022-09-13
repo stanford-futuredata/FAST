@@ -8,7 +8,7 @@ HYPOINVERSE is the standard location program supplied with the Earthworm seismic
 
 ## Get Station List  
 
-You will need to edit `eqt_get_station_hectormine.py` in `/FAST/utils/location/` for your dataset:  
+You will need to edit `eqt_get_station_list.py` in `/FAST/utils/location/` for your dataset:  
 
 * Starting with getting the data
 

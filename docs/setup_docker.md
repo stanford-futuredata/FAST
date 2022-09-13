@@ -219,7 +219,7 @@ root@555d364b63d7:/app/utils/location# python SeisBench2hypoinverse.py
 
 Move the following files from `root@555d364b63d7:/app/utils/location/` to `root@555d364b63d7:/app/utils/location/hyp1.40/source/`:  
 
-   *   eqt_get_station_list_hectormine.py
+   *   eqt_get_station_list.py
    *   hadley.crh
    *   locate_events.hyp
    *   output_hypoinverse_as_text.py
@@ -286,7 +286,7 @@ If you have this output, HYPOINVERSE is running correctly. Press ctrl-c to exit.
 
 Get Hector Mine Station List as a json file:  
 ```
-root@555d364b63d7:/app/utils/location# python eqt_get_station_list_hectormine.py
+root@555d364b63d7:/app/utils/location# python eqt_get_station_list.py
 ```
 
 Output:  
