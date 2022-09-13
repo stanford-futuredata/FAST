@@ -251,6 +251,8 @@ Make changes to `makefile` in `root@555d364b63d7:/app/utils/location/hyp1.40/sou
 # cp p2sdly /home/calnet/klein/bin
 ```  
 
+* Find and replace: g77 with gfortran
+
 * Save changes and exit  
 
 Check that HYPOINVERSE works:  

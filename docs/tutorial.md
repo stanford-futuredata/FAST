@@ -391,7 +391,9 @@ If GFortran is not installed, run:
 ```
 
 Make changes to `makefile` in `~/quake_tutorial/utils/location/hyp1.40/source`:  
+
    * Comment lines **16** and **230**  
+   * Change **g77** in lines to **gfortran**
 
 ```  py linenums="16"
 # cp hyp1.40 /home/calnet/klein/bin

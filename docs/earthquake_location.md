@@ -4,4 +4,7 @@ The phase pick information from `run_seisbench.py` is saved in `event_picks.json
 
 `SeisBench2hypoinverse.py` will format the needed earthquake information as input for HYPOINVERSE.  
 
-HYPOINVERSE is the standard location program supplied with the Earthworm seismic acquisition and processing system (AQMS). Read more about it [here](https://www.usgs.gov/software/hypoinverse-earthquake-location).
+HYPOINVERSE is the standard location program supplied with the Earthworm seismic acquisition and processing system (AQMS). Read more about it [here](https://www.usgs.gov/software/hypoinverse-earthquake-location).  
+
+## Get Station List  
+
