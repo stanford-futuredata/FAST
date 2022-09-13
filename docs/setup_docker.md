@@ -220,6 +220,7 @@ root@555d364b63d7:/app/utils/location# python SeisBench2hypoinverse.py
 Move the following files from `root@555d364b63d7:/app/utils/location/` to `root@555d364b63d7:/app/utils/location/hyp1.40/source/`:  
 
    *   eqt_get_station_list_hectormine.py
+   *   hadly.crh
    *   locate_events.hyp
    *   output_hypoinverse_as_text.py
    *   output_station_file.py
