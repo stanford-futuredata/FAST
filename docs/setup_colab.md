@@ -12,7 +12,7 @@
 
 ## Run FAST in Colab
 
-To run FAST in Google Colab, copy [this](https://colab.research.google.com/drive/1hdilryUPBwk3QRXkXGKh4eT4ViBGEh9y?usp=sharing) Google Colab FAST example using data from the Hector Mine into your Google drive.
+To run FAST in Google Colab, copy [this](https://colab.research.google.com/drive/1Xfe4Icx44WwM8kDkdJDJNgKCrNP3U5rz?usp=sharing) Google Colab FAST example using data from the Hector Mine into your Google drive.
 
 The Colab uses a small example data set from the Hector Mine with 7 stations and less than one day long. With the Hector Mine data set, you can run the end-to-end FAST pipeline, from fingerprint to output list of detection times, in just a few minutes, since it is a small data set.
 

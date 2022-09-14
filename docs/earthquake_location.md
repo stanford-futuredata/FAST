@@ -6,6 +6,7 @@ The phase pick information from `run_seisbench.py` is saved in `event_picks.json
 
 HYPOINVERSE is the standard location program supplied with the Earthworm seismic acquisition and processing system (AQMS). Read more about it [here](https://www.usgs.gov/software/hypoinverse-earthquake-location).  
 
+
 ## Get Station List  
 
 You will need to edit `eqt_get_station_list.py` in `/FAST/utils/location/` for your dataset:  
