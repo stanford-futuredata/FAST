@@ -86,6 +86,15 @@ mag_arr = np.array(mag)
 region = [lon_arr.min() - 1, lon_arr.max() + 1, lat_arr.min() - 1, lat_arr.max() + 1]  
 
 
+# In[38]:
+
+
+# Cities near Hector Mine
+nearby_cities_lat = np.array([34.5388, 34.895798, 34.42741, 34.114174])
+nearby_cities_lon = np.array([-117.298195, -117.017281, -117.31484, -116.432236])
+nearby_cities_names = np.array(['Victorville', 'Barstow', 'Hesperia', 'Yucca Valley'])
+
+
 # In[11]:
 
 
@@ -93,7 +102,7 @@ region = [lon_arr.min() - 1, lon_arr.max() + 1, lat_arr.min() - 1, lat_arr.max()
 mapcpt = 'map_gray.cpt'
 
 
-# In[13]:
+# In[39]:
 
 
 fig = pygmt.Figure()
@@ -146,12 +155,23 @@ with pygmt.config(FONT_TITLE=10):
 
 # Plot stations
 fig.plot(x=station_df.lon, 
-         y=station_df.lat, 
+         y=station_df.lat,
+         label='Stations',
          style='i0.5c', 
          color='red3', 
          pen='black')
 
-fig.text(x=station_df.lon, y=station_df.lat + 0.07, text=station_df.stations)
+fig.text(x=station_df.lon, y=station_df.lat + 0.07, text=station_df.stations, font='12p')
+
+# Plot nearby cities
+fig.plot(x=nearby_cities_lon, 
+         y=nearby_cities_lat, 
+         label='Nearby Cities',
+         style='a0.8c', 
+         color='yellow3', 
+         pen='black')
+
+fig.text(x=nearby_cities_lon, y=nearby_cities_lat + 0.07, text=nearby_cities_names, font="13p")
 
 fig.colorbar(frame='af+l"Depth (km)"')
 
@@ -172,6 +192,12 @@ with fig.inset(position="jTR+o0.1c",
     rectangle = [[subset_region[0], subset_region[2], subset_region[1], subset_region[3]]]
     fig.plot(data=rectangle, style="r+s", pen="0.8p,red")
              
+fig.legend(region=region, 
+           projection="M4i", 
+           spec='legend_file.txt', 
+           position="jBL+o0.2c",
+           box="+gantiquewhite+pthick,black")
+        
 fig.show()
 
 
