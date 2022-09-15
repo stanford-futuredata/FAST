@@ -102,7 +102,7 @@ nearby_cities_names = np.array(['Victorville', 'Barstow', 'Hesperia', 'Yucca Val
 mapcpt = 'map_gray.cpt'
 
 
-# In[39]:
+# In[49]:
 
 
 fig = pygmt.Figure()
@@ -167,11 +167,11 @@ fig.text(x=station_df.lon, y=station_df.lat + 0.07, text=station_df.stations, fo
 fig.plot(x=nearby_cities_lon, 
          y=nearby_cities_lat, 
          label='Nearby Cities',
-         style='a0.8c', 
-         color='yellow3', 
+         style='s0.5c', 
+         color='yellow', 
          pen='black')
 
-fig.text(x=nearby_cities_lon, y=nearby_cities_lat + 0.07, text=nearby_cities_names, font="13p")
+fig.text(x=nearby_cities_lon, y=nearby_cities_lat + 0.065, text=nearby_cities_names, font="13p")
 
 fig.colorbar(frame='af+l"Depth (km)"')
 
