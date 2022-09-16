@@ -305,6 +305,10 @@ img[alt=json_file_picks] {
     margin-left: 12%;
 }
 
+img[alt=hectormine_pygmt] {
+    margin-left: 17%;
+}
+
 figcaption {
     text-align: center;
 }

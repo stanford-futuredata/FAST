@@ -484,4 +484,14 @@ Use `output_hypoinverse_as_text.py` to output `locate_events.sum` in a more read
 
 ```
 ~/quake_tutorial$ conda install -c conda-forge pygmt
+```  
+
+### Run `hypoinverse_to_pygmt.py`
+
 ```
+~/quake_tutorial/utils/location$ python hypoinverse_to_pygmt.py  
+```  
+
+**Map Output**:  
+
+![hectormine_pygmt](img/hectormine_pygmt.png)

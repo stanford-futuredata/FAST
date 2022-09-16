@@ -347,3 +347,13 @@ Use `output_hypoinverse_as_text.py` to output `locate_events.sum` in a more read
 ```
 ~/FAST$ conda install -c conda-forge pygmt
 ```  
+
+### Run `hypoinverse_to_pygmt.py`
+
+```
+~/FAST/utils/location$ python hypoinverse_to_pygmt.py  
+```  
+
+**Map Output**:  
+
+![hectormine_pygmt](img/hectormine_pygmt.png)

@@ -335,6 +335,16 @@ root@555d364b63d7:/app/utils/location# python output_hypoinverse_as_text.py
 root@555d364b63d7:/app# conda install -c conda-forge pygmt
 ```  
 
+### Run `hypoinverse_to_pygmt.py`
+
+```
+root@555d364b63d7:/app/utils/location# python hypoinverse_to_pygmt.py  
+```  
+
+**Map Output**:  
+
+![hectormine_pygmt](img/hectormine_pygmt.png)
+
 ## **Exiting the Docker Container**
 
 ```

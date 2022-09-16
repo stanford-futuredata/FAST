@@ -205,28 +205,3 @@ fig.show()
 
 
 fig.savefig('hypoinverse_to_pygmt.png')
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
