@@ -7,7 +7,7 @@ import utils_hypoinverse as utils_hyp
 
 in_hinv_sum_file = 'locate_events.sum'
 catalog_start_time = UTCDateTime('1999-10-15T00:00:00')
-output_plot_file = 'events_locations_hectormine.txt'
+output_plot_file = 'events_locations.txt'
 
 #-----------------------------------
 

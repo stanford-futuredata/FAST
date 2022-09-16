@@ -63,7 +63,7 @@ depth = []
 mag = []
 ev_id = []
 
-with open('hyp1.40/source/events_locations_hectormine.txt', 'r') as f:
+with open('hyp1.40/source/events_locations.txt', 'r') as f:
     for line in f:
         split_line = line.split()
         num_of_sec.append(split_line[0])
