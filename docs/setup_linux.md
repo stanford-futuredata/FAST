@@ -354,6 +354,8 @@ Use `output_hypoinverse_as_text.py` to output `locate_events.sum` in a more read
 ~/FAST/utils/location$ python hypoinverse_to_pygmt.py  
 ```  
 
+Figure saved as `hypoinverse_to_pygmt.png` in `~/FAST/utils/location/`
+
 **Map Output**:  
 
 ![hectormine_pygmt](img/hectormine_pygmt.png)

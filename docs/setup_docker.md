@@ -341,6 +341,8 @@ root@555d364b63d7:/app# conda install -c conda-forge pygmt
 root@555d364b63d7:/app/utils/location# python hypoinverse_to_pygmt.py  
 ```  
 
+Figure saved as `hypoinverse_to_pygmt.png` in `root@555d364b63d7:/app/utils/location/`
+
 **Map Output**:  
 
 ![hectormine_pygmt](img/hectormine_pygmt.png)
