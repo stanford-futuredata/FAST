@@ -29,7 +29,7 @@ station_lats = []
 station_lons = []
 elev = []
 
-with open('station_list.json') as infile:
+with open('hyp1.40/source/station_list.json') as infile:
     stations = json.load(infile)
     
     for i in stations:
@@ -63,7 +63,7 @@ depth = []
 mag = []
 ev_id = []
 
-with open('events_locations_hectormine.txt', 'r') as f:
+with open('hyp1.40/source/events_locations_hectormine.txt', 'r') as f:
     for line in f:
         split_line = line.split()
         num_of_sec.append(split_line[0])
