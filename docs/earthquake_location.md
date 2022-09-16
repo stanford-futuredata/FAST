@@ -6,7 +6,7 @@ The phase pick information from `run_seisbench.py` is saved in `event_picks.json
 
 HYPOINVERSE is the standard location program supplied with the Earthworm seismic acquisition and processing system (AQMS). Read more about it [here](https://www.usgs.gov/software/hypoinverse-earthquake-location).  
 
-## Make Changes to `SeisBench2hypoinverse.py`  
+### Make Changes to `SeisBench2hypoinverse.py`  
 
 * Change output file name:  
 
@@ -14,7 +14,7 @@ HYPOINVERSE is the standard location program supplied with the Earthworm seismic
 out_hinv_phase_file = 'EQT_19991015_test.txt' # Change file name for your dataset
 ```  
 
-## Get Station List  
+### Get Station List  
 
 You will need to edit `eqt_get_station_list.py` in `/FAST/utils/location/` for your dataset:  
 
@@ -67,7 +67,7 @@ This line in the `locate_events.hyp` file tells you the ratio between p wave and
 `STA ‘station_list.sta’` - this is the station file, which has the list of station names and their locations.  There are scripts you can run to create this file shown in [Tutorial](tutorial.md).  
 
 
-## Change File Name in `locate_events.hyp`  
+### Change File Name in `locate_events.hyp`  
 
 The output changed above in `SeisBench2hypoinverse.py` is used in `locate_events.hyp`  
 
@@ -75,4 +75,38 @@ The output changed above in `SeisBench2hypoinverse.py` is used in `locate_events
 
 ```  py linenums="53"
 PHS 'EQT_19991015_test.txt' # Change file name for your dataset
+```  
+
+## Plotting HYPOINVERSE Location Results With PyGMT  
+
+* Change nearby cities latitude, longitude, and name Numpy arrays for your dataset:  
+
+``` py linenums="92"
+# Cities near Hector Mine
+nearby_cities_lat = np.array([34.5388, 34.895798, 34.42741, 34.114174])
+nearby_cities_lon = np.array([-117.298195, -117.017281, -117.31484, -116.432236])
+nearby_cities_names = np.array(['Victorville', 'Barstow', 'Hesperia', 'Yucca Valley'])
+```  
+
+* Change plot title:  
+
+``` py linenums="117"
+fig.basemap(region=region, projection='M4i', frame=['a', '+t1999 Hector Mine Foreshock Locations']) #Change title: keep +t, needed at beginning of string
+```  
+
+* Change region of inset plot:
+
+``` py linenums="179"
+with fig.inset(position="jTR+o0.1c", 
+               box="+p1.5p,black", 
+               region=[-130, -105, 27, 45], # Change region
+               projection='M1.5i'):
+    
+    fig.coast(region=[-130, -105, 27, 45], # Change region
+              projection='M1.5i',
+              land="lightgray", 
+              water="lightskyblue", 
+              borders="a/faint,117/117/117", 
+              shorelines="1/0.5p",
+              )
 ```  
