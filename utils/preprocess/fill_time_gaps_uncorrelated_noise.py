@@ -229,11 +229,11 @@ format_str = 'MSEED'
 if not os.path.exists(out_dir):
    os.makedirs(out_dir)
 
-print 'Number of files: ', len(file_arr)
+print('Number of files: ', len(file_arr))
 for ifile in file_arr:
 
    file_str = os.path.basename(ifile)
-   print file_str
+   print(file_str)
    file_name = ts_dir+file_str
 
 
@@ -250,9 +250,9 @@ for ifile in file_arr:
 
    [num_gaps, gap_start_ind, gap_end_ind] = detect_time_gaps(file_name, min_samples, epsilon, thresh_disc)
 
-   print 'Number of time gaps: ', num_gaps
-   print 'Starting index of each time gap: ', gap_start_ind
-   print 'Ending index of each time gap: ', gap_end_ind
+   print('Number of time gaps: ', num_gaps)
+   print('Starting index of each time gap: ', gap_start_ind)
+   print('Ending index of each time gap: ', gap_end_ind)
 
 
    # ------------------- FILL TIME GAPS WITH UNCORRELATED NOISE  ------------------------------------------------
@@ -262,26 +262,26 @@ for ifile in file_arr:
    ntest = 2000 # Number of test samples in data - assume they are noise
    for igap in range(num_gaps):
       ngap = gap_end_ind[igap] - gap_start_ind[igap] + 1
-      print 'Number of samples in gap: ', ngap
+      print('Number of samples in gap: ', ngap)
 
       # Bounds check
       if (gap_start_ind[igap]-ntest < 0): # not enough data on left side
-	 median_gap_right = np.median(st[0].data[gap_end_ind[igap]+1:gap_end_ind[igap]+ntest]) # median of ntest noise values on right side of gap
-	 median_gap = median_gap_right
-	 mad_gap_right = robust.mad(st[0].data[gap_end_ind[igap]+1:gap_end_ind[igap]+ntest]) # MAD of ntest noise values on right side of gap
-	 mad_gap = mad_gap_right
+         median_gap_right = np.median(st[0].data[gap_end_ind[igap]+1:gap_end_ind[igap]+ntest]) # median of ntest noise values on right side of gap
+         median_gap = median_gap_right
+         mad_gap_right = robust.mad(st[0].data[gap_end_ind[igap]+1:gap_end_ind[igap]+ntest]) # MAD of ntest noise values on right side of gap
+         mad_gap = mad_gap_right
       elif (gap_end_ind[igap]+ntest >= len(st[0].data)): # not enough data on left side
-	 median_gap_left = np.median(st[0].data[gap_start_ind[igap]-ntest:gap_start_ind[igap]-1]) # median of ntest noise values on left side of gap
-	 median_gap = median_gap_left
-	 mad_gap_left = robust.mad(st[0].data[gap_start_ind[igap]-ntest:gap_start_ind[igap]-1]) # MAD of ntest noise values on left side of gap
-	 mad_gap = mad_gap_left
+         median_gap_left = np.median(st[0].data[gap_start_ind[igap]-ntest:gap_start_ind[igap]-1]) # median of ntest noise values on left side of gap
+         median_gap = median_gap_left
+         mad_gap_left = robust.mad(st[0].data[gap_start_ind[igap]-ntest:gap_start_ind[igap]-1]) # MAD of ntest noise values on left side of gap
+         mad_gap = mad_gap_left
       else:
-	 median_gap_left = np.median(st[0].data[gap_start_ind[igap]-ntest:gap_start_ind[igap]-1]) # median of ntest noise values on left side of gap
-	 median_gap_right = np.median(st[0].data[gap_end_ind[igap]+1:gap_end_ind[igap]+ntest]) # median of ntest noise values on right side of gap
-	 median_gap = 0.5*(median_gap_left + median_gap_right)
-	 mad_gap_left = robust.mad(st[0].data[gap_start_ind[igap]-ntest:gap_start_ind[igap]-1]) # MAD of ntest noise values on left side of gap
-	 mad_gap_right = robust.mad(st[0].data[gap_end_ind[igap]+1:gap_end_ind[igap]+ntest]) # MAD of ntest noise values on right side of gap
-	 mad_gap = 0.5*(mad_gap_left + mad_gap_right)
+         median_gap_left = np.median(st[0].data[gap_start_ind[igap]-ntest:gap_start_ind[igap]-1]) # median of ntest noise values on left side of gap
+         median_gap_right = np.median(st[0].data[gap_end_ind[igap]+1:gap_end_ind[igap]+ntest]) # median of ntest noise values on right side of gap
+         median_gap = 0.5*(median_gap_left + median_gap_right)
+         mad_gap_left = robust.mad(st[0].data[gap_start_ind[igap]-ntest:gap_start_ind[igap]-1]) # MAD of ntest noise values on left side of gap
+         mad_gap_right = robust.mad(st[0].data[gap_end_ind[igap]+1:gap_end_ind[igap]+ntest]) # MAD of ntest noise values on right side of gap
+         mad_gap = 0.5*(mad_gap_left + mad_gap_right)
 
       # Fill in gap with uncorrelated white Gaussian noise
       gap_x = mad_gap*np.random.randn(ngap) + median_gap
