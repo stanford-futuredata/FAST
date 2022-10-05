@@ -237,6 +237,7 @@ Example expected output:
 
 If GFortran is not installed, run:  
 ```
+root@555d364b63d7:/app# apt-get update && apt-get upgrade  
 root@555d364b63d7:/app# apt-get install gfortran  
 ```
 

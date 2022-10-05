@@ -388,6 +388,7 @@ Example expected output:
 
 If GFortran is not installed, run:  
 ```
+~/quake_tutorial$ apt-get update && apt-get upgrade  
 ~/quake_tutorial$ apt-get install gfortran  
 ```
 
