@@ -31,21 +31,23 @@
 4.  How to Set Parameters  
     **Click here to learn how to test FAST on your own data sets.**
 
-    1.  [Input and Preprocessing](input_and_preprocess.md)
+    1.  [FAST Checklist](FAST_checklist.md)
+   
+    2.  [Input and Preprocessing](input_and_preprocess.md)
 
-    2.  [Fingerprint](f_p.md)
+    3.  [Fingerprint](f_p.md)
 
-    3.  [Similarity Search](sim_search.md)
+    4.  [Similarity Search](sim_search.md)
 
-    4.  [Network Detection](network_detection.md)  
+    5.  [Network Detection](network_detection.md)  
 
-    5.  [FAST Output](FAST_output.md)  
+    6.  [FAST Output](FAST_output.md)  
 
-    6.  [Phase Picking](phase_picking.md)  
+    7.  [Phase Picking](phase_picking.md)  
 
-    7.  [Earthquake Location](earthquake_location.md)  
+    8.  [Earthquake Location](earthquake_location.md)  
 
-    8.  [Example Parameters](ex_params_intro.md)  
+    9.  [Example Parameters](ex_params_intro.md)  
         **Click here to see data sets FAST has been used on to detect earthquakes.**
 
 5.  [References](references.md)  
