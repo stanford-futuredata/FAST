@@ -32,22 +32,24 @@
     **Click here to learn how to test FAST on your own data sets.**
 
     1.  [FAST Checklist](FAST_checklist.md)
+
+    2.  [Getting Seismic Data](get_seismic_data.md)
    
-    2.  [Input and Preprocessing](input_and_preprocess.md)
+    3.  [Input and Preprocessing](input_and_preprocess.md)
 
-    3.  [Fingerprint](f_p.md)
+    4.  [Fingerprint](f_p.md)
 
-    4.  [Similarity Search](sim_search.md)
+    5.  [Similarity Search](sim_search.md)
 
-    5.  [Network Detection](network_detection.md)  
+    6.  [Network Detection](network_detection.md)  
 
-    6.  [FAST Output](FAST_output.md)  
+    7.  [FAST Output](FAST_output.md)  
 
-    7.  [Phase Picking](phase_picking.md)  
+    8.  [Phase Picking](phase_picking.md)  
 
-    8.  [Earthquake Location](earthquake_location.md)  
+    9.  [Earthquake Location](earthquake_location.md)  
 
-    9.  [Example Parameters](ex_params_intro.md)  
+    10. [Example Parameters](ex_params_intro.md)  
         **Click here to see data sets FAST has been used on to detect earthquakes.**
 
 5.  [References](references.md)  
