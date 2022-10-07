@@ -13,6 +13,7 @@ nav:
     - Docker: setup_docker.md
   - Tutorial: tutorial.md
   - How to Set Parameters:
+    - FAST Checklist: FAST_checklist.md
     - Input and Preprocessing: input_and_preprocess.md
     - Fingerprint: f_p.md
     - Similarity Search: sim_search.md
