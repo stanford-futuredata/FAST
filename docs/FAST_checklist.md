@@ -32,7 +32,24 @@ CI.CRR..HHZ | 2021-06-05T00:00:00.008300Z - 2021-06-05T23:59:59.998300Z | 100.0 
      * If chosen sampling rate is 25 Hz, and trace sampling rate is 200 Hz, choose a decimate factor of 8
      * If chosen sampling rate is 25 Hz, and trace sampling rate is 100 Hz, choose a decimate factor of 4  
    
-* Use `~/FAST/utils/preprocess/bandpass_filter_decimate.py` and create a bash script similar to `~/FAST/utils/preprocess/mdl_bandpass_filter.sh` to filter waveforms
+* Use `~/FAST/utils/preprocess/bandpass_filter_decimate.py` and create a bash script similar to `~/FAST/utils/preprocess/mdl_bandpass_filter.sh` to filter waveforms. Make sure to change input directory and consider creating an output directory for the decimated waveform files.  
+
+Change input directory in  `~/FAST/utils/preprocess/bandpass_filter_decimate.py`  
+
+``` py linenums="65"
+ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveforms'+station+'/' # change input directory to reference where your waveforms are
+
+out_dir = '../../data/waveforms_decimated/' # consider creating an output directory 
+
+if not os.path.exists(out_dir): # create directory if it doesn't exist
+    os.mkdir(out_dir)
+```  
+
+Change where output files are written
+
+``` py linenums="114"
+st.write(ts_dir+str_prefix+file_str, format=format_str) # change ts_dir to out_dir
+```  
 
 ```
 >>> st = read(“AZ.TONN*“)
@@ -83,7 +100,7 @@ python bandpass_filter_decimate.py AZ TONN HNZ 4 12 8
         "channel": "HNE",
         "start_time": "21-06-05T00:00:00.0",
         "end_time": "21-06-06T00:00:00.0",
-        "folder": "data/waveforms/",
+        "folder": "data/waveforms/", # folder where decimated waveform files are located
         "fingerprint_files": [
 	    "Deci4.bp2to20.YR.ED04..HHZ.D.2016.303"],
         "MAD_sample_files": [
@@ -92,4 +109,14 @@ python bandpass_filter_decimate.py AZ TONN HNZ 4 12 8
 }
 ```
 
-* 
+* Put all fp_input_NETWORK_STATION_CHANNEL.json files in `~/FAST/config.json` and `~/FAST/parameters/fingerprint/your_dataset_folder/global_indices.json`; Example:    
+
+```
+{
+	"index_folder": "../data/global_indices/",
+	"fp_param_dir": "../parameters/fingerprint/your_dataset_folder/", # fp_input_NETWORK_STATION_CHANNEL.json directory
+	"fp_params": ["fp_input_CI_TPC_EHZ.json", "fp_input_CI_RMR_EHZ.json", "fp_input_CI_RMM_EHZ.json",
+		"fp_input_CI_HEC_BHE.json", "fp_input_CI_HEC_BHN.json", "fp_input_CI_HEC_BHZ.json",
+		"fp_input_CI_CPM_EHZ.json", "fp_input_CI_GTM_EHZ.json", "fp_input_CI_CDY_EHZ.json"]
+}
+```
