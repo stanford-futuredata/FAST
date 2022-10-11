@@ -35,13 +35,61 @@ CI.CRR..HHZ | 2021-06-05T00:00:00.008300Z - 2021-06-05T23:59:59.998300Z | 100.0 
 * Use `~/FAST/utils/preprocess/bandpass_filter_decimate.py` and create a bash script similar to `~/FAST/utils/preprocess/mdl_bandpass_filter.sh` to filter waveforms
 
 ```
-python bandpass_filter_decimate.py AZ TONN HNZ 5 12 5
+>>> st = read(“AZ.TONN*“)
+>>> print(st)
+3 Trace(s) in Stream:
+AZ.TONN..HNE | 2021-06-05T00:00:00.001900Z - 2021-06-05T23:59:59.990308Z | 200.0 Hz, 17280000 samples
+AZ.TONN..HNN | 2021-06-05T00:00:00.001900Z - 2021-06-05T23:59:59.990308Z | 200.0 Hz, 17280000 samples
+AZ.TONN..HNZ | 2021-06-05T00:00:00.001900Z - 2021-06-05T23:59:59.990308Z | 200.0 Hz, 17280000 samples
+```  
 
-# 5: min frequency
+The above waveform is 200 Hz, so the decimate factor should be 8, for the FAST fingerprint sampling rate to be 25 Hz:  
+
+```
+python bandpass_filter_decimate.py AZ TONN HNZ 4 12 8
+
+# 4: min frequency
 # 12: max frequency
-# 5: decimate value
+# 8: decimate value
 ```
 
 4 - 12 Hz is a good general min/max frequency range for most waveform files. The decimate value depends on the sampling rate. Follow the guide above to choose this value.
 
-*  
+* Create [fingerprint input json files](f_p.md) for each channel at each station in your dataset. Example:  
+
+```
+{
+    "fingerprint": {
+        "sampling_rate": 25, # final sampling rate after decimating
+        "min_freq": 4.0,
+        "max_freq": 12.0,
+        "spec_length": 6.0,
+        "spec_lag": 0.12,
+        "fp_length": 64,
+        "fp_lag": 10,
+        "k_coef": 400,
+        "nfreq": 32,
+        "mad_sampling_rate": 1,
+        "mad_sample_interval": 86400
+    },
+
+    "performance": {
+        "num_fp_thread": 16,
+        "partition_len": 86400
+    },
+
+    "data": {
+        "station": "WLA06",
+        "channel": "HNE",
+        "start_time": "21-06-05T00:00:00.0",
+        "end_time": "21-06-06T00:00:00.0",
+        "folder": "data/waveforms/",
+        "fingerprint_files": [
+	    "Deci4.bp2to20.YR.ED04..HHZ.D.2016.303"],
+        "MAD_sample_files": [
+	    "Deci4.bp2to20.YR.ED04..HHZ.D.2016.303"]
+    }
+}
+```
+
+* 
