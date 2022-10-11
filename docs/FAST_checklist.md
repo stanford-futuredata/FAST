@@ -44,4 +44,4 @@ python bandpass_filter_decimate.py AZ TONN HNZ 5 12 5
 
 4 - 12 Hz is a good general min/max frequency range for most waveform files. The decimate value depends on the sampling rate. Follow the guide above to choose this value.
 
-* sfsdfdsfd 
+*  
