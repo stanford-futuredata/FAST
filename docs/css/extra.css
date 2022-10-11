@@ -309,6 +309,14 @@ img[alt=hectormine_pygmt] {
     margin-left: 17%;
 }
 
+img[alt=multiple_channels] {
+    margin-left: 12%;
+}
+
+img[alt=channels_priority] {
+    margin-left: 12%;
+}
+
 figcaption {
     text-align: center;
 }
