@@ -1,5 +1,8 @@
 # Checklist for running FAST on Your Own Dataset
 
+!!! info
+    Follow along with the [tutorial](tutorial.md) section to make sure you follow the correct steps for FAST while using your own dataset.
+
 * Follow install instructions: [Google Colab](setup_colab.md), [Linux](setup_linux.md), or [Docker](setup_docker.md)
 * [Get seismic data](get_seismic_data.md)
 * Put seismic data folder in `~/FAST/data/`
@@ -119,4 +122,17 @@ python bandpass_filter_decimate.py AZ TONN HNZ 4 12 8
 		"fp_input_CI_HEC_BHE.json", "fp_input_CI_HEC_BHN.json", "fp_input_CI_HEC_BHZ.json",
 		"fp_input_CI_CPM_EHZ.json", "fp_input_CI_GTM_EHZ.json", "fp_input_CI_CDY_EHZ.json"]
 }
-```
+```  
+
+* After your data is ready, you can begin fingerprinting.  
+
+* Make sure your `fp_input_NETWORK_STATION_CHANNEL.json` files are pointing to the correct decimated waveform files and directory otherwise FAST will not write to global index.
+
+* Fingerprinting is complete when you see:  
+![writing_global_index](img/writing_global_index.png)  
+
+* Now you can begin [similarity search](sim_search.md)  
+
+* Create an `output_Dataset_pairs.sh` script similar to `~/FAST/parameters/postprocess/output_HectorMine_pairs.sh` for your dataset.  
+* Create an `combine_Dataset_pairs.sh` script similar to `~/FAST/parameters/postprocess/combine_HectorMine_pairs.sh` for your dataset.  
+
