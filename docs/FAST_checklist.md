@@ -136,3 +136,8 @@ python bandpass_filter_decimate.py AZ TONN HNZ 4 12 8
 * Create an `output_Dataset_pairs.sh` script similar to `~/FAST/parameters/postprocess/output_HectorMine_pairs.sh` for your dataset.  
 * Create an `combine_Dataset_pairs.sh` script similar to `~/FAST/parameters/postprocess/combine_HectorMine_pairs.sh` for your dataset.  
 
+* Follow instructions for running `output_Dataset_pairs.sh` and `combine_Dataset_pairs.sh` in [Tutorial](tutorial.md).  
+
+* If a station and its channels are stuck when merging files while running `combine_Dataset_pairs.sh`, remove it from `output_Dataset_pairs.sh`. Rerun `output_Dataset_pairs.sh` then `combine_Dataset_pairs.sh`.  
+
+* Configure parameters in `~/FAST/parameters/postprocess/7sta_2stathresh_network_params.json` for your dataset.  
