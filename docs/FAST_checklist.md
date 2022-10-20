@@ -140,4 +140,20 @@ python bandpass_filter_decimate.py AZ TONN HNZ 4 12 8
 
 * If a station and its channels are stuck when merging files while running `combine_Dataset_pairs.sh`, remove it from `output_Dataset_pairs.sh`. Rerun `output_Dataset_pairs.sh` then `combine_Dataset_pairs.sh`.  
 
-* Configure parameters in `~/FAST/parameters/postprocess/7sta_2stathresh_network_params.json` for your dataset.  
+* Configure parameters in `~/FAST/parameters/postprocess/7sta_2stathresh_network_params.json` for your dataset. Change the 7 in the file name to the number of stations in your dataset.
+
+* Run `python scr_run_network_det.py ../parameters/postprocess/7sta_2stathresh_network_params.json`
+
+* Clean up results:  
+    * Change file path in `arrange_network_detection_results.py` if you changed the file name of `7sta_2stathresh_network_params.json`
+    * Change `nsta` to number of stations in your dataset in `arrange_network_detection_results.py` and `n_sta` in  `delete_overlap_network_detections.py`  
+    * Also change file path name in `remove_duplicates_after_network.sh`, `delete_overlap_network_detections.py`, and `final_network_sort_nsta_peaksum.sh`  
+
+
+```
+~/FAST$ cd utils/network/
+~/FAST/utils/network$ python arrange_network_detection_results.py
+~/FAST/utils/network$ ./remove_duplicates_after_network.sh
+~/FAST/utils/network$ python delete_overlap_network_detections.py
+~/FAST/utils/network$ ./final_network_sort_nsta_peaksum.sh
+```

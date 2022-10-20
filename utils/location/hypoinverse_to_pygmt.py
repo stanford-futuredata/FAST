@@ -109,8 +109,8 @@ fig = pygmt.Figure()
 
 pygmt.config(MAP_FRAME_TYPE="plain")
 pygmt.config(FORMAT_GEO_MAP="ddd.xx")
-pygmt.config(FORMAT_GEO_MAP='D');
-pygmt.config(FONT_LABEL='10p,Helvetica,black');
+pygmt.config(FORMAT_GEO_MAP='D')
+pygmt.config(FONT_LABEL='10p,Helvetica,black')
 
 subset_region = [lon_arr.min() - 0.5, lon_arr.max() + 0.5, lat_arr.min() - 0.5, lat_arr.max() + 0.5]
 
