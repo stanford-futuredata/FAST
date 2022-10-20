@@ -131,6 +131,8 @@ python bandpass_filter_decimate.py AZ TONN HNZ 4 12 8
 * Fingerprinting is complete when you see:  
 ![writing_global_index](img/writing_global_index.png)  
 
+* If you get an error when FAST tries to write global index, check `global_indices.json` to make sure there are not any disceprencies between `config.json` and `globali_indices.sjon`, such as a station being included in `config.json` but left out of `global_indices.json`
+
 * Now you can begin [similarity search](sim_search.md)  
 
 * Create an `output_Dataset_pairs.sh` script similar to `~/FAST/parameters/postprocess/output_HectorMine_pairs.sh` for your dataset.  
