@@ -1,7 +1,9 @@
 # Checklist for running FAST on Your Own Dataset
 
 !!! info
-    Follow along with the [tutorial](tutorial.md) section to make sure you follow the correct steps for FAST while using your own dataset.
+    Follow along with the [tutorial](tutorial.md) section to make sure you follow the correct steps for FAST while using your own dataset.  
+
+    In most cases, if something does not run correctly, there is likely an issue with the file path or file name that users must fix.
 
 * Follow install instructions: [Google Colab](setup_colab.md), [Linux](setup_linux.md), or [Docker](setup_docker.md)
 * [Get seismic data](get_seismic_data.md)
@@ -158,4 +160,43 @@ python bandpass_filter_decimate.py AZ TONN HNZ 4 12 8
 ~/FAST/utils/network$ ./remove_duplicates_after_network.sh
 ~/FAST/utils/network$ python delete_overlap_network_detections.py
 ~/FAST/utils/network$ ./final_network_sort_nsta_peaksum.sh
+```  
+
+* Continue with next steps in tutorial  
+
+* Plot detected earthquakes (change file paths in `PARTIALplot_detected_waveforms_HectorMine.py`):  
+
+``` py linenums="24"
+[det_start_ind, det_end_ind, dL, nevents, nsta, tot_ndets, max_ndets, tot_vol, max_vol, peaksum, num_sta, diff_ind] = np.loadtxt(times_dir+'sort_nsta_peaksum_6sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt', usecols=(0,1,2,3,4,5,6,7,8,9,10,11), unpack=True) # change file name
+out_dir = times_dir+'6sta_2stathresh_NetworkWaveformPlots/' # change file name
+```  
+* Change start time  
+
+``` py linenums="39"
+init_time = UTCDateTime('2021-06-05T00:00:00.00') # global start time for all channels
 ```
+
+* Change directory for waveform files and change format if different  
+
+``` py linenums="50"
+st = read(ts_dir+'waveforms_priority_BP/Deci*', format='MSEED') 
+```  
+
+(Steps in tutorial)  
+```
+~/FAST/utils/network$ cd ..
+~/FAST/utils$ cd events/
+~/FAST/utils/events$ python PARTIALplot_detected_waveforms_HectorMine.py 0 100
+```  
+
+* Continue with next step of setting threshold  
+
+* Make changes to `output_final_detection_list.py`:  
+
+``` py linenums="10"
+infile_name = 'EQ_sort_nsta_peaksum_6sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
+outfile_name = times_dir+'FINAL_Detection_List_HectorMine_6sta_2stathresh.txt'
+init_time = UTCDateTime('2021-06-05T00:00:00.00') # global start time for all channels
+```   
+
+Now, follow the steps in [Phase Picking](phase_picking.md) and [Earthquake Location](earthquake_location.md).  
