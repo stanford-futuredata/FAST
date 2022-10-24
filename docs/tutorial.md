@@ -280,6 +280,7 @@ FINAL_Detection_List_HectorMine_7sta_2stathresh.txt
 * Detection list is ordered in descending order of number of stations (Column 6), then in descending order of peaksum similarity (Column 7).  
 
 Further processing is required for P/S phase picking and location:  
+
   * Cut SAC files  
   * Pick phases (automatic or manual)  
   * Locate earthquakes  
