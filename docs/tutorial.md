@@ -267,8 +267,9 @@ EQ_sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
 **Example Output:**  
 ```
 FINAL_Detection_List_HectorMine_7sta_2stathresh.txt
-```
-* **Column 1**: Event ID
+```  
+
+* **Column 1**: Event ID  
 * **Column 2**: YYYY-MM-DDTHH:MM:SS.SSSS for event detection time. This is an approximate arrival time for the event (NOT origin time)  
 * **Column 3**: Event detection time (seconds) since the start time for the first fingerprint, which for this data set is UTCDateTime('1999-10-15T13:00:00.676000')  
 * **Column 4**: First fingerprint index (integer) for this event. Multiply by dt_fp = 1 second to get the time in column 2. Columns 1, 2, 3 basically represent the same information.  
