@@ -2,6 +2,8 @@
 
 [Docker](https://www.docker.com/) is an open-source project for automating the deployment of applications as portable, self-sufficient containers that can run on the cloud or on-premises. ([Source](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/container-docker-introduction/docker-defined))
 
+Docker lets you run FAST on a non-Linux operating system, so it is recommended for Mac or Windows users.
+
 ## **Install Docker**
 Install Docker on your machine [here](https://www.docker.com/products/docker-desktop/). To get started, make sure Docker has been successfully installed by running:
 
@@ -102,6 +104,8 @@ root@555d364b63d7:/app/FAST/utils/network# cat ../../data/network_detection/sort
 
 ### Display Waveforms for FAST Detections in Descending Order of "Peaksum" Similarity
 
+This example outputs png images for 100 event waveforms with the highest "Peaksum" similarity.
+
 ```
 root@555d364b63d7:/app/FAST/utils/network# cd ..
 root@555d364b63d7:/app/FAST/utils# cd events/
@@ -109,13 +113,22 @@ root@555d364b63d7:/app/FAST/utils/events# python PARTIALplot_detected_waveforms_
 ```
 
 !!! note
-    View images outside Docker container — determine detection threshold.  
-    `$ /Users/user_name/Documents/DockerFAST/FAST/data/network_detection/7sta_2stathresh_NetworkWaveformPlots/`
+    View images outside Docker container — to manually determine detection threshold
+    ```
+    $ ls ../../data/network_detection/7sta_2stathresh_NetworkWaveformPlots/
+    event_rank00000_nsta7_peaksum1015_ind6204_time6204.0_1999-10-15T14:43:24.676000.png
+    event_rank00001_nsta7_peaksum1015_ind3842_time3842.0_1999-10-15T14:04:02.676000.png
+    event_rank00002_nsta7_peaksum920_ind7488_time7488.0_1999-10-15T15:04:48.676000.png
+    event_rank00003_nsta7_peaksum823_ind5286_time5286.0_1999-10-15T14:28:06.676000.png
+    event_rank00004_nsta7_peaksum718_ind20202_time20202.0_1999-10-15T18:36:42.676000.png
+    event_rank00005_nsta7_peaksum713_ind46536_time46536.0_1999-10-16T01:55:36.676000.png
+    ...
+    ```
 
 ### Set Detection Threshold
 
 !!! note
-    Setting the detection threshold will make everything above it an earthquake.  
+    Everything above the detection threshold is deemed an earthquake. In this example, the first 50 events with the highest "Peaksum" similarity are identified as earthquakes, while the remaining events are not earthquakes.
 
 ```
 root@555d364b63d7:/app/FAST/utils/events# cd ../../data/network_detection/
@@ -139,7 +152,8 @@ root@555d364b63d7:/app/FAST/utils/events# cat ../../data/network_detection/FINAL
 
 ### Cut SAC Files  
 
-* Cut the continuous seismic data based on the detection results from FAST  
+* Cut the continuous seismic data at all stations, based on the detection results from FAST
+In this example, the event waveform time windows are 180 seconds long, 60 seconds before detection time, 120 seconds after detection time.
 
 ```
 root@555d364b63d7:/app/utils/events# python cut_event_files.py
@@ -164,7 +178,7 @@ root@555d364b63d7:/app# pip install seisbench
 
 ### Pick Phases (automatically)  
 
-* Run SeisBench script for all events and all stations
+* Run SeisBench script for all events and all stations. This can take a few minutes to finish running.
 
 ```
 root@555d364b63d7:/app# cd utils/picking
