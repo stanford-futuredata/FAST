@@ -1,6 +1,7 @@
 import datetime
 from obspy import UTCDateTime
 import json
+import os
 # Convert REAL phase output file to HYPOINVERSE phase input file
 
 # from EQTransformer/utils/associator.py
@@ -20,8 +21,16 @@ def _weighcalculator_prob(pr):
     return weight
 
 
-in_real_phase_file = '../picking/event_picks.json'
-out_hinv_phase_file = 'EQT_19991015_test.txt' # Change file name
+# make directory for hypoinverse data files
+loc_dir = '../../data/location_hypoinverse/'
+if not os.path.exists(loc_dir):
+    os.makedirs(loc_dir)
+
+# copy files needed for hypoinverse to the new data file directory
+os.system('cp hadley.crh locate_events.hyp '+loc_dir)
+
+in_real_phase_file = '../../data/seisbench_picks/event_picks.json'
+out_hinv_phase_file = loc_dir+'EQT_19991015_test.txt' # Change file name
 
 
 fout = open(out_hinv_phase_file, 'w')
