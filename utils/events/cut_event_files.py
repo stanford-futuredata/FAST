@@ -66,7 +66,8 @@ for data in EQ_data:
     EQ_detection = EQ(ev_id, det_time, det_start_ind, det_end_ind, dL, diff_ind, nsta, peaksum)
     EQ_detections.append(EQ_detection)
 
-st = read('../../data/waveforms*/Deci5.Pick.*', format='SAC')
+# Cut event files from original unfiltered data (NOT decimated filtered data) for further phase picking
+st = read('../../data/waveforms*/19991015*', format='SAC')
 print(len(st))
 print(st.__str__(extended=True))
 
@@ -76,13 +77,13 @@ i_load = 0
 
 for kk in range(len(EQ_detections)):
     curr_ev = EQ_detections[kk].ev_id_list
+    out_file_dir = out_dir + "/" + curr_ev
+    if not os.path.exists(out_file_dir):
+        os.makedirs(out_file_dir)
 
     ev_time = init_time + det_times[kk]
     start_time = ev_time - wtime_before
     end_time = ev_time + wtime_after
-
-    if (int(diff_times[kk]) > wtime_after): # special case: unusually long delay between start and end times
-      end_time = ev_time + diff_times[kk] + wtime_after
 
     i_load += 1
 
@@ -93,8 +94,7 @@ for kk in range(len(EQ_detections)):
         for tr in st_slice:
             timestamp = str(ev_time.year) + str(ev_time.month) + str(ev_time.day) + str(ev_time.hour).zfill(2) + str(ev_time.minute).zfill(2) + str(ev_time.second).zfill(2)
 
-            out_file = out_dir + "/" + curr_ev
-            output_file_name = out_file + "/" + curr_ev +'_'+ timestamp + '_' + str(det_times[kk]) + '_' + tr.stats.station + '_' + tr.stats.channel + '.sac'
+            output_file_name = out_file_dir + "/" + curr_ev +'_'+ timestamp + '_' + str(det_times[kk]) + '_' + tr.stats.station + '_' + tr.stats.channel + '.sac'
             tr.write(output_file_name, format='SAC')
 
             # plot_file = '../../data/plots/' + curr_ev + '_' + timestamp + '_' + str(det_times[kk]) + '_' + tr.stats.station + '_' + tr.stats.channel + '.png'
