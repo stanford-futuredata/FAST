@@ -8,13 +8,21 @@ import pygmt
 import numpy as np
 import pandas as pd
 import json
+import os
 
 
 # In[7]:
 
+in_sta_dir = '../../data/stations/'
+in_loc_dir = '../../data/location_hypoinverse/'
+out_map_dir = '../../data/mapping_pygmt/'
+if not os.path.exists(out_map_dir):
+    os.makedirs(out_map_dir)
+
 
 # Plotting earth relief
-grid = '@earth_relief_30s'
+#grid = '@earth_relief_30s'
+grid = '@earth_relief_03s'
 
 
 # In[9]:
@@ -29,7 +37,7 @@ station_lats = []
 station_lons = []
 elev = []
 
-with open('hyp1.40/source/station_list.json') as infile:
+with open(in_sta_dir+'station_list.json') as infile:
     stations = json.load(infile)
     
     for i in stations:
@@ -63,7 +71,7 @@ depth = []
 mag = []
 ev_id = []
 
-with open('hyp1.40/source/events_locations.txt', 'r') as f:
+with open(in_loc_dir+'events_locations.txt', 'r') as f:
     for line in f:
         split_line = line.split()
         num_of_sec.append(split_line[0])
@@ -83,7 +91,8 @@ depth_arr = np.array(depth)
 mag_arr = np.array(mag)
         
 # Set region of the plot
-region = [lon_arr.min() - 1, lon_arr.max() + 1, lat_arr.min() - 1, lat_arr.max() + 1]  
+#region = [lon_arr.min() - 1, lon_arr.max() + 1, lat_arr.min() - 1, lat_arr.max() + 1]
+region = [-117.5, -115.5, 33.5, 35.5]
 
 
 # In[38]:
@@ -110,11 +119,11 @@ fig = pygmt.Figure()
 pygmt.config(MAP_FRAME_TYPE="plain")
 pygmt.config(FORMAT_GEO_MAP="ddd.xx")
 pygmt.config(FORMAT_GEO_MAP='D')
-pygmt.config(FONT_LABEL='10p,Helvetica,black')
+pygmt.config(FONT_LABEL='12p,Helvetica,black')
 
 subset_region = [lon_arr.min() - 0.5, lon_arr.max() + 0.5, lat_arr.min() - 0.5, lat_arr.max() + 0.5]
 
-fig.basemap(region=region, projection='M4i', frame=['a', '+t1999 Hector Mine Foreshock Locations'])
+fig.basemap(region=region, projection='M4i', frame=['a', '+t1999 Hector Mine Foreshocks'])
 
 fig.grdimage(
     grid=grid,
@@ -146,7 +155,8 @@ fig.plot(x=lon_arr,
          pen="black",
          frame='a',)
 
-scale = "f-117.2/33.8/20/50+u+lScale:"
+#scale = "f-117.2/33.8/20/50+u+lScale:"
+scale = "f-116.2/33.8/20/50+u+lScale:"
 
 
 with pygmt.config(FONT_TITLE=10):
@@ -198,10 +208,10 @@ fig.legend(region=region,
            position="jBL+o0.2c",
            box="+gantiquewhite+pthick,black")
         
-fig.show()
+#fig.show()
 
 
 # In[ ]:
 
 
-fig.savefig('hypoinverse_to_pygmt.png')
+fig.savefig(out_map_dir+'pygmt_hectormine_map.png')
