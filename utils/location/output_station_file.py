@@ -106,12 +106,11 @@ def output_station_file_gmt(in_sta_file, out_gmt_file, flag_format=0):
 
 def main():
 
-   in_sta_file = './station_list.json'
-   out_hypoinv_file = './station_list.sta'
+   in_sta_file = '../../data/stations/station_list.json'
+   out_hypoinv_file = '../../data/location_hypoinverse/station_list.sta'
 
    output_station_file_hypoinverse(in_sta_file, out_hypoinv_file)
 #   output_station_file_gmt(in_sta_file, out_gmt_file, flag_format=1)
-
 
 if __name__ == "__main__":
    main()
