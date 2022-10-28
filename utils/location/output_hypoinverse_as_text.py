@@ -5,9 +5,10 @@ import utils_hypoinverse as utils_hyp
 # Output file for plotting on GMT map
 
 
-in_hinv_sum_file = 'locate_events.sum'
-catalog_start_time = UTCDateTime('1999-10-15T00:00:00')
-output_plot_file = 'events_locations.txt'
+loc_dir = '../../data/location_hypoinverse/'
+in_hinv_sum_file = loc_dir+'locate_events.sum'
+output_plot_file = loc_dir+'events_locations.txt'
+catalog_start_time = UTCDateTime('1999-10-15T13:00:00')
 
 #-----------------------------------
 
