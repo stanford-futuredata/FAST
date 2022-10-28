@@ -1,4 +1,3 @@
-#from EQTransformer.utils.downloader import makeStationList
 import os
 import json
 from obspy import UTCDateTime
@@ -6,7 +5,7 @@ from obspy.clients.fdsn.client import Client
 
 # eqt_get_station_list.py: script to get list of stations to download data
 
-# Copied from EQTransformer/EQTransformer/utils/downloader.py
+# Copied from https://github.com/smousavi05/EQTransformer/blob/master/EQTransformer/utils/downloader.py
 def makeStationList(json_path,client_list, min_lat, max_lat, min_lon, max_lon, start_time, end_time, channel_list=[], filter_network=[], filter_station=[],**kwargs):
 
 
@@ -118,10 +117,8 @@ def makeStationList(json_path,client_list, min_lat, max_lat, min_lon, max_lon, s
          
          
 
-
-
 #--------------------------START OF INPUTS------------------------
-### Puerto Rico data
+### Hector Mine data
 clientlist=["SCEDC"]
 minlat=34.1
 maxlat=34.9
@@ -133,25 +130,12 @@ chan_priority_list=["HH[ZNE12]", "BH[ZNE12]", "EH[ZNE12]", "HN[ZNE12]"]
 
 ### Time duration should be for entire time period of interest
 
-## EQT_20200107_20200114
-#tstart="2020-01-07 00:00:00.00"
-#tend="2020-01-14 00:00:00.00"
-#out_station_json_file='/media/yoon/INT01/PuertoRico/EQT_20200107_20200114/station_list.json'
-
-## EQT_20191228_20200114
-#tstart="2019-12-28 00:00:00.00"
-#tend="2020-01-14 00:00:00.00"
-#out_station_json_file='/media/yoon/INT01/PuertoRico/EQT_20191228_20200114/station_list.json'
-
-# EQT_20180101_20220101
-tstart="1999-10-12 00:00:00.00"
-#tend="2021-06-01 00:00:00.00"
-#tend="2021-08-01 00:00:00.00" #UPDATE
-#tend="2021-09-01 00:00:00.00" #UPDATE
-#tend="2021-10-01 00:00:00.00" #UPDATE
-#tend="2021-12-01 00:00:00.00" #UPDATE
-tend="1999-10-17 00:00:00.00" #UPDATE
-out_station_json_file='./station_list.json'
+tstart="1999-10-15 13:00:00.00"
+tend="1999-10-16 13:00:00.00" #UPDATE
+out_station_dir = '../../data/stations/'
+if not os.path.exists(out_station_dir):
+    os.makedirs(out_station_dir)
+out_station_json_file = out_station_dir+'station_list.json'
 
 #--------------------------END OF INPUTS------------------------
 
