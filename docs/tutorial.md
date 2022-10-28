@@ -4,7 +4,9 @@
 
 ![hectormin_ex](img/hectormine_ex.png)  
 
-waveform data: `data/waveforms${STATION}/Deci5*`  
+Decimated filtered waveform data (20 Hz sampling rate) to use for FAST: `data/waveforms${STATION}/Deci5*`
+Original unfiltered waveform data (20 to 100 Hz sampling rate) to use for phase picking: `data/waveforms${STATION}/19991015*`
+
 
 ## **File Structure Overview**
 
@@ -31,7 +33,8 @@ waveform data: `data/waveforms${STATION}/Deci5*`
 
     data/
         waveforms${STATION}/
-            Deci5*
+            Deci5*${STATION}*.sac
+            19991015*${STATION}*.sac
 
 ## **Feature Extraction**  
 
