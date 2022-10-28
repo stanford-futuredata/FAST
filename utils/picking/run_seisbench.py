@@ -48,7 +48,7 @@ annotations_dir = '../../data/seisbench_picks/'
 if not os.path.exists(annotations_dir):
     os.makedirs(annotations_dir)
     
-with open("event_picks.json", "w") as json_file:
+with open(annotations_dir+"event_picks.json", "w") as json_file:
     for d in dir_list:
         if d != '.DS_Store':
             seisbench_picks['SeisBench_Picks'][str(d)] = {}
@@ -149,7 +149,7 @@ with open("event_picks.json", "w") as json_file:
 
                 seisbench_picks['SeisBench_Picks'][str(d)][trace_id] = []
 
-                picks, detections = model.classify(st_temp, D_threshold=0.3 ,P_threshold=0.1, S_threshold=0.1)
+                picks, detections = model.classify(st_temp, overlap=4500, D_threshold=0.3 ,P_threshold=0.1, S_threshold=0.1)
 
                 print("\nPicks:")
                 for pick in picks:
