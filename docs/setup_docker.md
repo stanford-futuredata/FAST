@@ -56,8 +56,8 @@ Run the Docker image in a Docker container
 $ docker run -v ${PWD}:/app -it fast_image:0.1 /bin/bash
 ```
 
-* `-v` - Bind mount a volume
-* `-it` - Short for --interactive + --tty, which takes you inside the container
+* `-v` - Bind mount a volume. The current directory in ${PWD} is mounted inside the container into the directory /app, so that any changes to files made inside the container are saved to disk and persist after exiting the container.
+* `-it` - Short for --interactive + --tty, which takes you inside the container in interactive mode, allowing you to run commands on the command line in the container, which we need to run FAST.
 
 ## **Running FAST with Docker**
 
