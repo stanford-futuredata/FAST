@@ -16,7 +16,6 @@ if __name__ == '__main__':
    print('bandpass:', min_freq, '-', max_freq, 'Hz, decimate factor:', dec_factor)
 
 
-
 # ------------------- INPUTS ------------------------------------------------
 #ts_dir = '/lfs/1/ceyoon/TimeSeries/ItalyDay/day303/'
 #file_arr = glob.glob(ts_dir+'*YR.'+station+'..'+channel+'*')
@@ -62,8 +61,12 @@ if __name__ == '__main__':
 #file_arr = glob.glob(ts_dir+network+'.'+station+'..'+channel+'*.mseed')
 #format_str = 'MSEED'
 
-ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveforms'+station+'/'
-file_arr = sorted(glob.glob(ts_dir+network+'.'+station+'..'+channel+'*.mseed'))
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveforms'+station+'/'
+#file_arr = sorted(glob.glob(ts_dir+network+'.'+station+'..'+channel+'*.mseed'))
+#format_str = 'MSEED'
+
+ts_dir = '../../Calipatria/waveforms'+station+'/'
+file_arr = sorted(glob.glob(ts_dir+network+'.'+station+'*'+channel+'*.mseed'))
 format_str = 'MSEED'
 # ------------------- INPUTS ------------------------------------------------
 
