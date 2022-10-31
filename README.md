@@ -10,6 +10,8 @@
 
 * To run FAST with Docker, click [here](https://ttapparo.github.io/FAST/setup_docker/) for the tutorial.  
 
+Check out the [user guide](https://ttapparo.github.io/FAST/) to learn more about FAST and how to use it on your own dataset.  
+
 ### References
 You can find more details about the pipeline and guidelines for setting parameters in our extended [user guide](https://github.com/stanford-futuredata/quake/blob/master/FAST_userguide_v0.pdf). You may also check out the following papers:
 + **FAST Overview:** [Earthquake detection through computationally efficient similarity search](http://advances.sciencemag.org/content/1/11/e1501057)
