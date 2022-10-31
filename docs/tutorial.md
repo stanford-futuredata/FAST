@@ -486,19 +486,11 @@ Use `output_hypoinverse_as_text.py` to output `locate_events.sum` in a more read
 
 ## **Plotting Earthquake Locations with PyGMT**
 
-### Install PyGMT  
+FAST is incompatible with PyGMT, so to use PyGMT with the HYPOINVERSE location results, follow the [PyGMT install instructions](https://www.pygmt.org/latest/install.html).  
 
-```
-~/quake_tutorial$ conda install -c conda-forge pygmt
-```  
+Use the `hypoinverse_to_pygmt.py` script and `map_gray.cpt` found in `/FAST/utils/mapping` to plot the location.  
 
-### Run `hypoinverse_to_pygmt.py`
-
-```
-~/quake_tutorial/utils/location$ python hypoinverse_to_pygmt.py  
-```  
-
-Figure saved as `hypoinverse_to_pygmt.png` in `~/quake_tutorial/utils/location/`
+Figure saved as `hypoinverse_to_pygmt.png`  
 
 **Map Output**:  
 

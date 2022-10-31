@@ -79,6 +79,10 @@ PHS 'EQT_19991015_test.txt' # Change file name for your dataset
 
 ## Plotting HYPOINVERSE Location Results With PyGMT  
 
+FAST is incompatible with PyGMT, so to use PyGMT with the HYPOINVERSE location results, follow the [PyGMT install instructions](https://www.pygmt.org/latest/install.html).  
+
+Use the `hypoinverse_to_pygmt.py` script and `map_gray.cpt` found in `/FAST/utils/mapping` to plot the location results with the changes below.  
+
 * Change nearby cities latitude, longitude, and name Numpy arrays for your dataset:  
 
 ``` py linenums="92"
