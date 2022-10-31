@@ -4,8 +4,6 @@
 
 FAST is an end-to-end and unsupervised earthquake detection pipeline. It is a useful tool for seismologists to extract more small earthquakes from continuous seismic data.  
 
-The following instructions were only tested on **Linux** clusters; we do not currently support other operating systems. To efficiently process inputs spanning a long duration, we suggest running the pipeline on a server with multiple processes and sufficient memory.  
-
 FAST is able to run on different machines by using Google Colab, Linux, or Docker.  
 
 To run FAST with Google Colab, click [here](https://ttapparo.github.io/FAST/setup_colab/) for the tutorial.  
