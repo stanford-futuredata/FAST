@@ -441,7 +441,8 @@ pygmt                    /root/miniconda3/envs/pygmt
 
 ## **Remove all Docker Containers and Images**
 
-WARNING: ONLY DO THIS WHEN YOU WANT TO REMOVE ALL DOCKER CONTAINERS AND IMAGES!!!
+!!! warning
+    ONLY DO THIS WHEN YOU WANT TO REMOVE ALL DOCKER CONTAINERS AND IMAGES!!!
 
 This step will free up lots of space on your computer.
 
