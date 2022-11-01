@@ -1,0 +1,6 @@
+L 15 Helvetica-Bold L Map Legend
+G 0.1c
+S 0.1i i 0.14i red 0.45p,red 0.3i Stations
+G 0.1c
+S 0.1i s 0.2i yellow 0.5p,black 0.3i Nearby Cities
+G 0.1c
