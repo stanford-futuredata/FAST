@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
   git \
   vim \
   wget \
+  jq \
   cmake \
   build-essential \
   libboost-all-dev \

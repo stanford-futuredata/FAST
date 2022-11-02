@@ -30,11 +30,11 @@ Change permissions so that Docker can write to this directory
 $ chmod 777 DockerFAST
 ```
 
-Clone the FAST repository from GitHub
+Clone the FAST repository from GitHub into a local directory named `./FAST/`
 
 ```
 $ cd DockerFAST
-$ git clone https://github.com/stanford-futuredata/FAST
+$ git clone https://github.com/stanford-futuredata/FAST.git ./FAST/
 ```
 
 Build the Docker image
@@ -43,7 +43,7 @@ Build the Docker image
     Building the Docker image with Dockerfile with set up all FAST dependencies (Linux Ubuntu 18.04, CMake compiler, C++ boost, conda for python virtual environment and libraries).
 
 ```
-$ cd FAST
+$ cd FAST/
 $ docker build -f Dockerfile -t fast_image:0.1 .
 ```
 
@@ -82,17 +82,21 @@ Now we are in the Docker container, in the `eq_fast` conda environment. We are r
 (eq_fast) root@555d364b63d7:/app/FAST# python run_simsearch.py -c config.json
 ```
 
-### Parse FAST Similarity Search Output
+### Postprocess: Parse FAST Similarity Search Output
 
 ```
 (eq_fast) root@555d364b63d7:/app/FAST# cd postprocessing/
 (eq_fast) root@555d364b63d7:/app/FAST/postprocessing# ../parameters/postprocess/output_HectorMine_pairs.sh
 (eq_fast) root@555d364b63d7:/app/FAST/postprocessing# ../parameters/postprocess/combine_HectorMine_pairs.sh
-(eq_fast) root@555d364b63d7:/app/FAST/postprocessing# python scr_run_network_det.py ../parameters/postprocess/7sta_2stathresh_network_params.json
 ```
 
 ### Postprocess: Network Detection
+```
+(eq_fast) root@555d364b63d7:/app/FAST/postprocessing# python scr_run_network_det.py ../parameters/postprocess/7sta_2stathresh_network_params.json
+```
 
+### Postprocess: Clean Network Detection Results
+Need to modify inputs within each script file to your data set.
 ```
 (eq_fast) root@555d364b63d7:/app/FAST/postprocessing# cd ../utils/network/
 (eq_fast) root@555d364b63d7:/app/FAST/utils/network# python arrange_network_detection_results.py
@@ -107,9 +111,9 @@ Now we are in the Docker container, in the `eq_fast` conda environment. We are r
 (eq_fast) root@555d364b63d7:/app/FAST/utils/network# cat ../../data/network_detection/sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
 ```
 
-### Display Waveforms for FAST Detections in Descending Order of "Peaksum" Similarity
+### Display Waveforms for FAST Detections in Descending Order of "peaksum" Similarity
 
-This example outputs png images for 100 event waveforms with the highest "Peaksum" similarity.
+This example outputs png images for 100 event waveforms. The plot file names are sorted in descending order by: `num_sta` (number of stations that detected this event), `peaksum` (peak total similarity)
 
 ```
 (eq_fast) root@555d364b63d7:/app/FAST/utils/network# cd ..
@@ -133,7 +137,7 @@ This example outputs png images for 100 event waveforms with the highest "Peaksu
 ### Set Detection Threshold
 
 !!! note
-    Everything above the detection threshold is deemed an earthquake. In this example, the first 50 events with the highest "Peaksum" similarity are identified as earthquakes, while the remaining events are not earthquakes.
+    Everything above the detection threshold is deemed an earthquake. In this example, the first 50 events with the highest "peaksum" similarity are identified as earthquakes, while the remaining events are not earthquakes.
 
 ```
 (eq_fast) root@555d364b63d7:/app/FAST/utils/events# cd ../../data/network_detection/
@@ -157,8 +161,9 @@ This example outputs png images for 100 event waveforms with the highest "Peaksu
 
 ### Cut SAC Files  
 
-* Cut the continuous seismic data at all stations, based on the detection results from FAST
-In this example, the event waveform time windows are 180 seconds long, 60 seconds before detection time, 120 seconds after detection time.
+* Cut short event waveform files in SAC format from the continuous seismic data at all stations, based on the detection results from FAST.
+* Cut from the original unfiltered continuous seismic data at full sampling rate (usually 100 sps), not the decimated filtered continuous seismic data used to run FAST.
+* In this example, the event waveform time windows are 180 seconds long, 60 seconds before detection time, 120 seconds after detection time.
 
 ```
 (eq_fast) root@555d364b63d7:/app/FAST/utils/events# python cut_event_files.py
@@ -203,10 +208,10 @@ In this example, the event waveform time windows are 180 seconds long, 60 second
 ![example_pick_1](img/example_pick_1.png)
 
 Output saved in:
-
 ```
 (eq_fast) root@555d364b63d7:/app/FAST/data/seisbench_picks/event_picks.json
 ```  
+
 Example output:  
 
 ![json_file_picks](img/json_file_picks.png)
@@ -234,10 +239,16 @@ Output:
 /app/FAST/data/location_hypoinverse/EQT_19991015_test.txt
 ```
 
+The script `SeisBench2hypoinverse.py` will also copy the following files from `/app/FAST/utils/location/` to the directory `/app/FAST/data/location_hypoinverse/` where we will run HYPOINVERSE:
+```
+   *   hadley.crh
+   *   locate_events.hyp
+```
+
 Get Hector Mine Station List as a json file:
 ```
 (eq_fast) root@555d364b63d7:/app/FAST/utils/location# cd ../preprocess/
-(eq_fast) root@555d364b63d7:/app/FAST/utils/preprocess # python get_station_list.py
+(eq_fast) root@555d364b63d7:/app/FAST/utils/preprocess# python get_station_list.py
 ```
 
 Output:
@@ -309,7 +320,7 @@ cp p2sdly /home/calnet/klein/bin
 
 **Check that HYPOINVERSE runs**:
 
-* Compile hypoinverse:
+* Compile HYPOINVERSE:
 ```
 (eq_fast) root@555d364b63d7:/app/FAST/utils/location/hyp1.40/source# make
 ```  
@@ -335,15 +346,10 @@ If you have this output, HYPOINVERSE is running correctly. Press ctrl-c to exit.
 
 ### Run HYPOINVERSE
 
-Copy the following files from `/app/FAST/utils/location/` to the directory `/app/FAST/data/location_hypoinverse/` where we will run HYPOINVERSE:
-```
-   *   hadley.crh
-   *   locate_events.hyp
-```
-To run HYPOINVERSE:  
+Run HYPOINVERSE within the directory `/app/FAST/data/location_hypoinverse/`:
 ```
 (eq_fast) root@555d364b63d7:/app/FAST/utils/location# cd ../../data/location_hypoinverse/
-(eq_fast) root@555d364b63d7:/app/FAST/data/location_hypoinverse/# ../../utils/location/hyp1.40/source/hyp1.40
+(eq_fast) root@555d364b63d7:/app/FAST/data/location_hypoinverse# ../../utils/location/hyp1.40/source/hyp1.40
 ```  
 
 Use **@locate_events.hyp** as input:
@@ -402,7 +408,7 @@ Figure saved as `pygmt_hectormine_map.png` in `/app/FAST/data/mapping_pygmt/`
 
 **Map Output**:  
 
-![hectormine_pygmt](img/hectormine_pygmt.png)
+#![hectormine_pygmt|10x20](img/hectormine_pygmt.png)
 
 ## **Exiting the Docker Container**
 
