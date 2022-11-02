@@ -290,22 +290,25 @@ Further processing is required for P/S phase picking and location:
   * Compute magnitudes  
 
 !!! info
-    The following sections of the tutorial are not a part of FAST but are optional steps to take for phase picking and earthquake location.
+    * The following tutorials are not a part of FAST, but are optional next steps to take for phase picking with SeisBench, earthquake location with HYPOINVERSE, and mapping/visualization with PyGMT.
+    * The same commands below should run within the [Docker container](setup_docker.md), but replace the path `~/FAST/` with `root@555d364b63d7:/app/FAST/`
 
 ## **Phase Picking**  
 
 ### Cut SAC Files  
 
-* Cut the continuous seismic data based on the detection results from FAST  
+* Cut short event waveform files in SAC format from the continuous seismic data at all stations, based on the detection results from FAST.
+* Cut from the original unfiltered continuous seismic data at full sampling rate (usually 100 sps), not the decimated filtered continuous seismic data used to run FAST.
+* In this example, the event waveform time windows are 180 seconds long, 60 seconds before detection time, 120 seconds after detection time.
 
 ```
-~/quake_tutorial/utils/events$ python cut_event_files.py
+(eq_fast) ~/FAST/utils/events$ python cut_event_files.py
 ```  
 
 * Check for cut files in:  
 
 ```
-~/quake_tutorial/data/event_ids/  
+(eq_fast) ~/FAST/data/event_ids
 ```
 
 * Example:  
@@ -315,24 +318,25 @@ Further processing is required for P/S phase picking and location:
 ### Install SeisBench  
 
 ```
-~/quake_tutorial$ pip install seisbench
+(eq_fast) ~/FAST/utils/events$ cd ../..
+(eq_fast) ~/FAST$ pip install seisbench
 ```
 
 ### Pick Phases (automatically)  
 
-* Run SeisBench script for all events and all stations
+* Run SeisBench script for all events and all stations. This can take a few minutes to finish running.
 
 ```
-~/quake_tutorial/utils/events$ cd ..
-~/quake_tutorial/utils$ cd picking
-~/quake_tutorial/utils/picking$ python run_seisbench.py
+(eq_fast) ~/FAST$ cd utils/picking
+(eq_fast) ~/FAST/utils/picking$ python run_seisbench.py
 ```  
 
 * Annotated plots are found in:  
 
 ```
-~/quake_tutorial/data/seisbench_picks
+(eq_fast) ~/FAST/data/seisbench_picks/
 ```
+
 ![example_pics](img/example_picks.png)
 
 * Example annotated plot from event 00000000:  
@@ -340,10 +344,10 @@ Further processing is required for P/S phase picking and location:
 ![example_pick_1](img/example_pick_1.png)
 
 Output saved in:
-
 ```
-~/quake_tutorial/utils/picking/event_picks.json/
+(eq_fast) ~/FAST/data/seisbench_picks/event_picks.json
 ```  
+
 Example output:  
 
 ![json_file_picks](img/json_file_picks.png)
@@ -357,35 +361,53 @@ The output from `run_seisbench.py` in the `event_picks.json` file contains the i
 
 HYPOINVERSE is the standard location program supplied with the Earthworm seismic acquisition and processing system (AQMS). Read more about it [here](https://www.usgs.gov/software/hypoinverse-earthquake-location).  
 
-### Locate Earthquakes  
+### Formatting input data for HYPOINVERSE
 
 To begin earthquake location run the following to format the phase picks for HYPOINVERSE:  
 
 ```
-~/quake_tutorial/utils/picking$ cd ..
-~/quake_tutorial/utils$ cd location
-~/quake_tutorial/utils/location$ python SeisBench2hypoinverse.py
+(eq_fast) ~/FAST/utils/picking$ cd ../location/
+(eq_fast) ~/FAST/utils/location$ python SeisBench2hypoinverse.py
 ```  
+
+Output:
+```
+~/FAST/data/location_hypoinverse/EQT_19991015_test.txt
+```
+
+The script `SeisBench2hypoinverse.py` will also copy the following files from `~/FAST/utils/location/` to the directory `~/FAST/data/location_hypoinverse/` where we will run HYPOINVERSE:
+```
+   *   hadley.crh
+   *   locate_events.hyp
+```
+
+Get Hector Mine Station List as a json file:
+```
+(eq_fast) ~/FAST/utils/location$ cd ../preprocess/
+(eq_fast) ~/FAST/utils/preprocess$ python get_station_list.py
+```
+
+Output:
+```
+~/FAST/data/stations/station_list.json
+```
+
+Convert `station_list.json` to HYPOINVERSE station input format in `station_list.sta`:
+```
+(eq_fast) ~/FAST/utils/preprocess$ cd ../location/
+(eq_fast) ~/FAST/utils/location$ python output_station_file.py
+```
+
+Output:
+```
+~/FAST/data/location_hypoinverse/station_list.sta
+```
 
 ### Install and Run HYPOINVERSE
 
-1. Download HYPOINVERSE [here](https://www.usgs.gov/software/hypoinverse-earthquake-location)    
-2. Expand the hyp1.40.tar file
-3. Move to `~/quake_tutorial/utils/location`
-
-Move the following files from `~/quake_tutorial/utils/location/` to `~/quake_tutorial/utils/location/hyp1.40/source/`:  
-
-   *   eqt_get_station_list.py
-   *   hadley.crh
-   *   locate_events.hyp
-   *   output_hypoinverse_as_text.py
-   *   output_station_file.py
-   *   utils_hypoinverse.py
-
-Check that GFortran is installed:  
-
+Check that GFortran is installed, since it is required to compile the HYPOINVERSE program from source:
 ```
-~/quake_tutorial$ gfortran --version
+(eq_fast) ~/FAST$ gfortran --version
 ```  
 
 Example expected output:  
@@ -393,44 +415,62 @@ Example expected output:
 
 If GFortran is not installed, run:  
 ```
-~/quake_tutorial$ apt-get update && apt-get upgrade  
-~/quake_tutorial$ apt-get install gfortran  
+(eq_fast) ~/FAST$ apt-get update && apt-get upgrade
+(eq_fast) ~/FAST$ apt-get install gfortran
 ```
 
-Make changes to `makefile` in `~/quake_tutorial/utils/location/hyp1.40/source`:  
+Download HYPOINVERSE [here](https://www.usgs.gov/software/hypoinverse-earthquake-location), expand the `hyp1.40.tar` file,
+move the resulting `hyp1.40/` directory to `~/FAST/utils/location/hyp1.40/`. This can be done with the following commands:
+```
+(eq_fast) ~/FAST/utils/location$ wget -c https://escweb.wr.usgs.gov/content/software/HYPOINVERSE/hyp1.40.tar
+(eq_fast) ~/FAST/utils/location$ mkdir hyp1.40
+(eq_fast) ~/FAST/utils/location$ cd hyp1.40
+(eq_fast) ~/FAST/utils/location/hyp1.40$ tar -xvf ../hyp1.40.tar
+(eq_fast) ~/FAST/utils/location/hyp1.40$ ls -l
+drwxr-xr-x  4 10003  124   128 Sep 10  2014 doc
+-rw-r--r--  1 root  root 77392 Sep 10  2014 hyp1.40-release-notes.pdf
+-rw-r--r--  1 root  root  3258 Sep 10  2014 hyp1.40-release-notes.txt
+drwxr-xr-x 54 10003  124  1728 Sep 10  2014 source
+drwxr-xr-x 13 10003  124   416 Aug 26  2014 testone
+```
 
-   * Comment lines **16** and **230**  
+Before compiling HYPOINVERSE, we need to make changes to `makefile` in `~/FAST/utils/location/hyp1.40/source/`:
+```
+(eq_fast) ~/FAST/utils/location/hyp1.40$ cd source
+(eq_fast) ~/FAST/utils/location/hyp1.40/source$ sed -i '/calnet/d' makefile
+(eq_fast) ~/FAST/utils/location/hyp1.40/source$ sed -i 's/g77/gfortran/g' makefile
+```
+
+* Remove lines **16** and **230**
 
 ```  py linenums="16"
-# cp hyp1.40 /home/calnet/klein/bin
+cp hyp1.40 /home/calnet/klein/bin
 ```  
 
 ```  py linenums="230"
-# cp p2sdly /home/calnet/klein/bin
+cp p2sdly /home/calnet/klein/bin
 ```  
 
-   * Find and replace: g77 with gfortran
+* Find and replace: `g77` with `gfortran`
 
-Save changes and exit.  
+**Check that HYPOINVERSE runs**:
 
-Check that HYPOINVERSE works:  
-
-* Compile hypoinverse:  
+* Compile HYPOINVERSE:
 ```
-~/quake_tutorial/utils/location/hyp1.40/source$ make 
+(eq_fast) ~/FAST/utils/location/hyp1.40/source$ make
 ```  
 
 * Make it executable:  
 ```
-~/quake_tutorial/utils/location/hyp1.40/source$ chmod +x hyp1.40
+(eq_fast) ~/FAST/utils/location/hyp1.40/source$ chmod +x hyp1.40
 ```  
 
 * Run HYPOINVERSE:  
 ```
-~/quake_tutorial/utils/location/hyp1.40/source$ ./hyp1.40
+(eq_fast) ~/FAST/utils/location/hyp1.40/source$ ./hyp1.40
 ```  
 
-* Expcted output:  
+* Expected output:
 ```
 HYPOINVERSE 2000 STARTING
 6/2014 VERSION 1.40 (geoid depth possible)
@@ -439,31 +479,15 @@ HYPOINVERSE 2000 STARTING
 
 If you have this output, HYPOINVERSE is running correctly. Press ctrl-c to exit.
 
-### Formatting data for HYPOINVERSE
+### Run HYPOINVERSE
 
-Get Hector Mine Station List as a json file:  
+Run HYPOINVERSE within the directory `~/FAST/data/location_hypoinverse/`:
 ```
-~/quake_tutorial/utils/location$ python eqt_get_station_list.py
-```
-
-Output:  
-```
-station_list.json
-```
-
-Convert `station_list.json` to `station_list.sta`:  
-```
-~/quake_tutorial/utils/location$ python output_station_file.py
+(eq_fast) ~/FAST/utils/location$ cd ../../data/location_hypoinverse/
+(eq_fast) ~/FAST/data/location_hypoinverse$ ../../utils/location/hyp1.40/source/hyp1.40
 ```  
 
-### Run HYPOINVERSE  
-
-To run HYPOINVERSE:  
-```
-~/quake_tutorial/utils/location/hyp1.40/source$ ./hyp1.40
-```  
-
-Use **@locate_event.hyp** as input:
+Use **@locate_events.hyp** as input:
 ```
 HYPOINVERSE 2000 STARTING
 6/2014 VERSION 1.40 (geoid depth possible)
@@ -473,25 +497,50 @@ HYPOINVERSE 2000 STARTING
 Expected output:
 ![hypo_output](img/hypo_output.png)   
 
-You should see output files called locate_events.sum and locate_events.arc, but these are difficult to read.  
+You should see output files called `locate_events.sum` and `locate_events.arc` in HYPOINVERSE Y2000 summary format, but these are difficult to read.
 
 !!! note
-    locate_events.arc has the event info, and phase pick info for each event. locate_events.sum has only the event info, no phase pick info.
+    `locate_events.arc` has the event info, and phase pick info for each event. `locate_events.sum` has only the event info, no phase pick info.
 
-Use `output_hypoinverse_as_text.py` to output `locate_events.sum` in a more readable format.  
+Use `output_hypoinverse_as_text.py` to output `locate_events.sum` in a more readable format to use for plotting and visualization.
 
 ```
-~/quake_tutorial/utils/location$ python output_hypoinverse_as_text.py  
+(eq_fast) ~/FAST/data/location_hypoinverse$ cd ../../utils/location/
+(eq_fast) ~/FAST/utils/location$ python output_hypoinverse_as_text.py
 ```
 
 ## **Plotting Earthquake Locations with PyGMT**
 
-FAST is incompatible with PyGMT, so to use PyGMT with the HYPOINVERSE location results, follow the [PyGMT install instructions](https://www.pygmt.org/latest/install.html).  
+### Install PyGMT
 
-Use the `hypoinverse_to_pygmt.py` script and `map_gray.cpt` found in `/FAST/utils/mapping` to plot the location.  
+IMPORTANT - PyGMT needs to be installed and run in a separate `pygmt` conda environment, since it is incompatible with the `eq_fast` conda environment.
 
-Figure saved as `hypoinverse_to_pygmt.png`  
+First, exit the `eq_fast` conda environment
+```
+(eq_fast) ~/FAST/utils/location$ conda deactivate
+```
+
+Next, create the `pygmt` conda environment with its dependencies, as described in the [PyGMT install page](https://www.pygmt.org/latest/install.html)
+```
+(base) ~/FAST/utils/location$ conda config --prepend channels conda-forge
+(base) ~/FAST/utils/location$ conda create --name pygmt python=3.9 numpy pandas xarray netcdf4 packaging gmt
+```
+
+Finally, enter the `pygmt` conda environment and install PyGMT
+```
+(base) ~/FAST/utils/location$ conda activate pygmt
+(pygmt) ~/FAST/utils/location$ conda install pygmt
+```
+
+### Create a PyGMT map of earthquake locations and seismic stations
+
+```
+(pygmt) ~/FAST/utils/location$ cd ../mapping/
+(pygmt) ~/FAST/utils/mapping$ python hypoinverse_to_pygmt.py
+```
+
+Figure saved as `pygmt_hectormine_map.png` in `~/FAST/data/mapping_pygmt/`
 
 **Map Output**:  
 
-![hectormine_pygmt](img/hectormine_pygmt.png)
+#![hectormine_pygmt|10x20](img/hectormine_pygmt.png)
