@@ -1,15 +1,15 @@
 {
     "fingerprint": {
-        "sampling_rate": 20,
-        "min_freq": 0.0,
-        "max_freq": 10.0,
+        "sampling_rate": 25, 
+        "min_freq": 4.0,
+        "max_freq": 12.0,
         "spec_length": 6.0,
-        "spec_lag": 0.2,
-        "fp_length": 32,
-        "fp_lag": 5,
-        "k_coef": 200,
-        "nfreq": 32,
-        "mad_sampling_rate": 1,
+        "spec_lag": 0.12,
+        "fp_length": 64, 
+        "fp_lag": 10, 
+        "k_coef": 400,
+        "nfreq": 32, 
+        "mad_sampling_rate": 0.1,
         "mad_sample_interval": 86400
     },
 
@@ -23,10 +23,10 @@
         "channel": "HHN",
         "start_time": "21-06-05T00:00:00.0",
         "end_time": "21-06-06T00:00:00.0",
-        "folder": "../data/waveforms_mdl_BP/",
+        "folder": "../data/20210605_Calipatria_Data/waveformsSWS/",
         "fingerprint_files": [
-	    "Deci5.bp5to12.CI.SWS..HHN__20210605T000000Z__20210606T000000Z.mseed"],
+	    "Deci4.bp4to12.CI.SWS..HHN__20210605T000000Z__20210606T000000Z.mseed"],
         "MAD_sample_files": [
-        "Deci5.bp5to12.CI.SWS..HHN__20210605T000000Z__20210606T000000Z.mseed"]
+        "Deci4.bp4to12.CI.SWS..HHN__20210605T000000Z__20210606T000000Z.mseed"]
     }
 }
