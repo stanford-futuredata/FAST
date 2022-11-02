@@ -121,7 +121,7 @@ class FeatureExtractor(object):
         for i in range(self.nwindows):
             # new_spectral_images[i,:,:] = imresize(spectral_images[i,:,:], (new_d1, new_d2), interp='bilinear', mode='F')
             # new_spectral_images[i,:,:] = np.array(Image.fromarray(spectral_images[i,:,:]).resize(size=(new_d1, new_d2), resample=PIL.Image.Resampling.BILINEAR))
-            new_spectral_images[i,:,:] = np.array(Image.fromarray(spectral_images[i,:,:]).resize(size=(new_d1, new_d2), resample=Image.Resampling.BILINEAR))
+            new_spectral_images[i,:,:] = np.array(Image.fromarray(spectral_images[i,:,:]).resize(size=(new_d2, new_d1), resample=Image.Resampling.BILINEAR))
 
         return new_spectral_images
 
