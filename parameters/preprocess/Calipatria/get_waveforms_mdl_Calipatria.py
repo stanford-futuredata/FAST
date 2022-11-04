@@ -20,8 +20,8 @@ chan_priority_list=["HH[ZNE12]", "BH[ZNE12]", "EH[ZNE12]", "HN[ZNE12]"]
 #chan_priority_list=["EH[ZNE12]"]
 
 # Output directories
-out_dir_wf = '../../../Calipatria/waveforms'
-out_dir_sta = '../../../Calipatria/stations'
+out_dir_wf = '../../../data/20210605_Calipatria_Data/waveforms'
+out_dir_sta = '../../../data/20210605_Calipatria_Data/stations'
 
 
 domain = RectangularDomain(minlatitude=minlat, maxlatitude=maxlat,
@@ -30,8 +30,8 @@ domain = RectangularDomain(minlatitude=minlat, maxlatitude=maxlat,
 restrictions = Restrictions(
     starttime=tstart,
     endtime=tend,
-    network="CI",
-    station="SAL",
+#    network="CI",
+#    station="SAL",
 #    network="NP",
 #    network="PB",
 #    network="SB",

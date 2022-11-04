@@ -132,7 +132,7 @@ chan_priority_list=["HH[ZNE12]", "BH[ZNE12]", "EH[ZNE12]", "HN[ZNE12]"]
 
 tstart="2021-06-05 00:00:00"
 tend="2021-06-06 00:00:00"
-out_station_dir = '../../../Calipatria/stations/'
+out_station_dir = '../../../data/20210605_Calipatria_Data/stations/'
 if not os.path.exists(out_station_dir):
     os.makedirs(out_station_dir)
 out_station_json_file = out_station_dir+'station_list.json'

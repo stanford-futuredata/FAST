@@ -2,7 +2,7 @@ import json
 from os import listdir
 from os.path import isfile, join
 
-station_dir = '../../../Calipatria/stations/'
+station_dir = '../../../data/20210605_Calipatria_Data/stations/'
 in_station_file = station_dir+'station_list.json'
 out_station_file = station_dir+'station_list_clean.json'
 

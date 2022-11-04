@@ -211,15 +211,26 @@ from detect_time_gaps import detect_time_gaps
 #file_arr = glob.glob(ts_dir+'NL*')
 #format_str = 'MSEED'
 
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveformsENWF/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveformsKEMF/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveformsKEMO/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveformsNC27/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveformsNC89/'
-#ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveformsNCBC/'
-ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveformsNCHR/'
-out_dir = '/lfs/1/ceyoon/TimeSeries/NEP/'
-file_arr = glob.glob(ts_dir+'NV*.mseed')
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveformsENWF/'
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveformsKEMF/'
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveformsKEMO/'
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveformsNC27/'
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveformsNC89/'
+##ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveformsNCBC/'
+#ts_dir = '/lfs/1/ceyoon/TimeSeries/NEP/waveformsNCHR/'
+#out_dir = '/lfs/1/ceyoon/TimeSeries/NEP/'
+#file_arr = glob.glob(ts_dir+'NV*.mseed')
+#format_str = 'MSEED'
+
+# Calipatria - PB stations after filter/decimate
+#ts_dir = '../../data/20210605_Calipatria_Data/waveformsGLRS/'
+#ts_dir = '../../data/20210605_Calipatria_Data/waveformsP494/'
+#ts_dir = '../../data/20210605_Calipatria_Data/waveformsP505/'
+#ts_dir = '../../data/20210605_Calipatria_Data/waveformsP506/'
+#ts_dir = '../../data/20210605_Calipatria_Data/waveformsSLMS/'
+ts_dir = '../../data/20210605_Calipatria_Data/waveformsUSGC/'
+out_dir = ts_dir
+file_arr = glob.glob(ts_dir+'Deci*.mseed')
 format_str = 'MSEED'
 
 

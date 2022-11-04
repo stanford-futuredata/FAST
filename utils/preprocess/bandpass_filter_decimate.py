@@ -65,7 +65,7 @@ if __name__ == '__main__':
 #file_arr = sorted(glob.glob(ts_dir+network+'.'+station+'..'+channel+'*.mseed'))
 #format_str = 'MSEED'
 
-ts_dir = '../../Calipatria/waveforms'+station+'/'
+ts_dir = '../../data/20210605_Calipatria_Data/waveforms'+station+'/'
 file_arr = sorted(glob.glob(ts_dir+network+'.'+station+'*'+channel+'*.mseed'))
 format_str = 'MSEED'
 # ------------------- INPUTS ------------------------------------------------

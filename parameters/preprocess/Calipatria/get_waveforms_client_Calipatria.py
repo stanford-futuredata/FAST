@@ -30,7 +30,7 @@ maxlat=33.7
 minlon=-116.1
 maxlon=-115.1
 
-base_dir = '../../../Calipatria/'
+base_dir = '../../../data/20210605_Calipatria_Data/'
 
 for cli in clientlist:
     print('-----------------------------------------------------------------')
@@ -73,16 +73,16 @@ for cli in clientlist:
 #        if ((network == 'SB')):
 #        if ((network == 'PB') and (station == 'DHL2')):
 #        if ((network == 'SB') and (station == 'WLA02')):
-        if ((network == 'CI') and (station == 'WI2')):
+#        if ((network == 'CI') and (station == 'WI2')):
                 
-           try:
-               wave_form = client2.get_waveforms(network, station, "*", "*", start_time, end_time)
-               for s in wave_form:
-                   if s.stats.channel in chan_priority_list:
-                       s.write(f"{out_dir}/{s.stats.network}.{s.stats.station}.{s.stats.channel}__{start_time_file}__{end_time_file}.mseed", format="MSEED")
+        try:
+            wave_form = client2.get_waveforms(network, station, "*", "*", start_time, end_time)
+            for s in wave_form:
+                if s.stats.channel in chan_priority_list:
+                    s.write(f"{out_dir}/{s.stats.network}.{s.stats.station}.{s.stats.channel}__{start_time_file}__{end_time_file}.mseed", format="MSEED")
 
-           except:
-               print(f"No data available for {network}.{station}")
+        except:
+            print(f"No data available for {network}.{station}")
 
 #           for s in wave_form:
 #               if s.stats.channel in chan_priority_list:
