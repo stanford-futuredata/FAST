@@ -71,3 +71,61 @@ If list index out of range in partition, fails to keep running -> try 1 partitio
 ```
 (eq_fast) root@6006660926e5:/app/postprocessing# python scr_run_network_det.py ../parameters/postprocess/Calipatria/37sta_3stathresh_network_params.json
 ```  
+
+### **Postprocess: Clean Network Detection Results**
+
+```
+(eq_fast) root@6006660926e5:/app/postprocessing# cd ../utils/network/
+(eq_fast) root@6006660926e5:/app/utils/network# python arrange_network_detection_results.py
+```  
+  
+Input parameter changes made to `arrange_network_detection_results.py` (from Hector Mine -> Calipatria)  
+
+``` py linenums="4"
+det_dir = ‘../../data/20210605_Calipatria_Data/network_detection/’
+network_file = ‘37sta_3stathresh_detlist_rank_by_peaksum.txt’
+nsta = 37
+```
+
+```
+(eq_fast) root@6006660926e5:/app/utils/network# ./remove_duplicates_after_network.sh
+```  
+  
+
+Input parameter changes made to `remove_duplicates_after_network.sh` (from Hector Mine -> Calipatria)  
+
+``` py linenums="4"
+cd ../../data/20210605_Calipatria_Data/network_detection/
+NETWORK_FILE=NetworkDetectionTimes_37sta_3stathresh_detlist_rank_by_peaksum.txt
+```
+
+```
+(eq_fast) root@6006660926e5:/app/utils/network# python delete_overlap_network_detections.py
+```  
+  
+Input parameter changes made to `delete_overlap_network_detections.py` (from Hector Mine -> Calipatria)  
+
+``` py linenums="4"
+input_dir = ‘../../data/20210605_Calipatria_Data/network_detection/’
+allfile_name = input_dir+‘uniquestart_sorted_no_duplicates.txt’
+outfile_name = input_dir+‘37sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt’
+n_sta = 37
+```
+
+```
+(eq_fast) root@6006660926e5:/app/utils/network# ./final_network_sort_nsta_peaksum.sh
+```  
+
+  
+Input parameter changes made to `final_network_sort_nsta_peaksum.sh` (from Hector Mine -> Calipatria)  
+
+``` py linenums="4"
+cd ../../data/20210605_Calipatria_Data/network_detection/
+NETWORK_FILE=37sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt
+```
+
+### **Visualize the FAST output (739 events)**  
+
+```
+(eq_fast) root@6006660926e5:/app/utils/network# cat ../../data/20210605_Calipatria_Data/network_detection/sort_nsta_peaksum_37sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt
+```  
