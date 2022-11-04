@@ -937,3 +937,7 @@ For the 14,474 events, output a catalog-like formatted list:
 ![ex_param_8](img/ex_param_8.png)  
 
 <figcaption>Figure 16: New Zealand map: 5 stations (black triangles) used for FAST detection (except GVZ which was not used), and locations of GeoNet catalog events (circles). 4916 catalog events were detected by FAST (red circles). Catalog events missed by FAST are displayed as green circles.</figcaption>  
+
+## 0.11 Calipatria, June 2021  
+
+![calipatria_maps](img/calipatria_maps.png)
