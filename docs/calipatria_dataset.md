@@ -124,8 +124,66 @@ cd ../../data/20210605_Calipatria_Data/network_detection/
 NETWORK_FILE=37sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt
 ```
 
-### **Visualize the FAST output (739 events)**  
+#### **Visualize the FAST output (739 events)**  
 
 ```
 (eq_fast) root@6006660926e5:/app/utils/network# cat ../../data/20210605_Calipatria_Data/network_detection/sort_nsta_peaksum_37sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt
 ```  
+
+#### **Display FAST detection waveforms, descending order of peaksum-similarity**  
+
+```
+(eq_fast) root@6006660926e5:/app/utils/network# cd ../events/
+(eq_fast) root@6006660926e5:/app/utils/events# python PARTIALplot_detected_waveforms_Calipatria.py 0 739
+```  
+
+Input parameter changes made to `PARTIALplot_detected_waveforms_Calipatria.py` (from Hector Mine -> Calipatria)  
+
+``` py linenums="23"
+times_dir = ‘../../data/20210605_Calipatria_Data/network_detection/’
+```  
+
+``` py linenums="25"
+out_dir = times_dir+‘37sta_3stathresh_NetworkWaveformPlots/’
+```  
+
+``` py linenums="30"
+dt_fp = 1.2
+```  
+
+``` py linenums="37"
+init_time = UTCDateTime(‘2021-06-05T00:00:00.000000’)
+```  
+
+``` py linenums="47"
+ts_dir = ‘../../data/20210605_Calipatria_Data/’
+st = read(ts_dir+‘waveforms*/Deci*Z__20210605T000000Z__20210606T000000Z.mseed’) # Plot only vertical component
+```  
+
+#### **Set detection threshold - keep all events with at least 3 stations**  
+
+```
+(eq_fast) root@6006660926e5:/app/utils/events# cd ../../data/20210605_Calipatria_Data/network_detection/
+(eq_fast) root@6006660926e5:/app/data/20210605_Calipatria_Data/network_detection# head -739 sort_nsta_peaksum_37sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt > EQ_sort_nsta_peaksum_37sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt
+```  
+
+#### **Output final FAST detected event list**  
+
+```
+(eq_fast) root@6006660926e5:/app/data/20210605_Calipatria_Data/network_detection# cd ../../../utils/events/
+(eq_fast) root@6006660926e5:/app/utils/events# python output_final_detection_list.py
+```  
+
+Input parameter changes made to `output_final_detection_list.py` (from Hector Mine -> Calipatria)  
+
+``` py linenums="9"
+times_dir = ‘../../data/20210605_Calipatria_Data/network_detection/’
+infile_name = ‘EQ_sort_nsta_peaksum_37sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt’
+outfile_name = times_dir+‘FINAL_Detection_List_Calipatria_37sta_3stathresh.txt’
+init_time = UTCDateTime(‘2021-06-05T00:00:00.000000’) # global start time for all channels
+dt_fp = 1.2
+```
+
+```
+(eq_fast) root@6006660926e5:/app/utils/events# cat ../../data/20210605_Calipatria_Data/network_detection/FINAL_Detection_List_Calipatria_37sta_3stathresh.txt
+```   
