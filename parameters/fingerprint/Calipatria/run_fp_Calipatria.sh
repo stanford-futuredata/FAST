@@ -113,29 +113,29 @@ python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_NP_5274_HNE.json
 
 python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_NP_5444_EHZ.json
 
-#python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_GLRS_HNZ.json
-#python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_GLRS_HNN.json
-#python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_GLRS_HNE.json
-#
-#python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_P494_HNZ.json
-#python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_P494_HNN.json
-#python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_P494_HNE.json
-#
-#python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_P505_HNZ.json
-#python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_P505_HNN.json
-#python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_P505_HNE.json
-#
-#python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_P506_HNZ.json
-#python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_P506_HNN.json
-#python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_P506_HNE.json
-#
-#python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_SLMS_HNZ.json
-#python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_SLMS_HNN.json
-#python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_SLMS_HNE.json
-#
-#python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_USGC_HNZ.json
-#python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_USGC_HNN.json
-#python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_USGC_HNE.json
+python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_GLRS_HNZ.json
+python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_GLRS_HNN.json
+python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_GLRS_HNE.json
+
+python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_P494_HNZ.json
+python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_P494_HNN.json
+python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_P494_HNE.json
+
+python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_P505_HNZ.json
+python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_P505_HNN.json
+python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_P505_HNE.json
+
+python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_P506_HNZ.json
+python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_P506_HNN.json
+python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_P506_HNE.json
+
+python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_SLMS_HNZ.json
+python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_SLMS_HNN.json
+python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_SLMS_HNE.json
+
+python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_USGC_HNZ.json
+python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_USGC_HNN.json
+python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_PB_USGC_HNE.json
 
 python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_SB_WLA_HNZ.json
 python gen_fp.py ../parameters/fingerprint/Calipatria/fp_input_SB_WLA_HNN.json

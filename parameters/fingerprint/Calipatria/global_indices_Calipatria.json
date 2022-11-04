@@ -1,5 +1,5 @@
 {
-	"index_folder": "../data/global_indices/",
+	"index_folder": "../data/20210605_Calipatria_Data/global_indices/",
 	"fp_param_dir": "../parameters/fingerprint/Calipatria/",
 	"fp_params": ["fp_input_AZ_USGCB_HNZ.json", "fp_input_AZ_USGCB_HNN.json", "fp_input_AZ_USGCB_HNE.json",
 
