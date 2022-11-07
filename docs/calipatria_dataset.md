@@ -187,3 +187,29 @@ dt_fp = 1.2
 ```
 (eq_fast) root@6006660926e5:/app/utils/events# cat ../../data/20210605_Calipatria_Data/network_detection/FINAL_Detection_List_Calipatria_37sta_3stathresh.txt
 ```   
+
+### **Cut event SAC files for phase picking**  
+
+```
+(eq_fast) root@6006660926e5:/app/utils/events# python cut_event_files.py
+```  
+
+Input parameter changes made to `cut_event_files.py` (from Hector Mine -> Calipatria)  
+
+``` py linenums="20"
+stations = [“USGCB”, “BC3", “BOM”, “CLI2", “COA”, “COK2", “CRR”,
+    “CTC”, “CTW”, “DRE”, “ERR”, “FRK”, “IMP”, “NSS2",
+    “OCP”, “RXH”, “SAL”, “SLB”, “SLV”, “SNR”, “SWP”,
+    “SWS”, “THM”, “WMD”, “WWF”, “286", “5056”, “5058",
+    “5062”, “5271", “5274”, “5444",
+    “WLA”, “WLA01", “WLA03”, “WLA04", “WLA06”]
+in_mseed_dir = ‘../../data/20210605_Calipatria_Data/’
+in_FINAL_Detection_List = ‘../../data/20210605_Calipatria_Data/network_detection/FINAL_Detection_List_Calipatria_37sta_3stathresh.txt’
+out_dir = ‘../../data/20210605_Calipatria_Data/event_ids’
+init_time = UTCDateTime(‘2021-06-05T00:00:06.840000’, precision=2) # global start time for all channels
+dt_fp = 1.2
+```  
+
+``` py linenums="80"
+st = read(‘../../data/20210605_Calipatria_Data/waveforms*/[!Deci]*.mseed’)
+```  
