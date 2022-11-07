@@ -79,13 +79,15 @@ PHS 'EQT_19991015_test.txt' # Change file name for your dataset
 
 ## Plotting HYPOINVERSE Location Results With PyGMT  
 
-FAST is incompatible with PyGMT, so to use PyGMT with the HYPOINVERSE location results, follow the [PyGMT install instructions](https://www.pygmt.org/latest/install.html).  
+IMPORTANT - PyGMT needs to be installed and run in a separate `pygmt` conda environment, since it is incompatible with the `eq_fast` conda environment.  
+
+Follow the steps in the [tutorial section](tutorial.md) to user PyGMT.  
 
 Use the `hypoinverse_to_pygmt.py` script and `map_gray.cpt` found in `/FAST/utils/mapping` to plot the location results with the changes below.  
 
 * Change nearby cities latitude, longitude, and name Numpy arrays for your dataset:  
 
-``` py linenums="92"
+``` py linenums="101"
 # Cities near Hector Mine
 nearby_cities_lat = np.array([34.5388, 34.895798, 34.42741, 34.114174])
 nearby_cities_lon = np.array([-117.298195, -117.017281, -117.31484, -116.432236])
@@ -94,13 +96,13 @@ nearby_cities_names = np.array(['Victorville', 'Barstow', 'Hesperia', 'Yucca Val
 
 * Change plot title:  
 
-``` py linenums="117"
+``` py linenums="126"
 fig.basemap(region=region, projection='M4i', frame=['a', '+t1999 Hector Mine Foreshock Locations']) #Change title: keep +t, needed at beginning of string
 ```  
 
 * Change region of inset plot:
 
-``` py linenums="179"
+``` py linenums="189"
 with fig.inset(position="jTR+o0.1c", 
                box="+p1.5p,black", 
                region=[-130, -105, 27, 45], # Change region
