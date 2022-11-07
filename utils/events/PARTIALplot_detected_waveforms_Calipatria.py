@@ -30,11 +30,10 @@ if not os.path.exists(out_dir):
 dt_fp = 1.2
 det_times = dt_fp * det_start_ind
 diff_times = dt_fp * diff_ind
-dL_dt = dt_fp * dL
 print(len(det_times))
 
 # Window length (seconds) for event plot
-init_time = UTCDateTime('2021-06-05T00:00:00.000000') # global start time for all channels
+init_time = UTCDateTime('2021-06-05T00:00:06.840000') # global start time for all channels
 wtime_before = 10
 wtime_after = 40
 

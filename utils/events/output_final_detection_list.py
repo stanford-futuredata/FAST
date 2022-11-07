@@ -63,7 +63,7 @@ dt_fp = 1.0
 #times_dir = '../../data/20210605_Calipatria_Data/network_detection/'
 #infile_name = 'EQ_sort_nsta_peaksum_37sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt'
 #outfile_name = times_dir+'FINAL_Detection_List_Calipatria_37sta_3stathresh.txt'
-#init_time = UTCDateTime('2021-06-05T00:00:00.000000') # global start time for all channels
+#init_time = UTCDateTime('2021-06-05T00:00:06.840000') # global start time for all channels
 #dt_fp = 1.2
 
 # ---------------------------------------------------INPUTS --------------------------------------------
