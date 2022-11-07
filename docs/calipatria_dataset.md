@@ -280,3 +280,6 @@ loc_dir = ‘../../data/20210605_Calipatria_Data/location_hypoinverse/’
 root@6006660926e5:/app/utils/mapping# conda activate pygmt
 (pygmt) root@6006660926e5:/app/utils/mapping# python hypoinverse_to_pygmt_Calipatria.py
 ```  
+
+![calipatria_FAST_maps](img/calipatria_FAST_maps.png)  
+<figcaption>Plots of detected earthquakes from FAST output</figcaption>  
