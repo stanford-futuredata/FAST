@@ -271,3 +271,12 @@ Input parameter changes made to `output_hypoinverse_as_text.py` (from Hector Min
 catalog_start_time = UTCDateTime(‘2021-06-05T00:00:06.840000’)
 loc_dir = ‘../../data/20210605_Calipatria_Data/location_hypoinverse/’ 
 ```  
+
+### **Mapping earthquake locations with PyGMT**  
+
+```
+(eq_fast) root@6006660926e5:/app/utils/location# cd ../mapping/
+(eq_fast) root@6006660926e5:/app/utils/mapping# conda deactivate
+root@6006660926e5:/app/utils/mapping# conda activate pygmt
+(pygmt) root@6006660926e5:/app/utils/mapping# python hypoinverse_to_pygmt_Calipatria.py
+```  

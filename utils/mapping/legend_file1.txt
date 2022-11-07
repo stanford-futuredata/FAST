@@ -1,0 +1,8 @@
+L 15 Helvetica-Bold L Map Legend
+G 0.1c
+S 0.1i i 0.14i red 0.45p,black 0.3i Stations
+G 0.1c
+S 0.1i a 0.14i yellow 0.5p,red 0.3i M 5.3
+G 0.1c
+S 0.1i c 0.14i lightblue 0.5p,black 0.3i Earthquakes
+G 0.1c
