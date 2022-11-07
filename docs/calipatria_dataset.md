@@ -213,3 +213,20 @@ dt_fp = 1.2
 ``` py linenums="80"
 st = read(‘../../data/20210605_Calipatria_Data/waveforms*/[!Deci]*.mseed’)
 ```  
+
+### **Pick phases with SeisBench**  
+
+```
+(eq_fast) root@6006660926e5:/app/utils/events# cd ../picking/
+(eq_fast) root@6006660926e5:/app/utils/picking# python run_seisbench.py
+```  
+
+Input parameter changes made to `run_seisbench.py` (from Hector Mine -> Calipatria)  
+
+``` py linenums="16"
+base_dir = ‘../../data/20210605_Calipatria_Data/’
+```  
+
+``` py linenums="18"
+stations = [‘CLI2’, ‘COK2’, ‘OCP’, ‘SAL’, ‘WWF’, ‘5062’, ‘5271’, ‘5444’]
+```  

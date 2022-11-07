@@ -12,12 +12,25 @@ import json
 import pandas as pd
 import datetime
 
-dir_list = os.listdir('../../data/event_ids')
-seisbench_picks = {'SeisBench_Picks': {}}
-trace_id = " "
-
+# Inputs - Hector Mine
+base_dir = '../../data/'
 # List of stations that do not have 3 components
 stations = ['CDY', 'CPM', 'GTM', 'RMM', 'RMR', 'TPC']
+
+## Inputs - Calipatria
+#base_dir = '../../data/20210605_Calipatria_Data/'
+## List of stations that do not have 3 components
+#stations = ['CLI2', 'COK2', 'OCP', 'SAL', 'WWF', '5062', '5271', '5444']
+
+
+
+
+in_data_dir = base_dir+'event_ids/'
+annotations_dir = base_dir+'seisbench_picks/'
+
+dir_list = os.listdir(in_data_dir)
+seisbench_picks = {'SeisBench_Picks': {}}
+trace_id = " "
 
 model = sbm.EQTransformer()
 print(model)
@@ -44,7 +57,6 @@ print(model.weights_docstring)
 '''
 
 # make directory for annotation plots
-annotations_dir = '../../data/seisbench_picks/'
 if not os.path.exists(annotations_dir):
     os.makedirs(annotations_dir)
     
@@ -56,7 +68,11 @@ with open(annotations_dir+"event_picks.json", "w") as json_file:
             
             st = Stream()
 
-            stream = read('../../data/event_ids/' + d + '/*.sac')
+            try:
+                stream = read(in_data_dir + d + '/*.sac')
+            except Exception:
+                print("WARNING: unable to read event files for ", d)
+                continue
             
             for i in range(len(stream)):
                 
@@ -106,9 +122,10 @@ with open(annotations_dir+"event_picks.json", "w") as json_file:
                 and resample the trace to the required sampling rate.
             '''
 
-            fig = plt.figure(figsize=(30, 15))
-            axs = fig.subplots((int(len(st) / 3) * 2), 1, sharex=True, gridspec_kw={'hspace' : 0.5})
-            fig.suptitle('Event ID: ' + str(d), fontsize=30)
+###        # Remove the ### comments for annotation plot outputs, though they will slow down runtime
+###            fig = plt.figure(figsize=(30, 15))
+###            axs = fig.subplots((int(len(st) / 3) * 2), 1, sharex=True, gridspec_kw={'hspace' : 0.5})
+###            fig.suptitle('Event ID: ' + str(d), fontsize=30)
 
             count = 0
             station_origin_times = []
@@ -126,26 +143,26 @@ with open(annotations_dir+"event_picks.json", "w") as json_file:
                     annotations = model.annotate(st_temp)
                     print(annotations)
                         
-                    offset = annotations[0].stats.starttime - st[0].stats.starttime
+###                    offset = annotations[0].stats.starttime - st[0].stats.starttime
                     
                     for j in range(i, i + 3): 
-                        axs[count].plot(st[j].times(), st[j].data, label=st[j].stats.channel)
-                        axs[count].legend([str(st[j].stats.station) + "_" + st[j].stats.channel], loc ="upper right")
-                        axs[count].set_title('Station: ' + st[i].stats.station)
-                        axs[count].legend(bbox_to_anchor=(1,1), loc="upper left")
+###                        axs[count].plot(st[j].times(), st[j].data, label=st[j].stats.channel)
+###                        axs[count].legend([str(st[j].stats.station) + "_" + st[j].stats.channel], loc ="upper right")
+###                        axs[count].set_title('Station: ' + st[i].stats.station)
+###                        axs[count].legend(bbox_to_anchor=(1,1), loc="upper left")
                         
                         trace_id = st[j].stats.network + '.' + st[j].stats.station
                         # seisbench_picks['SeisBench_Picks'][str(d)][trace_id] = []
 
-                for k in range(len(annotations)):
-                    if annotations[k].stats.channel[-1] != "N" and count < (int(len(st) / 3 * 2)):  # Do not plot noise curve
-                        axs[count + 1].plot(annotations[k].times() + offset, annotations[k].data, label=annotations[k].stats.channel)
-                        axs[count + 1].set_title('EQTransformer: ' + st[i].stats.station)
-                        axs[count + 1].legend(bbox_to_anchor=(1,1), loc="upper left")
-                        plt.ylim([0, 1])
-                        plt.xlabel("Time (s) starting at " + str(st[i].stats.starttime), size = 16,)
-                        
-                plt.savefig(annotations_dir + 'annotations_' + d + '.png')
+###                for k in range(len(annotations)):
+###                    if annotations[k].stats.channel[-1] != "N" and count < (int(len(st) / 3 * 2)):  # Do not plot noise curve
+###                        axs[count + 1].plot(annotations[k].times() + offset, annotations[k].data, label=annotations[k].stats.channel)
+###                        axs[count + 1].set_title('EQTransformer: ' + st[i].stats.station)
+###                        axs[count + 1].legend(bbox_to_anchor=(1,1), loc="upper left")
+###                        plt.ylim([0, 1])
+###                        plt.xlabel("Time (s) starting at " + str(st[i].stats.starttime), size = 16,)
+###
+###                plt.savefig(annotations_dir + 'annotations_' + d + '.png')
 
                 seisbench_picks['SeisBench_Picks'][str(d)][trace_id] = []
 
