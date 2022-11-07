@@ -58,15 +58,15 @@ with open(out_map_dir+"scedc_20210605_24hr_events_alltypes.txt", "r") as r:
         lat.append(float(split_line[6]))
         lon.append(float(split_line[7]))
         depth.append(float(split_line[8]))
-        
+
 ## FAST-SeisBench-HYPOINVERSE Catalog
 #with open(in_loc_dir+"events_locations.txt", "r") as r:
 #    for line in r:
 #        split_line = line.split()
 #        mag.append(2.0)
-#        lat.append(float(split_line[1]))
-#        lon.append(float(split_line[2]))
-#        depth.append(float(split_line[3]))
+#        lat.append(float(split_line[2]))
+#        lon.append(float(split_line[3]))
+#        depth.append(float(split_line[4]))
         
 
 
