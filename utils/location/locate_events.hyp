@@ -1,4 +1,4 @@
-* locate Puerto Rico earthquakes with HYPOINVERSE
+* locate Southern California earthquakes with HYPOINVERSE
 * Requires hyp 1.3 or greater and uses 4th generation station delay files
 
 * These are standard Northern Calif network startup commands:
@@ -30,8 +30,6 @@ STA 'station_list.sta'    			 /Read ASCII file of all stations.
 * CRUSTAL MODEL
 TYP Read in crustal model(s):
 CRH 1 'hadley.crh'
-* CRH 1 'velp_pr_1d.crh'
-* CRH 2 'vs_przhang_1d.crh'
 * SAL 1 2
 * GEO F                                  / model depth
 GEO T                                  / geoid depth
@@ -50,7 +48,7 @@ GEO T                                  / geoid depth
 * SET DEFAULT PHASE FILE BUT GIVE USER A CHANCE TO CHANGE IT
 TYP Hit enter or carriage-return to keep the test filenames:
 TYP (Also tests the phase file to use its format)
-PHS 'EQT_19991015_test.txt'
+PHS 'hinv_phase_file.txt'
 FIL					/Examine phase file and set its format
 
 * SET DEFAULT PRINT FILE BUT GIVE USER A CHANCE TO CHANGE IT

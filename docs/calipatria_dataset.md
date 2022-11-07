@@ -230,3 +230,44 @@ base_dir = ‘../../data/20210605_Calipatria_Data/’
 ``` py linenums="18"
 stations = [‘CLI2’, ‘COK2’, ‘OCP’, ‘SAL’, ‘WWF’, ‘5062’, ‘5271’, ‘5444’]
 ```  
+
+### **Earthquake location with HYPOINVERSE**  
+
+```
+(eq_fast) root@6006660926e5:/app/utils/picking# cd ../location/
+(eq_fast) root@6006660926e5:/app/utils/location# python SeisBench2hypoinverse.py
+```  
+
+Input parameter changes made to `SeisBench2hypoinverse.py` (from Hector Mine -> Calipatria)  
+
+``` py linenums="25"
+base_dir = ‘../../data/20210605_Calipatria_Data/’
+start_lat = 33.1
+start_lon = -115.6
+start_depth = 5
+```
+
+```
+(eq_fast) root@6006660926e5:/app/utils/location# python output_station_file.py
+```  
+
+Input parameter changes made to `output_station_file.py` (from Hector Mine -> Calipatria)  
+
+``` py linenums="113"
+base_dir = ‘../../data/20210605_Calipatria_Data/’
+```
+
+```
+(eq_fast) root@6006660926e5:/app/utils/location# cd ../../data/20210605_Calipatria_Data/location_hypoinverse/
+(eq_fast) root@6006660926e5:/app/data/20210605_Calipatria_Data/location_hypoinverse/# ../../../utils/location/hyp1.40/source/hyp1.40
+COMMAND? @locate_events.hyp
+(eq_fast) root@6006660926e5:/app/data/20210605_Calipatria_Data/location_hypoinverse/# cd ../../../utils/location/
+(eq_fast) root@6006660926e5:/app/utils/location# python output_hypoinverse_as_text.py
+```  
+
+Input parameter changes made to `output_hypoinverse_as_text.py` (from Hector Mine -> Calipatria)  
+
+``` py linenums="12"
+catalog_start_time = UTCDateTime(‘2021-06-05T00:00:06.840000’)
+loc_dir = ‘../../data/20210605_Calipatria_Data/location_hypoinverse/’ 
+```  

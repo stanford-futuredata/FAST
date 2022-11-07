@@ -21,16 +21,29 @@ def _weighcalculator_prob(pr):
     return weight
 
 
+# Inputs - Hector Mine
+base_dir = '../../data/'
+start_lat = 34.603
+start_lon = -116.265
+start_depth = 5
+
+## Inputs - Calipatria
+#base_dir = '../../data/20210605_Calipatria_Data/'
+#start_lat = 33.1
+#start_lon = -115.6
+#start_depth = 5
+
+
 # make directory for hypoinverse data files
-loc_dir = '../../data/location_hypoinverse/'
+loc_dir = base_dir+'location_hypoinverse/'
 if not os.path.exists(loc_dir):
     os.makedirs(loc_dir)
 
 # copy files needed for hypoinverse to the new data file directory
 os.system('cp hadley.crh locate_events.hyp '+loc_dir)
 
-in_real_phase_file = '../../data/seisbench_picks/event_picks.json'
-out_hinv_phase_file = loc_dir+'EQT_19991015_test.txt' # Change file name
+in_real_phase_file = base_dir+'seisbench_picks/event_picks.json'
+out_hinv_phase_file = loc_dir+'hinv_phase_file.txt' # Change file name
 
 
 fout = open(out_hinv_phase_file, 'w')
@@ -58,7 +71,7 @@ with open(in_real_phase_file, 'r') as freal:
          origin_time = origin_time_nosec + origin_delta
          origin_time_second = round(100*(origin_time.second + 1e-6*origin_time.microsecond))
          
-         lat = 34.603
+         lat = start_lat
          lat_int = int(float(lat))
          dlat = abs(float(lat) - float(lat_int))
          lat_min = str(format(round(100*float(dlat*60.0)), '04d'))
@@ -68,7 +81,7 @@ with open(in_real_phase_file, 'r') as freal:
             lat_char = ' '
          lat_int = abs(lat_int)
          
-         lon = -116.265
+         lon = start_lon
          lon_int = int(float(lon))
          dlon = abs(float(lon) - float(lon_int))
          lon_min = str(format(round(100*float(dlon*60.0)), '04d'))
@@ -78,7 +91,7 @@ with open(in_real_phase_file, 'r') as freal:
             lon_char = 'E'
          lon_int = abs(lon_int)
             
-         depth = 5
+         depth = start_depth
          depth_out = round(100*float(depth))
          
          fout.write(('%4d%02d%02d%02d%02d%04d%2d%1s%4s%3d%1s%4s%5d%3d\n') % (origin_time.year, origin_time.month, origin_time.day, origin_time.hour, origin_time.minute, origin_time_second, lat_int, lat_char, lat_min, lon_int, lon_char, lon_min, depth_out, 0))

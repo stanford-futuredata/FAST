@@ -106,8 +106,14 @@ def output_station_file_gmt(in_sta_file, out_gmt_file, flag_format=0):
 
 def main():
 
-   in_sta_file = '../../data/stations/station_list.json'
-   out_hypoinv_file = '../../data/location_hypoinverse/station_list.sta'
+   # Inputs - Hector Mine
+   base_dir = '../../data/'
+
+   # Inputs - Calipatria
+#   base_dir = '../../data/20210605_Calipatria_Data/'
+
+   in_sta_file = base_dir+'stations/station_list.json'
+   out_hypoinv_file = base_dir+'location_hypoinverse/station_list.sta'
 
    output_station_file_hypoinverse(in_sta_file, out_hypoinv_file)
 #   output_station_file_gmt(in_sta_file, out_gmt_file, flag_format=1)
