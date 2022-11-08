@@ -5,7 +5,7 @@ import utils_hypoinverse as utils_hyp
 # Output file for plotting on GMT map
 
 # Inputs - Hector Mine
-catalog_start_time = UTCDateTime('1999-10-15T13:00:00')
+catalog_start_time = UTCDateTime('1999-10-15T13:00:00.676000')
 loc_dir = '../../data/location_hypoinverse/'
 
 ## Inputs - Calipatria
