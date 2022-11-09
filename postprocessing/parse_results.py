@@ -205,7 +205,7 @@ def filter_and_reduce_file(idx):
             output, err = proc.communicate()
             if reduce_key in output.decode("UTF-8"):
                 while reduce_key in line:
-                    line = f.next()
+                    line = next(f)
                 reduce_key, reduce_val = _parse_line(line)
         for line in f:
             key, val = _parse_line(line)

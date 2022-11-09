@@ -1,6 +1,7 @@
 from obspy import read
 from obspy import UTCDateTime
 import numpy as np
+import os
 
 # Output final detection list
 
@@ -59,6 +60,12 @@ dt_fp = 1.0
 #init_time = UTCDateTime('2008-07-18T00:00:06.840000') # global start time for all channels
 #dt_fp = 1.2
 
+#times_dir = '../../data/20210605_Calipatria_Data/network_detection/'
+#infile_name = 'EQ_sort_nsta_peaksum_37sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt'
+#outfile_name = times_dir+'FINAL_Detection_List_Calipatria_37sta_3stathresh.txt'
+#init_time = UTCDateTime('2021-06-05T00:00:06.840000') # global start time for all channels
+#dt_fp = 1.2
+
 # ---------------------------------------------------INPUTS --------------------------------------------
 
 # ================================================================
@@ -72,4 +79,10 @@ print(len(det_times))
 with open(outfile_name, 'w') as fout:
    for kk in range(len(det_times)):
       event_time = init_time + det_times[kk]
-      fout.write(('%s %12.2f %12d %12d %12d %12d %12d\n') % (event_time.strftime('%Y-%m-%dT%H:%M:%S.%f'), det_times[kk], det_start_ind[kk], dL[kk], diff_ind[kk], num_sta[kk], peaksum[kk]))
+      
+      out_dir = '../../data/event_ids/' + str(kk).zfill(8) + '/'
+      
+      if not os.path.exists(out_dir):
+         os.makedirs(out_dir)
+
+      fout.write(('%s %s %12.2f %12d %12d %12d %12d %12d\n') % (str(kk).zfill(8), event_time.strftime('%Y-%m-%dT%H:%M:%S.%f'), det_times[kk], det_start_ind[kk], dL[kk], diff_ind[kk], num_sta[kk], peaksum[kk]))

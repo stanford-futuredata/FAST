@@ -1,120 +1,60 @@
-# FAST tutorial
+# FAST  
 
-The following instructions were only tested on **Linux** clusters; we do not currently support other operating systems. To efficiently process inputs spanning a long duration, we suggest running the pipeline on a server with multiple processes and sufficient memory. 
+![fast_index](docs/img/fast_index_page.png)  
 
-### Dependencies
-The pipeline is implemented in Python and C++, with the following dependencies:
-```
-c++ dependency: boost
-python dependencies: obspy, pywt, scipy, numpy, skimage, sklearn
-```
+**FAST** is an end-to-end and unsupervised earthquake detection pipeline. It is a useful tool for seismologists to extract more small earthquakes from continuous seismic data. FAST is able to run on different machines by using Google Colab, Linux, or Docker.  
 
-### Install
-Copy the zip file to your home diretory, unzip and install the Python dependencies:
-```sh
-~/$ unzip FAST.zip
-~/$ cd FAST
-~/FAST$ pip install -r requirements.txt
-```
-Install the C++ dependencies:
-```sh
-~/FAST$ sudo apt-get install cmake, build-essential, libboost-all-dev 
-```
+* To run FAST with Google Colab, click [here](https://ttapparo.github.io/FAST/setup_colab/) for the tutorial.  
 
-### Dataset
+* To run FAST with Linux, click [here](https://ttapparo.github.io/FAST/setup_linux/) for the tutorial.  
 
-Raw SAC files for each station are stored under  ```data/waveforms${STATION}```. Station "HEC" has 3 components so it should have 3 time series data files; the other stations have only 1 component.
+* To run FAST with Docker, click [here](https://ttapparo.github.io/FAST/setup_docker/) for the tutorial.  
 
+Check out the [user guide](https://ttapparo.github.io/FAST/) to learn more about FAST and how to use it on your own dataset.  
 
+**FAST User Guide Contents**
+------------
+1.  [FAST Overview](https://ttapparo.github.io/FAST/fast_overview/)  
+   **Click here for a summary of the FAST algorithm and why you might want to use it on your seismic data.**
 
-### Fingerprint
-Parameters for each station is under ```parameters/fingerprint/```. To fingerprint all stations and generate the global index, you can call the wrapper script (Python):
-```sh
-~/FAST$ python run_fp.py -c config.json
-```
-Another option for the fingerprint wrapper script (bash):
-```sh
-~/FAST$ cd fingerprint/
-~/FAST/fingerprint$ ../parameters/fingerprint/run_fp_HectorMine.sh
-```
-The fingerprinting step takes less than 1 minute per waveform file on a 2.60GHz CPU. The generated fingerprints can be found at ```data/waveforms${STATION}/fingerprints/${STATION}${CHANNEL}.fp```. The json file ```data/waveforms${STATION}/${STATION}_${CHANNEL}.json``` contains information about the fingerprint file, including number of fingerprints (`nfp`) and dimension of each fingerprint (`ndim`).
+2.  Install  
+    **Go here to learn how to install and run the FAST software on your computer.**
 
-Alternatively, to fingerprint a specific stations, call the fingerprint script with the corresponding fingerprint parameter file:
-```sh
-~/FAST$ cd fingerprint/
-~/FAST/fingerprint$ python gen_fp.py ../parameters/fingerprint/fp_input_CI_CDY_EHZ.json
-```
+    1.  [Google Colab](https://ttapparo.github.io/FAST/setup_colab/)  
 
-In addition to generating fingerprints, the wrapper script calls the global index generation script automatically. The global index (as opposed to index with a single component) is a consistent way to refer to fingerprint times at different components and stations. Global index generation should only be performed after you've generated fingerprints for *every* component and station that is used in the detection: 
-```sh
-~/FAST/fingerprint$ python global_index.py  ../parameters/fingerprint/global_indices.json
-```
-The resulting global index mapping for each component is stored at ```data/global_indices/${STATION}_${CHANNEL}_idx_mapping.txt```, where line `i` in the file represents the global index for fingerprint `i-1` in this component.
+    2.  [Linux](https://ttapparo.github.io/FAST/setup_linux/)  
 
-### Similarity Search
-Compile and build the code for similarity search:
-```sh
-~/FAST$ cd simsearch
-~/FAST/simsearch$ cmake .
-~/FAST/simsearch$ make
-```
+    3.  [Docker](https://ttapparo.github.io/FAST/setup_docker/)  
 
-Call the wrapper script to run similarity search for all stations:
-```sh
-~/FAST/simsearch$ cd ..
-~/FAST$ python run_simsearch.py -c config.json
-```
-Another option for the similarity search wrapper script (bash):
-```sh
-~/FAST$ cd simsearch/
-~/FAST/simsearch$ ../parameters/simsearch/run_simsearch_HectorMine.sh
-```
-Alternatively, to run the similarity search for each station individually:
-```sh
-~/FAST$ cd simsearch
-~/FAST/simsearch$ ../parameters/simsearch/simsearch_input_HectorMine.sh CDY EHZ
-```
+3.  [Tutorial](https://ttapparo.github.io/FAST/tutorial/)  
+    **Learn how FAST detects earthquakes on the Hector Mine data set.**  
 
-### Postprocessing
-The following scripts parse the binary output from similarity search to text files, and combine the three channel results for Station HEC to a single output. Finally, it copies the parsed outputs to directory ```../data/input_network/```.
-```sh
-~/FAST$ cd postprocessing/
-~/FAST/postprocessing$ ../parameters/postprocess/output_HectorMine_pairs.sh
-~/FAST/postprocessing$ ../parameters/postprocess/combine_HectorMine_pairs.sh
-```
+4.  How to Set Parameters  
+    **Click here to learn how to test FAST on your own data sets.**  
 
-Run network detection:
-```sh
-~/FAST/postprocessing$ python scr_run_network_det.py ../parameters/postprocess/7sta_2stathresh_network_params.json
-```
-Results from the network detection are under ```data/network_detection/7sta_2stathresh_network_detlist*```. The file contains a list of potential detections including information about starting fingerprint index (global index, or time) at each station, number of stations where we found other events similar to this event (`nsta`), total number of similar fingerprint pairs mapped to the event (`tot_ndets`), total sum of the similarity values (`tot_vol`). Detailed format of the output can be found in the user guide. 
+    1.  [FAST Checklist](https://ttapparo.github.io/FAST/FAST_checklist/)  
 
-Optionally, to clean up the results from network detection (need to modify inputs within each script file):
-```sh
-~/FAST$ cd utils/network/
-~/FAST/utils/network$ python arrange_network_detection_results.py
-~/FAST/utils/network$ ./remove_duplicates_after_network.sh
-~/FAST/utils/network$ python delete_overlap_network_detections.py
-~/FAST/utils/network$ ./final_network_sort_nsta_peaksum.sh
-```
-The results from the above scripts can be found at ```data/network_detection/7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt```
+    2.  [Getting Seismic Data](https://ttapparo.github.io/FAST/get_seismic_data/)  
+   
+    3.  [Input and Preprocessing](https://ttapparo.github.io/FAST/input_and_preprocess/)  
 
-The above section only works with detection results with **multitple stations**. For single station detections, you can parse the results in the [output file](https://github.com/stanford-futuredata/FAST/blob/master/postprocessing/scr_run_network_det.py#L240). The schema of the output file is: event_start (starting fingerprint index), event_dt,  ndets (total number of event-pairs that include this event), peaksum (peak total similarity), and volume (sum of all similarity values for all event-pairs containing this event). Large peaksums usuallly correspond to higher confidence. 
+    4.  [Fingerprint](https://ttapparo.github.io/FAST/f_p/)  
 
-### Plotting
-To plot the waveforms from network detection:
-```sh
-~/FAST$ cd utils/events/ 
-~/FAST/utils/events$ python PARTIALplot_hector_detected_waveforms.py 0 50
-```
-The above script plots the first 50 waveforms from the output.
-The plot file names are sorted in descending order by: num_sta (number of stations that detected this event), peaksum (peak total similarity) 
-You can view the images at data/network_detection/7sta_2stathresh_NetworkWaveformPlots/
-Inspect the waveforms in order to set detection thresholds.
+    5.  [Similarity Search](https://ttapparo.github.io/FAST/sim_search/)  
 
-Similarly, to plot results for single station detection, we need a global start time (t0) from global_idx_stats.txt, dt_fp in seconds:
-- Event time = t0 + dt_fp*(start fingerprint index)
+    6.  [Network Detection](https://ttapparo.github.io/FAST/network_detection/)
 
+    7.  [FAST Output](https://ttapparo.github.io/FAST/FAST_output/)  
+
+    8.  [Phase Picking](https://ttapparo.github.io/FAST/phase_picking/)  
+
+    9.  [Earthquake Location](https://ttapparo.github.io/FAST/earthquake_location/)  
+
+    10. [Example Parameters](https://ttapparo.github.io/FAST/ex_params_intro/)  
+        **Click here to see data sets FAST has been used on to detect earthquakes.**
+
+5.  [References](https://ttapparo.github.io/FAST/references/)  
+    **Read publications about FAST here.**
 
 ### References
 You can find more details about the pipeline and guidelines for setting parameters in our extended [user guide](https://github.com/stanford-futuredata/quake/blob/master/FAST_userguide_v0.pdf). You may also check out the following papers:

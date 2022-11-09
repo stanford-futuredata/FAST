@@ -38,6 +38,11 @@ n_sta = 7
 #allfile_name = input_dir+'uniquestart_sorted_no_duplicates.txt'
 #outfile_name = input_dir+'7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt'
 
+#input_dir = '../../data/20210605_Calipatria_Data/network_detection/'
+#allfile_name = input_dir+'uniquestart_sorted_no_duplicates.txt'
+#outfile_name = input_dir+'37sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt'
+#n_sta = 37
+
 # Output detection time at each station to file (avoid this if there are many stations)
 flag_each_station = False
 

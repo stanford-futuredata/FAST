@@ -28,6 +28,10 @@ NETWORK_FILE=7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
 
 #cd /lfs/1/ceyoon/TimeSeries/Okmok/network_detection/
 #NETWORK_FILE=7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
+
+#cd ../../data/20210605_Calipatria_Data/network_detection/
+#NETWORK_FILE=37sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt
+
 # ---------------------------------------------------INPUTS --------------------------------------------
 
 # Sort in descending order of number of stations (column 11), then descending order of peaksum (column 10)

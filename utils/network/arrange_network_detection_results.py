@@ -37,6 +37,10 @@ nsta = 7
 #network_file = '7sta_2stathresh_detlist_rank_by_peaksum.txt'
 #nsta = 7
 
+#det_dir = '../../data/20210605_Calipatria_Data/network_detection/'
+#network_file = '37sta_3stathresh_detlist_rank_by_peaksum.txt'
+#nsta = 37
+
 # Output detection time at each station to file (avoid this if there are many stations)
 flag_each_station = False
 

@@ -1,0 +1,86 @@
+site_name: FAST
+repo_name: FAST GitHub
+repo_url: https://github.com/stanford-futuredata/FAST
+
+extra_css:
+  - css/extra.css
+
+nav:
+  - FAST Overview: fast_overview.md
+  - Install:
+    - Google Colab: setup_colab.md
+    - Linux: setup_linux.md
+    - Docker: setup_docker.md
+  - Tutorial: tutorial.md
+  - How to Set Parameters:
+    - FAST Checklist: FAST_checklist.md
+    - Getting Seismic Data: get_seismic_data.md
+    - Input and Preprocessing: input_and_preprocess.md
+    - Fingerprint: f_p.md
+    - Similarity Search: sim_search.md
+    - Network Detection: network_detection.md
+    - FAST Output: FAST_output.md
+    - Phase Picking: phase_picking.md
+    - Earthquake Location: earthquake_location.md
+    - Example Parameters: 
+      - ex_params_intro.md
+      - italy_day_yr_dataset.md
+      - tanzania_dataset.md
+      - saudi_dataset.md
+      - saudifull_dataset.md
+      - ometepec_dataset.md
+      - wenchuan_dataset.md
+      - groningen_dataset.md
+      - brazil_dataset.md
+      - newzealand_dataset.md
+      - calipatria_dataset.md
+  - References: references.md
+
+theme: 
+  name: material
+  logo: logo.png
+  favicon: favicon.png
+  features:
+    - content.tabs.link
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: red
+      accent: red
+      toggle:
+        icon: material/lightbulb-outline
+        name: "Switch to dark mode"
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: red
+      accent: red
+      toggle:
+        icon: material/lightbulb
+        name: "Switch to light mode"
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - codehilite
+  - def_list
+  - markdown.extensions.toc:
+      baselevel: 1
+      permalink: true
+  - markdown.extensions.attr_list
+  - md_in_html
+  - tables
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+plugins:
+  - search

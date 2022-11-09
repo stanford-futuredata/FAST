@@ -1,0 +1,31 @@
+{
+	"lsh_param": {
+		"ntbl": 100,
+		"nhash": 4,
+		"nvote": 2,
+		"nthread": 8,
+		"npart": 1,
+		"repeat": 5
+	},
+
+	"io": {
+		"base_dir": "data/",
+		"global_index_dir": "global_indices/",
+		"fp_param_dir": "parameters/fingerprint/",
+		"simsearch_param_dir": "parameters/simsearch/",
+
+		"fp_params": ["fp_input_AZ_TONN_HNZ.json", "fp_input_AZ_TONN_HNN.json", "fp_input_AZ_TONN_HNE.json",
+		"fp_input_CI_BOM_HHZ.json", "fp_input_CI_BOM_HHE.json",
+		"fp_input_CI_CLI2_EHZ.json",
+		"fp_input_CI_CRR_HHZ.json", "fp_input_CI_CRR_HHN.json", "fp_input_CI_CRR_HHE.json",
+		"fp_input_CI_DRE_HHZ.json", "fp_input_CI_DRE_HHN.json", "fp_input_CI_DRE_HHE.json",
+		"fp_input_CI_FRK_HHZ.json", "fp_input_CI_FRK_HHN.json", "fp_input_CI_FRK_HHE.json",
+		"fp_input_CI_IMP_HHZ.json", "fp_input_CI_IMP_HHN.json", "fp_input_CI_IMP_HHE.json",
+		"fp_input_CI_NSS2_HHZ.json", "fp_input_CI_NSS2_HHN.json", "fp_input_CI_NSS2_HHE.json",
+		"fp_input_CI_SWS_HHZ.json", "fp_input_CI_SWS_HHN.json", "fp_input_CI_SWS_HHE.json",
+		"fp_input_NP_286_HNZ.json", "fp_input_NP_286_HNN.json", "fp_input_NP_286_HNE.json",
+		"fp_input_NP_5274_HNZ.json", "fp_input_NP_5274_HNN.json", "fp_input_NP_5274_HNE.json",
+		"fp_input_SB_WLA06_HNZ.json", "fp_input_SB_WLA06_HNN.json", "fp_input_SB_WLA06_HNE.json"]
+	}
+
+}

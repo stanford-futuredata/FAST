@@ -25,14 +25,14 @@ def detect_time_gaps(file_name, min_samples=10, epsilon=1e-20, thresh_disc=100):
       ind_disc = np.where(ind_diff > thresh_disc)[0]
 
       # N-1 time gaps
-      print ind_gap
+      print(ind_gap)
       curr_ind_start = ind_gap[0]
-      print curr_ind_start
+      print(curr_ind_start)
       for igap in range(len(ind_disc)): # do not enter this loop if ind_disc is empty
-	 gap_start_ind.append(curr_ind_start)
-	 last_index = ind_gap[ind_disc[igap]] + min_samples
-	 gap_end_ind.append(last_index)
-	 curr_ind_start = ind_gap[ind_disc[igap]+1] # update for next iteration
+         gap_start_ind.append(curr_ind_start)
+         last_index = ind_gap[ind_disc[igap]] + min_samples
+         gap_end_ind.append(last_index)
+         curr_ind_start = ind_gap[ind_disc[igap]+1] # update for next iteration
 
       # Last time gap
       gap_start_ind.append(curr_ind_start)

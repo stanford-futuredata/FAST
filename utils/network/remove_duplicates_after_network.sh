@@ -34,6 +34,10 @@ NETWORK_FILE=NetworkDetectionTimes_7sta_2stathresh_detlist_rank_by_peaksum.txt
 
 #cd /lfs/1/ceyoon/TimeSeries/Okmok/network_detection/
 #NETWORK_FILE=NetworkDetectionTimes_7sta_2stathresh_detlist_rank_by_peaksum.txt
+
+#cd ../../data/20210605_Calipatria_Data/network_detection/
+#NETWORK_FILE=NetworkDetectionTimes_37sta_3stathresh_detlist_rank_by_peaksum.txt
+
 # ---------------------------------------------------INPUTS --------------------------------------------
 
 # Remove exact duplicate pairs (for matching start and end times of each event)
