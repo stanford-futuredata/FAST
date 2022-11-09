@@ -1,0 +1,1205 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.9">
+    
+    
+      
+        <title>Linux - FAST</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.08040f6c.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#installation-for-linux" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="FAST" class="md-header__button md-logo" aria-label="FAST" data-md-component="logo">
+      
+  <img src="../logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FAST
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Linux
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/stanford-futuredata/FAST" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FAST GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="FAST" class="md-nav__button md-logo" aria-label="FAST" data-md-component="logo">
+      
+  <img src="../logo.png" alt="logo">
+
+    </a>
+    FAST
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/stanford-futuredata/FAST" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FAST GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fast_overview/" class="md-nav__link">
+        FAST Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Install
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Install" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Install
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup_colab/" class="md-nav__link">
+        Google Colab
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Linux
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Linux
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-fast" class="md-nav__link">
+    Install FAST
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-fast" class="md-nav__link">
+    Run FAST
+  </a>
+  
+    <nav class="md-nav" aria-label="Run FAST">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dataset" class="md-nav__link">
+    Dataset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fingerprint" class="md-nav__link">
+    Fingerprint
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#similarity-search" class="md-nav__link">
+    Similarity Search
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postprocess-parse-fast-similarity-search-output" class="md-nav__link">
+    Postprocess: Parse FAST Similarity Search Output
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postprocess-network-detection" class="md-nav__link">
+    Postprocess: Network detection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postprocess-clean-network-detection-results" class="md-nav__link">
+    Postprocess: Clean Network Detection Results
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visualize-the-fast-output" class="md-nav__link">
+    Visualize the FAST Output
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#display-waveforms-for-fast-detections-in-descending-order-of-peaksum-similarity" class="md-nav__link">
+    Display Waveforms for FAST Detections in Descending Order of "peaksum" Similarity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-detection-threshold" class="md-nav__link">
+    Set Detection Threshold
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-final-fast-detected-event-list" class="md-nav__link">
+    Output Final FAST Detected Event List
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-picking-earthquake-location-map-visualization" class="md-nav__link">
+    Phase Picking, Earthquake Location, Map Visualization
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup_docker/" class="md-nav__link">
+        Docker
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/" class="md-nav__link">
+        Tutorial
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          How to Set Parameters
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="How to Set Parameters" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          How to Set Parameters
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FAST_checklist/" class="md-nav__link">
+        FAST Checklist
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../get_seismic_data/" class="md-nav__link">
+        Getting Seismic Data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../input_and_preprocess/" class="md-nav__link">
+        Input and Preprocessing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../f_p/" class="md-nav__link">
+        Fingerprint
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sim_search/" class="md-nav__link">
+        Similarity Search
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../network_detection/" class="md-nav__link">
+        Network Detection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FAST_output/" class="md-nav__link">
+        FAST Output
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase_picking/" class="md-nav__link">
+        Phase Picking
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../earthquake_location/" class="md-nav__link">
+        Earthquake Location
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_10" type="checkbox" id="__nav_4_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_10">
+          Example Parameters
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Example Parameters" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_10">
+          <span class="md-nav__icon md-icon"></span>
+          Example Parameters
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ex_params_intro/" class="md-nav__link">
+        0.1 Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../italy_day_yr_dataset/" class="md-nav__link">
+        0.2 ItalyDayYR Data Set
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tanzania_dataset/" class="md-nav__link">
+        0.3 Tanzania, August 2016
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../saudi_dataset/" class="md-nav__link">
+        0.4 Saudi Arabia, May 2014
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../saudifull_dataset/" class="md-nav__link">
+        0.5 SaudiFull Data Set: Saudi Arabia, January - May 2017
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ometepec_dataset/" class="md-nav__link">
+        0.6 Ometepec, Mexico, January - April 2012
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wenchuan_dataset/" class="md-nav__link">
+        0.7 SeismOlympics: Wenchuan Aftershocks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../groningen_dataset/" class="md-nav__link">
+        0.8 Groningen Data Set
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../brazil_dataset/" class="md-nav__link">
+        0.9 BrazilAcre Data Set
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../newzealand_dataset/" class="md-nav__link">
+        0.10 New Zealand, Year 2010
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calipatria_dataset/" class="md-nav__link">
+        0.11 Calipatria, June 2021
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        References
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-fast" class="md-nav__link">
+    Install FAST
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-fast" class="md-nav__link">
+    Run FAST
+  </a>
+  
+    <nav class="md-nav" aria-label="Run FAST">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dataset" class="md-nav__link">
+    Dataset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fingerprint" class="md-nav__link">
+    Fingerprint
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#similarity-search" class="md-nav__link">
+    Similarity Search
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postprocess-parse-fast-similarity-search-output" class="md-nav__link">
+    Postprocess: Parse FAST Similarity Search Output
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postprocess-network-detection" class="md-nav__link">
+    Postprocess: Network detection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postprocess-clean-network-detection-results" class="md-nav__link">
+    Postprocess: Clean Network Detection Results
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visualize-the-fast-output" class="md-nav__link">
+    Visualize the FAST Output
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#display-waveforms-for-fast-detections-in-descending-order-of-peaksum-similarity" class="md-nav__link">
+    Display Waveforms for FAST Detections in Descending Order of "peaksum" Similarity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-detection-threshold" class="md-nav__link">
+    Set Detection Threshold
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-final-fast-detected-event-list" class="md-nav__link">
+    Output Final FAST Detected Event List
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-picking-earthquake-location-map-visualization" class="md-nav__link">
+    Phase Picking, Earthquake Location, Map Visualization
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/stanford-futuredata/FAST/edit/master/docs/setup_linux.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="installation-for-linux"><strong>Installation for Linux</strong><a class="headerlink" href="#installation-for-linux" title="Permanent link">&para;</a></h1>
+<h2 id="requirements"><strong>Requirements</strong><a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
+<p>FAST is written in Python and C++ and is designed to run on Linux clusters.  </p>
+<p>Install instructions might not work for Windows and macOS machines. Refer to the installation instructions for <a href="../setup_colab/">Google Colab</a> or <a href="../setup_docker/">Docker</a> if you want to run FAST on a machine other than Linux.  </p>
+<p>The code will benefit from running on machines with more memory and CPUs.  </p>
+<ul>
+<li>Consider using instances from Amazon AWS or Google Cloud  </li>
+</ul>
+<h2 id="install-fast"><strong>Install FAST</strong><a class="headerlink" href="#install-fast" title="Permanent link">&para;</a></h2>
+<p>Clone the FAST repository from GitHub into a local directory named <code>./FAST/</code>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>(base) ~$ git clone https://github.com/stanford-futuredata/FAST.git ./FAST/
+</code></pre></div></p>
+<p>Install utilities (if not already installed)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>(base) ~$ sudo apt-get install -y wget
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>(base) ~$ sudo apt-get install -y jq
+</code></pre></div></p>
+<p>Install C++ dependencies
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>(base) ~$ sudo apt-get install -y cmake
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>(base) ~$ sudo apt-get install -y build-essential
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>(base) ~$ sudo apt-get install -y libboost-all-dev
+</code></pre></div></p>
+<p>Install Python dependencies in the <code>eq_fast</code> conda environment
+This requires having <a href="https://docs.anaconda.com/anaconda/install/linux/">Anaconda</a> or <a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a> already installed on your computer
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>(base) ~$ cd FAST/
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>(base) ~/FAST$ conda env create -f environment.yml -n eq_fast
+</code></pre></div></p>
+<p>Activate <code>eq_fast</code> conda environment before running FAST
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>(base) ~/FAST$ conda activate eq_fast
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>(eq_fast) ~/FAST$
+</code></pre></div></p>
+<h2 id="run-fast"><strong>Run FAST</strong><a class="headerlink" href="#run-fast" title="Permanent link">&para;</a></h2>
+<p>Refer to the <a href="../tutorial/">Tutorial</a> for more detailed information about FAST parameters, inputs, and outputs.</p>
+<h3 id="dataset">Dataset<a class="headerlink" href="#dataset" title="Permanent link">&para;</a></h3>
+<p>Raw SAC files for each station are stored under <code>data/waveforms${STATION}</code>. Station "HEC" has 3 components so it should have 3 time series data files; the other stations have only 1 component.  </p>
+<h3 id="fingerprint">Fingerprint<a class="headerlink" href="#fingerprint" title="Permanent link">&para;</a></h3>
+<p>Parameters for each station are under <code>parameters/fingerprint/</code>. To fingerprint all stations and generate the global index, you can call the wrapper script (Python):  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>(eq_fast) ~/FAST$ python run_fp.py -c config.json
+</code></pre></div>
+<p>An alternate option for the fingerprint wrapper script (bash):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>(eq_fast) ~/FAST$ cd fingerprint/
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>(eq_fast) ~/FAST/fingerprint$ ../parameters/fingerprint/run_fp_HectorMine.sh
+</code></pre></div>
+<p>The fingerprinting step takes less than 1 minute per waveform file on a 2.60GHz CPU.</p>
+<p>The generated fingerprints can be found at <code>data/waveforms${STATION}/fingerprints/${STATION}${CHANNEL}.fp</code>.</p>
+<p>The json file <code>data/waveforms${STATION}/${STATION}_${CHANNEL}.json</code> contains information about the fingerprint file, including number of fingerprints (<code>nfp</code>) and dimension of each fingerprint (<code>ndim</code>).</p>
+<p>To fingerprint a specific channel/station, call the fingerprint script with the corresponding fingerprint parameter file (this is one line from <code>run_fp_HectorMine.sh</code>):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>(eq_fast) ~/FAST$ cd fingerprint/
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>(eq_fast) ~/FAST/fingerprint$ python gen_fp.py ../parameters/fingerprint/fp_input_CI_CDY_EHZ.json
+</code></pre></div>
+<p>In addition to generating fingerprints, the wrapper script calls the global index generation script automatically. The global index (as opposed to index with a single component) is a consistent way to refer to fingerprint times at different components and stations. Global index generation should only be performed after you've generated fingerprints for every component and station that is used in the detection:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>(eq_fast) ~/FAST/fingerprint$ python global_index.py  ../parameters/fingerprint/global_indices.json
+</code></pre></div>
+<p>The resulting global index mapping for each component is stored at <code>data/global_indices/${STATION}_${CHANNEL}_idx_mapping.txt</code>, where line i in the file represents the global index for fingerprint i-1 in this component.  </p>
+<h3 id="similarity-search">Similarity Search<a class="headerlink" href="#similarity-search" title="Permanent link">&para;</a></h3>
+<p>Compile and build the code for similarity search:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>(eq_fast) ~/FAST$ cd simsearch
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>(eq_fast) ~/FAST/simsearch$ cmake .
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>(eq_fast) ~/FAST/simsearch$ make
+</code></pre></div>
+<p>Call the wrapper script to run similarity search for all stations:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>(eq_fast) ~/FAST/simsearch$ cd ..
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>(eq_fast) ~/FAST$ python run_simsearch.py -c config.json
+</code></pre></div>
+<p>An alternate option for the similarity search wrapper script (bash):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>(eq_fast) ~/FAST$ cd simsearch/
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>(eq_fast) ~/FAST/simsearch$ ../parameters/simsearch/run_simsearch_HectorMine.sh
+</code></pre></div>
+<p>To run the similarity search for each channel/station individually:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>(eq_fast) ~/FAST$ cd simsearch/
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>(eq_fast) ~/FAST/simsearch$ ../parameters/simsearch/simsearch_input_HectorMine.sh CDY EHZ
+</code></pre></div>
+<h3 id="postprocess-parse-fast-similarity-search-output">Postprocess: Parse FAST Similarity Search Output<a class="headerlink" href="#postprocess-parse-fast-similarity-search-output" title="Permanent link">&para;</a></h3>
+<p>The following scripts parse the binary output from similarity search to text files, and combine the three channel results for station HEC to a single output. Finally, it copies the parsed outputs to directory <code>../data/inputs_network/</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>(eq_fast) ~/FAST$ cd postprocessing/
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>(eq_fast) ~/FAST/postprocessing$ ../parameters/postprocess/output_HectorMine_pairs.sh
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>(eq_fast) ~/FAST/postprocessing$ ../parameters/postprocess/combine_HectorMine_pairs.sh
+</code></pre></div>
+<h3 id="postprocess-network-detection">Postprocess: Network detection<a class="headerlink" href="#postprocess-network-detection" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>(eq_fast) ~/FAST/postprocessing$ python scr_run_network_det.py ../parameters/postprocess/7sta_2stathresh_network_params.json
+</code></pre></div>
+<p>Results from the network detection are under <code>data/network_detection/7sta_2stathresh_detlist*</code>. The file contains a list of potential detections including information about starting fingerprint index (global index, or time) at each station, number of stations where we found other events similar to this event (<code>nsta</code>), total number of similar fingerprint pairs mapped to the event (<code>tot_ndets</code>), total sum of the similarity values (<code>tot_vol</code>). Detailed format of the output can be found in the user guide.</p>
+<h3 id="postprocess-clean-network-detection-results">Postprocess: Clean Network Detection Results<a class="headerlink" href="#postprocess-clean-network-detection-results" title="Permanent link">&para;</a></h3>
+<p>Need to modify inputs within each script file to your data set.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>(eq_fast) ~/FAST$ cd utils/network/
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>(eq_fast) ~/FAST/utils/network$ python arrange_network_detection_results.py
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>(eq_fast) ~/FAST/utils/network$ ./remove_duplicates_after_network.sh
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>(eq_fast) ~/FAST/utils/network$ python delete_overlap_network_detections.py
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>(eq_fast) ~/FAST/utils/network$ ./final_network_sort_nsta_peaksum.sh
+</code></pre></div>
+<p>The results from the above scripts can be found at <code>data/network_detection/sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt</code></p>
+<p>The above section only works with detection results with <ins>multiple stations</ins>. For single station detections, you can parse the results in the <mark>output file</mark>. The schema of the output file is: event_start (starting fingerprint index), event_dt, ndets (total number of event-pairs that include this event), peaksum (peak total similarity), and volume (sum of all similarity values for all event-pairs containing this event). Large peaksums usually correspond to higher confidence.  </p>
+<h3 id="visualize-the-fast-output">Visualize the FAST Output<a class="headerlink" href="#visualize-the-fast-output" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>(eq_fast) ~/FAST/utils/network$ cat ../../data/network_detection/sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
+</code></pre></div>
+<h3 id="display-waveforms-for-fast-detections-in-descending-order-of-peaksum-similarity">Display Waveforms for FAST Detections in Descending Order of "peaksum" Similarity<a class="headerlink" href="#display-waveforms-for-fast-detections-in-descending-order-of-peaksum-similarity" title="Permanent link">&para;</a></h3>
+<p>This example outputs png images for 100 event waveforms. The plot file names are sorted in descending order by: <code>num_sta</code> (number of stations that detected this event), <code>peaksum</code> (peak total similarity)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>(eq_fast) ~/FAST/utils/network$ cd ..
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>(eq_fast) ~/FAST/utils$ cd events/
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>(eq_fast) ~/FAST/utils/events$ python PARTIALplot_detected_waveforms_HectorMine.py 0 100
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>View waveform images — to manually determine detection threshold
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>$ ls ../../data/network_detection/7sta_2stathresh_NetworkWaveformPlots/
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>event_rank00000_nsta7_peaksum1015_ind6204_time6204.0_1999-10-15T14:43:24.676000.png
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>event_rank00001_nsta7_peaksum1015_ind3842_time3842.0_1999-10-15T14:04:02.676000.png
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>event_rank00002_nsta7_peaksum920_ind7488_time7488.0_1999-10-15T15:04:48.676000.png
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>event_rank00003_nsta7_peaksum823_ind5286_time5286.0_1999-10-15T14:28:06.676000.png
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>event_rank00004_nsta7_peaksum718_ind20202_time20202.0_1999-10-15T18:36:42.676000.png
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>event_rank00005_nsta7_peaksum713_ind46536_time46536.0_1999-10-16T01:55:36.676000.png
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>...
+</code></pre></div></p>
+</div>
+<p>Similarly, to plot results for single station detection, we need a global start time (t0) from global_idx_stats.txt, dt_fp in seconds:  </p>
+<ul>
+<li>Event time = t0 + dt_fp * (start fingerprint index)</li>
+</ul>
+<h3 id="set-detection-threshold">Set Detection Threshold<a class="headerlink" href="#set-detection-threshold" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Everything above the detection threshold is deemed an earthquake. In this example, the first 50 events with the highest "peaksum" similarity are identified as earthquakes, while the remaining events are not earthquakes.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>(eq_fast) ~/FAST/utils/events$ cd ../../data/network_detection/
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>(eq_fast) ~/FAST/data/network_detection$ head -50 sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt &gt; EQ_sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
+</code></pre></div>
+<h3 id="output-final-fast-detected-event-list">Output Final FAST Detected Event List<a class="headerlink" href="#output-final-fast-detected-event-list" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>(eq_fast) ~/FAST/data/network_detection$ cd ../../utils/events/
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>(eq_fast) ~/FAST/utils/events$ python output_final_detection_list.py
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>(eq_fast) ~/FAST/utils/events$ cat ../../data/network_detection/FINAL_Detection_List_HectorMine_7sta_2stathresh.txt
+</code></pre></div>
+<h2 id="phase-picking-earthquake-location-map-visualization"><strong>Phase Picking, Earthquake Location, Map Visualization</strong><a class="headerlink" href="#phase-picking-earthquake-location-map-visualization" title="Permanent link">&para;</a></h2>
+<p>Refer to the <a href="../tutorial/">Tutorial</a> for more information and detailed commands for optional next steps to take after running FAST:</p>
+<ul>
+<li>Phase Picking with SeisBench</li>
+<li>Earthquake Location with HYPOINVERSE</li>
+<li>Mapping and Visualization with PyGMT</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../setup_colab/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Google Colab" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Google Colab
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../setup_docker/" class="md-footer__link md-footer__link--next" aria-label="Next: Docker" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Docker
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.tabs.link"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d6c3db9e.min.js"></script>
+      
+    
+  </body>
+</html>

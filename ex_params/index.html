@@ -1,0 +1,1651 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.9">
+    
+    
+      
+        <title>**Example Parameters** - FAST</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.08040f6c.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#example-parameters" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="FAST" class="md-header__button md-logo" aria-label="FAST" data-md-component="logo">
+      
+  <img src="../logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FAST
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              **Example Parameters**
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/stanford-futuredata/FAST" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FAST GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="FAST" class="md-nav__button md-logo" aria-label="FAST" data-md-component="logo">
+      
+  <img src="../logo.png" alt="logo">
+
+    </a>
+    FAST
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/stanford-futuredata/FAST" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FAST GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fast_overview/" class="md-nav__link">
+        FAST Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Install
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Install" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Install
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup_colab/" class="md-nav__link">
+        Google Colab
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup_linux/" class="md-nav__link">
+        Linux
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup_docker/" class="md-nav__link">
+        Docker
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/" class="md-nav__link">
+        Tutorial
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          How to Set Parameters
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="How to Set Parameters" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          How to Set Parameters
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FAST_checklist/" class="md-nav__link">
+        FAST Checklist
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../get_seismic_data/" class="md-nav__link">
+        Getting Seismic Data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../input_and_preprocess/" class="md-nav__link">
+        Input and Preprocessing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../f_p/" class="md-nav__link">
+        Fingerprint
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sim_search/" class="md-nav__link">
+        Similarity Search
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../network_detection/" class="md-nav__link">
+        Network Detection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FAST_output/" class="md-nav__link">
+        FAST Output
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase_picking/" class="md-nav__link">
+        Phase Picking
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../earthquake_location/" class="md-nav__link">
+        Earthquake Location
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_10" type="checkbox" id="__nav_4_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_10">
+          Example Parameters
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Example Parameters" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_10">
+          <span class="md-nav__icon md-icon"></span>
+          Example Parameters
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ex_params_intro/" class="md-nav__link">
+        0.1 Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../italy_day_yr_dataset/" class="md-nav__link">
+        0.2 ItalyDayYR Data Set
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tanzania_dataset/" class="md-nav__link">
+        0.3 Tanzania, August 2016
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../saudi_dataset/" class="md-nav__link">
+        0.4 Saudi Arabia, May 2014
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../saudifull_dataset/" class="md-nav__link">
+        0.5 SaudiFull Data Set: Saudi Arabia, January - May 2017
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ometepec_dataset/" class="md-nav__link">
+        0.6 Ometepec, Mexico, January - April 2012
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wenchuan_dataset/" class="md-nav__link">
+        0.7 SeismOlympics: Wenchuan Aftershocks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../groningen_dataset/" class="md-nav__link">
+        0.8 Groningen Data Set
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../brazil_dataset/" class="md-nav__link">
+        0.9 BrazilAcre Data Set
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../newzealand_dataset/" class="md-nav__link">
+        0.10 New Zealand, Year 2010
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calipatria_dataset/" class="md-nav__link">
+        0.11 Calipatria, June 2021
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        References
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#01-introduction" class="md-nav__link">
+    0.1 Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#02-italydayyr-data-set" class="md-nav__link">
+    0.2 ItalyDayYR Data Set
+  </a>
+  
+    <nav class="md-nav" aria-label="0.2 ItalyDayYR Data Set">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#021-preprocessing" class="md-nav__link">
+    0.2.1 Preprocessing
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#03-tanzania-august-2016" class="md-nav__link">
+    0.3 Tanzania, August 2016
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#04-saudi-arabia-may-2014" class="md-nav__link">
+    0.4 Saudi Arabia, May 2014
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#05-saudifull-data-set-saudi-arabia-january-may-2017" class="md-nav__link">
+    0.5 SaudiFull data set: Saudi Arabia, January - May 2017
+  </a>
+  
+    <nav class="md-nav" aria-label="0.5 SaudiFull data set: Saudi Arabia, January - May 2017">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#051-preprocessing" class="md-nav__link">
+    0.5.1 Preprocessing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#052-fingerprint" class="md-nav__link">
+    0.5.2 Fingerprint
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#053-similarity-search" class="md-nav__link">
+    0.5.3 Similarity Search
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#054-postprocessing" class="md-nav__link">
+    0.5.4 Postprocessing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#055-remove-duplicates-after-network-detection" class="md-nav__link">
+    0.5.5 Remove Duplicates After Network Detection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#056-visual-inspection-and-final-detections" class="md-nav__link">
+    0.5.6 Visual Inspection and Final Detections
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#06-ometepec-mexico-january-april-2012" class="md-nav__link">
+    0.6 Ometepec, Mexico, January - April 2012
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#07-seismolympics-wenchuan-aftershocks" class="md-nav__link">
+    0.7 SeismOlympics: Wenchuan Aftershocks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#08-groningen-data-set" class="md-nav__link">
+    0.8 Groningen Data Set
+  </a>
+  
+    <nav class="md-nav" aria-label="0.8 Groningen Data Set">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#081-preprocessing" class="md-nav__link">
+    0.8.1 Preprocessing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#082-fingerprint" class="md-nav__link">
+    0.8.2 Fingerprint
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#083-similarity-search" class="md-nav__link">
+    0.8.3 Similarity Search
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#084-postprocessing" class="md-nav__link">
+    0.8.4 Postprocessing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#085-remove-duplicates-after-network-detection" class="md-nav__link">
+    0.8.5 Remove duplicates after network detection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#086-visual-inspection-and-final-detections" class="md-nav__link">
+    0.8.6 Visual inspection and final detections
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#09-brazilacre-data-set" class="md-nav__link">
+    0.9 BrazilAcre Data Set
+  </a>
+  
+    <nav class="md-nav" aria-label="0.9 BrazilAcre Data Set">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#091-preprocessing" class="md-nav__link">
+    0.9.1 Preprocessing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#092-fingerprint" class="md-nav__link">
+    0.9.2 Fingerprint
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#093-similarity-search" class="md-nav__link">
+    0.9.3 Similarity Search
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#094-postprocessing" class="md-nav__link">
+    0.9.4 Postprocessing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#095-remove-duplicates-after-network-detection" class="md-nav__link">
+    0.9.5 Remove duplicates after network detection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#096-visual-inspection-and-final-detections" class="md-nav__link">
+    0.9.6 Visual inspection and final detections
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#010-new-zealand-year-2010" class="md-nav__link">
+    0.10 New Zealand, Year 2010
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#011-calipatria-june-2021" class="md-nav__link">
+    0.11 Calipatria, June 2021
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/stanford-futuredata/FAST/edit/master/docs/ex_params.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="example-parameters"><strong>Example Parameters</strong><a class="headerlink" href="#example-parameters" title="Permanent link">&para;</a></h1>
+<h2 id="01-introduction">0.1 Introduction<a class="headerlink" href="#01-introduction" title="Permanent link">&para;</a></h2>
+<p>FAST is available to the public at <a href="https://github.com/stanford-futuredata/FAST">https://github.com/stanford-futuredata/FAST</a> as open-source software, and it will be released with a comprehensive user manual containing guidance for setting parameters. Interested users can run FAST to perform an uninformed search for earthquakes with similar waveforms on any seismic network, with varying duration of continuous data and number of stations. The FAST software has successfully detected earthquakes in the following data sets. FAST will only reach its full potential as a tool for seismological discovery if other users apply it to their own data sets (filling the N and T gaps in Figure 1) and improve the detection algorithms. Thank you to all collaborators and interested users who shared data, which was useful for testing the FAST software and identifying bug fixes, in preparation for its public release.  </p>
+<p><img alt="ex_param_1" src="../img/ex_param_1.png" />  </p>
+<figcaption>Figure 1: Dimensions of different data sets where FAST has successfully detected similar earthquakes. The log-scale axes represent the directions of data growth in seismology to ”large-T” and ”large-N” big data sets (Chapters 1 and 5): T is the longest duration of continuous data over all stations in the data set, while N is the number of seismic stations in the data set. Blue stars: data sets from Chapters 2-5. Red stars: additional data sets from Appendix A, Sections A.1-A.6.</figcaption>
+
+<h2 id="02-italydayyr-data-set">0.2 <code>ItalyDayYR</code> Data Set<a class="headerlink" href="#02-italydayyr-data-set" title="Permanent link">&para;</a></h2>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>One day of continuous data, 2016-10-29 00:00:00 to 2016-10-29 23:59:59 UTC, at 22 stations in central Italy (Figure 2), used 22 channels (vertical component HHZ only on each channel) for detection, provided by Bill Ellsworth. This data records small earthquakes from a swarm in Central Italy during October 2016, that occurred between the Mw 6.1 earthquake on 2016-10-26 19:18:08 UTC and the Mw 6.6 Norcia earthquake on 2016-10-30 06:40:18 UTC.  </p>
+</div>
+<p><img alt="ex_param_2" src="../img/ex_param_2.png" />  </p>
+<figcaption>Figure 2: Map of 22 stations (black triangles) in central Italy used for FAST detection of small earthquakes on 2016-10-29, one day of continuous data. The INGV catalog (http://cnt.rm.ingv.it/search) had 482 earthquakes (circles colored by depth, sized by relative magnitudes 0.4 ≤ M ≤ 4.1) inside the boundaries of this map on 2016-10-29.</figcaption>
+
+<h3 id="021-preprocessing">0.2.1 Preprocessing<a class="headerlink" href="#021-preprocessing" title="Permanent link">&para;</a></h3>
+<p>Output sample spectrograms on each channel and station to determine bandpass filter range:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>~/FAST/utils/preprocess/$ ../../parameters/preprocess/ItalyDayYR/sample_spectrograms_ItalyDayYR.sh
+</code></pre></div>
+<p>Table S2: FAST input parameters for Italy earthquake detection: single-channel at 22 YR stations (Figure 2, black triangles), after bandpass filter 2-20 Hz, and decimate to 25 Hz. Total number of fingerprints: 71,989.  </p>
+<!-- | FAST Parameter      | Value                          |
+| ----------- | ------------------------------------ |
+| Time series window length for spectrogram generation       |     150 samples (6 s)  |
+| Time series window lag for spectrogram generation       |  3 samples (0.12 s) |
+| Spectral image window length      |  64 samples (13.68 s) |
+| Spectral image window lag = fingerprint sampling period    |      10 samples (1.2 s) |
+| Number of top k amplitude standardized Haar coefficients       |  400 (out of 2048) |
+| LSH: number of hash functions per hash table r       |  4 |
+| LSH: number of hash tables b       |  100 |
+| Initial pair threshold: number v (fraction) of tables, pair in same bucket       |  2 (2/100 = 0.02) |
+| Similarity search: near-repeat exclusion parameter       |  5 samples (6 s) | -->
+
+<p><img alt="data_table_1" src="../img/data_table_1.png" />  </p>
+<p>Table S3: Network detection input parameters for Italy earthquakes at 22 YR stations (HHZ channel only), after getting similar pairs of fingerprints from FAST for each station.  </p>
+<p><img alt="data_table_2" src="../img/data_table_2.png" />  </p>
+<p><img alt="distribution_1" src="../img/distribution_1.png" />  </p>
+<figcaption>Figure 3: Distribution of FAST detections in central Italy continuous data on 2016-10-29. FAST detected a total of 1,485 earthquakes during this day.</figcaption>
+
+<h2 id="03-tanzania-august-2016">0.3 Tanzania, August 2016<a class="headerlink" href="#03-tanzania-august-2016" title="Permanent link">&para;</a></h2>
+<p>Temporary dense deployment of seismic stations in Tanzania to identify previously unknown faults and infer their dimensions. 1 month continuous data (2016-07-31 to 2016-08-31), at 5 stations, 15 channels (3 components per station), provided by Laura Parisi of King Abdullah University of Science and Technology (KAUST). The stations are located about 10 km apart, at the base of a volcanic caldera called Ngorongoro Crater. For all 15 channels, we applied the following preprocessing: 4-12 Hz bandpass filter, then decimated to 25 Hz (factor of 8, from original 200 Hz); also, all time gaps with 0’s were filled with uncorrelated random noise (only on station CES04).  </p>
+<p>Table S4: FAST input parameters for Tanzania earthquake detection, applied to each component at all 5 stations. For the median statistics calculation (for wavelet coefficient selection), we randomly sampled 10% of the data, once per day. Total number of fingerprints (largest number over all channels): 2,231,989.  </p>
+<p><img alt="data_table_3" src="../img/data_table_3.png" />  </p>
+<p>Table S5: Network detection input parameters for Tanzania earthquakes at 5 stations, after getting similar pairs of fingerprints from FAST for each station — added similarity from all 3 [HNE,HNN,HNZ] components at a given station and set station-pair threshold of (v=2)*(3 components) = 6.  </p>
+<p><img alt="data_table_4" src="../img/data_table_4.png" />  </p>
+<p>Table S6: Final thresholds for Tanzania earthquakes, applied to network detection parameters <em>nsta</em> (number of stations that detected event pair) and <em>peaksum</em> (total similarity score at all stations) to determine list of earthquakes, set empirically after visual inspection. For each value of <em>nsta</em>, a different threshold for <em>peaksum</em> can be applied.  </p>
+<p><img alt="data_table_5" src="../img/data_table_5.png" />  </p>
+<p><img alt="distribution_2" src="../img/distribution_2.png" />  </p>
+<figcaption>Figure 4: Tanzania earthquake detections from 2016-07-31 to 2016-08-31. The vertical axis indicates a measure of network FAST similarity: nsta*peaksum (Table S6). FAST detected a total of 1,156 earthquakes during this month. Some false positive detections had to be removed manually, especially detections on only 2 out of 5 stations.</figcaption>
+
+<h2 id="04-saudi-arabia-may-2014">0.4 Saudi Arabia, May 2014<a class="headerlink" href="#04-saudi-arabia-may-2014" title="Permanent link">&para;</a></h2>
+<p><img alt="ex_param_3" src="../img/ex_param_3.png" /></p>
+<figcaption>Figure 5: Map of 19 stations (white triangles) in Saudi Arabia used for FAST detection from 2014-05-01 to 2014-06-01. Catalog earthquakes are colored by depth; mantle earthquakes are circled. This figure was created by Alex Blanchette.</figcaption>
+
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Seismic network from Saudi Arabia to study dike swarms in volcanic area, and deep mantle earthquakes. 1 month continuous data (2014-05-01 to 2014-06-01), at 19 stations (Figure 5), 55 channels (3 components per station, except LNY11 where only HHN was used), provided by Alex Blanchette of Stanford Geophysics.  </p>
+</div>
+<p>Table S7: Preprocessing parameters for Saudi Arabia May 2014 earthquake detection, for each station (same filter applied to all components), 1 month continuous data (2014-05-01 to 2014-06-01), at 19 stations, decimate to 25 Hz. Also, all time gaps with 0’s were filled with uncorrelated random noise. For station LNY11, only HHN component was used in similarity search, as the HHE and HHZ components had too much correlated noise.  </p>
+<p><img alt="data_table_6" src="../img/data_table_6.png" />  </p>
+<p>Table S8: FAST input parameters for Saudi Arabia May 2014 earthquake detection, applied to each component at each station. For the median statistics calculation (for wavelet coefficient selection), we randomly sampled 10% of the data, once per day. Total number of fingerprints (largest number over all channels): 2,231,989.  </p>
+<p><img alt="data_table_7" src="../img/data_table_7.png" />  </p>
+<p>Table S9: Network detection input parameters for Saudi Arabia May 2014 earthquake detection at 19 stations, after getting similar pairs of fingerprints from FAST for each station — added similarity from all 3 [HHE,HHN,HHZ] components at a given station and set station-pair threshold of (v=2)*(3 components) = 6.  </p>
+<p><img alt="data_table_8" src="../img/data_table_8.png" />  </p>
+<p>Table S10: Final thresholds for Saudi Arabia May 2014 earthquake detection, applied to network detection parameters <em>nsta</em> (number of stations that detected event pair) and <em>peaksum</em> (total similarity score at all stations) to determine list of earthquakes, set empirically after visual inspection. For each value of <em>nsta</em>, a different threshold for <em>peaksum</em> can be applied.  </p>
+<p><img alt="data_table_9" src="../img/data_table_9.png" />  </p>
+<p><img alt="distribution_3" src="../img/distribution_3.png" />  </p>
+<figcaption>Figure 6: Saudi Arabia earthquake detections from 2014-05-01 to 2014-06-01. The vertical axis indicates a measure of network FAST similarity: nsta*peaksum (Table S10). FAST detected a total of 1,837 earthquakes during this month.</figcaption>
+
+<h2 id="05-saudifull-data-set-saudi-arabia-january-may-2017">0.5 <code>SaudiFull</code> data set: Saudi Arabia, January - May 2017<a class="headerlink" href="#05-saudifull-data-set-saudi-arabia-january-may-2017" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Location: Saudi Arabia, January - May 2017 (volcanic area with dikes)  </li>
+<li>Duration: up to 5 months (151 days): 2017-01-01 to 2017-05-30  </li>
+<li>Network: 36 stations, 3 components each (HHE, HHN, HHZ) = 106 channels. (Station SA.UMJ02: only HHE channel)  </li>
+<li>Sampling rate: 100 Hz  </li>
+<li>Provided by: Mohammad Youssof (KAUST)  </li>
+</ul>
+<h3 id="051-preprocessing">0.5.1 Preprocessing<a class="headerlink" href="#051-preprocessing" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Output continuous data duration: different stations used for detection have different durations and time gaps (need to modify paths in get_continuous_data_times.py):  </li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>~/FAST/utils/preprocess/$ ../../parameters/preprocess/SaudiFull/continuous_data_times_SaudiFull.sh
+</code></pre></div>
+<p>The output files in <code>continuous_duration/</code> can be read into a custom script called <code>plot_continuous_ duration_SaudiFull.py</code> to plot the duration of available continuous data at each station and channel (Figure 7).  </p>
+<p><img alt="saudi_fig_7" src="../img/saudi_fig_7.png" />  </p>
+<figcaption>Figure 7: Duration of SaudiFull continuous data at 36 stations (change colors with each station), 3 components each (except SA.UMJ02 which has only HHE). White sections indicate time gaps.</figcaption>
+
+<ul>
+<li>Detected zero-filled time-gap sections of continuous data in all 106 channels (need to modify paths in fill_ time_gaps_with_uncorrelated_noise.py), and filled them with random uncorrelated noise:  </li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>~/FAST/utils/preprocess/$ python fill_time_gaps_with_uncorrelated_noise.py  
+</code></pre></div>
+<p>Only stations SA.UMJ03, SA.UMJ05, SA.UMJ08 had zero-filled time-gap sections, which were filled with random noise and saved as files starting with the <code>Filled.*</code> string. The majority of continuous data files had no zero-filled time gaps, so we used original mseed data files.  </p>
+<ul>
+<li>Output sample spectrograms on each channel and station to determine bandpass filter range (need to modify paths in plot_sample_spectrograms.py):  </li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>~/FAST/utils/preprocess/$ ../../parameters/preprocess/SaudiFull/sample_spectrograms_SaudiFull.sh
+</code></pre></div>
+<ul>
+<li>Apply bandpass filter and decimate (need to modify paths in bandpass_filter_decimate.py):  </li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>~/FAST/utils/preprocess/$ ../../parameters/preprocess/SaudiFull/bandpass_filter_decimate_SaudiFull.sh
+</code></pre></div>
+<p>Based on sample spectrograms, apply a station-specific bandpass filter (Table S11). Decimate by a factor of 2 to a sampling rate of 50 Hz. Filtered continuous data files start with <code>Deci2.bpXtoY.*</code>, where X is the lower frequency and Y is the higher frequency, which are input to the fingerprint step.  </p>
+<p>Table S11: Preprocessing parameters for SaudiFull earthquake detection, for each station (same filter applied to all components), 5 months continuous data (2017-01-01 to 2017-05-31), at 36 stations, decimate to 50 Hz.  </p>
+<p><img alt="data_table_10" src="../img/data_table_10.png" />  </p>
+<h3 id="052-fingerprint">0.5.2 Fingerprint<a class="headerlink" href="#052-fingerprint" title="Permanent link">&para;</a></h3>
+<p>Master script to create fingerprints on each channel, then generate global indices at the end:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>~/FAST/fingerprint/$ ../parameters/fingerprint/SaudiFull/run_fp_SaudiFull.sh
+</code></pre></div>
+<p>Example script to generate fingerprints on one channel (HHZ) at one station (LNY03), called by the master script run_fp_SaudiFull.sh:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>~/FAST/fingerprint/$ python gen_fp.py ../parameters/fingerprint/SaudiFull/fp_input_SA_LNY03_HHZ.json
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    &quot;fingerprint&quot;: {
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>       &quot;sampling_rate&quot;: 50,
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>       &quot;min_freq&quot;: 4.0,
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>       &quot;max_freq&quot;: 15.0,
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>       &quot;spec_length&quot;: 6.0,
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>       &quot;spec_lag&quot;: 0.12,
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>       &quot;fp_length&quot;: 64,
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>       &quot;fp_lag&quot;: 10,
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>       &quot;k_coef&quot;: 400,
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>       &quot;nfreq&quot;: 32,
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>       &quot;mad_sampling_rate&quot;: 0.1,
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>       &quot;mad_sample_interval&quot;: 86400
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>    &quot;data&quot;: {
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>       &quot;station&quot;: &quot;LNY03&quot;,
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>       &quot;channel&quot;: &quot;HHZ&quot;,
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>       &quot;start_time&quot;: &quot;17-01-01T00:00:00.0&quot;,
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>       &quot;end_time&quot;: &quot;17-05-31T00:00:00.0&quot;,
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>       &quot;folder&quot;: &quot;/lfs/1/ceyoon/TimeSeries/SaudiFull/SA.LNY03/&quot;,
+</code></pre></div>
+<p>There are a total of 106 fp_input_NETWORK_STATION_CHANNEL.json fingerprint input files, one for each channel and station, all with the same input fingerprint parameters in Table S12.  </p>
+<p>Median/MAD output files: <code>mad/mad*.txt</code>  </p>
+<p>Table S12: Fingerprint input parameters for SaudiFull earthquake detection: 3-component at 36 stations (except for SA.UMJ02), after applying station-specific bandpass filter (Table S11), and sampled at 50 Hz. The fingerprint sampling period is dt_fp = 1.2 seconds.  </p>
+<p><img alt="data_table_11" src="../img/data_table_11.png" />  </p>
+<p>Fingerprints (binary files): <code>fingerprints/LNY03.HHZ.fp</code><br />
+Timestamps at each fingerprint index (text files): <code>timestamps/LNY03.HHZ.ts</code>  </p>
+<p>Finally, to create global indices for the SaudiFull data set, so that fingerprint indices from different channels (all 106) and stations are referenced to a common starting time:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$ python global_index.py ../parameters/fingerprint/SaudiFull/global_indices_SaudiFull.json  
+</code></pre></div>
+<p>The common starting time is in <code>global_idx_stats.txt</code>: 2017-01-01T00:00:06.840000 UTC  </p>
+<h3 id="053-similarity-search">0.5.3 Similarity Search<a class="headerlink" href="#053-similarity-search" title="Permanent link">&para;</a></h3>
+<p>Master script to run similarity search on each channel (out of 106 total):  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>~/FAST/simsearch/$ ../parameters/simsearch/SaudiFull/run_simsearch_SaudiFull.sh  
+</code></pre></div>
+<p>Table S13: Similarity search input parameters for SaudiFull earthquake detection: 106 channels at 36 stations (3 components each, except SA.UMJ02). The occurrence filter, specified by the FREQ_NOISE parameter, was applied only for selected stations and channels (Table S14).  </p>
+<p><img alt="data_table_12" src="../img/data_table_12.png" />  </p>
+<p>Example script to run similarity search on one channel (HHZ) at one station (LNY03), called by the master script <code>run_simsearch_SaudiFull.sh</code>:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>~/FAST/simsearch/$ ../parameters/simsearch/SaudiFull/simsearch_input_SaudiFull.sh LNY03 HHZ
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>NTBLS=100
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>NHASH=4
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>NREPEAT=5
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>NVOTES=2
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>NTHREAD=56
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>NUM_PART=1
+</code></pre></div>
+<p>We first ran similarity search with the same input parameters on all 106 channels, without the occurrence filter. For 18 selected channels (Table S14), where the <code>candidate_pairs</code> similarity search outputs were especially large because of correlated noise, we ran similarity search with the occurrence filter (FREQ_NOISE=0.01), which significantly reduced the similarity search output file sizes. A fingerprint that matches over 1% of other fingerprints is excluded from the similarity search, in order to avoid detecting noise that repeats often in time. For example, the occurrence filter was applied for station LNY01 channel HHZ by calling the script <code>filt_simsearch_input_SaudiFull.sh</code> from the master script <code>run_simsearch_SaudiFull.sh</code>:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>~/FAST/simsearch/$ ../parameters/simsearch/SaudiFull/filt_simsearch_input_SaudiFull.sh LNY03 HHZ
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>NTBLS=100
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>NHASH=4
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>NREPEAT=5
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>NVOTES=2
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>NTHREAD=56
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>NUM_PART=1
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>FREQ_NOISE=0.01
+</code></pre></div>
+<p>Table S14: Selected stations and channels from SaudiFull data set where we applied the occurrence filter with FREQ_ NOISE=0.01.  </p>
+<p><img alt="data_table_13" src="../img/data_table_13.png" />  </p>
+<h3 id="054-postprocessing">0.5.4 Postprocessing<a class="headerlink" href="#054-postprocessing" title="Permanent link">&para;</a></h3>
+<p><strong>First</strong>, run the master script to convert similarity search output from binary format to text format (3 columns: dt = idx1 − idx2, idx1, sim, sorted in increasing dt order) for each channel (106 total):  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>~/FAST/postprocessing/$ ../parameters/postprocess/SaudiFull/output_SaudiFull_pairs.sh
+</code></pre></div>
+<p>For example, on one channel (HHZ) at one station (LNY03), all on one line:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>~/FAST/postprocessing/$ python parse_results.py
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>-d /lfs/1/ceyoon/TimeSeries/SaudiFull/SA.LNY03/fingerprints/
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>-p candidate_pairs_LNY03_HHZ -i /lfs/1/ceyoon/TimeSeries/SaudiFull/global_indices/LNY03_HHZ_idx_mapping.txt
+</code></pre></div>
+<p><mark>Output file for example (large size at channel level):</mark> <code>/lfs/1/ceyoon/TimeSeries/SaudiFull/SA.LNY03/fingerprints/candidate_pairs_LNY03_HHZ_merged.txt</code>  </p>
+<p><strong>Second</strong>, run the master script to combine similarity output from all 3 components at a given station, for all 36 stations:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>~/FAST/postprocessing/$ ../parameters/postprocess/SaudiFull/combine_SaudiFull_pairs.sh  
+</code></pre></div>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>For example, on three channels (HHE, HHN, HHZ) at one station (LNY03), first move the similarity output text files to the inputs_network/ directory:  </p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>$ cd /lfs/1/ceyoon/TimeSeries/SaudiFull/SA.LNY03/fingerprints/
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>$ mv candidate_pairs_LNY03_HH*_merged.txt ../../../inputs_network/
+</code></pre></div>
+<p><strong>Then</strong> for each similar fingerprint pair, add the similarity from all 3 components at the same station, with a similarity threshold of 6 = (3 components)*(v=2 votes/component, Table S13). Note: this step will delete the c<code>andidate_ pairs_LNY03_HH*_merged.txt</code> files.  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>~/FAST/postprocessing/$ python parse_results.py
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>-d /lfs/1/ceyoon/TimeSeries/SaudiFull/inputs_network/
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>-p candidate_pairs_LNY03 --sort true --parse false -c true -t 6
+</code></pre></div>
+<p><mark>Output file for example (smaller size at station level):</mark> <code>/lfs/1/ceyoon/TimeSeries/SaudiFull/inputs_network/ candidate_pairs_LNY03_combined.txt</code>  </p>
+<p>For station SA.UMJ02, which has only 1 component (HHE), multiply the similarity sim by 3 to give this station an equal weight as the other 3-component stations:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>~/FAST/postprocessing/$ awk ’{print $1, $2, 3*$3}’
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>/lfs/1/ceyoon/TimeSeries/SaudiFull/SA.UMJ02/fingerprints/candidate_pairs_UMJ02_HHE_merged.txt
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>&gt; /lfs/1/ceyoon/TimeSeries/SaudiFull/SA.UMJ02/fingerprints/candidate_pairs_UMJ02_combined.txt
+</code></pre></div>
+<p><strong>Finally</strong>, detect similar fingerprints across the network of 36 stations, using the input parameters in Table S15:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>~/FAST/postprocessing/$
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>python scr_run_network_det.py ../parameters/postprocess/SaudiFull/36sta_3stathresh_network_params.json
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>       &quot;network&quot;: {
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>              &quot;max_fp&quot;: 10736786,
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>              &quot;dt_fp&quot;: 1.2, (seconds)
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>              &quot;dgapL&quot;: 10, (12 s)
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>              &quot;dgapW&quot;: 3, (3.6 s)
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>              &quot;num_pass&quot;: 2,
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>              &quot;min_dets&quot;: 3,
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>              &quot;min_sum_multiplier&quot;: 1,
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>              &quot;max_width&quot;: 8, (9.6 s)
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>              &quot;ivals_thresh&quot;: 6,
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>              &quot;nsta_thresh&quot;: 3,
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>              &quot;input_offset&quot;: 15 (18 s)
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>},
+</code></pre></div>
+<p>Network detection output file for example (smaller size at station level): <code>/lfs/1/ceyoon/TimeSeries/SaudiFull/ network_detection/36sta_3stathresh_detlist_rank_by_peaksum.txt</code> (21,498 events)  </p>
+<p>At this point, FAST earthquake detection processing is <strong>done</strong>.  </p>
+<p>Table S15: Network detection input parameters for SaudiFull at 36 stations. max_fp = 10736786 is the largest fingerprint index over all channels from *mapping.txt files in the global_indices directory. dt_fp = 1.2 seconds is the fingerprint sampling period from Table S12.  </p>
+<p><img alt="data_table_14" src="../img/data_table_14.png" />  </p>
+<h3 id="055-remove-duplicates-after-network-detection">0.5.5 Remove Duplicates After Network Detection<a class="headerlink" href="#055-remove-duplicates-after-network-detection" title="Permanent link">&para;</a></h3>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The network detection output still contains many duplicate events, so we need to remove these using a few scripts, where you need to modify the hard-coded paths. (These are scripts I quickly came up with on the fly to help me analyze the detection output. Feel free to come up with improved scripts that would better suit your needs.)  </p>
+</div>
+<p><strong>First</strong>, save only first and last time indices for each detection. For the last 2 columns: output the number of stations that detected event (num_sta) and difference between first and last index (diff_ind).  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>~/FAST/utils/network/$ python arrange_network_detection_results.py
+</code></pre></div>
+<p><mark>Output:</mark> <code>NetworkDetectionTimes_36sta_3stathresh_detlist_rank_by_peaksum.txt (21,498 events)</code>  </p>
+<p><strong>Second</strong>, remove duplicate events. First remove events with exact first and last detection time indices. Then remove events with duplicate start times; for each start time, keep only the event with the highest num_sta (number of stations that detected the event) and peaksum (peak similarity).  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>~/FAST/utils/network/$ ./remove_duplicates_after_network.sh  
+</code></pre></div>
+<p><mark>Output:</mark> <code>uniquestart_sorted_no_duplicates.txt (15,054 events)</code>  </p>
+<p><strong>Third</strong>, remove events that overlap between the first and last detection time indices, keeping the event with the highest
+num_sta and peaksum.  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>~/FAST/utils/network/$ python delete_overlap_network_detections.py  
+</code></pre></div>
+<p><mark>Output:</mark> <code>36sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt</code> (11,597 events)  </p>
+<p><strong>Fourth</strong>, since different channels in the network have different durations (for example, in Figure 7, stations UMJ01-UMJ12 were active only during May 2017, while many of the other stations were active from January to May 2017), we calculate a normalized measure of the number of stations that detected the event: frac_ch, which is the fraction of channels that were active at each detection time. This is done by reading in files that were generated during preprocessing by get_continuous_data_times.py. This normalization step would not be necessary if all stations and channels in the network recorded the same duration of data.  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>~/FAST/utils/network/$ python get_station_count_detections.py
+</code></pre></div>
+<p><mark>Output:</mark> <code>36sta_3stathresh_ChannelCount_FinalUniqueNetworkDetectionTimes.txt</code> (11,597 events)  </p>
+<p><strong>Finally</strong>, sort remaining events in descending order of num_sta, then frac_ch, then peaksum, for the final detection
+list.  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>~/FAST/utils/network/$ ./final_network_sort_nsta_fracch_peaksum.sh
+</code></pre></div>
+<p><mark>Output:</mark> <code>sort_nsta_peaksum_36sta_3stathresh_ChannelCount_FinalUniqueNetworkDetectionTimes.txt</code> (11,597 events)  </p>
+<h3 id="056-visual-inspection-and-final-detections">0.5.6 Visual Inspection and Final Detections<a class="headerlink" href="#056-visual-inspection-and-final-detections" title="Permanent link">&para;</a></h3>
+<p>Plot event waveforms in the final detection list, ranked in descending order of num_sta, then peaksum, for visual inspection. Need to verify by looking at the waveforms that these are indeed earthquakes, and also enables setting final detection thresholds (Table S16).  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>~/FAST/utils/events/$ python PARTIALplot_detected_waveforms_SaudiFull.py 0 11597
+</code></pre></div>
+<p><mark>Output:</mark> <code>.png</code> image files in <code>36sta_3stathresh_NetworkWaveformPlots/</code>  </p>
+<p>Table S16: Final thresholds for SaudiFull applied to network detection parameters num_sta (number of stations that detected event pair) and peaksum (total similarity score at all stations) to determine list of earthquakes, set empirically after visual inspection. For each value of num_sta, a different threshold for peaksum can be applied.  </p>
+<p><img alt="data_table_15" src="../img/data_table_15.png" />  </p>
+<p>After visual inspection, 4634 events are above thresholds in Table S16.  </p>
+<ul>
+<li><code>EQ_sort_nsta_peaksum_36sta_3stathresh_ChannelCount_FinalUniqueNetworkDetectionTimes.txt</code>: 4543 events that look like earthquake waveforms  </li>
+<li><code>FALSE_sort_nsta_peaksum_36sta_3stathresh_ChannelCount_FinalUniqueNetworkDetectionTimes.txt</code>: 91 false detections above thresholds that do not look like earthquakes  </li>
+</ul>
+<p>For the 4543 earthquake events, output an event catalog (Figure 8):  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>~/FAST/utils/events/$ python output_final_detection_list.py
+</code></pre></div>
+<p><mark>Output:</mark> <code>FINAL_Detection_List_SaudiFull_36sta_3stathresh.txt</code> (4543 events)  </p>
+<p><img alt="distribution_4" src="../img/distribution_4.png" />  </p>
+<figcaption>Figure 8: Saudi Arabia earthquake detections from 2017-01-01 to 2017-05-31. The vertical axis indicates a measure of network FAST similarity: nsta*peaksum (Table S16). FAST detected a total of 4,543 earthquakes during this month.</figcaption>
+
+<h2 id="06-ometepec-mexico-january-april-2012">0.6 Ometepec, Mexico, January - April 2012<a class="headerlink" href="#06-ometepec-mexico-january-april-2012" title="Permanent link">&para;</a></h2>
+<p><img alt="ex_param_4" src="../img/ex_param_4.png" />  </p>
+<figcaption>Figure 9: Map of 1 station in southern Mexico (black triangle) used for FAST detection of small earthquakes from 2012-01-01 to 2012-04-21. The SSN catalog (http://www2.ssn.unam.mx:8080/catalogo/) had 558 earthquakes (circles colored by depth, sized by relative magnitudes 2.8 ≤ M ≤ 7.5) inside the boundaries of this map during the detection time period. The yellow star denotes the location of the Mw 7.5 Ometepec earthquake on 2012-03-20.</figcaption>
+
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The objective of this study is to identify repeating earthquake sequences as tools to measure deep aseismic slip rates [Dominguez et al., 2016], and characterize the unusually active aftershock sequence of the Mw 7.5 Omepetec, Mexico earthquake on 2012-03-20 [UNAM, 2013] (Figure 9). 112 days of continuous data (2012-01-01 to 2012-04-21) at 1 station, 3 components, provided by Luis Dominguez of Universidad Nacional Autonoma de Mexico (UNAM)-Morelia. For all 3 channels, I applied a 3-20 Hz bandpass filter, and kept the original sampling rate of 100 Hz.  </p>
+</div>
+<p>FAST detected a total of 31,970 earthquakes during these 4 months. 30,923 were earthquakes (Figure 10), and 1,047 were noise, as determined by visual inspection. ***NOTE: postprocessing and elimination of duplicate detection pairs was done with the old MATLAB code from [Yoon et al., 2015] and [Yoon et al., 2017]. Single-station event-pair extraction with network FAST was not yet available. These were the events I sent to Luis, who performed single-station location using P-wave polarization analysis (Figure 10).  </p>
+<p>Table S17: FAST input parameters for Ometepec, Mexico earthquake detection, applied to each component at station IG.PNIG. For the median statistics calculation (for wavelet coefficient selection), we randomly sampled 10% of the data, once per day. Total number of fingerprints (largest number over all channels): 4,795,140.  </p>
+<p><img alt="data_table_16" src="../img/data_table_16.png" />  </p>
+<p><img alt="distribution_5" src="../img/distribution_5.png" />  </p>
+<figcaption>Figure 10: Ometepec, Mexico earthquake detections from 2012-01-01 to 2012-04-21. The blue dots indicate the total 3-component FAST similarity (left y-axis) of the 30,923 FAST detections as a function of time. The red dots indicate the magnitudes (right y-axis) of the 558 catalog events as a function of time. Following the Mw 7.5 earthquake on 2012-03-20, aftershocks are abundant.</figcaption>
+
+<h2 id="07-seismolympics-wenchuan-aftershocks">0.7 SeismOlympics: Wenchuan Aftershocks<a class="headerlink" href="#07-seismolympics-wenchuan-aftershocks" title="Permanent link">&para;</a></h2>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Alibaba Cloud and the China Earthquake Administration sponsored a ”SeismOlympics” programming competition to detect aftershocks of the deadly May 12, 2008 Mw 7.9 Wenchuan, China, earthquake [Fang et al., 2017], similar to the Netflix Prize or the Kaggle data science competitions. Competitors from seismology, machine learning, signal processing, computer science, and other backgrounds developed algorithms that automatically detect and pick phases on aftershock waveforms while avoiding false positive detections. Performance was evaluated against phases picked by human analysts. This was a great opportunity to test how the FAST earthquake detection algorithm measured up against other methods. Other members of my team, all from Stanford Geophysics (Mostafa Mousavi, Yixiao Sheng, Weiqiang Zhu) used machine learning to pick phases and recognize false detections. We finished in 27th place in the first round of competition, and 16th place in the second round.  </p>
+</div>
+<p><img alt="ex_param_5" src="../img/ex_param_5.png" />  </p>
+<figcaption>Figure 11: Map of 15 stations in Wenchuan, China used for FAST detection of small earthquakes in 3 months of continuous data. The ComCat catalog had 1039 aftershocks (circles colored by depth, sized by relative magnitudes 3.2 ≤ M ≤ 6.1) inside the boundaries of this map during the detection time period. The yellow star denotes the location of the Mw 7.9 Wenchuan earthquake on 2008-05-12.
+</figcaption>
+
+<p>After the competition, I applied FAST to detect earthquakes within the entire continuous data set provided in both rounds of competition. 3 months of seismic data: April 1-22, 2008 (foreshocks), July 1-August 31, 2008 (aftershocks), at 15 stations (Figure 11) with 3 components each, although some stations only have data for part of this time. For all 45 channels, I applied the following preprocessing: 1-20 Hz bandpass filter, then decimated to 50 Hz (factor of 2, from original 100 Hz); also, all time gaps with 0’s were filled with uncorrelated random noise. FAST detected about 12,000 earthquakes; some of them are teleseismic because the 1-20 Hz filter includes lower frequencies.  </p>
+<p>Table S18: FAST input parameters for Wenchuan 2008 aftershock detection, applied to each component at each station. For the median statistics calculation (for wavelet coefficient selection), we randomly sampled 10% of the data, once per day. Total number of fingerprints (largest number over all channels): 3,612,972.  </p>
+<p><img alt="data_table_17" src="../img/data_table_17.png" />  </p>
+<p>Table S19: Network detection input parameters for Wenchuan 2008 aftershock detection at 15 stations, after getting similar pairs of fingerprints from FAST for each station — added similarity from all 3 [HHE,HHN,HHZ] components at a given station and set station-pair threshold of (v=2)*(3 components) = 6.  </p>
+<p><img alt="data_table_18" src="../img/data_table_18.png" />  </p>
+<p>Table S20: Final thresholds for Wenchuan 2008 aftershock detection applied to network detection parameters nsta (number of stations that detected event pair) and peaksum (total similarity score at all stations) to determine list of earthquakes, set empirically after visual inspection. For each value of nsta, a different threshold for peaksum can be applied.  </p>
+<p><img alt="data_table_19" src="../img/data_table_19.png" />  </p>
+<h2 id="08-groningen-data-set">0.8 <code>Groningen</code> Data Set<a class="headerlink" href="#08-groningen-data-set" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Location: Netherlands (gas production field)  </li>
+<li>Duration: 4 months (119 days): 2018-01-01 to 2018-04-30  </li>
+<li>Network: 67 stations (Figure 12), 3 components each (HH1, HH2, HHZ) = 201 channels. (Station G294 not used for detection due to short duration)  </li>
+<li>Sampling rate: 20 Hz (already downsampled)  </li>
+<li>Provided by: Zack Spica (Stanford Geophysics)  </li>
+</ul>
+<p><img alt="ex_param_6" src="../img/ex_param_6.png" />  </p>
+<figcaption>Figure 12: Groningen map provided by Zack Spica: 67 stations (black, red triangles) used for FAST detection, and locations of known catalog events (blue circles).</figcaption>
+
+<h3 id="081-preprocessing">0.8.1 Preprocessing<a class="headerlink" href="#081-preprocessing" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Output continuous data duration: different stations used for detection have different durations and time gaps (need to modify paths in get_continuous_data_times.py):  </li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>~/FAST/utils/preprocess/$ ../../parameters/preprocess/Groningen/continuous_data_times_Groningen.sh
+</code></pre></div>
+<p><img alt="groningen_visual" src="../img/groningen_visual.png" />  </p>
+<figcaption>Figure 13: Duration of Groningen continuous data at 67 stations (change colors with each station), 3 components each. White sections indicate time gaps.</figcaption>
+
+<p>The output files in continuous_duration/ can be read into a custom script called plot_continuous_
+duration_Groningen.py to plot the duration of available continuous data at each station and channel (Figure 13).  </p>
+<ul>
+<li>Confirmed no zero-filled time-gap sections of continuous data in all 201 channels (need to modify paths in
+fill_time_gaps_with_uncorrelated_noise.py):  </li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>~/FAST/utils/preprocess/$ python fill_time_gaps_with_uncorrelated_noise.py
+</code></pre></div>
+<strong>Use original mseed data files.</strong>  </p>
+<ul>
+<li>Output sample spectrograms on each channel and station to determine bandpass filter range (need to modify
+paths in plot_sample_spectrograms.py):  </li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>~/FAST/utils/preprocess/$ ../../parameters/preprocess/Groningen/sample_spectrograms_Groningen.sh
+</code></pre></div>
+<ul>
+<li>Apply bandpass filter and decimate (need to modify paths in bandpass_filter_decimate.py):  </li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>~/FAST/utils/preprocess/$ ../../parameters/preprocess/Groningen/bandpass_filter_decimate_Groningen.sh
+</code></pre></div>
+<p>Based on sample spectrograms, filter 3-10 Hz for all 201 channels. No need to decimate, as sampling rate is already low at 20 Hz. Filtered continuous data files start with Deci1.bp3to10.*, which are input to the fingerprint step.  </p>
+<h3 id="082-fingerprint">0.8.2 Fingerprint<a class="headerlink" href="#082-fingerprint" title="Permanent link">&para;</a></h3>
+<p>Master script to create fingerprints on each channel, then generate global indices at the end:  </p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>~/FAST/fingerprint/$ ../parameters/fingerprint/Groningen/run_fp_Groningen.sh
+</code></pre></div>
+<strong>Example script to generate fingerprints on one channel (HHZ) at one station (G014), called by the master script run_fp_Groningen.sh:</strong>  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>~/FAST/fingerprint/$ python gen_fp.py ../parameters/fingerprint/Groningen/fp_input_NL_G014_HHZ.json
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>    &quot;fingerprint&quot;: {
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>       &quot;sampling_rate&quot;: 20,
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>       &quot;min_freq&quot;: 3.0,
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>       &quot;max_freq&quot;: 10.0,
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>       &quot;spec_length&quot;: 6.0,
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>       &quot;spec_lag&quot;: 0.12,
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>       &quot;fp_length&quot;: 64,
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>       &quot;fp_lag&quot;: 10,
+<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>       &quot;k_coef&quot;: 400,
+<a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>       &quot;nfreq&quot;: 32,
+<a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a>       &quot;mad_sampling_rate&quot;: 0.05,
+<a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a>       &quot;mad_sample_interval&quot;: 86400
+<a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a>    &quot;data&quot;: {
+<a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a>       &quot;station&quot;: &quot;G014&quot;,
+<a id="__codelineno-30-16" name="__codelineno-30-16" href="#__codelineno-30-16"></a>       &quot;channel&quot;: &quot;HHZ&quot;,
+<a id="__codelineno-30-17" name="__codelineno-30-17" href="#__codelineno-30-17"></a>       &quot;start_time&quot;: &quot;18-01-01T00:00:00.0&quot;,
+<a id="__codelineno-30-18" name="__codelineno-30-18" href="#__codelineno-30-18"></a>       &quot;end_time&quot;: &quot;18-04-30T00:00:00.0&quot;,
+<a id="__codelineno-30-19" name="__codelineno-30-19" href="#__codelineno-30-19"></a>       &quot;folder&quot;: &quot;/lfs/1/ceyoon/TimeSeries/Groningen/data/waveformsG014/&quot;,
+</code></pre></div>
+<p>There are a total of 201 fp_input_NETWORK_STATION_CHANNEL.json fingerprint input files, one for each channel and station, all with the same input fingerprint parameters in Table S21.  </p>
+<p>Table S21: Fingerprint input parameters for Groningen earthquake detection: 3-component at 67 stations (Figure 12, red, black triangles), after bandpass filter 3-10 Hz, and sampled at 20 Hz. The fingerprint sampling period is dt_fp = 1.5 seconds.  </p>
+<p><img alt="data_table_20" src="../img/data_table_20.png" />  </p>
+<p>Median/MAD output files: <code>mad/mad*.txt</code><br />
+Fingerprints (binary files): <code>fingerprints/G014.HHZ.fp</code><br />
+Timestamps at each fingerprint index (text files): <code>timestamps/G014.HHZ.ts</code>  </p>
+<p>Finally, to create global indices for the Groningen data set, so that fingerprint indices from different channels (all 201) and stations are referenced to a common starting time:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>$ python global_index.py ../parameters/fingerprint/Groningen/global_indices_Groningen.json  
+</code></pre></div>
+<p>The common starting time is in <code>global_idx_stats.txt</code>: 2018-01-01T00:00:04.500000 UTC </p>
+<h3 id="083-similarity-search">0.8.3 Similarity Search<a class="headerlink" href="#083-similarity-search" title="Permanent link">&para;</a></h3>
+<p>Master script to run similarity search on each channel (out of 201 total):  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>~/FAST/simsearch/$ ../parameters/simsearch/Groningen/run_simsearch_Groningen.sh
+</code></pre></div>
+<p>Table S22: Similarity search input parameters for Groningen earthquake detection: 201 channels at 67 stations (3 components each).  </p>
+<p><img alt="data_table_21" src="../img/data_table_21.png" />  </p>
+<p><strong>Example script to run similarity search on one channel (HHZ) at one station (G014), called by the master script run_simsearch_Groningen.sh:</strong>  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>~/FAST/simsearch/$ ../parameters/simsearch/Groningen/filt_simsearch_input_Groningen.sh G014 HHZ
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>NTBLS=100
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>NHASH=5
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>NREPEAT=5
+<a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>NVOTES=2
+<a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>NTHREAD=56
+<a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a>NUM_PART=1
+<a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>FREQ_NOISE=0.01
+</code></pre></div>
+<p>Similarity search is run with the occurrence filter (FREQ_NOISE=0.01) for all 201 channels. A fingerprint that matches over 1% of other fingerprints is excluded from the similarity search, in order to avoid detecting noise that repeats often in time. The same input parameters are used for similarity search on all 201 channels (Table S22).  </p>
+<h3 id="084-postprocessing">0.8.4 Postprocessing<a class="headerlink" href="#084-postprocessing" title="Permanent link">&para;</a></h3>
+<p><strong>First</strong>, run the master script to convert similarity search output from binary format to text format (3 columns: dt = idx1 − idx2, idx1, sim, sorted in increasing dt order) for each channel (201 total):  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>~/FAST/postprocessing/$ ../parameters/postprocess/Groningen/output_Groningen_pairs.sh
+</code></pre></div>
+<p>For example, on one channel (HHZ) at one station (G014), all on one line:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>~/FAST/postprocessing/$ python parse_results.py
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>-d /lfs/1/ceyoon/TimeSeries/Groningen/data/waveformsG014/fingerprints/
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>-p candidate_pairs_G014_HHZ -i /lfs/1/ceyoon/TimeSeries/Groningen/global_indices/G014_HHZ_idx_mapping.txt
+</code></pre></div>
+<p>Output file for example (large size at channel level): <code>/lfs/1/ceyoon/TimeSeries/Groningen/data/waveformsG014/ fingerprints/candidate_pairs_G014_HHZ_merged.txt</code>  </p>
+<p><strong>Second</strong>, run the master script to combine similarity output from all 3 components at a given station, for all 67 stations:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>~/FAST/postprocessing/$ ../parameters/postprocess/Groningen/combine_Groningen_pairs.sh
+</code></pre></div>
+<p>For example, on three channels (HH1, HH2, HHZ) at one station (G014), first move the similarity output text files to the inputs_network/ directory:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>$ cd /lfs/1/ceyoon/TimeSeries/Groningen/data/waveformsG014/fingerprints/
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>$ mv candidate_pairs_G014_HH*_merged.txt ../../../inputs_network/
+</code></pre></div>
+<p><strong>Then</strong> for each similar fingerprint pair, add the similarity from all 3 components at the same station, with a similarity threshold of 6 = (3 components)<em>(v=2 votes/component, Table S22). Note: this step will delete the candidate_ pairs_G014_HH</em>_merged.txt files.  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>~/FAST/postprocessing/$ python parse_results.py
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>-d /lfs/1/ceyoon/TimeSeries/Groningen/inputs_network/
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>-p candidate_pairs_G014 --sort true --parse false -c true -t 6
+</code></pre></div>
+<p>Output file for example (smaller size at station level):<code>/lfs/1/ceyoon/TimeSeries/Groningen/inputs_network/ candidate_pairs_G014_combined.txt</code>  </p>
+<p><strong>Finally</strong>, detect similar fingerprints across the network of 67 stations, using the input parameters in Table S23:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>~/FAST/postprocessing/$
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>python scr_run_network_det.py ../parameters/postprocess/Groningen/67sta_3stathresh_network_params.json
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>       &quot;network&quot;: {
+<a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>              &quot;max_fp&quot;: 6798013,
+<a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>              &quot;dt_fp&quot;: 1.5, (seconds)
+<a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a>              &quot;dgapL&quot;: 10, (15 s)
+<a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a>              &quot;dgapW&quot;: 3, (4.5 s)
+<a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a>              &quot;num_pass&quot;: 2,
+<a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a>
+<a id="__codelineno-39-10" name="__codelineno-39-10" href="#__codelineno-39-10"></a>28
+<a id="__codelineno-39-11" name="__codelineno-39-11" href="#__codelineno-39-11"></a>},
+</code></pre></div>
+<p>Table S23: Network detection input parameters for Groningen at 67 stations. max_fp = 6798013 is the largest fingerprint index over all channels from *mapping.txt files in the global_indices directory. dt_fp = 1.5 seconds is the fingerprint sampling period from Table S21.  </p>
+<p><img alt="data_table_22" src="../img/data_table_22.png" />  </p>
+<p>Network detection output file for example (smaller size at station level): <code>/lfs/1/ceyoon/TimeSeries/Groningen/ network_detection/67sta_3stathresh_detlist_rank_by_peaksum.txt (118,728 events)</code> </p>
+<p>At this point, FAST earthquake detection processing is done.  </p>
+<h3 id="085-remove-duplicates-after-network-detection">0.8.5 Remove duplicates after network detection<a class="headerlink" href="#085-remove-duplicates-after-network-detection" title="Permanent link">&para;</a></h3>
+<p>The network detection output still contains many duplicate events, so we need to remove these using a few scripts, where you need to modify the hard-coded paths. (These are scripts I quickly came up with on the fly to help me analyze the detection output. Feel free to come up with improved scripts that would better suit your needs.)  </p>
+<p><strong>First</strong>, save only first and last time indices for each detection. For the last 2 columns: output the number of stations that detected event (num_sta) and difference between first and last index (diff_ind).  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>~/FAST/utils/network/$ python arrange_network_detection_results.py
+</code></pre></div>
+<p><mark>Output:</mark> <code>NetworkDetectionTimes_67sta_3stathresh_detlist_rank_by_peaksum.txt</code> (118,728 events)  </p>
+<p><strong>Second</strong>, remove duplicate events. First remove events with exact first and last detection time indices. Then remove events with duplicate start times; for each start time, keep only the event with the highest num_sta (number of stations that detected the event) and peaksum (peak similarity).  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>~/FAST/utils/network/$ ./remove_duplicates_after_network.sh
+</code></pre></div>
+<p><mark>Output:</mark> <code>uniquestart_sorted_no_duplicates.txt</code> (13,782 events)  </p>
+<p><mark>Third</mark>, remove events that overlap between the first and last detection time indices, keeping the event with the highest
+num_sta and peaksum.  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>~/FAST/utils/network/$ python delete_overlap_network_detections.py
+</code></pre></div>
+<p><mark>Output:</mark> <code>67sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt</code> (6277 events)  </p>
+<p><mark>Finally</mark>, sort remaining events in descending order of num_sta, then peaksum, for the final detection list.  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>~/FAST/utils/network/$ ./final_network_sort_nsta_peaksum.sh
+</code></pre></div>
+<p><mark>Output:</mark> <code>sort_nsta_peaksum_67sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt</code> (6277 events)  </p>
+<h3 id="086-visual-inspection-and-final-detections">0.8.6 Visual inspection and final detections<a class="headerlink" href="#086-visual-inspection-and-final-detections" title="Permanent link">&para;</a></h3>
+<p>Plot event waveforms in the final detection list, ranked in descending order of num_sta, then peaksum, for visual inspection. Need to verify by looking at the waveforms that these are indeed earthquakes, and also enables setting final detection thresholds (Table 0.8.6).  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>~/FAST/utils/events/$ python PARTIALplot_detected_waveforms_Groningen.py 0 6277
+</code></pre></div>
+<p><mark>Output:</mark> <code>.png</code> image files in <code>67sta_3stathresh_NetworkWaveformPlots/</code>  </p>
+<p>Table S24: Final thresholds for Groningen applied to network detection parameters num_sta (number of stations that detected event pair) and peaksum (total similarity score at all stations) to determine list of earthquakes, set empirically after visual inspection. For each value of num_sta, a different threshold for peaksum can be applied.  </p>
+<p><img alt="data_table_23" src="../img/data_table_23.png" />  </p>
+<p>After visual inspection, 26 events are above thresholds in Table 0.8.6.  </p>
+<ul>
+<li><code>EQ_sort_nsta_peaksum_67sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt</code>: 23 events that look like earthquake waveforms  </li>
+<li><code>FALSE_sort_nsta_peaksum_67sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt</code>: 3 false detections above thresholds that do not look like earthquakes  </li>
+</ul>
+<p>For the 23 earthquake events, output an event catalog:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>~/FAST/utils/events/$ python output_final_detection_list.py
+</code></pre></div>
+<p><mark>Output:</mark> <code>FINAL_Detection_List_Groningen_67sta_13stathresh.txt</code> (23 events)  </p>
+<h2 id="09-brazilacre-data-set">0.9 <code>BrazilAcre</code> Data Set<a class="headerlink" href="#09-brazilacre-data-set" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Location: Acre, Brazil (search for intermediate-depth and deep earthquakes)  </li>
+<li>Duration: about 3 months (with time gaps): 2015-05-28 to 2016-02-01  </li>
+<li>Network: 1 station (Figure 14), 3 components (HHE, HHN, HHZ) = 3 channels. • Sampling rate: 100 Hz  </li>
+<li>Provided by: Marcelo de Bianchi (University of Sao Paulo)  </li>
+</ul>
+<p><img alt="ex_param_7" src="../img/ex_param_7.png" />  </p>
+<figcaption>Figure 14: Acre, Brazil map provided by Marcelo de Bianchi: 1 station (yellow triangle) used for FAST detection, and locations of known catalog events (circles colored by depth).</figcaption>
+
+<h3 id="091-preprocessing">0.9.1 Preprocessing<a class="headerlink" href="#091-preprocessing" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Output continuous data duration: different stations used for detection have different durations and time gaps (need to modify paths in get_continuous_data_times.py):  </li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>~/FAST/utils/preprocess/$ ../../parameters/preprocess/BrazilAcre/continuous_data_times_BrazilAcre.sh
+</code></pre></div>
+<p>The output files in continuous_duration/ can be read into a custom script called plot_continuous_ duration_BrazilAcre.py to plot the duration of available continuous data at each station and channel (Figure 15).  </p>
+<p><img alt="fig_15" src="../img/fig_15.png" />  </p>
+<figcaption>Figure 15: Duration of BrazilAcre continuous data at 1 station (3 components). White sections indicate time gaps.</figcaption>
+
+<ul>
+<li>Confirmed no zero-filled time-gap sections of continuous data in all 3 channels (need to modify paths in fill_ time_gaps_with_uncorrelated_noise.py):  </li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>~/FAST/utils/preprocess/$ python fill_time_gaps_with_uncorrelated_noise.py
+</code></pre></div>
+<p><strong>Use original mseed data files.</strong></p>
+<ul>
+<li>Output sample spectrograms on each channel and station to determine bandpass filter range (need to modify
+paths in plot_sample_spectrograms.py):  </li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>~/FAST/utils/preprocess/$ ../../parameters/preprocess/BrazilAcre/sample_spectrograms_BrazilAcre.sh
+</code></pre></div>
+<ul>
+<li>Apply bandpass filter and decimate (need to modify paths in bandpass_filter_decimate.py):  </li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>~/FAST/utils/preprocess/$ ../../parameters/preprocess/BrazilAcre/bandpass_filter_decimate_BrazilAcre.sh
+</code></pre></div>
+<p>Based on sample spectrograms, filter 3-20 Hz for all 3 channels. Decimate by a factor of 2, to 50 Hz sampling rate. Filtered continuous data files start with Deci2.bp3to20.*, which are input to the fingerprint step.  </p>
+<ul>
+<li>Need to add <code>.mseed</code> extension to all time series files, otherwise the Julian day number in the time series file gets removed while fingerprinting, and we cannot tell the difference between fingerprints from different days.  </li>
+</ul>
+<h3 id="092-fingerprint">0.9.2 Fingerprint<a class="headerlink" href="#092-fingerprint" title="Permanent link">&para;</a></h3>
+<p>Master script to create fingerprints on each channel, then generate global indices at the end:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>~/FAST/fingerprint/$ ../parameters/fingerprint/BrazilAcre/run_fp_BrazilAcre.sh
+</code></pre></div>
+<p>Example script to generate fingerprints on one channel (HHE) at one station (CZSB), called by the master script run_fp_BrazilAcre.sh:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>~/FAST/fingerprint/$ python gen_fp.py ../parameters/fingerprint/BrazilAcre/fp_input_BR_CZSB_HHE.json
+<a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>    &quot;fingerprint&quot;: {
+<a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a>       &quot;sampling_rate&quot;: 50,
+<a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a>       &quot;min_freq&quot;: 3.0,
+<a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a>       &quot;max_freq&quot;: 20.0,
+<a id="__codelineno-51-6" name="__codelineno-51-6" href="#__codelineno-51-6"></a>       &quot;spec_length&quot;: 10.0,
+<a id="__codelineno-51-7" name="__codelineno-51-7" href="#__codelineno-51-7"></a>       &quot;spec_lag&quot;: 0.2,
+<a id="__codelineno-51-8" name="__codelineno-51-8" href="#__codelineno-51-8"></a>       &quot;fp_length&quot;: 128,
+<a id="__codelineno-51-9" name="__codelineno-51-9" href="#__codelineno-51-9"></a>         Continuous Data (Network.Station.Channel)
+<a id="__codelineno-51-10" name="__codelineno-51-10" href="#__codelineno-51-10"></a>       &quot;fp_lag&quot;: 10,
+<a id="__codelineno-51-11" name="__codelineno-51-11" href="#__codelineno-51-11"></a>       &quot;k_coef&quot;: 800,
+<a id="__codelineno-51-12" name="__codelineno-51-12" href="#__codelineno-51-12"></a>       &quot;nfreq&quot;: 32,
+<a id="__codelineno-51-13" name="__codelineno-51-13" href="#__codelineno-51-13"></a>       &quot;mad_sampling_rate&quot;: 0.1,
+<a id="__codelineno-51-14" name="__codelineno-51-14" href="#__codelineno-51-14"></a>       &quot;mad_sample_interval&quot;: 86400
+<a id="__codelineno-51-15" name="__codelineno-51-15" href="#__codelineno-51-15"></a>    &quot;data&quot;: {
+<a id="__codelineno-51-16" name="__codelineno-51-16" href="#__codelineno-51-16"></a>       &quot;station&quot;: &quot;CZSB&quot;,
+<a id="__codelineno-51-17" name="__codelineno-51-17" href="#__codelineno-51-17"></a>       &quot;channel&quot;: &quot;HHE&quot;,
+<a id="__codelineno-51-18" name="__codelineno-51-18" href="#__codelineno-51-18"></a>       &quot;start_time&quot;: &quot;15-10-28T00:00:00.0&quot;,
+<a id="__codelineno-51-19" name="__codelineno-51-19" href="#__codelineno-51-19"></a>       &quot;end_time&quot;: &quot;16-02-01T00:00:03.0&quot;,
+<a id="__codelineno-51-20" name="__codelineno-51-20" href="#__codelineno-51-20"></a>       &quot;folder&quot;: &quot;/lfs/1/ceyoon/TimeSeries/BrazilAcre/CZSB/&quot;,
+</code></pre></div>
+<p>There are a total of 3 <code>fp_input_NETWORK_STATION_CHANNEL.json</code> fingerprint input files, one for each channel and station, all with the same input fingerprint parameters in Table S25.  </p>
+<p>Table S25: Fingerprint input parameters for BrazilAcre earthquake detection: 3-component at 1 station (Figure 14, yellow triangle), after bandpass filter 3-20 Hz, and decimated to 50 Hz sampling rate. The fingerprint sampling period is dt_fp = 2 seconds.  </p>
+<p><img alt="table_25" src="../img/table_25.png" />  </p>
+<p>Median/MAD output files: <code>mad/mad*.txt</code><br />
+Fingerprints (binary files): <code>fingerprints/CZSB.HHE.fp</code><br />
+Timestamps at each fingerprint index (text files): <code>timestamps/CZSB.HHE.ts</code>  </p>
+<p>Finally, to create global indices for the BrazilAcre data set, so that fingerprint indices from different channels (all 3) and stations are referenced to a common starting time:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>$ python global_index.py ../parameters/fingerprint/BrazilAcre/global_indices_BrazilAcre.json
+</code></pre></div>
+<p>The common starting time is in global_idx_stats.txt: 2015-10-28T00:00:21.340000 UTC  </p>
+<h3 id="093-similarity-search">0.9.3 Similarity Search<a class="headerlink" href="#093-similarity-search" title="Permanent link">&para;</a></h3>
+<p>Master script to run similarity search on each channel (out of 3 total):  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>~/FAST/simsearch/$ ../parameters/simsearch/BrazilAcre/run_simsearch_BrazilAcre.sh
+</code></pre></div>
+<p>Example script to run similarity search on one channel (HHE) at one station (CZSB), called by the master script <code>run_simsearch_BrazilAcre.sh</code>:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>~/FAST/simsearch/$ ../parameters/simsearch/BrazilAcre/filt_simsearch_input_BrazilAcre.sh CZSB HHE
+<a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>NTBLS=100
+<a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a>NHASH=4
+<a id="__codelineno-54-4" name="__codelineno-54-4" href="#__codelineno-54-4"></a>NREPEAT=5
+<a id="__codelineno-54-5" name="__codelineno-54-5" href="#__codelineno-54-5"></a>NVOTES=2
+<a id="__codelineno-54-6" name="__codelineno-54-6" href="#__codelineno-54-6"></a>NTHREAD=56
+<a id="__codelineno-54-7" name="__codelineno-54-7" href="#__codelineno-54-7"></a>NUM_PART=1
+</code></pre></div>
+<p>Table S26: Similarity search input parameters for BrazilAcre earthquake detection: 3 channels at 1 station (3
+components each).  </p>
+<p><img alt="table_26" src="../img/table_26.png" />  </p>
+<p>The same input parameters are used for similarity search on all 3 channels (Table S26).  </p>
+<h3 id="094-postprocessing">0.9.4 Postprocessing<a class="headerlink" href="#094-postprocessing" title="Permanent link">&para;</a></h3>
+<p><strong>First</strong>, run the master script to convert similarity search output from binary format to text format (3 columns: dt = idx1 − idx2, idx1, sim, sorted in increasing dt order) for each channel (3 total):  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>~/FAST/postprocessing/$ ../parameters/postprocess/BrazilAcre/output_BrazilAcre_pairs.sh  
+</code></pre></div>
+<p>For example, on one channel (HHE) at one station (CZSB), all on one line:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>~/FAST/postprocessing/$ python parse_results.py
+<a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>-d /lfs/1/ceyoon/TimeSeries/BrazilAcre/CZSB/fingerprints/
+<a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a>-p candidate_pairs_CZSB_HHE -i /lfs/1/ceyoon/TimeSeries/BrazilAcre/global_indices/CZSB_HHE_idx_mapping.txt
+</code></pre></div>
+<p><mark>Output file for example (large size at channel level):</mark> /<code>lfs/1/ceyoon/TimeSeries/BrazilAcre/CZSB/fingerprints/ candidate_pairs_CZSB_HHE_merged.txt</code>  </p>
+<p><strong>Second</strong>, run the master script to combine similarity output from all 3 components at a given station, for 1 station:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>~/FAST/postprocessing/$ ../parameters/postprocess/BrazilAcre/combine_BrazilAcre_pairs.sh
+</code></pre></div>
+<p>For example, on three channels (HHE, HHN, HHZ) at one station (CZSB), first move the similarity output text files to the inputs_network/ directory:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>$ cd /lfs/1/ceyoon/TimeSeries/BrazilAcre/CZSB/fingerprints/
+<a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>$ mv candidate_pairs_CZSB_HH*_merged.txt ../../../inputs_network/
+</code></pre></div>
+<p>Then for each similar fingerprint pair, add the similarity from all 3 components at the same station, with a similarity threshold of 6 = (3 components)*(v=2 votes/component, Table S26). Note: this step will delete the <code>candidate_ pairs_CZSB_HH*_merged.txt</code> files.  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>~/FAST/postprocessing/$ python parse_results.py
+<a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>-d /lfs/1/ceyoon/TimeSeries/BrazilAcre/inputs_network/
+<a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a>-p candidate_pairs_CZSB --sort true --parse false -c true -t 6
+</code></pre></div>
+<p><mark>Output file for example (smaller size at station level):</mark> <code>/lfs/1/ceyoon/TimeSeries/BrazilAcre/inputs_network/ candidate_pairs_CZSB_combined.txt</code>  </p>
+<p>Finally, detect similar fingerprints across the network of 1 station, using the input parameters in Table S27 (Note: this step only aggregates similar event pairs from similar fingerprints, and resolves the pairs into a list of candidate events, since there is only 1 station.):  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>~/FAST/postprocessing/$
+<a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>python scr_run_network_det.py ../parameters/postprocess/BrazilAcre/1sta_1stathresh_network_params.json
+<a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a>       &quot;network&quot;: {
+<a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a>              &quot;max_fp&quot;: 4147182,
+<a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a>              &quot;dt_fp&quot;: 2.0, (seconds)
+<a id="__codelineno-60-6" name="__codelineno-60-6" href="#__codelineno-60-6"></a>              &quot;dgapL&quot;: 10, (20 s)
+<a id="__codelineno-60-7" name="__codelineno-60-7" href="#__codelineno-60-7"></a>              &quot;dgapW&quot;: 3, (6 s)
+<a id="__codelineno-60-8" name="__codelineno-60-8" href="#__codelineno-60-8"></a>              &quot;num_pass&quot;: 2,
+<a id="__codelineno-60-9" name="__codelineno-60-9" href="#__codelineno-60-9"></a>              &quot;min_dets&quot;: 3,
+<a id="__codelineno-60-10" name="__codelineno-60-10" href="#__codelineno-60-10"></a>              &quot;min_sum_multiplier&quot;: 1,
+<a id="__codelineno-60-11" name="__codelineno-60-11" href="#__codelineno-60-11"></a>              &quot;max_width&quot;: 8, (16 s)
+<a id="__codelineno-60-12" name="__codelineno-60-12" href="#__codelineno-60-12"></a>              &quot;ivals_thresh&quot;: 6,
+<a id="__codelineno-60-13" name="__codelineno-60-13" href="#__codelineno-60-13"></a>              &quot;nsta_thresh&quot;: 1,
+<a id="__codelineno-60-14" name="__codelineno-60-14" href="#__codelineno-60-14"></a>              &quot;input_offset&quot;: 15 (30 s) &lt;--- NOT USED
+<a id="__codelineno-60-15" name="__codelineno-60-15" href="#__codelineno-60-15"></a>},  
+</code></pre></div>
+<p>Table S27: Network detection input parameters for BrazilAcre at 1 station. max_fp = 4147182 is the largest fingerprint index over all channels from *mapping.txt files in the global_indices directory. dt_fp = 2 seconds is the fingerprint sampling period from Table S25.  </p>
+<p><img alt="table_27" src="../img/table_27.png" />  </p>
+<p>Network detection output file: <code>/lfs/1/ceyoon/TimeSeries/BrazilAcre/network_detection/1sta_1stathresh_detlist_rank_by_peaksum.tx</code>t (14,477 events)  </p>
+<p>At this point, FAST earthquake detection processing is done.  </p>
+<h3 id="095-remove-duplicates-after-network-detection">0.9.5 Remove duplicates after network detection<a class="headerlink" href="#095-remove-duplicates-after-network-detection" title="Permanent link">&para;</a></h3>
+<p>Sort events in descending order of peaksum (peak similarity score between similar fingerprints) for the final detection list.  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>~/FAST/utils/network/$ ./final_single_station_sort_nsta_peaksum.sh
+</code></pre></div>
+<p><mark>Output:</mark> <code>sort_peaksum_1sta_1stathresh_CZSB_events.txt</code> (14,477 events)  </p>
+<h3 id="096-visual-inspection-and-final-detections">0.9.6 Visual inspection and final detections<a class="headerlink" href="#096-visual-inspection-and-final-detections" title="Permanent link">&para;</a></h3>
+<p>Plot event waveforms in the final detection list, ranked in descending order of peaksum (peak similarity score between similar fingerprints), for visual inspection. Need to verify by looking at the waveforms that these are indeed earthquakes, and also enables setting final detection thresholds (peaksum ≥ 6).  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>~/FAST/utils/events/$ python PARTIALplot_detected_waveforms_BrazilAcre.py 0 14477
+</code></pre></div>
+<p><mark>Output:</mark> <code>.png</code> image files in <code>1sta_1stathresh_NetworkWaveformPlots/</code> (zip file)  </p>
+<p>Visual inspection shows that there are many false detections that do not look like earthquake waveforms (for example, <code>event_rank00000_peaksum116351_ind854248_time1708496.0_2015-11-16T18/35/17.340000.png</code>). However, some earthquake waveforms (for example, <code>event_rank00049_peaksum26898_ind1297608_time2595216</code>. <code>0_2015-11-27T00/53/57.340000.png</code>) are also detected. <strong>I suggest running FAST on at least 3 stations for reliable earthquake detection.</strong>  </p>
+<p>14,474 events are above the arbitrary low threshold (peaksum ≥ 6).  </p>
+<ul>
+<li><code>EQ_sort_peaksum_1sta_1stathresh_CZSB_events.txt</code>  </li>
+</ul>
+<p>For the 14,474 events, output a catalog-like formatted list:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>~/FAST/utils/events/$ python output_final_detection_list.py
+</code></pre></div>
+<p><mark>Output:</mark> <code>FINAL_Detection_List_BrazilAcre_1sta_1stathresh_peaksum6.txt</code> (14,474 events)  </p>
+<h2 id="010-new-zealand-year-2010">0.10 New Zealand, Year 2010<a class="headerlink" href="#010-new-zealand-year-2010" title="Permanent link">&para;</a></h2>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The objective of this study is to detect small earthquakes in New Zealand to test earthquake triggering hypothesis. Detection results, with input parameters, are described in Rong et al. [2018]. 1 year continuous data (2010), 5 seismic stations LTZ, MQZ, KHZ, THZ, OXZ (Figure 16, black triangles), vertical components only, sampled at 100 Hz. Detections were compared against the GeoNet catalog, and visually inspected. FAST detected 11419 events: 4916 catalog events (Figure 16, red circles), 355 teleseismic events, 6123 new local earthquakes and 25 false positives (noise waveforms).  </p>
+</div>
+<p><img alt="ex_param_8" src="../img/ex_param_8.png" />  </p>
+<figcaption>Figure 16: New Zealand map: 5 stations (black triangles) used for FAST detection (except GVZ which was not used), and locations of GeoNet catalog events (circles). 4916 catalog events were detected by FAST (red circles). Catalog events missed by FAST are displayed as green circles.</figcaption>
+
+<h2 id="011-calipatria-june-2021">0.11 Calipatria, June 2021<a class="headerlink" href="#011-calipatria-june-2021" title="Permanent link">&para;</a></h2>
+<p><img alt="calipatria_maps" src="../img/calipatria_maps.png" /></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.tabs.link"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d6c3db9e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1867 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.9">
+    
+    
+      
+        <title>Tutorial - FAST</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.08040f6c.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tutorial" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="FAST" class="md-header__button md-logo" aria-label="FAST" data-md-component="logo">
+      
+  <img src="../logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FAST
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tutorial
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/stanford-futuredata/FAST" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FAST GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="FAST" class="md-nav__button md-logo" aria-label="FAST" data-md-component="logo">
+      
+  <img src="../logo.png" alt="logo">
+
+    </a>
+    FAST
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/stanford-futuredata/FAST" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FAST GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fast_overview/" class="md-nav__link">
+        FAST Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Install
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Install" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Install
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup_colab/" class="md-nav__link">
+        Google Colab
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup_linux/" class="md-nav__link">
+        Linux
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup_docker/" class="md-nav__link">
+        Docker
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Tutorial
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#example-data-hector-mine-foreshocks" class="md-nav__link">
+    Example Data: Hector Mine Foreshocks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-structure-overview" class="md-nav__link">
+    File Structure Overview
+  </a>
+  
+    <nav class="md-nav" aria-label="File Structure Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#code" class="md-nav__link">
+    Code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-and-parameters" class="md-nav__link">
+    Configuration and Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data" class="md-nav__link">
+    Data
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#feature-extraction" class="md-nav__link">
+    Feature Extraction
+  </a>
+  
+    <nav class="md-nav" aria-label="Feature Extraction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-fingerprints" class="md-nav__link">
+    Generate Fingerprints
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#global-index" class="md-nav__link">
+    Global Index
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#similarity-search" class="md-nav__link">
+    Similarity Search
+  </a>
+  
+    <nav class="md-nav" aria-label="Similarity Search">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#search-for-similar-earthquake-pairs" class="md-nav__link">
+    Search for Similar Earthquake Pairs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fast-similarity-search-output-1-channel" class="md-nav__link">
+    FAST Similarity Search Output (1 Channel)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parse-fast-similarity-search-output-binary-text-file" class="md-nav__link">
+    Parse FAST Similarity Search Output: [Binary --&gt; Text File]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#postprocessing" class="md-nav__link">
+    Postprocessing
+  </a>
+  
+    <nav class="md-nav" aria-label="Postprocessing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#postprocess-combine-fast-similarity-search-output-3-components-1-station" class="md-nav__link">
+    Postprocess: Combine FAST Similarity Search Output (3 Components @ 1 Station)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postprocess-weight-stations-equally" class="md-nav__link">
+    Postprocess: Weight Stations Equally
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postprocess-network-detection" class="md-nav__link">
+    Postprocess: Network Detection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-detection-outputs" class="md-nav__link">
+    Network Detection Outputs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-custom-scripts-to-clean-up-and-visualize-network-detection-results" class="md-nav__link">
+    Example Custom Scripts to Clean up and Visualize Network Detection Results
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-thresholds-visualmanual-inspection" class="md-nav__link">
+    Final Thresholds: Visual/Manual Inspection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-event-detection-list" class="md-nav__link">
+    Final Event Detection List
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-picking" class="md-nav__link">
+    Phase Picking
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase Picking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cut-sac-files" class="md-nav__link">
+    Cut SAC Files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-seisbench" class="md-nav__link">
+    Install SeisBench
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pick-phases-automatically" class="md-nav__link">
+    Pick Phases (automatically)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#earthquake-location" class="md-nav__link">
+    Earthquake Location
+  </a>
+  
+    <nav class="md-nav" aria-label="Earthquake Location">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#formatting-input-data-for-hypoinverse" class="md-nav__link">
+    Formatting input data for HYPOINVERSE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-and-run-hypoinverse" class="md-nav__link">
+    Install and Run HYPOINVERSE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-hypoinverse" class="md-nav__link">
+    Run HYPOINVERSE
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plotting-earthquake-locations-with-pygmt" class="md-nav__link">
+    Plotting Earthquake Locations with PyGMT
+  </a>
+  
+    <nav class="md-nav" aria-label="Plotting Earthquake Locations with PyGMT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-pygmt" class="md-nav__link">
+    Install PyGMT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-pygmt-map-of-earthquake-locations-and-seismic-stations" class="md-nav__link">
+    Create a PyGMT map of earthquake locations and seismic stations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          How to Set Parameters
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="How to Set Parameters" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          How to Set Parameters
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FAST_checklist/" class="md-nav__link">
+        FAST Checklist
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../get_seismic_data/" class="md-nav__link">
+        Getting Seismic Data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../input_and_preprocess/" class="md-nav__link">
+        Input and Preprocessing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../f_p/" class="md-nav__link">
+        Fingerprint
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sim_search/" class="md-nav__link">
+        Similarity Search
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../network_detection/" class="md-nav__link">
+        Network Detection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FAST_output/" class="md-nav__link">
+        FAST Output
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase_picking/" class="md-nav__link">
+        Phase Picking
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../earthquake_location/" class="md-nav__link">
+        Earthquake Location
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_10" type="checkbox" id="__nav_4_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_10">
+          Example Parameters
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Example Parameters" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_10">
+          <span class="md-nav__icon md-icon"></span>
+          Example Parameters
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ex_params_intro/" class="md-nav__link">
+        0.1 Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../italy_day_yr_dataset/" class="md-nav__link">
+        0.2 ItalyDayYR Data Set
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tanzania_dataset/" class="md-nav__link">
+        0.3 Tanzania, August 2016
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../saudi_dataset/" class="md-nav__link">
+        0.4 Saudi Arabia, May 2014
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../saudifull_dataset/" class="md-nav__link">
+        0.5 SaudiFull Data Set: Saudi Arabia, January - May 2017
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ometepec_dataset/" class="md-nav__link">
+        0.6 Ometepec, Mexico, January - April 2012
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wenchuan_dataset/" class="md-nav__link">
+        0.7 SeismOlympics: Wenchuan Aftershocks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../groningen_dataset/" class="md-nav__link">
+        0.8 Groningen Data Set
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../brazil_dataset/" class="md-nav__link">
+        0.9 BrazilAcre Data Set
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../newzealand_dataset/" class="md-nav__link">
+        0.10 New Zealand, Year 2010
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calipatria_dataset/" class="md-nav__link">
+        0.11 Calipatria, June 2021
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        References
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#example-data-hector-mine-foreshocks" class="md-nav__link">
+    Example Data: Hector Mine Foreshocks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-structure-overview" class="md-nav__link">
+    File Structure Overview
+  </a>
+  
+    <nav class="md-nav" aria-label="File Structure Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#code" class="md-nav__link">
+    Code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-and-parameters" class="md-nav__link">
+    Configuration and Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data" class="md-nav__link">
+    Data
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#feature-extraction" class="md-nav__link">
+    Feature Extraction
+  </a>
+  
+    <nav class="md-nav" aria-label="Feature Extraction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-fingerprints" class="md-nav__link">
+    Generate Fingerprints
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#global-index" class="md-nav__link">
+    Global Index
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#similarity-search" class="md-nav__link">
+    Similarity Search
+  </a>
+  
+    <nav class="md-nav" aria-label="Similarity Search">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#search-for-similar-earthquake-pairs" class="md-nav__link">
+    Search for Similar Earthquake Pairs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fast-similarity-search-output-1-channel" class="md-nav__link">
+    FAST Similarity Search Output (1 Channel)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parse-fast-similarity-search-output-binary-text-file" class="md-nav__link">
+    Parse FAST Similarity Search Output: [Binary --&gt; Text File]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#postprocessing" class="md-nav__link">
+    Postprocessing
+  </a>
+  
+    <nav class="md-nav" aria-label="Postprocessing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#postprocess-combine-fast-similarity-search-output-3-components-1-station" class="md-nav__link">
+    Postprocess: Combine FAST Similarity Search Output (3 Components @ 1 Station)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postprocess-weight-stations-equally" class="md-nav__link">
+    Postprocess: Weight Stations Equally
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postprocess-network-detection" class="md-nav__link">
+    Postprocess: Network Detection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-detection-outputs" class="md-nav__link">
+    Network Detection Outputs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-custom-scripts-to-clean-up-and-visualize-network-detection-results" class="md-nav__link">
+    Example Custom Scripts to Clean up and Visualize Network Detection Results
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-thresholds-visualmanual-inspection" class="md-nav__link">
+    Final Thresholds: Visual/Manual Inspection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-event-detection-list" class="md-nav__link">
+    Final Event Detection List
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-picking" class="md-nav__link">
+    Phase Picking
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase Picking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cut-sac-files" class="md-nav__link">
+    Cut SAC Files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-seisbench" class="md-nav__link">
+    Install SeisBench
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pick-phases-automatically" class="md-nav__link">
+    Pick Phases (automatically)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#earthquake-location" class="md-nav__link">
+    Earthquake Location
+  </a>
+  
+    <nav class="md-nav" aria-label="Earthquake Location">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#formatting-input-data-for-hypoinverse" class="md-nav__link">
+    Formatting input data for HYPOINVERSE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-and-run-hypoinverse" class="md-nav__link">
+    Install and Run HYPOINVERSE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-hypoinverse" class="md-nav__link">
+    Run HYPOINVERSE
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plotting-earthquake-locations-with-pygmt" class="md-nav__link">
+    Plotting Earthquake Locations with PyGMT
+  </a>
+  
+    <nav class="md-nav" aria-label="Plotting Earthquake Locations with PyGMT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-pygmt" class="md-nav__link">
+    Install PyGMT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-pygmt-map-of-earthquake-locations-and-seismic-stations" class="md-nav__link">
+    Create a PyGMT map of earthquake locations and seismic stations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/stanford-futuredata/FAST/edit/master/docs/tutorial.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="tutorial"><strong>Tutorial</strong><a class="headerlink" href="#tutorial" title="Permanent link">&para;</a></h1>
+<h2 id="example-data-hector-mine-foreshocks"><strong>Example Data: Hector Mine Foreshocks</strong><a class="headerlink" href="#example-data-hector-mine-foreshocks" title="Permanent link">&para;</a></h2>
+<p><img alt="hectormin_ex" src="../img/hectormine_ex.png" />  </p>
+<p>Decimated filtered waveform data (20 Hz sampling rate) to use for FAST: <code>data/waveforms${STATION}/Deci5*</code>
+Original unfiltered waveform data (20 to 100 Hz sampling rate) to use for phase picking: <code>data/waveforms${STATION}/19991015*</code></p>
+<h2 id="file-structure-overview"><strong>File Structure Overview</strong><a class="headerlink" href="#file-structure-overview" title="Permanent link">&para;</a></h2>
+<h3 id="code">Code<a class="headerlink" href="#code" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>fingerprint/          # Fingerprint
+simsearch/            # Similarity Search
+postprocessing/       # Postprocessing
+utils/                # Utility Functions
+    preprocess/       
+    network/          
+    events/           
+    run_fp.py         
+    run_simsearch.py
+</code></pre></div>
+
+<h3 id="configuration-and-parameters">Configuration and Parameters<a class="headerlink" href="#configuration-and-parameters" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>parameters/            
+    fingerprint/       
+    simsearch/         
+    postprocess/
+</code></pre></div>
+
+<h3 id="data">Data<a class="headerlink" href="#data" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>data/
+    waveforms<span class="cp">${</span><span class="n">STATION</span><span class="cp">}</span>/
+        Deci5*<span class="cp">${</span><span class="n">STATION</span><span class="cp">}</span>*.sac
+        19991015*<span class="cp">${</span><span class="n">STATION</span><span class="cp">}</span>*.sac
+</code></pre></div>
+
+<h2 id="feature-extraction"><strong>Feature Extraction</strong><a class="headerlink" href="#feature-extraction" title="Permanent link">&para;</a></h2>
+<p><img alt="fp_step" src="../img/fp_step.png" /></p>
+<h3 id="generate-fingerprints">Generate Fingerprints<a class="headerlink" href="#generate-fingerprints" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Create fingerprints for each of the 9 channels (7 stations) + global index, using wrapper</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>~/quake_tutorial$ python run_fp.py -c config.json
+</code></pre></div>
+<ul>
+<li>Alternatively, to fingerprint a specific station, call the fingerprint script with the corresponding fingerprint parameter file:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>~/quake_tutorial$ cd fingerprint/
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>~/quake_tutorial/fingerprint$ python gen_fp.py ../parameters/fingerprint/fp_input_CI_CDY_EHZ.json
+</code></pre></div>
+<h3 id="global-index">Global Index<a class="headerlink" href="#global-index" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Global index is already called by run_fp.py wrapper  </p>
+</div>
+<ul>
+<li>Complete this step only <ins>after</ins> you have finished computing <ins>fingerprints</ins> for <ins>every</ins> component and station you want to use for detection.  </li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$ python global_index.py global indices.json
+</code></pre></div>
+<ul>
+<li><code>global_index.py</code> <strong>in</strong> <code>fingerprint/</code></li>
+<li><code>global_indices.json</code> <strong>in</strong> <code>parameters/fingerprint/</code><br />
+<br></li>
+<li>Continuous data start/end times may be different, and time gaps may happen at different times, at different components and stations.  </li>
+<li>Global index: consistent way to refer to times of fingerprints at different components and stations.  </li>
+</ul>
+<h2 id="similarity-search"><strong>Similarity Search</strong><a class="headerlink" href="#similarity-search" title="Permanent link">&para;</a></h2>
+<p><img alt="simsearch_step" src="../img/simsearch_step.png" /></p>
+<h3 id="search-for-similar-earthquake-pairs">Search for Similar Earthquake Pairs<a class="headerlink" href="#search-for-similar-earthquake-pairs" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Compile and build C++ similarity search code.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>~/quake_tutorial$ <span class="nb">cd</span> simsearch/
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>~/quake_tutorial$ cmake .
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>~/quake_tutorial$ make
+</code></pre></div>
+<ul>
+<li>Similarity search for each of the 9 channels (7 stations), using wrapper  </li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>~/quake_tutorial/simsearch$ <span class="nb">cd</span> ..
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>~/quake_tutorial$ python run_simsearch.py -c config.json
+</code></pre></div>
+<ul>
+<li>Alternatively, to use similarity search for a specific station, call the similarity search script with the corresponding similarity search parameter file:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>~/quake_tutorial$ <span class="nb">cd</span> simsearch/
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>~/quake_tutorial$ cp ../parameters/simsearch/simsearch_input_HectorMine.sh .
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>~/quake_tutorial$ ./simsearch_input_HectorMine.sh
+</code></pre></div>
+<h3 id="fast-similarity-search-output-1-channel">FAST Similarity Search Output (1 Channel)<a class="headerlink" href="#fast-similarity-search-output-1-channel" title="Permanent link">&para;</a></h3>
+<p><code>data/waveforms${STATION}/fingerprints</code><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — MinHash Signatures (can delete these later)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <code>mh_${STATION}_${CHANNEL}_${nhash}.bin</code><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Example: <code>mh_CDY_EHZ_4.bin</code>  </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; — Binary files with similarity search output (npart files, one per partition, with first and last fingerprint index for the partition in filename):<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <code>candidate_pairs_${STATION}_${CHANNEL}_${nhash},${ntbl}(${FIRST_FP_INDEX},${LAST_FP_INDEX})</code> <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Example: <code>andiate_pairs_CDY_EHZ_4,2(0,74793)</code><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• For efficiency, the output is binary format; need parsing to convert similarity search &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output to text files</p>
+<h3 id="parse-fast-similarity-search-output-binary-text-file">Parse FAST Similarity Search Output: [Binary --&gt; Text File]<a class="headerlink" href="#parse-fast-similarity-search-output-binary-text-file" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>Use the wrapper script to parse all 9 channels (7 stations)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>~/quake_tutorial$ cd postprocessing
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>~/quake_tutorial/postprocessing$ cp ../parameters/postprocess/*.sh .
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>~/quake_tutorial/postprocessing$ ./output_HectorMine_pairs.sh
+</code></pre></div></p>
+</li>
+<li>
+<p>Parse a Specific Channel
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>python parse_results.py –d &lt;folder_with_binary_sim_search_files&gt; -p &lt;sim_search_filename_prefix&gt; -i &lt;global_index_file&gt;
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Example input file:</strong> <code>candidate_pairs_CDY_EHZ_4,2(0,74793)</code>  </p>
+</li>
+<li><strong>Example command:</strong> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>$ python parse_results.py –d ../data/waveformsCDY/fingerprints/ candidate_pairs_CDY_EHZ –i ../data/global_indices/CDY_EHZ_idx_mapping.txt
+</code></pre></div></li>
+</ul>
+<h2 id="postprocessing"><strong>Postprocessing</strong><a class="headerlink" href="#postprocessing" title="Permanent link">&para;</a></h2>
+<p><img alt="postproc_step" src="../img/postproc_step.png" /></p>
+<h3 id="postprocess-combine-fast-similarity-search-output-3-components-1-station">Postprocess: Combine FAST Similarity Search Output (3 Components @ 1 Station)<a class="headerlink" href="#postprocess-combine-fast-similarity-search-output-3-components-1-station" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>Combine similarity matrix from all components in each station, and copy outputs to <code>../data/inputs_network/</code> using wrapper script:  </p>
+<ul>
+<li><code>~/quake_tutorial/postprocessing$ cp ../parameters/postprocess/*.sh .</code>  </li>
+<li><code>~/quake_tutorial/postprocessing$ ./combine_HectorMine_pairs.sh</code>  </li>
+</ul>
+</li>
+<li>
+<p>Alternatively, to combine outputs (add “FAST similarity” for same fingerprint pair (index1, index2) ) from a specific station:  </p>
+<ul>
+<li><code>$ python parse_results.py –d &lt;folder_with_text_sim_search_files&gt; -p &lt;text_sim_search_file_prefix&gt; --sort true –parse false –c true –t &lt;threshold&gt;</code>  </li>
+<li>
+<p><strong>Example:</strong> <code>$ python parse_results.py –d ../data/inputs_network/ -p candidate_pairs_HEC --sort true –parse false –c true –t 6</code> </p>
+<ul>
+<li>Adds FAST similarity for same fingerprint pairs on HEC components: <code>candidate_pairs_HEC_BHE_merged.txt</code>, <code>candidate_pairs_HEC_BHN_merged.txt</code>, <code>candidate_pairs_HEC_BHZ_merged.txt</code>  </li>
+<li>Output (one file per station): <code>candidate_pairs_HEC_combined.txt</code>  </li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>By default, the *merged.txt files for all 3 components are deleted after combining! Copy them before this step if you want to keep them.</p>
+</div>
+</li>
+<li>
+<p>Usually set threshold=number of components * v, where v=nvote at a single component  </p>
+<ul>
+<li>The threshold helps filter out matches generated from noise, since we require either strong matches at a single component, or weak matches at multiple components</li>
+<li>May want to set threshold slightly lower (e.g., 2*v) if the output size is too small after combining</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="postprocess-weight-stations-equally">Postprocess: Weight Stations Equally<a class="headerlink" href="#postprocess-weight-stations-equally" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>‘Equalize’ across network: weighting stations with different number of components equally</p>
+<ul>
+<li>Hector Mine example: one 3-component station (HEC) with similarity threshold at 6 votes, and 6 1-component stations with similarity threshold at 2 votes.</li>
+<li>Want to weight each station equally, so multiply similarity in each 1-component station by 3<ul>
+<li><code>$ awk ‘{print$1,$2,3*$3}’ candidate_pairs_CDY_EHZ_merged.txt &gt; candidate_pairs_CDY_combined.txt</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Another option: use only part of the data (e.g. vertical component at each station)</p>
+</li>
+</ul>
+<p><img alt="postproc_weight" src="../img/postprocess_weight.png" /></p>
+<h3 id="postprocess-network-detection">Postprocess: Network Detection<a class="headerlink" href="#postprocess-network-detection" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Run network detection (combine FAST results from all 7 stations):  <ul>
+<li><code>~/quake_tutorial/postprocessing$ cp ../parameters/network/* .</code>  </li>
+<li><code>~/quake_tutorial/postprocessing$ python scr_run_network_det.py 7sta_2stathresh_network_params.json</code>  </li>
+</ul>
+</li>
+</ul>
+<p>Input file: <code>7sta_2stathresh_network_params.json</code>  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>&quot;io&quot;: {
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    &quot;channel_vars&quot;: [&quot;CDY&quot;, &quot;CPM&quot;, &quot;GTM&quot;, &quot;HEC&quot;, &quot;RMM&quot;, &quot;RMR&quot;, &quot;TPC&quot;],  # Station names
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    &quot;fname_template&quot;: &quot;candidate_pairs_%s_combined.txt&quot;,                # Input file (to fill w/station name) 
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    &quot;base_dir&quot;: ”../data/&quot;,                                             # Base directory
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    &quot;data_folder&quot;: &quot;inputs_network/&quot;,                                   # Input file directory
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    &quot;out_folder&quot;: &quot;network_detection/&quot;                                  # Output file directory
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>}
+</code></pre></div>
+<h3 id="network-detection-outputs">Network Detection Outputs<a class="headerlink" href="#network-detection-outputs" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Network Detection Output (text file with labeled columns)<ul>
+<li>Example (ranked in descending order of ‘peaksum’): <code>7sta_2stathresh_detlist_rank_by_peaksum.txt</code>  </li>
+<li>First (num_sta=number of stations) columns: starting fingerprint index at each station (time information)  <ul>
+<li>Outputs “nan” if not observed at a particular station</li>
+</ul>
+</li>
+<li><code>dL</code>: Maximum length (samples) along diagonal, over all event-pairs containing this event  </li>
+<li><code>nevents</code>: Number of other events ‘linked’ to (similar to) this event</li>
+<li><code>nsta</code>: Number of stations over which other events are similar to this event</li>
+<li><code>tot_ndets</code>: Total number of fingerprint-pairs (pixels) containing this event, over all event-pair clusters, over all stations</li>
+<li><code>max_ndets</code>: Maximum number of fingerprint-pairs (pixels) containing this event, over all event-pair clusters, over all stations</li>
+<li><code>tot_vol</code>: Total sum (or ‘volume’) of all similarity values (added over all stations), over all event-pairs containing this event</li>
+<li><code>max_vol:</code> Maximum sum (or ‘volume’) of all similarity values (added over all stations), over all event-pairs containing this event</li>
+<li><code>max_peaksum</code>: Maximum similarity value (added over all stations), over all event-pairs containing this event</li>
+</ul>
+</li>
+</ul>
+<h3 id="example-custom-scripts-to-clean-up-and-visualize-network-detection-results">Example Custom Scripts to Clean up and Visualize Network Detection Results<a class="headerlink" href="#example-custom-scripts-to-clean-up-and-visualize-network-detection-results" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Depending on the parameters, network detection output text file might still have duplicate events</li>
+<li>
+<p>We provide some example post-processing scripts to remove these duplicate events and come up with a final list of event detections</p>
+<ul>
+<li><code>cp ../utils/network/* .</code></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These have not been fully tested. You may want
+to write your own instead! Need to modify input/output parameters within each script. 4 scripts: outputs of each script are inputs to the next script.</p>
+</div>
+</li>
+<li>
+<p><code>~/quake_tutorial/postprocessing$ python arrange_network_detection_results.py</code>  </p>
+<ol>
+<li>Save only start and end fingerprint indices for each event (Firstnum_stacolumns --&gt; 2 columns)</li>
+<li>Output 2 more columns at end<ol>
+<li><code>Num_sta</code>: number of stations that detected event</li>
+<li><code>Diff_ind</code>: Difference between first and last fingerprint index</li>
+</ol>
+</li>
+<li><strong>Example output:</strong> <code>NetworkDetectionTimes_7sta_2stathresh_detlist_rank_by_peaksum.txt</code></li>
+</ol>
+</li>
+<li>
+<p><code>~/quake_tutorial/postprocessing$ ./remove_duplicates_after_network.sh</code>  </p>
+<ol>
+<li>Remove events with duplicate start fingerprint index (keep events with highest num_sta then peaksum)</li>
+<li><strong>Example output:</strong> <code>uniquestart_sorted_no_duplicates.txt</code></li>
+</ol>
+</li>
+<li>
+<p><code>~/quake_tutorial/postprocessing$ python delete_overlap_network_detections.py</code>  </p>
+<ol>
+<li>Remove events with overlapping times: where start time of one event is before end time of another event</li>
+<li><strong>Example output:</strong> <code>7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt</code></li>
+</ol>
+</li>
+<li>
+<p><code>~/quake_tutorial/postprocessing$ ./final_network_sort_nsta_peaksum.sh</code>  </p>
+<ol>
+<li>Sort events in descending order of num_sta (number of stations that detected event), then peaksum (maximum similarity for this event)</li>
+<li>Should no longer have duplicate events</li>
+<li><strong>Example output:</strong> <code>sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt</code></li>
+</ol>
+</li>
+</ul>
+<h3 id="final-thresholds-visualmanual-inspection">Final Thresholds: Visual/Manual Inspection<a class="headerlink" href="#final-thresholds-visualmanual-inspection" title="Permanent link">&para;</a></h3>
+<p>Now we have a list of detections — but are they actually earthquakes? We need to plot and visually inspect them.  </p>
+<p><strong>Example script, view first 100 events:</strong><br />
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>~/quake_tutorial/utils/events$ python PARTIALplot_hector_detected_waveforms.py 0 100
+</code></pre></div></p>
+<ul>
+<li>Input finger indices from <code>sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt</code>  </li>
+<li>Need global start time (t0) from global_idx_stats.txt, dt_fp in seconds  </li>
+<li>Here t0 = UTCDateTime('1999-10-15T13:00:00.676000')  </li>
+<li>Event time = t0 + dt_fp * (start finger print index)  </li>
+<li>Cut short time window around event waveform in filtered data, plot across all stations, save image to png file with names ordered in descending order of num_sta, peaksum – does it look like an earthquake?  </li>
+</ul>
+<p>Set final thresholds for num_sta, peaksum  </p>
+<ul>
+<li><strong>Example Output (first 50 events):</strong></li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>EQ_sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
+</code></pre></div>
+<p>Additional post-processing scripts to remove false positive detections?  </p>
+<h3 id="final-event-detection-list">Final Event Detection List<a class="headerlink" href="#final-event-detection-list" title="Permanent link">&para;</a></h3>
+<p><strong>Example Script:</strong><br />
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>~/quake_tutorial/utils/events$ python output_final_detection_list.py
+</code></pre></div></p>
+<p><strong>Example Input:</strong><br />
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>EQ_sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
+</code></pre></div></p>
+<p><strong>Example Output:</strong><br />
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>FINAL_Detection_List_HectorMine_7sta_2stathresh.txt
+</code></pre></div></p>
+<ul>
+<li><strong>Column 1</strong>: Event ID  </li>
+<li><strong>Column 2</strong>: YYYY-MM-DDTHH:MM:SS.SSSS for event detection time. This is an approximate arrival time for the event (NOT origin time)  </li>
+<li><strong>Column 3</strong>: Event detection time (seconds) since the start time for the first fingerprint, which for this data set is UTCDateTime('1999-10-15T13:00:00.676000')  </li>
+<li><strong>Column 4</strong>: First fingerprint index (integer) for this event. Multiply by dt_fp = 1 second to get the time in column 2. Columns 1, 2, 3 basically represent the same information.  </li>
+<li><strong>Column 5</strong>: Last fingerprint index (integer) for this event from the network-detection</li>
+<li><strong>Column 6</strong>: Fingerprint index duration; column5 = column4-column3. Some sense of event duration</li>
+<li><strong>Column 7</strong>: Number of stations at which the event was similar enough for a detection, the higher the better (nsta_thresh = 2)  </li>
+<li><strong>Column 8</strong>: Peak sum of similarity for this event over all stations where it was detected, the higher the better (more similar to some other event).</li>
+<li>Detection list is ordered in descending order of number of stations (Column 6), then in descending order of peaksum similarity (Column 7).  </li>
+</ul>
+<p>Further processing is required for P/S phase picking and location:  </p>
+<ul>
+<li>Cut SAC files  </li>
+<li>Pick phases (automatic or manual)  </li>
+<li>Locate earthquakes  </li>
+<li>Compute magnitudes  </li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<ul>
+<li>The following tutorials are not a part of FAST, but are optional next steps to take for phase picking with SeisBench, earthquake location with HYPOINVERSE, and mapping/visualization with PyGMT.</li>
+<li>The same commands below should run within the <a href="../setup_docker/">Docker container</a>, but replace the path <code>~/FAST/</code> with <code>root@555d364b63d7:/app/FAST/</code></li>
+</ul>
+</div>
+<h2 id="phase-picking"><strong>Phase Picking</strong><a class="headerlink" href="#phase-picking" title="Permanent link">&para;</a></h2>
+<h3 id="cut-sac-files">Cut SAC Files<a class="headerlink" href="#cut-sac-files" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Cut short event waveform files in SAC format from the continuous seismic data at all stations, based on the detection results from FAST.</li>
+<li>Cut from the original unfiltered continuous seismic data at full sampling rate (usually 100 sps), not the decimated filtered continuous seismic data used to run FAST.</li>
+<li>In this example, the event waveform time windows are 180 seconds long, 60 seconds before detection time, 120 seconds after detection time.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>(eq_fast) ~/FAST/utils/events$ python cut_event_files.py
+</code></pre></div>
+<ul>
+<li>Check for cut files in:  </li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>(eq_fast) ~/FAST/data/event_ids
+</code></pre></div>
+<ul>
+<li>Example:  </li>
+</ul>
+<p><img alt="ex_files" src="../img/ex_files.png" /></p>
+<h3 id="install-seisbench">Install SeisBench<a class="headerlink" href="#install-seisbench" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>(eq_fast) ~/FAST/utils/events$ cd ../..
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>(eq_fast) ~/FAST$ pip install seisbench
+</code></pre></div>
+<h3 id="pick-phases-automatically">Pick Phases (automatically)<a class="headerlink" href="#pick-phases-automatically" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Run SeisBench script for all events and all stations. This can take a few minutes to finish running.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>(eq_fast) ~/FAST$ cd utils/picking
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>(eq_fast) ~/FAST/utils/picking$ python run_seisbench.py
+</code></pre></div>
+<ul>
+<li>Annotated plots are found in:  </li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>(eq_fast) ~/FAST/data/seisbench_picks/
+</code></pre></div>
+<p><img alt="example_pics" src="../img/example_picks.png" /></p>
+<ul>
+<li>Example annotated plot from event 00000000:  </li>
+</ul>
+<p><img alt="example_pick_1" src="../img/example_pick_1.png" /></p>
+<p>Output saved in:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>(eq_fast) ~/FAST/data/seisbench_picks/event_picks.json
+</code></pre></div></p>
+<p>Example output:  </p>
+<p><img alt="json_file_picks" src="../img/json_file_picks.png" /></p>
+<ul>
+<li>"peak_time": Arrival time of pick</li>
+<li>"peak_value": Probability of pick</li>
+</ul>
+<h2 id="earthquake-location"><strong>Earthquake Location</strong><a class="headerlink" href="#earthquake-location" title="Permanent link">&para;</a></h2>
+<p>The output from <code>run_seisbench.py</code> in the <code>event_picks.json</code> file contains the information needed to locate the detected earthquakes from the FAST final detection list. We use HYPOINVERSE to locate earthquakes from the picks found with <code>run_seisbench.py</code>.  </p>
+<p>HYPOINVERSE is the standard location program supplied with the Earthworm seismic acquisition and processing system (AQMS). Read more about it <a href="https://www.usgs.gov/software/hypoinverse-earthquake-location">here</a>.  </p>
+<h3 id="formatting-input-data-for-hypoinverse">Formatting input data for HYPOINVERSE<a class="headerlink" href="#formatting-input-data-for-hypoinverse" title="Permanent link">&para;</a></h3>
+<p>To begin earthquake location run the following to format the phase picks for HYPOINVERSE:  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>(eq_fast) ~/FAST/utils/picking$ cd ../location/
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>(eq_fast) ~/FAST/utils/location$ python SeisBench2hypoinverse.py
+</code></pre></div>
+<p>Output:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>~/FAST/data/location_hypoinverse/EQT_19991015_test.txt
+</code></pre></div></p>
+<p>The script <code>SeisBench2hypoinverse.py</code> will also copy the following files from <code>~/FAST/utils/location/</code> to the directory <code>~/FAST/data/location_hypoinverse/</code> where we will run HYPOINVERSE:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>   *   hadley.crh
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>   *   locate_events.hyp
+</code></pre></div></p>
+<p>Get Hector Mine Station List as a json file:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>(eq_fast) ~/FAST/utils/location$ cd ../preprocess/
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>(eq_fast) ~/FAST/utils/preprocess$ python get_station_list.py
+</code></pre></div></p>
+<p>Output:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>~/FAST/data/stations/station_list.json
+</code></pre></div></p>
+<p>Convert <code>station_list.json</code> to HYPOINVERSE station input format in <code>station_list.sta</code>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>(eq_fast) ~/FAST/utils/preprocess$ cd ../location/
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>(eq_fast) ~/FAST/utils/location$ python output_station_file.py
+</code></pre></div></p>
+<p>Output:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>~/FAST/data/location_hypoinverse/station_list.sta
+</code></pre></div></p>
+<h3 id="install-and-run-hypoinverse">Install and Run HYPOINVERSE<a class="headerlink" href="#install-and-run-hypoinverse" title="Permanent link">&para;</a></h3>
+<p>Check that GFortran is installed, since it is required to compile the HYPOINVERSE program from source:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>(eq_fast) ~/FAST$ gfortran --version
+</code></pre></div></p>
+<p>Example expected output:<br />
+<mark>GNU Fortran (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0</mark>  </p>
+<p>If GFortran is not installed, run:<br />
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>(eq_fast) ~/FAST$ apt-get update &amp;&amp; apt-get upgrade
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>(eq_fast) ~/FAST$ apt-get install gfortran
+</code></pre></div></p>
+<p>Download HYPOINVERSE <a href="https://www.usgs.gov/software/hypoinverse-earthquake-location">here</a>, expand the <code>hyp1.40.tar</code> file,
+move the resulting <code>hyp1.40/</code> directory to <code>~/FAST/utils/location/hyp1.40/</code>. This can be done with the following commands:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>(eq_fast) ~/FAST/utils/location$ wget -c https://escweb.wr.usgs.gov/content/software/HYPOINVERSE/hyp1.40.tar
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>(eq_fast) ~/FAST/utils/location$ mkdir hyp1.40
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>(eq_fast) ~/FAST/utils/location$ cd hyp1.40
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>(eq_fast) ~/FAST/utils/location/hyp1.40$ tar -xvf ../hyp1.40.tar
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>(eq_fast) ~/FAST/utils/location/hyp1.40$ ls -l
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>drwxr-xr-x  4 10003  124   128 Sep 10  2014 doc
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>-rw-r--r--  1 root  root 77392 Sep 10  2014 hyp1.40-release-notes.pdf
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>-rw-r--r--  1 root  root  3258 Sep 10  2014 hyp1.40-release-notes.txt
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>drwxr-xr-x 54 10003  124  1728 Sep 10  2014 source
+<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>drwxr-xr-x 13 10003  124   416 Aug 26  2014 testone
+</code></pre></div></p>
+<p>Before compiling HYPOINVERSE, we need to make changes to <code>makefile</code> in <code>~/FAST/utils/location/hyp1.40/source/</code>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>(eq_fast) ~/FAST/utils/location/hyp1.40$ cd source
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>(eq_fast) ~/FAST/utils/location/hyp1.40/source$ sed -i &#39;/calnet/d&#39; makefile
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>(eq_fast) ~/FAST/utils/location/hyp1.40/source$ sed -i &#39;s/g77/gfortran/g&#39; makefile
+</code></pre></div></p>
+<ul>
+<li>Remove lines <strong>16</strong> and <strong>230</strong></li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-32-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-32-16" name="__codelineno-32-16"></a><span class="n">cp</span> <span class="n">hyp1</span><span class="mf">.40</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">calnet</span><span class="o">/</span><span class="n">klein</span><span class="o">/</span><span class="nb">bin</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-33-230">230</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-33-230" name="__codelineno-33-230"></a><span class="n">cp</span> <span class="n">p2sdly</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">calnet</span><span class="o">/</span><span class="n">klein</span><span class="o">/</span><span class="nb">bin</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Find and replace: <code>g77</code> with <code>gfortran</code></li>
+</ul>
+<p><strong>Check that HYPOINVERSE runs</strong>:</p>
+<ul>
+<li>
+<p>Compile HYPOINVERSE:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>(eq_fast) ~/FAST/utils/location/hyp1.40/source$ make
+</code></pre></div></p>
+</li>
+<li>
+<p>Make it executable:<br />
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>(eq_fast) ~/FAST/utils/location/hyp1.40/source$ chmod +x hyp1.40
+</code></pre></div></p>
+</li>
+<li>
+<p>Run HYPOINVERSE:<br />
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>(eq_fast) ~/FAST/utils/location/hyp1.40/source$ ./hyp1.40
+</code></pre></div></p>
+</li>
+<li>
+<p>Expected output:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>HYPOINVERSE 2000 STARTING
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>6/2014 VERSION 1.40 (geoid depth possible)
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a> COMMAND?
+</code></pre></div></p>
+</li>
+</ul>
+<p>If you have this output, HYPOINVERSE is running correctly. Press ctrl-c to exit.</p>
+<h3 id="run-hypoinverse">Run HYPOINVERSE<a class="headerlink" href="#run-hypoinverse" title="Permanent link">&para;</a></h3>
+<p>Run HYPOINVERSE within the directory <code>~/FAST/data/location_hypoinverse/</code>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>(eq_fast) ~/FAST/utils/location$ cd ../../data/location_hypoinverse/
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>(eq_fast) ~/FAST/data/location_hypoinverse$ ../../utils/location/hyp1.40/source/hyp1.40
+</code></pre></div></p>
+<p>Use <strong>@locate_events.hyp</strong> as input:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>HYPOINVERSE 2000 STARTING
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>6/2014 VERSION 1.40 (geoid depth possible)
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a> COMMAND? @locate_events.hyp
+</code></pre></div></p>
+<p>Expected output:
+<img alt="hypo_output" src="../img/hypo_output.png" />   </p>
+<p>You should see output files called <code>locate_events.sum</code> and <code>locate_events.arc</code> in HYPOINVERSE Y2000 summary format, but these are difficult to read.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>locate_events.arc</code> has the event info, and phase pick info for each event. <code>locate_events.sum</code> has only the event info, no phase pick info.</p>
+</div>
+<p>Use <code>output_hypoinverse_as_text.py</code> to output <code>locate_events.sum</code> in a more readable format to use for plotting and visualization.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>(eq_fast) ~/FAST/data/location_hypoinverse$ cd ../../utils/location/
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>(eq_fast) ~/FAST/utils/location$ python output_hypoinverse_as_text.py
+</code></pre></div>
+<h2 id="plotting-earthquake-locations-with-pygmt"><strong>Plotting Earthquake Locations with PyGMT</strong><a class="headerlink" href="#plotting-earthquake-locations-with-pygmt" title="Permanent link">&para;</a></h2>
+<h3 id="install-pygmt">Install PyGMT<a class="headerlink" href="#install-pygmt" title="Permanent link">&para;</a></h3>
+<p>IMPORTANT - PyGMT needs to be installed and run in a separate <code>pygmt</code> conda environment, since it is incompatible with the <code>eq_fast</code> conda environment.</p>
+<p>First, exit the <code>eq_fast</code> conda environment
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>(eq_fast) ~/FAST/utils/location$ conda deactivate
+</code></pre></div></p>
+<p>Next, create the <code>pygmt</code> conda environment with its dependencies, as described in the <a href="https://www.pygmt.org/latest/install.html">PyGMT install page</a>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>(base) ~/FAST/utils/location$ conda config --prepend channels conda-forge
+<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>(base) ~/FAST/utils/location$ conda create --name pygmt python=3.9 numpy pandas xarray netcdf4 packaging gmt
+</code></pre></div></p>
+<p>Finally, enter the <code>pygmt</code> conda environment and install PyGMT
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>(base) ~/FAST/utils/location$ conda activate pygmt
+<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>(pygmt) ~/FAST/utils/location$ conda install pygmt
+</code></pre></div></p>
+<h3 id="create-a-pygmt-map-of-earthquake-locations-and-seismic-stations">Create a PyGMT map of earthquake locations and seismic stations<a class="headerlink" href="#create-a-pygmt-map-of-earthquake-locations-and-seismic-stations" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>(pygmt) ~/FAST/utils/location$ cd ../mapping/
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>(pygmt) ~/FAST/utils/mapping$ python hypoinverse_to_pygmt.py
+</code></pre></div>
+<p>Figure saved as <code>pygmt_hectormine_map.png</code> in <code>~/FAST/data/mapping_pygmt/</code></p>
+<p><strong>Map Output</strong>:  </p>
+<h1 id="_1"><img alt="hectormine_pygmt|10x20" src="../img/hectormine_pygmt.png" /><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../setup_docker/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Docker" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Docker
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../FAST_checklist/" class="md-footer__link md-footer__link--next" aria-label="Next: FAST Checklist" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              FAST Checklist
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.tabs.link"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d6c3db9e.min.js"></script>
+      
+    
+  </body>
+</html>

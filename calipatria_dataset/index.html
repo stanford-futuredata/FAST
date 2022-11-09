@@ -1,0 +1,1263 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.9">
+    
+    
+      
+        <title>0.11 Calipatria, June 2021 - FAST</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.08040f6c.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#011-calipatria-june-2021" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="FAST" class="md-header__button md-logo" aria-label="FAST" data-md-component="logo">
+      
+  <img src="../logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FAST
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              0.11 Calipatria, June 2021
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/stanford-futuredata/FAST" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FAST GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="FAST" class="md-nav__button md-logo" aria-label="FAST" data-md-component="logo">
+      
+  <img src="../logo.png" alt="logo">
+
+    </a>
+    FAST
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/stanford-futuredata/FAST" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FAST GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fast_overview/" class="md-nav__link">
+        FAST Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Install
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Install" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Install
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup_colab/" class="md-nav__link">
+        Google Colab
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup_linux/" class="md-nav__link">
+        Linux
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup_docker/" class="md-nav__link">
+        Docker
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/" class="md-nav__link">
+        Tutorial
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          How to Set Parameters
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="How to Set Parameters" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          How to Set Parameters
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FAST_checklist/" class="md-nav__link">
+        FAST Checklist
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../get_seismic_data/" class="md-nav__link">
+        Getting Seismic Data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../input_and_preprocess/" class="md-nav__link">
+        Input and Preprocessing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../f_p/" class="md-nav__link">
+        Fingerprint
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sim_search/" class="md-nav__link">
+        Similarity Search
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../network_detection/" class="md-nav__link">
+        Network Detection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FAST_output/" class="md-nav__link">
+        FAST Output
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase_picking/" class="md-nav__link">
+        Phase Picking
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../earthquake_location/" class="md-nav__link">
+        Earthquake Location
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_10" type="checkbox" id="__nav_4_10" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_10">
+          Example Parameters
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Example Parameters" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_10">
+          <span class="md-nav__icon md-icon"></span>
+          Example Parameters
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ex_params_intro/" class="md-nav__link">
+        0.1 Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../italy_day_yr_dataset/" class="md-nav__link">
+        0.2 ItalyDayYR Data Set
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tanzania_dataset/" class="md-nav__link">
+        0.3 Tanzania, August 2016
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../saudi_dataset/" class="md-nav__link">
+        0.4 Saudi Arabia, May 2014
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../saudifull_dataset/" class="md-nav__link">
+        0.5 SaudiFull Data Set: Saudi Arabia, January - May 2017
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ometepec_dataset/" class="md-nav__link">
+        0.6 Ometepec, Mexico, January - April 2012
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wenchuan_dataset/" class="md-nav__link">
+        0.7 SeismOlympics: Wenchuan Aftershocks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../groningen_dataset/" class="md-nav__link">
+        0.8 Groningen Data Set
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../brazil_dataset/" class="md-nav__link">
+        0.9 BrazilAcre Data Set
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../newzealand_dataset/" class="md-nav__link">
+        0.10 New Zealand, Year 2010
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          0.11 Calipatria, June 2021
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        0.11 Calipatria, June 2021
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#preprocess" class="md-nav__link">
+    Preprocess
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fingerprint" class="md-nav__link">
+    Fingerprint
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#similarity-search" class="md-nav__link">
+    Similarity Search
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#postprocessing" class="md-nav__link">
+    Postprocessing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-detection" class="md-nav__link">
+    Network detection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#postprocess-clean-network-detection-results" class="md-nav__link">
+    Postprocess: Clean Network Detection Results
+  </a>
+  
+    <nav class="md-nav" aria-label="Postprocess: Clean Network Detection Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#visualize-the-fast-output-739-events" class="md-nav__link">
+    Visualize the FAST output (739 events)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#display-fast-detection-waveforms-descending-order-of-peaksum-similarity" class="md-nav__link">
+    Display FAST detection waveforms, descending order of peaksum-similarity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-detection-threshold-keep-all-events-with-at-least-3-stations" class="md-nav__link">
+    Set detection threshold - keep all events with at least 3 stations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-final-fast-detected-event-list" class="md-nav__link">
+    Output final FAST detected event list
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cut-event-sac-files-for-phase-picking" class="md-nav__link">
+    Cut event SAC files for phase picking
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pick-phases-with-seisbench" class="md-nav__link">
+    Pick phases with SeisBench
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#earthquake-location-with-hypoinverse" class="md-nav__link">
+    Earthquake location with HYPOINVERSE
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mapping-earthquake-locations-with-pygmt" class="md-nav__link">
+    Mapping earthquake locations with PyGMT
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        References
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#preprocess" class="md-nav__link">
+    Preprocess
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fingerprint" class="md-nav__link">
+    Fingerprint
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#similarity-search" class="md-nav__link">
+    Similarity Search
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#postprocessing" class="md-nav__link">
+    Postprocessing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-detection" class="md-nav__link">
+    Network detection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#postprocess-clean-network-detection-results" class="md-nav__link">
+    Postprocess: Clean Network Detection Results
+  </a>
+  
+    <nav class="md-nav" aria-label="Postprocess: Clean Network Detection Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#visualize-the-fast-output-739-events" class="md-nav__link">
+    Visualize the FAST output (739 events)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#display-fast-detection-waveforms-descending-order-of-peaksum-similarity" class="md-nav__link">
+    Display FAST detection waveforms, descending order of peaksum-similarity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-detection-threshold-keep-all-events-with-at-least-3-stations" class="md-nav__link">
+    Set detection threshold - keep all events with at least 3 stations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-final-fast-detected-event-list" class="md-nav__link">
+    Output final FAST detected event list
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cut-event-sac-files-for-phase-picking" class="md-nav__link">
+    Cut event SAC files for phase picking
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pick-phases-with-seisbench" class="md-nav__link">
+    Pick phases with SeisBench
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#earthquake-location-with-hypoinverse" class="md-nav__link">
+    Earthquake location with HYPOINVERSE
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mapping-earthquake-locations-with-pygmt" class="md-nav__link">
+    Mapping earthquake locations with PyGMT
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/stanford-futuredata/FAST/edit/master/docs/calipatria_dataset.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="011-calipatria-june-2021">0.11 Calipatria, June 2021<a class="headerlink" href="#011-calipatria-june-2021" title="Permanent link">&para;</a></h1>
+<p><img alt="calipatria_maps" src="../img/calipatria_maps.png" />  </p>
+<p>Get stations and waveform data in directory: <code>/app/data/20210605_Calipatria_data/</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>(eq_fast) root@6006660926e5:/app# cd parameters/preprocess/Calipatria/
+</code></pre></div>
+<p>Get station data in directory: /app/data/20210605_Calipatria_data/stations/  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>(eq_fast) root@6006660926e5:/app/parameters/preprocess/Calipatria# python get_station_list_Calipatria.py
+</code></pre></div>
+<p>For these stations, download waveform data in directory: <code>/app/data/20210605_Calipatria_data/waveforms/</code>  </p>
+<p>Try the mass downloader first. Then try the get_waveforms function from client directly to get any data missed from mass downloader. You may need to run waveform download scripts multiple times to get all data.  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>(eq_fast) root@6006660926e5:/app/parameters/preprocess/Calipatria# python get_waveforms_mdl_Calipatria.py
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>(eq_fast) root@6006660926e5:/app/parameters/preprocess/Calipatria# python get_station_list_Calipatria.py
+</code></pre></div>
+<p>Not all stations from the original station list will have downloadable waveform data. Clean up the station list so that only stations with downloaded waveform data are included.  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>(eq_fast) root@6006660926e5:/app/parameters/preprocess/Calipatria# python clean_station_list_Calipatria.py
+</code></pre></div>
+<p>Need to manually arrange downloaded MSEED data into directories, with one directory per station named as:
+<code>/app/data/20210605_Calipatria_data/waveforms${STATION_NAME}/</code>  </p>
+<h3 id="preprocess"><strong>Preprocess</strong><a class="headerlink" href="#preprocess" title="Permanent link">&para;</a></h3>
+<p>apply 4-12 Hz bandpass filter to all MSEED data, decimate to 25 Hz (factor of 4 for 100-sps data; factor of 8 for 200-sps data). This script will output MSEED data named with “Deci..” to be used in FAST.  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>(eq_fast) root@6006660926e5:/app/parameters/preprocess/Calipatria# cd ../../../utils/preprocess/
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>(eq_fast) root@6006660926e5:/app/utils/preprocess# ../../parameters/preprocess/Calipatria/bandpass_filter_decimate_Calipatria.sh
+</code></pre></div>
+<h3 id="fingerprint"><strong>Fingerprint</strong><a class="headerlink" href="#fingerprint" title="Permanent link">&para;</a></h3>
+<p>43 stations, 113 channels  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>(eq_fast) root@6006660926e5:/app/utils/preprocess# cd ../../fingerprint/
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>(eq_fast) root@6006660926e5:/app/fingerprint# ../parameters/fingerprint/Calipatria/run_fp_Calipatria.sh
+</code></pre></div>
+<h3 id="similarity-search"><strong>Similarity Search</strong><a class="headerlink" href="#similarity-search" title="Permanent link">&para;</a></h3>
+<p>Ended up not using 6 PB stations (18 channels). Now 37 stations, 95 channels  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>(eq_fast) root@6006660926e5:/app/fingerprint# cd ../simsearch/
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>(eq_fast) root@6006660926e5:/app/simsearch# ../parameters/simsearch/Calipatria/run_simsearch_calipatria.sh
+</code></pre></div>
+<h3 id="postprocessing"><strong>Postprocessing</strong><a class="headerlink" href="#postprocessing" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>(eq_fast) root@6006660926e5:/app/simsearch# cd ../postprocessing/
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>(eq_fast) root@6006660926e5:/app/postprocessing# ../parameters/postprocess/Calipatria/output_calipatria_pairs.sh
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>(eq_fast) root@6006660926e5:/app/postprocessing# ../parameters/postprocess/Calipatria/combine_calipatria_pairs.sh
+</code></pre></div>
+<h3 id="network-detection"><strong>Network detection</strong><a class="headerlink" href="#network-detection" title="Permanent link">&para;</a></h3>
+<p>If list index out of range in partition, fails to keep running -&gt; try 1 partition  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>(eq_fast) root@6006660926e5:/app/postprocessing# python scr_run_network_det.py ../parameters/postprocess/Calipatria/37sta_3stathresh_network_params.json
+</code></pre></div>
+<h3 id="postprocess-clean-network-detection-results"><strong>Postprocess: Clean Network Detection Results</strong><a class="headerlink" href="#postprocess-clean-network-detection-results" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>(eq_fast) root@6006660926e5:/app/postprocessing# cd ../utils/network/
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>(eq_fast) root@6006660926e5:/app/utils/network# python arrange_network_detection_results.py
+</code></pre></div>
+<p>Input parameter changes made to <code>arrange_network_detection_results.py</code> (from Hector Mine -&gt; Calipatria)  </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span>
+<span class="normal"><a href="#__codelineno-10-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="n">det_dir</span> <span class="o">=</span> <span class="err">‘</span><span class="o">../../</span><span class="n">data</span><span class="o">/</span><span class="mi">20210605</span><span class="n">_Calipatria_Data</span><span class="o">/</span><span class="n">network_detection</span><span class="o">/</span><span class="err">’</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="n">network_file</span> <span class="o">=</span> <span class="err">‘</span><span class="mi">37</span><span class="n">sta_3stathresh_detlist_rank_by_peaksum</span><span class="o">.</span><span class="n">txt</span><span class="err">’</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="n">nsta</span> <span class="o">=</span> <span class="mi">37</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>(eq_fast) root@6006660926e5:/app/utils/network# ./remove_duplicates_after_network.sh
+</code></pre></div>
+<p>Input parameter changes made to <code>remove_duplicates_after_network.sh</code> (from Hector Mine -&gt; Calipatria)  </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-4">4</a></span>
+<span class="normal"><a href="#__codelineno-12-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="n">cd</span> <span class="o">../../</span><span class="n">data</span><span class="o">/</span><span class="mi">20210605</span><span class="n">_Calipatria_Data</span><span class="o">/</span><span class="n">network_detection</span><span class="o">/</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="n">NETWORK_FILE</span><span class="o">=</span><span class="n">NetworkDetectionTimes_37sta_3stathresh_detlist_rank_by_peaksum</span><span class="o">.</span><span class="n">txt</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>(eq_fast) root@6006660926e5:/app/utils/network# python delete_overlap_network_detections.py
+</code></pre></div>
+<p>Input parameter changes made to <code>delete_overlap_network_detections.py</code> (from Hector Mine -&gt; Calipatria)  </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-4">4</a></span>
+<span class="normal"><a href="#__codelineno-14-5">5</a></span>
+<span class="normal"><a href="#__codelineno-14-6">6</a></span>
+<span class="normal"><a href="#__codelineno-14-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="n">input_dir</span> <span class="o">=</span> <span class="err">‘</span><span class="o">../../</span><span class="n">data</span><span class="o">/</span><span class="mi">20210605</span><span class="n">_Calipatria_Data</span><span class="o">/</span><span class="n">network_detection</span><span class="o">/</span><span class="err">’</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="n">allfile_name</span> <span class="o">=</span> <span class="n">input_dir</span><span class="o">+</span><span class="err">‘</span><span class="n">uniquestart_sorted_no_duplicates</span><span class="o">.</span><span class="n">txt</span><span class="err">’</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6"></a><span class="n">outfile_name</span> <span class="o">=</span> <span class="n">input_dir</span><span class="o">+</span><span class="err">‘</span><span class="mi">37</span><span class="n">sta_3stathresh_FinalUniqueNetworkDetectionTimes</span><span class="o">.</span><span class="n">txt</span><span class="err">’</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7"></a><span class="n">n_sta</span> <span class="o">=</span> <span class="mi">37</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>(eq_fast) root@6006660926e5:/app/utils/network# ./final_network_sort_nsta_peaksum.sh
+</code></pre></div>
+<p>Input parameter changes made to <code>final_network_sort_nsta_peaksum.sh</code> (from Hector Mine -&gt; Calipatria)  </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-4">4</a></span>
+<span class="normal"><a href="#__codelineno-16-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-4" name="__codelineno-16-4"></a><span class="n">cd</span> <span class="o">../../</span><span class="n">data</span><span class="o">/</span><span class="mi">20210605</span><span class="n">_Calipatria_Data</span><span class="o">/</span><span class="n">network_detection</span><span class="o">/</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5"></a><span class="n">NETWORK_FILE</span><span class="o">=</span><span class="mi">37</span><span class="n">sta_3stathresh_FinalUniqueNetworkDetectionTimes</span><span class="o">.</span><span class="n">txt</span>
+</code></pre></div></td></tr></table></div>
+<h4 id="visualize-the-fast-output-739-events"><strong>Visualize the FAST output (739 events)</strong><a class="headerlink" href="#visualize-the-fast-output-739-events" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>(eq_fast) root@6006660926e5:/app/utils/network# cat ../../data/20210605_Calipatria_Data/network_detection/sort_nsta_peaksum_37sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt
+</code></pre></div>
+<h4 id="display-fast-detection-waveforms-descending-order-of-peaksum-similarity"><strong>Display FAST detection waveforms, descending order of peaksum-similarity</strong><a class="headerlink" href="#display-fast-detection-waveforms-descending-order-of-peaksum-similarity" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>(eq_fast) root@6006660926e5:/app/utils/network# cd ../events/
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>(eq_fast) root@6006660926e5:/app/utils/events# python PARTIALplot_detected_waveforms_Calipatria.py 0 739
+</code></pre></div>
+<p>Input parameter changes made to <code>PARTIALplot_detected_waveforms_Calipatria.py</code> (from Hector Mine -&gt; Calipatria)  </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-23" name="__codelineno-19-23"></a><span class="n">times_dir</span> <span class="o">=</span> <span class="err">‘</span><span class="o">../../</span><span class="n">data</span><span class="o">/</span><span class="mi">20210605</span><span class="n">_Calipatria_Data</span><span class="o">/</span><span class="n">network_detection</span><span class="o">/</span><span class="err">’</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-25">25</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-25" name="__codelineno-20-25"></a><span class="n">out_dir</span> <span class="o">=</span> <span class="n">times_dir</span><span class="o">+</span><span class="err">‘</span><span class="mi">37</span><span class="n">sta_3stathresh_NetworkWaveformPlots</span><span class="o">/</span><span class="err">’</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-30">30</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-30" name="__codelineno-21-30"></a><span class="n">dt_fp</span> <span class="o">=</span> <span class="mf">1.2</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-37">37</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-37" name="__codelineno-22-37"></a><span class="n">init_time</span> <span class="o">=</span> <span class="n">UTCDateTime</span><span class="p">(</span><span class="err">‘</span><span class="mi">2021</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">05</span><span class="n">T00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">06.840000</span><span class="err">’</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-47">47</a></span>
+<span class="normal"><a href="#__codelineno-23-48">48</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-23-47" name="__codelineno-23-47"></a><span class="n">ts_dir</span> <span class="o">=</span> <span class="err">‘</span><span class="o">../../</span><span class="n">data</span><span class="o">/</span><span class="mi">20210605</span><span class="n">_Calipatria_Data</span><span class="o">/</span><span class="err">’</span>
+<a id="__codelineno-23-48" name="__codelineno-23-48"></a><span class="n">st</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">ts_dir</span><span class="o">+</span><span class="err">‘</span><span class="n">waveforms</span><span class="o">*/</span><span class="n">Deci</span><span class="o">*</span><span class="n">Z__20210605T000000Z__20210606T000000Z</span><span class="o">.</span><span class="n">mseed</span><span class="err">’</span><span class="p">)</span> <span class="c1"># Plot only vertical component</span>
+</code></pre></div></td></tr></table></div>
+<h4 id="set-detection-threshold-keep-all-events-with-at-least-3-stations"><strong>Set detection threshold - keep all events with at least 3 stations</strong><a class="headerlink" href="#set-detection-threshold-keep-all-events-with-at-least-3-stations" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>(eq_fast) root@6006660926e5:/app/utils/events# cd ../../data/20210605_Calipatria_Data/network_detection/
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>(eq_fast) root@6006660926e5:/app/data/20210605_Calipatria_Data/network_detection# head -739 sort_nsta_peaksum_37sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt &gt; EQ_sort_nsta_peaksum_37sta_3stathresh_FinalUniqueNetworkDetectionTimes.txt
+</code></pre></div>
+<h4 id="output-final-fast-detected-event-list"><strong>Output final FAST detected event list</strong><a class="headerlink" href="#output-final-fast-detected-event-list" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>(eq_fast) root@6006660926e5:/app/data/20210605_Calipatria_Data/network_detection# cd ../../../utils/events/
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>(eq_fast) root@6006660926e5:/app/utils/events# python output_final_detection_list.py
+</code></pre></div>
+<p>Input parameter changes made to <code>output_final_detection_list.py</code> (from Hector Mine -&gt; Calipatria)  </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-26-10">10</a></span>
+<span class="normal"><a href="#__codelineno-26-11">11</a></span>
+<span class="normal"><a href="#__codelineno-26-12">12</a></span>
+<span class="normal"><a href="#__codelineno-26-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-26-9" name="__codelineno-26-9"></a><span class="n">times_dir</span> <span class="o">=</span> <span class="err">‘</span><span class="o">../../</span><span class="n">data</span><span class="o">/</span><span class="mi">20210605</span><span class="n">_Calipatria_Data</span><span class="o">/</span><span class="n">network_detection</span><span class="o">/</span><span class="err">’</span>
+<a id="__codelineno-26-10" name="__codelineno-26-10"></a><span class="n">infile_name</span> <span class="o">=</span> <span class="err">‘</span><span class="n">EQ_sort_nsta_peaksum_37sta_3stathresh_FinalUniqueNetworkDetectionTimes</span><span class="o">.</span><span class="n">txt</span><span class="err">’</span>
+<a id="__codelineno-26-11" name="__codelineno-26-11"></a><span class="n">outfile_name</span> <span class="o">=</span> <span class="n">times_dir</span><span class="o">+</span><span class="err">‘</span><span class="n">FINAL_Detection_List_Calipatria_37sta_3stathresh</span><span class="o">.</span><span class="n">txt</span><span class="err">’</span>
+<a id="__codelineno-26-12" name="__codelineno-26-12"></a><span class="n">init_time</span> <span class="o">=</span> <span class="n">UTCDateTime</span><span class="p">(</span><span class="err">‘</span><span class="mi">2021</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">05</span><span class="n">T00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">06.840000</span><span class="err">’</span><span class="p">)</span> <span class="c1"># global start time for all channels</span>
+<a id="__codelineno-26-13" name="__codelineno-26-13"></a><span class="n">dt_fp</span> <span class="o">=</span> <span class="mf">1.2</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>(eq_fast) root@6006660926e5:/app/utils/events# cat ../../data/20210605_Calipatria_Data/network_detection/FINAL_Detection_List_Calipatria_37sta_3stathresh.txt
+</code></pre></div>
+<h3 id="cut-event-sac-files-for-phase-picking"><strong>Cut event SAC files for phase picking</strong><a class="headerlink" href="#cut-event-sac-files-for-phase-picking" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>(eq_fast) root@6006660926e5:/app/utils/events# python cut_event_files.py
+</code></pre></div>
+<p>Input parameter changes made to <code>cut_event_files.py</code> (from Hector Mine -&gt; Calipatria)  </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-29-20">20</a></span>
+<span class="normal"><a href="#__codelineno-29-21">21</a></span>
+<span class="normal"><a href="#__codelineno-29-22">22</a></span>
+<span class="normal"><a href="#__codelineno-29-23">23</a></span>
+<span class="normal"><a href="#__codelineno-29-24">24</a></span>
+<span class="normal"><a href="#__codelineno-29-25">25</a></span>
+<span class="normal"><a href="#__codelineno-29-26">26</a></span>
+<span class="normal"><a href="#__codelineno-29-27">27</a></span>
+<span class="normal"><a href="#__codelineno-29-28">28</a></span>
+<span class="normal"><a href="#__codelineno-29-29">29</a></span>
+<span class="normal"><a href="#__codelineno-29-30">30</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-29-20" name="__codelineno-29-20"></a><span class="n">stations</span> <span class="o">=</span> <span class="p">[</span><span class="err">“</span><span class="n">USGCB</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">BC3</span><span class="s2">&quot;, “BOM”, “CLI2&quot;</span><span class="p">,</span> <span class="err">“</span><span class="n">COA</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">COK2</span><span class="s2">&quot;, “CRR”,</span>
+<a id="__codelineno-29-21" name="__codelineno-29-21"></a>    <span class="err">“</span><span class="n">CTC</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">CTW</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">DRE</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">ERR</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">FRK</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">IMP</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">NSS2</span><span class="s2">&quot;,</span>
+<a id="__codelineno-29-22" name="__codelineno-29-22"></a>    <span class="err">“</span><span class="n">OCP</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">RXH</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">SAL</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">SLB</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">SLV</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">SNR</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">SWP</span><span class="err">”</span><span class="p">,</span>
+<a id="__codelineno-29-23" name="__codelineno-29-23"></a>    <span class="err">“</span><span class="n">SWS</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">THM</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">WMD</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">WWF</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="mi">286</span><span class="s2">&quot;, “5056”, “5058&quot;</span><span class="p">,</span>
+<a id="__codelineno-29-24" name="__codelineno-29-24"></a>    <span class="err">“</span><span class="mi">5062</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="mi">5271</span><span class="s2">&quot;, “5274”, “5444&quot;</span><span class="p">,</span>
+<a id="__codelineno-29-25" name="__codelineno-29-25"></a>    <span class="err">“</span><span class="n">WLA</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">WLA01</span><span class="s2">&quot;, “WLA03”, “WLA04&quot;</span><span class="p">,</span> <span class="err">“</span><span class="n">WLA06</span><span class="err">”</span><span class="p">]</span>
+<a id="__codelineno-29-26" name="__codelineno-29-26"></a><span class="n">in_mseed_dir</span> <span class="o">=</span> <span class="err">‘</span><span class="o">../../</span><span class="n">data</span><span class="o">/</span><span class="mi">20210605</span><span class="n">_Calipatria_Data</span><span class="o">/</span><span class="err">’</span>
+<a id="__codelineno-29-27" name="__codelineno-29-27"></a><span class="n">in_FINAL_Detection_List</span> <span class="o">=</span> <span class="err">‘</span><span class="o">../../</span><span class="n">data</span><span class="o">/</span><span class="mi">20210605</span><span class="n">_Calipatria_Data</span><span class="o">/</span><span class="n">network_detection</span><span class="o">/</span><span class="n">FINAL_Detection_List_Calipatria_37sta_3stathresh</span><span class="o">.</span><span class="n">txt</span><span class="err">’</span>
+<a id="__codelineno-29-28" name="__codelineno-29-28"></a><span class="n">out_dir</span> <span class="o">=</span> <span class="err">‘</span><span class="o">../../</span><span class="n">data</span><span class="o">/</span><span class="mi">20210605</span><span class="n">_Calipatria_Data</span><span class="o">/</span><span class="n">event_ids</span><span class="err">’</span>
+<a id="__codelineno-29-29" name="__codelineno-29-29"></a><span class="n">init_time</span> <span class="o">=</span> <span class="n">UTCDateTime</span><span class="p">(</span><span class="err">‘</span><span class="mi">2021</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">05</span><span class="n">T00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">06.840000</span><span class="err">’</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># global start time for all channels</span>
+<a id="__codelineno-29-30" name="__codelineno-29-30"></a><span class="n">dt_fp</span> <span class="o">=</span> <span class="mf">1.2</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-30-80">80</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-30-80" name="__codelineno-30-80"></a><span class="n">st</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="err">‘</span><span class="o">../../</span><span class="n">data</span><span class="o">/</span><span class="mi">20210605</span><span class="n">_Calipatria_Data</span><span class="o">/</span><span class="n">waveforms</span><span class="o">*/</span><span class="p">[</span><span class="err">!</span><span class="n">Deci</span><span class="p">]</span><span class="o">*.</span><span class="n">mseed</span><span class="err">’</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="pick-phases-with-seisbench"><strong>Pick phases with SeisBench</strong><a class="headerlink" href="#pick-phases-with-seisbench" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>(eq_fast) root@6006660926e5:/app/utils/events# cd ../picking/
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>(eq_fast) root@6006660926e5:/app/utils/picking# python run_seisbench.py
+</code></pre></div>
+<p>Input parameter changes made to <code>run_seisbench.py</code> (from Hector Mine -&gt; Calipatria)  </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-32-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-32-16" name="__codelineno-32-16"></a><span class="n">base_dir</span> <span class="o">=</span> <span class="err">‘</span><span class="o">../../</span><span class="n">data</span><span class="o">/</span><span class="mi">20210605</span><span class="n">_Calipatria_Data</span><span class="o">/</span><span class="err">’</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-33-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-33-18" name="__codelineno-33-18"></a><span class="n">stations</span> <span class="o">=</span> <span class="p">[</span><span class="err">‘</span><span class="n">CLI2</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">COK2</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">OCP</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">SAL</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">WWF</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="mi">5062</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="mi">5271</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="mi">5444</span><span class="err">’</span><span class="p">]</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="earthquake-location-with-hypoinverse"><strong>Earthquake location with HYPOINVERSE</strong><a class="headerlink" href="#earthquake-location-with-hypoinverse" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>(eq_fast) root@6006660926e5:/app/utils/picking# cd ../location/
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>(eq_fast) root@6006660926e5:/app/utils/location# python SeisBench2hypoinverse.py
+</code></pre></div>
+<p>Input parameter changes made to <code>SeisBench2hypoinverse.py</code> (from Hector Mine -&gt; Calipatria)  </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-35-25">25</a></span>
+<span class="normal"><a href="#__codelineno-35-26">26</a></span>
+<span class="normal"><a href="#__codelineno-35-27">27</a></span>
+<span class="normal"><a href="#__codelineno-35-28">28</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-35-25" name="__codelineno-35-25"></a><span class="n">base_dir</span> <span class="o">=</span> <span class="err">‘</span><span class="o">../../</span><span class="n">data</span><span class="o">/</span><span class="mi">20210605</span><span class="n">_Calipatria_Data</span><span class="o">/</span><span class="err">’</span>
+<a id="__codelineno-35-26" name="__codelineno-35-26"></a><span class="n">start_lat</span> <span class="o">=</span> <span class="mf">33.1</span>
+<a id="__codelineno-35-27" name="__codelineno-35-27"></a><span class="n">start_lon</span> <span class="o">=</span> <span class="o">-</span><span class="mf">115.6</span>
+<a id="__codelineno-35-28" name="__codelineno-35-28"></a><span class="n">start_depth</span> <span class="o">=</span> <span class="mi">5</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>(eq_fast) root@6006660926e5:/app/utils/location# python output_station_file.py
+</code></pre></div>
+<p>Input parameter changes made to <code>output_station_file.py</code> (from Hector Mine -&gt; Calipatria)  </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-37-113">113</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-37-113" name="__codelineno-37-113"></a><span class="n">base_dir</span> <span class="o">=</span> <span class="err">‘</span><span class="o">../../</span><span class="n">data</span><span class="o">/</span><span class="mi">20210605</span><span class="n">_Calipatria_Data</span><span class="o">/</span><span class="err">’</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>(eq_fast) root@6006660926e5:/app/utils/location# cd ../../data/20210605_Calipatria_Data/location_hypoinverse/
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>(eq_fast) root@6006660926e5:/app/data/20210605_Calipatria_Data/location_hypoinverse/# ../../../utils/location/hyp1.40/source/hyp1.40
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>COMMAND? @locate_events.hyp
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>(eq_fast) root@6006660926e5:/app/data/20210605_Calipatria_Data/location_hypoinverse/# cd ../../../utils/location/
+<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>(eq_fast) root@6006660926e5:/app/utils/location# python output_hypoinverse_as_text.py
+</code></pre></div>
+<p>Input parameter changes made to <code>output_hypoinverse_as_text.py</code> (from Hector Mine -&gt; Calipatria)  </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-39-12">12</a></span>
+<span class="normal"><a href="#__codelineno-39-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-39-12" name="__codelineno-39-12"></a><span class="n">catalog_start_time</span> <span class="o">=</span> <span class="n">UTCDateTime</span><span class="p">(</span><span class="err">‘</span><span class="mi">2021</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">05</span><span class="n">T00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mf">06.840000</span><span class="err">’</span><span class="p">)</span>
+<a id="__codelineno-39-13" name="__codelineno-39-13"></a><span class="n">loc_dir</span> <span class="o">=</span> <span class="err">‘</span><span class="o">../../</span><span class="n">data</span><span class="o">/</span><span class="mi">20210605</span><span class="n">_Calipatria_Data</span><span class="o">/</span><span class="n">location_hypoinverse</span><span class="o">/</span><span class="err">’</span> 
+</code></pre></div></td></tr></table></div>
+<h3 id="mapping-earthquake-locations-with-pygmt"><strong>Mapping earthquake locations with PyGMT</strong><a class="headerlink" href="#mapping-earthquake-locations-with-pygmt" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>(eq_fast) root@6006660926e5:/app/utils/location# cd ../mapping/
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>(eq_fast) root@6006660926e5:/app/utils/mapping# conda deactivate
+<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>root@6006660926e5:/app/utils/mapping# conda activate pygmt
+<a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>(pygmt) root@6006660926e5:/app/utils/mapping# python hypoinverse_to_pygmt_Calipatria.py
+</code></pre></div>
+<p><img alt="calipatria_FAST_maps" src="../img/calipatria_FAST_maps.png" />  </p>
+<figcaption>Plots of detected earthquakes from FAST output</figcaption>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../newzealand_dataset/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 0.10 New Zealand, Year 2010" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              0.10 New Zealand, Year 2010
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../references/" class="md-footer__link md-footer__link--next" aria-label="Next: References" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              References
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.tabs.link"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d6c3db9e.min.js"></script>
+      
+    
+  </body>
+</html>

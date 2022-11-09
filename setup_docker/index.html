@@ -1,0 +1,1264 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.9">
+    
+    
+      
+        <title>Docker - FAST</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.08040f6c.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#installation-for-docker" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="FAST" class="md-header__button md-logo" aria-label="FAST" data-md-component="logo">
+      
+  <img src="../logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FAST
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Docker
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/stanford-futuredata/FAST" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FAST GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="FAST" class="md-nav__button md-logo" aria-label="FAST" data-md-component="logo">
+      
+  <img src="../logo.png" alt="logo">
+
+    </a>
+    FAST
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/stanford-futuredata/FAST" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FAST GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fast_overview/" class="md-nav__link">
+        FAST Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Install
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Install" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Install
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup_colab/" class="md-nav__link">
+        Google Colab
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup_linux/" class="md-nav__link">
+        Linux
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Docker
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Docker
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install-docker" class="md-nav__link">
+    Install Docker
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-docker-for-fast" class="md-nav__link">
+    Setting up Docker for FAST
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-fast-with-docker" class="md-nav__link">
+    Running FAST with Docker
+  </a>
+  
+    <nav class="md-nav" aria-label="Running FAST with Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-fingerprints-for-the-data-set" class="md-nav__link">
+    Generate fingerprints for the data set
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search-for-similar-earthquakes" class="md-nav__link">
+    Search for Similar Earthquakes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postprocess-parse-fast-similarity-search-output" class="md-nav__link">
+    Postprocess: Parse FAST Similarity Search Output
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postprocess-network-detection" class="md-nav__link">
+    Postprocess: Network Detection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postprocess-clean-network-detection-results" class="md-nav__link">
+    Postprocess: Clean Network Detection Results
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visualize-the-fast-output" class="md-nav__link">
+    Visualize the FAST Output
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#display-waveforms-for-fast-detections-in-descending-order-of-peaksum-similarity" class="md-nav__link">
+    Display Waveforms for FAST Detections in Descending Order of "peaksum" Similarity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-detection-threshold" class="md-nav__link">
+    Set Detection Threshold
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-final-fast-detected-event-list" class="md-nav__link">
+    Output Final FAST Detected Event List
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-picking-earthquake-location-map-visualization" class="md-nav__link">
+    Phase Picking, Earthquake Location, Map Visualization
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exiting-the-docker-container" class="md-nav__link">
+    Exiting the Docker Container
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#view-status-of-the-docker-container" class="md-nav__link">
+    View status of the Docker Container
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enter-docker-container-again" class="md-nav__link">
+    Enter Docker Container again
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remove-all-docker-containers-and-images" class="md-nav__link">
+    Remove all Docker Containers and Images
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/" class="md-nav__link">
+        Tutorial
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          How to Set Parameters
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="How to Set Parameters" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          How to Set Parameters
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FAST_checklist/" class="md-nav__link">
+        FAST Checklist
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../get_seismic_data/" class="md-nav__link">
+        Getting Seismic Data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../input_and_preprocess/" class="md-nav__link">
+        Input and Preprocessing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../f_p/" class="md-nav__link">
+        Fingerprint
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sim_search/" class="md-nav__link">
+        Similarity Search
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../network_detection/" class="md-nav__link">
+        Network Detection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FAST_output/" class="md-nav__link">
+        FAST Output
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase_picking/" class="md-nav__link">
+        Phase Picking
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../earthquake_location/" class="md-nav__link">
+        Earthquake Location
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_10" type="checkbox" id="__nav_4_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_10">
+          Example Parameters
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Example Parameters" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_10">
+          <span class="md-nav__icon md-icon"></span>
+          Example Parameters
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ex_params_intro/" class="md-nav__link">
+        0.1 Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../italy_day_yr_dataset/" class="md-nav__link">
+        0.2 ItalyDayYR Data Set
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tanzania_dataset/" class="md-nav__link">
+        0.3 Tanzania, August 2016
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../saudi_dataset/" class="md-nav__link">
+        0.4 Saudi Arabia, May 2014
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../saudifull_dataset/" class="md-nav__link">
+        0.5 SaudiFull Data Set: Saudi Arabia, January - May 2017
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ometepec_dataset/" class="md-nav__link">
+        0.6 Ometepec, Mexico, January - April 2012
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wenchuan_dataset/" class="md-nav__link">
+        0.7 SeismOlympics: Wenchuan Aftershocks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../groningen_dataset/" class="md-nav__link">
+        0.8 Groningen Data Set
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../brazil_dataset/" class="md-nav__link">
+        0.9 BrazilAcre Data Set
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../newzealand_dataset/" class="md-nav__link">
+        0.10 New Zealand, Year 2010
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calipatria_dataset/" class="md-nav__link">
+        0.11 Calipatria, June 2021
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        References
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install-docker" class="md-nav__link">
+    Install Docker
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-docker-for-fast" class="md-nav__link">
+    Setting up Docker for FAST
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-fast-with-docker" class="md-nav__link">
+    Running FAST with Docker
+  </a>
+  
+    <nav class="md-nav" aria-label="Running FAST with Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-fingerprints-for-the-data-set" class="md-nav__link">
+    Generate fingerprints for the data set
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search-for-similar-earthquakes" class="md-nav__link">
+    Search for Similar Earthquakes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postprocess-parse-fast-similarity-search-output" class="md-nav__link">
+    Postprocess: Parse FAST Similarity Search Output
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postprocess-network-detection" class="md-nav__link">
+    Postprocess: Network Detection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postprocess-clean-network-detection-results" class="md-nav__link">
+    Postprocess: Clean Network Detection Results
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visualize-the-fast-output" class="md-nav__link">
+    Visualize the FAST Output
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#display-waveforms-for-fast-detections-in-descending-order-of-peaksum-similarity" class="md-nav__link">
+    Display Waveforms for FAST Detections in Descending Order of "peaksum" Similarity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-detection-threshold" class="md-nav__link">
+    Set Detection Threshold
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-final-fast-detected-event-list" class="md-nav__link">
+    Output Final FAST Detected Event List
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-picking-earthquake-location-map-visualization" class="md-nav__link">
+    Phase Picking, Earthquake Location, Map Visualization
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exiting-the-docker-container" class="md-nav__link">
+    Exiting the Docker Container
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#view-status-of-the-docker-container" class="md-nav__link">
+    View status of the Docker Container
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enter-docker-container-again" class="md-nav__link">
+    Enter Docker Container again
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remove-all-docker-containers-and-images" class="md-nav__link">
+    Remove all Docker Containers and Images
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/stanford-futuredata/FAST/edit/master/docs/setup_docker.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="installation-for-docker"><strong>Installation for Docker</strong><a class="headerlink" href="#installation-for-docker" title="Permanent link">&para;</a></h1>
+<p><a href="https://www.docker.com/">Docker</a> is an open-source project for automating the deployment of applications as portable, self-sufficient containers that can run on the cloud or on-premises. (<a href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/container-docker-introduction/docker-defined">Source</a>)</p>
+<p>Docker lets you run FAST on a non-Linux operating system, so it is recommended for Mac or Windows users.</p>
+<h2 id="install-docker"><strong>Install Docker</strong><a class="headerlink" href="#install-docker" title="Permanent link">&para;</a></h2>
+<p>Install Docker on your machine <a href="https://www.docker.com/products/docker-desktop/">here</a>. To get started, make sure Docker has been successfully installed by running:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$ docker run hello-world
+</code></pre></div>
+<p>You should see the <code>Hello from Docker!</code> message displayed. Otherwise, refer to Docker's documentation for getting started <a href="https://www.docker.com/get-started/">here</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>By default, Docker for Mac allocates <strong>2.00GB of RAM</strong>. The more memory available on Docker, the faster FAST will run. Please refer to <a href="https://docs.docker.com/desktop/mac/#resources"><strong>Docker's Docker Desktop for Mac user manual</strong></a> for more information on how to increase the allocated memory.</p>
+</div>
+<h2 id="setting-up-docker-for-fast"><strong>Setting up Docker for FAST</strong><a class="headerlink" href="#setting-up-docker-for-fast" title="Permanent link">&para;</a></h2>
+<p>Create a directory for FAST code and outputs</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$ mkdir DockerFAST
+</code></pre></div>
+<p>Change permissions so that Docker can write to this directory</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$ chmod 777 DockerFAST
+</code></pre></div>
+<p>Clone the FAST repository from GitHub into a local directory named <code>./FAST/</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$ cd DockerFAST
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>$ git clone https://github.com/stanford-futuredata/FAST.git ./FAST/
+</code></pre></div>
+<p>Build the Docker image</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Building the Docker image with Dockerfile with set up all FAST dependencies (Linux Ubuntu 18.04, CMake compiler, C++ boost, conda for python virtual environment and libraries).</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$ cd FAST/
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>$ docker build -f Dockerfile -t fast_image:0.1 .
+</code></pre></div>
+<ul>
+<li><code>-f</code> - Name of the Dockerfile</li>
+<li><code>-t</code> - Tag name</li>
+</ul>
+<p>Run the Docker image in a Docker container</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$ docker run -v ${PWD}:/app -it fast_image:0.1 /bin/bash
+</code></pre></div>
+<ul>
+<li><code>-v</code> - Bind mount a volume. The current directory in ${PWD} is mounted inside the container into the directory /app, so that any changes to files made inside the container are saved to disk and persist after exiting the container.</li>
+<li><code>-it</code> - Short for --interactive + --tty, which takes you inside the container in interactive mode, allowing you to run commands on the command line in the container, which we need to run FAST.</li>
+</ul>
+<p>Now we are in the Docker container, in the <code>eq_fast</code> conda environment. We are ready to run FAST now.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>(eq_fast) root@555d364b63d7:/app/FAST#
+</code></pre></div></p>
+<h2 id="running-fast-with-docker"><strong>Running FAST with Docker</strong><a class="headerlink" href="#running-fast-with-docker" title="Permanent link">&para;</a></h2>
+<p>Refer to the <a href="../tutorial/">Tutorial</a> for more detailed information about FAST parameters, inputs, and outputs.</p>
+<h3 id="generate-fingerprints-for-the-data-set">Generate fingerprints for the data set<a class="headerlink" href="#generate-fingerprints-for-the-data-set" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>(eq_fast) root@555d364b63d7:/app/FAST# python run_fp.py -c config.json
+</code></pre></div>
+<h3 id="search-for-similar-earthquakes">Search for Similar Earthquakes<a class="headerlink" href="#search-for-similar-earthquakes" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>(eq_fast) root@555d364b63d7:/app/FAST# cd simsearch/
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>(eq_fast) root@555d364b63d7:/app/FAST/simsearch# cmake .
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>(eq_fast) root@555d364b63d7:/app/FAST/simsearch# make
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>(eq_fast) root@555d364b63d7:/app/FAST/simsearch# cd ..
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>(eq_fast) root@555d364b63d7:/app/FAST# python run_simsearch.py -c config.json
+</code></pre></div>
+<h3 id="postprocess-parse-fast-similarity-search-output">Postprocess: Parse FAST Similarity Search Output<a class="headerlink" href="#postprocess-parse-fast-similarity-search-output" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>(eq_fast) root@555d364b63d7:/app/FAST# cd postprocessing/
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>(eq_fast) root@555d364b63d7:/app/FAST/postprocessing# ../parameters/postprocess/output_HectorMine_pairs.sh
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>(eq_fast) root@555d364b63d7:/app/FAST/postprocessing# ../parameters/postprocess/combine_HectorMine_pairs.sh
+</code></pre></div>
+<h3 id="postprocess-network-detection">Postprocess: Network Detection<a class="headerlink" href="#postprocess-network-detection" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>(eq_fast) root@555d364b63d7:/app/FAST/postprocessing# python scr_run_network_det.py ../parameters/postprocess/7sta_2stathresh_network_params.json
+</code></pre></div>
+<h3 id="postprocess-clean-network-detection-results">Postprocess: Clean Network Detection Results<a class="headerlink" href="#postprocess-clean-network-detection-results" title="Permanent link">&para;</a></h3>
+<p>Need to modify inputs within each script file to your data set.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>(eq_fast) root@555d364b63d7:/app/FAST/postprocessing# cd ../utils/network/
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>(eq_fast) root@555d364b63d7:/app/FAST/utils/network# python arrange_network_detection_results.py
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>(eq_fast) root@555d364b63d7:/app/FAST/utils/network# ./remove_duplicates_after_network.sh
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>(eq_fast) root@555d364b63d7:/app/FAST/utils/network# python delete_overlap_network_detections.py
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>(eq_fast) root@555d364b63d7:/app/FAST/utils/network# ./final_network_sort_nsta_peaksum.sh
+</code></pre></div></p>
+<h3 id="visualize-the-fast-output">Visualize the FAST Output<a class="headerlink" href="#visualize-the-fast-output" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>(eq_fast) root@555d364b63d7:/app/FAST/utils/network# cat ../../data/network_detection/sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
+</code></pre></div>
+<h3 id="display-waveforms-for-fast-detections-in-descending-order-of-peaksum-similarity">Display Waveforms for FAST Detections in Descending Order of "peaksum" Similarity<a class="headerlink" href="#display-waveforms-for-fast-detections-in-descending-order-of-peaksum-similarity" title="Permanent link">&para;</a></h3>
+<p>This example outputs png images for 100 event waveforms. The plot file names are sorted in descending order by: <code>num_sta</code> (number of stations that detected this event), <code>peaksum</code> (peak total similarity)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>(eq_fast) root@555d364b63d7:/app/FAST/utils/network# cd ..
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>(eq_fast) root@555d364b63d7:/app/FAST/utils# cd events/
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>(eq_fast) root@555d364b63d7:/app/FAST/utils/events# python PARTIALplot_detected_waveforms_HectorMine.py 0 100
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>View images outside Docker container — to manually determine detection threshold
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>$ ls ../../data/network_detection/7sta_2stathresh_NetworkWaveformPlots/
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>event_rank00000_nsta7_peaksum1015_ind6204_time6204.0_1999-10-15T14:43:24.676000.png
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>event_rank00001_nsta7_peaksum1015_ind3842_time3842.0_1999-10-15T14:04:02.676000.png
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>event_rank00002_nsta7_peaksum920_ind7488_time7488.0_1999-10-15T15:04:48.676000.png
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>event_rank00003_nsta7_peaksum823_ind5286_time5286.0_1999-10-15T14:28:06.676000.png
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>event_rank00004_nsta7_peaksum718_ind20202_time20202.0_1999-10-15T18:36:42.676000.png
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>event_rank00005_nsta7_peaksum713_ind46536_time46536.0_1999-10-16T01:55:36.676000.png
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>...
+</code></pre></div></p>
+</div>
+<h3 id="set-detection-threshold">Set Detection Threshold<a class="headerlink" href="#set-detection-threshold" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Everything above the detection threshold is deemed an earthquake. In this example, the first 50 events with the highest "peaksum" similarity are identified as earthquakes, while the remaining events are not earthquakes.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>(eq_fast) root@555d364b63d7:/app/FAST/utils/events# cd ../../data/network_detection/
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>(eq_fast) root@555d364b63d7:/app/FAST/data/network_detection# head -50 sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt &gt; EQ_sort_nsta_peaksum_7sta_2stathresh_FinalUniqueNetworkDetectionTimes.txt
+</code></pre></div>
+<h3 id="output-final-fast-detected-event-list">Output Final FAST Detected Event List<a class="headerlink" href="#output-final-fast-detected-event-list" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>(eq_fast) root@555d364b63d7:/app/FAST/data/network_detection# cd ../../utils/events/
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>(eq_fast) root@555d364b63d7:/app/FAST/utils/events# python output_final_detection_list.py
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>(eq_fast) root@555d364b63d7:/app/FAST/utils/events# cat ../../data/network_detection/FINAL_Detection_List_HectorMine_7sta_2stathresh.txt
+</code></pre></div>
+<h2 id="phase-picking-earthquake-location-map-visualization"><strong>Phase Picking, Earthquake Location, Map Visualization</strong><a class="headerlink" href="#phase-picking-earthquake-location-map-visualization" title="Permanent link">&para;</a></h2>
+<p>Refer to the <a href="../tutorial/">Tutorial</a> for more information and detailed commands for optional next steps to take after running FAST:</p>
+<ul>
+<li>Phase Picking with SeisBench</li>
+<li>Earthquake Location with HYPOINVERSE</li>
+<li>Mapping and Visualization with PyGMT</li>
+</ul>
+<h2 id="exiting-the-docker-container"><strong>Exiting the Docker Container</strong><a class="headerlink" href="#exiting-the-docker-container" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>(pygmt) root@555d364b63d7:/app/FAST/utils/mapping# exit
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>exit
+</code></pre></div>
+<p>After exiting the Docker container, all files created within the container should still be accessible on your disk
+since the current directory was mounted inside the container with <code>docker run -v ${PWD}:/app</code>.</p>
+<h2 id="view-status-of-the-docker-container"><strong>View status of the Docker Container</strong><a class="headerlink" href="#view-status-of-the-docker-container" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>$ docker ps -a
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>CONTAINER ID   IMAGE                             COMMAND                  CREATED        STATUS                      PORTS     NAMES
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>555d364b63d7   fast_image:0.1                    &quot;/bin/bash&quot;              6 days ago     Exited (1) 25 seconds ago             pensive_ramanujan
+</code></pre></div>
+<h2 id="enter-docker-container-again"><strong>Enter Docker Container again</strong><a class="headerlink" href="#enter-docker-container-again" title="Permanent link">&para;</a></h2>
+<p>We can pick up where we left off after entering the same Docker container again. Notice that the <code>pygmt</code> conda environment is still there.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>$ docker start -i 555d364b63d7
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>(eq_fast) root@555d364b63d7:/# cd app
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>(eq_fast) root@555d364b63d7:/app# ls
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>Calipatria      FAST_userguide_v0.pdf  __pycache__                      changes                 data             fingerprint  parse_config.py   run_fp.py         utils
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>Calipatria.zip  LICENSE                calipatria_client.ipynb          config.json             docs             mkdocs.yml   postprocessing    run_simsearch.py
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>Dockerfile      README.md              calipatria_massdownloader.ipynb  config_calipatria.json  environment.yml  parameters   requirements.txt  simsearch
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>(eq_fast) root@6006660926e5:/app# conda env list
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a># conda environments:
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>#
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>base                     /root/miniconda3
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>eq_fast               *  /root/miniconda3/envs/eq_fast
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>pygmt                    /root/miniconda3/envs/pygmt
+</code></pre></div></p>
+<h2 id="remove-all-docker-containers-and-images"><strong>Remove all Docker Containers and Images</strong><a class="headerlink" href="#remove-all-docker-containers-and-images" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>ONLY DO THIS WHEN YOU WANT TO REMOVE ALL DOCKER CONTAINERS AND IMAGES!!!</p>
+</div>
+<p>This step will free up lots of space on your computer.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>$ docker system prune
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>WARNING! This will remove:
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>- all stopped containers
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>- all networks not used by at least one container
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>- all dangling images
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>- all dangling build cache
+</code></pre></div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../setup_linux/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Linux" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Linux
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../tutorial/" class="md-footer__link md-footer__link--next" aria-label="Next: Tutorial" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Tutorial
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.tabs.link"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d6c3db9e.min.js"></script>
+      
+    
+  </body>
+</html>

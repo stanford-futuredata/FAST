@@ -1,0 +1,322 @@
+img[alt=image] {
+    float: right;
+    height: 450px;
+}
+
+img[alt=sta_s] {
+    width : 750px;
+    height: 400px;
+}
+
+img[alt=sta_u] {
+    width : 750px;
+    height: 400px;
+}
+
+img[alt=supervised_matching] {
+    width : auto;
+    height: auto;
+}
+
+img[alt=unsupervised_matching] {
+    width : auto;
+    height: auto;
+}
+
+img[alt=efficient_search] {
+    width: auto;
+}
+
+img[alt=colab_jupyter] {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+img[alt=hector_mine_plot] {
+    float: left;
+    height: 450px;
+}
+
+img[alt=data_process] {
+    float: left;
+    width: 25%;
+    height: 400px;
+}
+
+img[alt=continuous_data] {
+    float: center;
+}
+
+img[alt=gen_fp] {
+    margin-left: 15%;
+}
+
+img[alt=simsearch_process] {
+    float: left;
+    width: 25%;
+    height: 400px;
+}
+
+img[alt=fast_index_2] {
+    height: 100%;
+}
+
+img[alt=postproc_weight] {
+    margin-left: 20%;
+}
+
+img[alt=minhash] {
+    height: 350px;
+    width: 65%;
+    margin-left: 15%;
+}
+
+img[alt=minhash_prob] {
+    margin-left: 27%;
+}
+
+img[alt=minhash_ex] {
+    height: 400px;
+    width: 75%;
+    margin-left: 10%;
+}
+
+img[alt=lsh_ex] {
+    height: 400px;
+    width: 75%;
+    margin-left: 10%;
+}
+
+img[alt=simsearch_database] {
+    height: 400px;
+    width: 75%;
+    margin-left: 10%;
+}
+
+img[alt=prob_detection] {
+    height: 400px;
+    width: 75%;
+    margin-left: 10%;
+}
+
+img[alt=jaccard_sim] {
+    margin-left: 3%;
+}
+
+img[alt=p_impact_1] {
+    margin-left: 3%;
+}
+
+img[alt=p_impact_2] {
+    margin-left: 3%;
+}
+
+img[alt=p_impact_ex] {
+    margin-left: 3%;
+}
+
+img[alt=p_impact_ex_2] {
+    margin-left: 13%;
+}
+
+img[alt=lsh_params] {
+    margin-left: 2%;
+}
+
+img[alt=lsh_params_2] {
+    margin-left: 2%;
+}
+
+img[alt=lsh_det_1] {
+    margin-left: 20%;
+}
+
+img[alt=lsh_det_2] {
+    margin-left: 19%;
+}
+
+img[alt=lsh_det_3] {
+    margin-left: 19%;
+}
+
+img[alt=lsh_guidance] {
+    margin-left: 10%;
+}
+
+img[alt=memory_usage] {
+    margin-left: 10%;
+}
+
+img[alt=correlated_noise] {
+    margin-left: 15%;
+}
+
+img[alt=association_det] {
+    margin-left: 5%;
+}
+
+img[alt=multi_network] {
+    margin-left: 10%;
+}
+
+img[alt=multi_net_illustration] {
+    margin-left: 5%;
+}
+
+img[alt=event_pair_extraction] {
+    margin-left: 28%;
+}
+
+img[alt=event_pair_extraction_2] {
+    margin-left: 30%;
+}
+
+img[alt=event_reso_algo] {
+    margin-left: 3%;
+}
+
+img[alt=sample_params_settings] {
+    margin-left: 3%;
+}
+
+img[alt=pseudo_params] {
+    margin-left: 17%;
+}
+
+img[alt=data_table_1] {
+    margin-left: 15%;
+}
+
+img[alt=distribution_1] {
+    margin-left: 8%;
+}
+
+img[alt=data_table_2] {
+    margin-left: 6%;
+}
+
+img[alt=data_table_3] {
+    margin-left: 5%;
+}
+
+img[alt=data_table_4] {
+    margin-left: 5%;
+}
+
+img[alt=data_table_5] {
+    margin-left: 37%;
+}
+
+img[alt=ex_param_2] {
+    margin-left: 15%;
+}
+
+img[alt=ex_param_3] {
+    margin-left: 10%;
+}
+
+img[alt=data_table_6] {
+    margin-left: 37%;
+}
+
+img[alt=data_table_7] {
+    margin-left: 4%;
+}
+
+img[alt=data_table_8] {
+    margin-left: 5%;
+}
+
+img[alt=data_table_9] {
+    margin-left: 37%;
+}
+
+img[alt=distribution_3] {
+    margin-left: 12%;
+}
+
+img[alt=saudi_fig_7] {
+    margin-left: 25%;
+}
+
+img[alt=data_table_10] {
+    margin-left: 37%;
+}
+
+img[alt=data_table_11] {
+    margin-left: 10%;
+}
+
+img[alt=data_table_12] {
+    margin-left: 5%;
+}
+
+img[alt=data_table_13] {
+    margin-left: 35%;
+}
+
+img[alt=data_table_15] {
+    margin-left: 35%;
+}
+
+img[alt=distribution_4] {
+    margin-left: 12%;
+}
+
+img[alt=distribution_5] {
+    margin-left: 10%;
+}
+
+img[alt=ex_param_4] {
+    margin-left: 20%;
+}
+
+img[alt=data_table_16] {
+    margin-left: 18%;
+}
+
+img[alt=ex_param_5] {
+    margin-left: 20%;
+}
+
+img[alt=data_table_17] {
+    margin-left: 18%;
+}
+
+img[alt=data_table_19] {
+    margin-left: 35%;
+}
+
+img[alt=data_table_18] {
+    margin-left: 5%;
+}
+
+img[alt=data_table_23] {
+    margin-left: 30%;
+}
+
+img[alt=ex_files] {
+    margin-left: 15%;
+}
+
+img[alt=json_file_picks] {
+    margin-left: 12%;
+}
+
+img[alt=hectormine_pygmt] {
+    margin-left: 17%;
+}
+
+img[alt=multiple_channels] {
+    margin-left: 12%;
+}
+
+img[alt=channels_priority] {
+    margin-left: 12%;
+}
+
+figcaption {
+    text-align: center;
+}

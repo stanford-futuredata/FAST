@@ -1,0 +1,1116 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.9">
+    
+    
+      
+        <title>Network Detection - FAST</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.08040f6c.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#network-detection" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="FAST" class="md-header__button md-logo" aria-label="FAST" data-md-component="logo">
+      
+  <img src="../logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FAST
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Network Detection
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/stanford-futuredata/FAST" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FAST GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="FAST" class="md-nav__button md-logo" aria-label="FAST" data-md-component="logo">
+      
+  <img src="../logo.png" alt="logo">
+
+    </a>
+    FAST
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/stanford-futuredata/FAST" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FAST GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fast_overview/" class="md-nav__link">
+        FAST Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Install
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Install" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Install
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup_colab/" class="md-nav__link">
+        Google Colab
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup_linux/" class="md-nav__link">
+        Linux
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup_docker/" class="md-nav__link">
+        Docker
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/" class="md-nav__link">
+        Tutorial
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          How to Set Parameters
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="How to Set Parameters" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          How to Set Parameters
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FAST_checklist/" class="md-nav__link">
+        FAST Checklist
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../get_seismic_data/" class="md-nav__link">
+        Getting Seismic Data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../input_and_preprocess/" class="md-nav__link">
+        Input and Preprocessing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../f_p/" class="md-nav__link">
+        Fingerprint
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sim_search/" class="md-nav__link">
+        Similarity Search
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Network Detection
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Network Detection
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#association-detect-earthquakes-over-a-seismic-network" class="md-nav__link">
+    Association: Detect Earthquakes Over a Seismic Network
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-multi-station-detection-with-fast" class="md-nav__link">
+    Network (Multi-Station) Detection with FAST
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-multi-station-illustration" class="md-nav__link">
+    Network (Multi-Station) Illustration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-pair-extraction-parameters" class="md-nav__link">
+    Event-Pair Extraction Parameters
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-pair-extraction-samples" class="md-nav__link">
+    Event-Pair Extraction Samples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-detection-performance-parameter-guidance" class="md-nav__link">
+    Network Detection Performance Parameter Guidance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pseudo-association-parameters-multiple-stations" class="md-nav__link">
+    Pseudo-Association Parameters (Multiple stations)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-resolution-implementation" class="md-nav__link">
+    Event Resolution Implementation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-resolution-implementation-algorithm" class="md-nav__link">
+    Event Resolution Implementation Algorithm:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sample-parameter-settings-2014-m82-iquique-foreshock-sequence" class="md-nav__link">
+    Sample Parameter Settings: 2014 M8.2 Iquique Foreshock Sequence
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FAST_output/" class="md-nav__link">
+        FAST Output
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase_picking/" class="md-nav__link">
+        Phase Picking
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../earthquake_location/" class="md-nav__link">
+        Earthquake Location
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_10" type="checkbox" id="__nav_4_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_10">
+          Example Parameters
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Example Parameters" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_10">
+          <span class="md-nav__icon md-icon"></span>
+          Example Parameters
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ex_params_intro/" class="md-nav__link">
+        0.1 Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../italy_day_yr_dataset/" class="md-nav__link">
+        0.2 ItalyDayYR Data Set
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tanzania_dataset/" class="md-nav__link">
+        0.3 Tanzania, August 2016
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../saudi_dataset/" class="md-nav__link">
+        0.4 Saudi Arabia, May 2014
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../saudifull_dataset/" class="md-nav__link">
+        0.5 SaudiFull Data Set: Saudi Arabia, January - May 2017
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ometepec_dataset/" class="md-nav__link">
+        0.6 Ometepec, Mexico, January - April 2012
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wenchuan_dataset/" class="md-nav__link">
+        0.7 SeismOlympics: Wenchuan Aftershocks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../groningen_dataset/" class="md-nav__link">
+        0.8 Groningen Data Set
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../brazil_dataset/" class="md-nav__link">
+        0.9 BrazilAcre Data Set
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../newzealand_dataset/" class="md-nav__link">
+        0.10 New Zealand, Year 2010
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calipatria_dataset/" class="md-nav__link">
+        0.11 Calipatria, June 2021
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        References
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#association-detect-earthquakes-over-a-seismic-network" class="md-nav__link">
+    Association: Detect Earthquakes Over a Seismic Network
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-multi-station-detection-with-fast" class="md-nav__link">
+    Network (Multi-Station) Detection with FAST
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-multi-station-illustration" class="md-nav__link">
+    Network (Multi-Station) Illustration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-pair-extraction-parameters" class="md-nav__link">
+    Event-Pair Extraction Parameters
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-pair-extraction-samples" class="md-nav__link">
+    Event-Pair Extraction Samples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-detection-performance-parameter-guidance" class="md-nav__link">
+    Network Detection Performance Parameter Guidance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pseudo-association-parameters-multiple-stations" class="md-nav__link">
+    Pseudo-Association Parameters (Multiple stations)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-resolution-implementation" class="md-nav__link">
+    Event Resolution Implementation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-resolution-implementation-algorithm" class="md-nav__link">
+    Event Resolution Implementation Algorithm:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sample-parameter-settings-2014-m82-iquique-foreshock-sequence" class="md-nav__link">
+    Sample Parameter Settings: 2014 M8.2 Iquique Foreshock Sequence
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/stanford-futuredata/FAST/edit/master/docs/network_detection.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="network-detection"><strong>Network Detection</strong><a class="headerlink" href="#network-detection" title="Permanent link">&para;</a></h1>
+<p><img alt="network_det_overview" src="../img/network_det_overview.png" />  </p>
+<h3 id="association-detect-earthquakes-over-a-seismic-network">Association: Detect Earthquakes Over a Seismic Network<a class="headerlink" href="#association-detect-earthquakes-over-a-seismic-network" title="Permanent link">&para;</a></h3>
+<p>Earthquake pair at different stations: consistent inter-event time dt Reduce false detections  </p>
+<p><img alt="association_det" src="../img/association_det.png" />  </p>
+<h3 id="network-multi-station-detection-with-fast">Network (Multi-Station) Detection with FAST<a class="headerlink" href="#network-multi-station-detection-with-fast" title="Permanent link">&para;</a></h3>
+<p><img alt="multi_network" src="../img/multi_network.png" />  </p>
+<h3 id="network-multi-station-illustration">Network (Multi-Station) Illustration<a class="headerlink" href="#network-multi-station-illustration" title="Permanent link">&para;</a></h3>
+<p><img alt="multi_net_illustration" src="../img/multi_net_illustration.png" />  </p>
+<h3 id="event-pair-extraction-parameters">Event-Pair Extraction Parameters<a class="headerlink" href="#event-pair-extraction-parameters" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&quot;network&quot;: {
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    &quot;dgapL&quot;: 3,                 # Longest allowed along-diagonal time gap (samples)  
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    ”dgapW&quot;: 3,                 # Longest allowed cross-diagonal time gap (samples)  
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    ”num_pass&quot;: 2,              # Adjacent diagonal merge iterations  
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    ”ivals_thresh&quot;: 6,          # Minimum similarity (number of votes)  
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    “min_dets&quot;: 4,              # Minimum number of fingerprint-pairs in a cluster  
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    ”min_sum_multiplier&quot;: 1,    # Minimum total similarity multiplier for a cluster  
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    &quot;max_width&quot;: 8,             # Maximum bounding box width (samples)  
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>}
+</code></pre></div>
+<p><strong>Guidelines for setting parameters:</strong>  </p>
+<ul>
+<li>ivals_thresh = nvote, <strong>unless initial threshold is too low</strong>. <strong>Better approach is increasing</strong> min_sum_multiplier (i.e. min_sum_multiplier = updated_nvote / nvote ) <strong>which effectively increases fingerprint-pair threshold to</strong> updated_nvote <strong>with better thresholding that takes advantage of structure of event-pairs</strong>  </li>
+<li>min_dets = 4-6  </li>
+<li>dgapL: <strong>time interval equivalent to largest expected P-S gap (e.g. 10-20 seconds)</strong>  </li>
+<li>dgapW: <strong>should be small, equivalent to a few seconds (3-4 seconds)</strong> </li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&quot;network&quot;: {
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    “max_fp&quot;: 74797,    # Max fingerprint index over all stations  
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    ”dt_fp&quot;: 1.0,       # Fingerprint lag (s)  
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    &quot;dgapL&quot;: 3,         # Longest allowed along-diagonal time gap (samples)  
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    ”dgapW&quot;: 3,         # Longest allowed cross-diagonal time gap (samples)  
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    ”num_pass&quot;: 2,      # Adjacent diagonal merge iterations
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>},
+</code></pre></div>
+<p><img alt="event_pair_extraction" src="../img/event_pair_extraction.png" />  </p>
+<figcaption>Event-Pair Extraction Parameters (1 Station)</figcaption>
+
+<ul>
+<li>
+<p><code>dgapL</code>, <code>dgapW</code>: determine whether to keep as 1 cluster or split into 2 clusters  </p>
+<ul>
+<li>Multiply <code>dgapL</code>, <code>dgapW</code> by dt_fp to get values in seconds</li>
+</ul>
+</li>
+<li>
+<p><code>num_pass</code>=2 is good default (3 is also ok, but takes longer)  </p>
+</li>
+</ul>
+<h3 id="event-pair-extraction-samples">Event-Pair Extraction Samples<a class="headerlink" href="#event-pair-extraction-samples" title="Permanent link">&para;</a></h3>
+<p><img alt="event_pair_samples" src="../img/event_pair_samples.png" />  </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>&quot;network&quot;: {
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    ”ivals_thresh&quot;: 6,              # Minimum similarity (number of votes)  
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    “min_dets&quot;: 4,                  # Minimum number of fingerprint-pairs in a cluster  
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    ”min_sum_multiplier&quot;: 1,        # Minimum total similarity multiplier for a cluster  
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    &quot;max_width&quot;: 8,                 # Maximum bounding box width (samples)  
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>},
+</code></pre></div>
+<p><img alt="event_pair_extraction_2" src="../img/event_pair_extraction_2.png" />  </p>
+<figcaption>Event-Pair Pruning Parameters (1 Station)</figcaption>
+
+<ul>
+<li>Set higher thresholds on similarity in order to identify an event-pair cluster Minimum total similarity threshold: <code>ivals_thresh</code> * <code>min_dets</code> * <code>min_sum_multiplier</code>  </li>
+<li><code>max_width</code>: 8 is a good default value, probably don’t need to change  <ul>
+<li>multiply by dt_fp to get value in seconds  </li>
+</ul>
+</li>
+</ul>
+<h3 id="network-detection-performance-parameter-guidance">Network Detection Performance Parameter Guidance<a class="headerlink" href="#network-detection-performance-parameter-guidance" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>&quot;performance&quot;: {
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    &quot;partition_size&quot;: 2147483648,  
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    &quot;num_cores&quot;: 4  
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>}
+</code></pre></div>
+<ul>
+<li><code>partition_size</code>: Maximum size of each partition (bytes), if entire list of similarity search output pairs does not fit into memory</li>
+<li><code>num_cores</code>: Number of threads for parallel processing (event-pair extraction only)  </li>
+</ul>
+<p><img alt="sim_matrix" src="../img/sim_matrix.png" />  </p>
+<h3 id="pseudo-association-parameters-multiple-stations">Pseudo-Association Parameters (Multiple stations)<a class="headerlink" href="#pseudo-association-parameters-multiple-stations" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>”network&quot;: { 
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    ”nsta_thresh&quot;: 2,       # Minimum number of stations for detection  
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    “input_offset&quot;: 3,      # Arrival time constraint: maximum time gap (samples)
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>},
+</code></pre></div>
+<p><img alt="pseudo_params" src="../img/pseudo_params.png" />  </p>
+<ul>
+<li>Set <code>nsta_thresh</code> low to begin, can increase threshold later  </li>
+<li>n<code>sta_thresh</code>=1: single station detection not yet thoroughly tested  </li>
+<li>
+<p>Set <code>input_offset</code> to be largest expected time gap between S wave at 1 station and P wave at another station</p>
+<ul>
+<li>Multiply by dt_fp to get value in seconds  </li>
+</ul>
+</li>
+<li>
+<p><code>input_offset</code>: arrival time constraint: maximum time gap (samples)  </p>
+<ul>
+<li><code>input_offset</code> is the longest time period that can elapse with no active detections (for a given – event-pair): after a gap of more than <code>input_offset</code> samples within a network event-pair, pseudo- association will automatically create a new network event-pair.</li>
+<li>A reasonable upper-bound on <code>input_offset</code> is the largest expected S-P time for any station in the network, or the largest difference in P arrival times between any pair of stations in the network, whichever is larger. Usually, <code>input_offset</code> can be shorter than this upper-bound, but the value should not be smaller than the time gap parameter used in event-pair extraction: <code>input_offset</code> &gt; <code>dgapL</code>.</li>
+<li>Note that because all event-pairs are only grouped together into network event-pairs only if they have nearly identical inter-event times, there is limited risk of falsely associating event-pairs or of being unable to resolve overlapping events (with detections separated by a time interval of less than <code>input_offset</code>) due to selecting the value of <code>input_offset</code> that is somewhat longer than necessary. However, <code>input_offset</code> should not be set to a value that is unnecessarily large (e.g. 60+ seconds) because this does increase the chance of spurious associations of unrelated event-pairs observed at different stations in the network.</li>
+<li><strong>For most data sets, the value of network time gap parameter should lie within the range, <code>input_offset</code> = 15-40 seconds</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="event-resolution-implementation">Event Resolution Implementation<a class="headerlink" href="#event-resolution-implementation" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Event resolution is applied separately to each station using detections from each station that meet network detection threshold (e.g. observed at minimum number of station)  </li>
+<li>In this implementation, event resolution method is relatively simple to minimize memory usage for large data sets. Specifically event resolution does not keep information about structure of pairwise detections, only whether there was a detection (in any event-pair) for each time stamp.  </li>
+<li>Thus in this version of the code, events that are overlapping in time at a single station with be resolved to a single event. In order to tease out two separate events that overlap in time at a single station, the user will need to go back to the network detection output from pairwise pseudo-association. Two events overlapping in time at a single station will belong to different network event-pairs (if there are two detections at the same station in the same network event-pair, then these are not overlapping events, but different phases of the same event).  </li>
+</ul>
+<h3 id="event-resolution-implementation-algorithm">Event Resolution Implementation Algorithm:<a class="headerlink" href="#event-resolution-implementation-algorithm" title="Permanent link">&para;</a></h3>
+<p><img alt="event_reso_algo" src="../img/event_reso_algo.png" /></p>
+<h3 id="sample-parameter-settings-2014-m82-iquique-foreshock-sequence">Sample Parameter Settings: 2014 M8.2 Iquique Foreshock Sequence<a class="headerlink" href="#sample-parameter-settings-2014-m82-iquique-foreshock-sequence" title="Permanent link">&para;</a></h3>
+<p>(from Bergen &amp; Beroza, 2018)  </p>
+<p><img alt="sample_params_settings" src="../img/sample_params_settings.png" /></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../sim_search/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Similarity Search" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Similarity Search
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../FAST_output/" class="md-footer__link md-footer__link--next" aria-label="Next: FAST Output" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              FAST Output
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.tabs.link"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d6c3db9e.min.js"></script>
+      
+    
+  </body>
+</html>
